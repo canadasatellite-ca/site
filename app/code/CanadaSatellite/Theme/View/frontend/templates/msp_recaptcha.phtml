@@ -1,0 +1,11 @@
+<?php
+/** @var $block CanadaSatellite\Theme\Block\Frontend\ReCaptcha */
+?>
+
+<script type="text/x-magento-init">
+{
+    "#msp-recaptcha-container": {
+        "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */ echo $block->getJsLayout();?>
+    }
+}
+</script>

@@ -1,0 +1,178 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/** @var \Cart2Quote\Quotation\Block\Checkout\Cart\Item\Renderer $block */
+
+$item = $block->getItem();
+$product = $item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper(\Magento\Msrp\Helper\Data::class);
+$quotationHelper = $this->helper(\Cart2Quote\Quotation\Helper\Data::class);
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+
+/** @var \Cart2Quote\Quotation\Helper\Escaper $escapeHelper */
+$escapeHelper = $this->helper(\Cart2Quote\Quotation\Helper\Escaper::class);
+?>
+<tbody class="cart item">
+<tr class="item-info">
+    <td data-th="<?php echo $block->escapeHtml(__('Item')); ?>" class="col item">
+        <?php if ($block->hasProductUrl()) : ?>
+        <a href="<?php echo $block->escapeHtml($block->getProductUrl()) ?>"
+           title="<?php echo $block->escapeHtml($block->getProductName()) ?>"
+           tabindex="-1"
+           class="product-item-photo">
+        <?php else : ?>
+            <span class="product-item-photo">
+        <?php endif; ?>
+            <?php echo $block->getImage($block->getProductForThumbnail(), 'cart_page_product_thumbnail')->toHtml(); ?>
+            <?php if ($block->hasProductUrl()) : ?>
+        </a>
+            <?php else : ?>
+        </span>
+            <?php endif; ?>
+        <div class="product-item-details">
+            <strong class="product-item-name">
+                <?php if ($block->hasProductUrl()) : ?>
+                    <a href="<?php echo $block->escapeHtml($block->getProductUrl()) ?>"
+                    ><?php echo $block->escapeHtml($block->getProductName()) ?></a>
+                <?php else : ?>
+                    <?php echo $block->escapeHtml($block->getProductName()) ?>
+                <?php endif; ?>
+            </strong>
+            <?php if ($_options = $block->getOptionList()) : ?>
+                <dl class="item-options">
+                    <?php foreach ($_options as $_option) : ?>
+                        <?php $_formatedOptionValue = $block->getFormatedOptionValue($_option) ?>
+                        <dt><?php echo $block->escapeHtml($_option['label']) ?></dt>
+                        <dd>
+                            <?php if (isset($_formatedOptionValue['full_view'])) : ?>
+                                <?php echo $_formatedOptionValue['full_view'] ?>
+                            <?php else : ?>
+                                <?php echo $_formatedOptionValue['value'] ?>
+                            <?php endif; ?>
+                        </dd>
+                    <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+            <?php if ($messages = $block->getMessages()) : ?>
+                <?php foreach ($messages as $message) : ?>
+                    <div class="cart item message <?php echo $block->escapeHtml($message['type']) ?>">
+                        <div><?php echo $block->escapeHtml($message['text']) ?></div>
+                    </div>
+                <?php endforeach; ?>
+            <?php endif; ?>
+            <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+            <?php if ($addInfoBlock) : ?>
+                <?php echo $addInfoBlock->setItem($item)->toHtml() ?>
+            <?php endif; ?>
+        </div>
+        <?php $cols = 1; ?>
+    </td>
+
+    <?php if ($canApplyMsrp) : ?>
+        <td class="col msrp" data-th="<?php echo $block->escapeHtml(__('Price')); ?>">
+                <span class="pricing msrp">
+                    <span class="msrp notice"><?php echo $block->escapeHtml(__('See price before order confirmation.')); ?></span>
+                    <?php $helpLinkId = 'cart-msrp-help-' . $item->getId(); ?>
+                    <a href="#" class="action help map" id="<?php echo $block->escapeHtml($helpLinkId); ?>"
+                        <?php
+                        $json = '{"addToCart":{"helpLinkId": "#';
+                        $json .= $helpLinkId;
+                        $json .= '","productName": "';
+                        $json .= $product->getName();
+                        $json .= '","showAddToCart": false}}';
+                        ?>
+                       data-mage-init='<?php echo $json; ?>'>
+                        <span><?php echo $block->escapeHtml(__("What's this?")); ?></span>
+                    </a>
+                </span>
+            <?php $cols++; ?>
+        </td>
+    <?php else : ?>
+        <?php $unitPriceHtml = $block->getUnitPriceHtml($item) ?>
+        <td class="col price" data-th="<?php echo $block->escapeHtml(__('Price')); ?>"
+            id="cart-<?php echo $block->escapeHtml($item->getId()) ?>-price">
+            <div class="quote-item-price-component" data-bind="scope:'quote-item-<?php echo $item->getId() ?>-price'">
+                <!-- ko template: getTemplate() --><!-- /ko -->
+                <script type="text/x-magento-init">
+                {
+                    ".quote-item-price-component": {
+                        "Magento_Ui/js/core/app": {
+                           "components": {
+                                "quote-item-<?php echo $block->escapeHtml($item->getId()) ?>-price": {
+                                    "component": "Cart2Quote_Quotation/js/quote/item/price-component",
+                                    "price": "<?php echo $escapeHelper->getEscaper()->escapeJs($unitPriceHtml); ?>",
+                                    "itemId": "<?php echo $block->escapeHtml($item->getId()) ?>"
+                                }
+                            }
+                        }
+                    }
+                }
+                </script>
+            </div>
+            <?php $cols++; ?>
+        </td>
+    <?php endif; ?>
+    <td class="col qty" data-th="<?php echo $block->escapeHtml(__('Qty')); ?>">
+        <div class="field qty<?php if ($quotationHelper->isFrontendTierEnabled()) : ?> tier-qty<?php endif; ?>">
+            <label class="label" for="cart-<?php echo $block->escapeHtml($item->getId()) ?>-qty">
+                <span><?php echo __('Qty') ?></span>
+            </label>
+            <div class="control qty">
+                <div id="tiers-<?php echo $block->escapeHtml($item->getId()) ?>" class="tiers-block">
+                    <input id="cart-<?php echo $block->escapeHtml($item->getId()) ?>-qty"
+                           name="cart[<?php echo $block->escapeHtml($item->getId()) ?>][qty]"
+                           data-cart-item-id="<?php echo $block->escapeHtml($item->getSku()) ?>"
+                           value="<?php echo $block->escapeHtml($block->getQty()) ?>"
+                           type="number"
+                           size="4"
+                           title="<?php echo $block->escapeHtml(__('Qty')); ?>"
+                           class="input-text qty"
+                           maxlength="12" disabled
+                           data-validate="{required:true,'validate-greater-than-zero':true}"
+                           data-role="cart-item-qty"
+                           data-mage-init='{"productUpdater":{
+                                    "itemId": <?php echo $block->escapeHtml($item->getId()); ?>,
+                                    "sessionProductKey": "qty"
+                           }}'/>
+
+                <?php echo $this->getChildHtml('tiers'); ?>
+                </div>
+            </div>
+            <?php if ($quotationHelper->isFrontendTierEnabled()) : ?>
+            <div class="field-tooltip">
+                <a href="#" class="action action-addtier field-tooltip" id="add-tier-<?php echo $block->escapeHtml($item->getId()) ?>" onclick="return false">
+                    <span><?php echo $block->escapeHtml(__('Add Qty')) ?></span>
+                </a>
+                <div class="field-tooltip-content">
+                    <?php echo $block->escapeHtml(__('Add extra quantities to the products in your Quote.')); ?>
+                </div>
+            </div>
+                <script type="text/x-magento-init">
+                    {
+                        "*": {
+                            "addTierQty": {
+                                "item_id": "<?php echo $block->escapeHtml($item->getId()) ?>"
+                            }
+                        }
+                    }
+                </script>
+            <?php endif; ?>
+        </div>
+        <?php $cols++; ?>
+    </td>
+</tr>
+<tr class="item-actions">
+    <td colspan="<?php echo $block->escapeHtml($cols); ?>">
+        <div class="actions-toolbar">
+            <?php echo $block->getActions($item) ?>
+        </div>
+    </td>
+</tr>
+</tbody>

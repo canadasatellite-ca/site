@@ -1,0 +1,93 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Totals $block */ ?>
+<legend class="admin__legend"><span><?php echo $block->escapeHtml(__('Quote Totals')) ?></span></legend>
+<br>
+
+<table class="admin__table-secondary data-table">
+    <tbody>
+    <?php echo $block->renderTotals(); ?>
+    <?php echo $block->renderTotals('footer'); ?>
+    </tbody>
+</table>
+
+<div class="quote-totals-actions">
+    <div class="admin__field admin__field-option field-append-comments">
+        <input type="checkbox"
+               id="notify_customer"
+               name="quote[comment][customer_note_notify]"
+               value="1"
+            <?php if ($block->getNoteNotify()) : ?>
+                checked="checked"
+            <?php endif; ?>
+               class="admin__control-checkbox"/>
+        <label for="notify_customer" class="admin__field-label"><?php echo $block->escapeHtml(__('Append Comments')) ?></label>
+    </div>
+    <?php if ($block->canSendNewQuoteConfirmationEmail()) : ?>
+        <div class="admin__field admin__field-option field-email-quote-confirmation">
+            <input type="checkbox"
+                   id="send_confirmation"
+                   name="quote[send_confirmation]"
+                   value="1"
+                   checked="checked"
+                   class="admin__control-checkbox"/>
+            <label for="send_confirmation" class="admin__field-label">
+                <?php echo $block->escapeHtml(__('Email quote Confirmation')) ?>
+            </label>
+        </div>
+    <?php endif; ?>
+    <div class="actions">
+        <?php if ($block->displaySubmitQuoteButton()) : ?>
+            <?php echo $block->getButtonHtml(
+                __('Submit Proposal'),
+                'jQuery("#edit_form").attr("action", jQuery("#edit_form").attr("data-send-action")); quote.submit()',
+                'save primary'
+            ); ?>
+        <?php endif; ?>
+
+        <?php
+        $pdfUrl = $block->getUrl('quotation/quote/pdf', ['quote_id' => $this->getQuote()->getId()]);
+        echo $block->getButtonHtml(
+            __('Preview Quote PDF'),
+            'location.href="' . $block->escapeHtml($pdfUrl) . '"',
+            'action-default scalable quote-pdf',
+            'quote-pdf'
+        );
+        ?>
+        <fieldset id="quote-convert" class="admin__fieldset quote-convert">
+            <?php echo $block->getChildHtml('convert') ?>
+        </fieldset>
+    </div>
+</div>
+
+<script>
+    require(['prototype'], function () {
+
+//<![CDATA[
+        var sendEmailCheckbox = $('send_confirmation');
+        if (sendEmailCheckbox) {
+            Event.observe(sendEmailCheckbox, 'change', notifyCustomerUpdate);
+            notifyCustomerUpdate();
+        }
+
+        function notifyCustomerUpdate() {
+            var sendEmailCheckbox = $('send_confirmation');
+            var notifyCustomerCheckbox = $('notify_customer');
+            if (!sendEmailCheckbox || !notifyCustomerCheckbox)
+                return;
+            notifyCustomerCheckbox.disabled = !sendEmailCheckbox.checked;
+        }
+
+//]]>
+
+        window.notifyCustomerUpdate = notifyCustomerUpdate;
+        window.sendEmailCheckbox = sendEmailCheckbox;
+
+    });
+</script>

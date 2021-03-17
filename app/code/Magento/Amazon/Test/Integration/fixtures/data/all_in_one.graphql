@@ -1,0 +1,102 @@
+{
+    uuids: stores {
+        uuid
+    }
+    allStores: stores {
+        xx: id
+        uuid
+        created
+        updated
+        marketplace {
+            countryCode
+            currency
+            name
+            region
+        }
+        listings {
+            active
+            inactive
+            incomplete
+            inProgress
+        }
+        reports {
+            lifetime
+            week: revenue(days: 7, filterEmpty: true) {
+                date
+                revenue
+            }
+            month: revenue(days: 30, filterEmpty: true) {
+                date
+                revenue
+            }
+        }
+        magentoWebsite {
+            id
+            name
+            code
+        }
+    }
+    heartbeat
+    magentoSettings {
+        adminSessionLifetime
+    }
+    marketplaces {
+        countryCode
+        name
+        currency
+        region
+    }
+    zzzUrl: magentoUrl(route: "ZZZZZ", params: "{\"x\": 123}", query: "{\"aaa\": 333}")
+    qqqUrl: magentoUrl(route: "qq", params: "{\"x\": 123}", query: "{\"aaa\": 333}", urlFragment: "eeee")
+    ordersStore: store(uuid: "authentication_pending_account") {
+        id
+        uuid
+        basicOrders: orders {
+            edges {
+                node {
+                    purchaseDate
+                }
+                cursor
+            }
+            totalCount
+            pageInfo {
+                endCursor
+                hasNextPage
+            }
+        }
+        filterByTotal: orders(filters: [{field: "total", gt: 0.1, lt: 2, operator: AND}]) {
+            edges {
+                node {
+                    total
+                }
+                cursor
+            }
+            totalCount
+        }
+        limit: orders(first: 1) {
+            edges {
+                node {
+                    orderId
+                }
+            }
+            totalCount
+            pageInfo {
+                hasNextPage
+            }
+        }
+        sort: orders(sortBy: {field: "total"}) {
+            edges {
+                node {
+                    total
+                }
+            }
+        }
+        reports {
+            lifetime
+            revenue(days: 7) {
+                date
+                revenue
+            }
+        }
+    }
+}

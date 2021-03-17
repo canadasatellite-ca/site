@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="mageants" translate="label" sortOrder="10">
+            <label>Mageants Extension</label>
+       </tab>
+        <section id="alsobought_section" translate="label" sortOrder="300" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Customer Also Bought</label>
+            <tab>mageants</tab>
+            <resource>Mageants_AlsoBought::config</resource>
+                <group id="slider_settings" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Slider Settings</label>
+
+                    <field id="slider_loop" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Enable Loop</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\Loop</source_model>
+                    </field>
+
+                    <field id="slider_nav" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display Navigation</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\Loop</source_model>
+                    </field>
+
+                    <field id="slider_dots" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display Dots</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\Loop</source_model>
+
+                    </field>
+
+                    <field id="slider_items" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Number of product items in slider</label>
+                    </field>
+                </group>
+                <group id="alsobought_product" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product Settings</label>
+
+                    <field id="alsobought_product_display" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Module Enable</label>
+                            <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+
+                    <field id="alsobought_product_title" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Block Title</label>
+                        <depends>
+                            <field id="alsobought_section/alsobought_product/alsobought_product_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_product_position" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Block Position</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\Position</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_product/alsobought_product_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_product_layout" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Block Layout</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\Layout</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_product/alsobought_product_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_product_catalog" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display Random Product from Same Category</label>
+                        <comment>If who also bought product are empty then we can display random products from same category</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_product/alsobought_product_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_product_product_count" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Max Products to Display</label>
+                        <depends>
+                            <field id="alsobought_section/alsobought_product/alsobought_product_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_product_cart_button" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display "Add to Cart" Button	</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_product/alsobought_product_display">1</field>
+                        </depends>
+                    </field>
+                </group>
+                <group id="alsobought_cart" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Cart Settings</label>
+
+                    <field id="alsobought_cart_display" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Module Enable</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    </field>
+
+                    <field id="alsobought_cart_title" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Block Title</label>
+                        <depends>
+                            <field id="alsobought_section/alsobought_cart/alsobought_cart_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_cart_position" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Block Position</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\CartPosition</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_cart/alsobought_cart_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_cart_layout" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Block Layout</label>
+                        <source_model>Mageants\AlsoBought\Model\Source\Layout</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_cart/alsobought_cart_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_cart_catalog" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display Random Product from Same Category</label>
+                        <comment>If who also bought product are empty then we can display random products from same category</comment>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_cart/alsobought_cart_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_cart_product_count" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Max Products to Display</label>
+                        <depends>
+                            <field id="alsobought_section/alsobought_cart/alsobought_cart_display">1</field>
+                        </depends>
+                    </field>
+
+                    <field id="alsobought_cart_cart_button" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                        <label>Display "Add to Cart" Button	</label>
+                        <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                        <depends>
+                            <field id="alsobought_section/alsobought_cart/alsobought_cart_display">1</field>
+                        </depends>
+                    </field>
+                </group>
+        </section>
+    </system>
+</config>

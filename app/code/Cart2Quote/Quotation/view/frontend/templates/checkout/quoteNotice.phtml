@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/** @var \Cart2Quote\Quotation\Block\Checkout\QuoteNotice $block */ ?>
+<?php if ($block->getQuote()->getItemsCount() > 0) : ?>
+    <p>
+        <?php echo __(
+            'Click <a href="%1">here</a> to view the <b>%2</b> product(s) in your quotation cart.',
+            $block->getLinkToQuote(),
+            $block->getQuote()->getItemsCount()
+        ) ?>
+    </p>
+<?php endif; ?>

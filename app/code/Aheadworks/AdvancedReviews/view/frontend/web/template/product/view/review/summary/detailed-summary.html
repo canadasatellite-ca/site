@@ -1,0 +1,12 @@
+<div class="detailed-summary">
+    <div class="rating-values-statistics">
+        <fastForEach args="data: getDetailedSummaryData(), as: 'detailedSummaryDataRow'" >
+            <div css="_active: $parent.isSelected(value)" class="rating-value-row" click="$parent.apply.bind($parent, detailedSummaryDataRow.value)">
+                <span class="rating-value-label" text="$parent.getRatingLabel(detailedSummaryDataRow)"/>
+                <span class="rating-bar"><span class="progress-bar" data-bind="style: { width: $parent.getRatingReviewsPercent(detailedSummaryDataRow)+'%'  }"></span></span>
+                <span class="rating-value-reviews-count" text="$parent.getRatingReviewsCount(detailedSummaryDataRow)"/>
+                <span class="rating-value-reviews-percent" text="'(' + $parent.getRatingReviewsPercent(detailedSummaryDataRow) + '%)'"/>
+            </div>
+        </fastForEach>
+    </div>
+</div>

@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var Cart2Quote\Quotation\Block\Quote\Item\Renderer\DefaultRenderer $block */ ?>
+<?php if (!$block->isProductRemarkDisabled()) : ?>
+    <div class="control comment" data-mage-init='{"collapsible":{"openedState": "active", "saveState": false}}'>
+        <a href="#" data-role="title" onclick="return false"><?php echo $block->escapeHtml(__('Enter your product comment')) ?></a>
+        <textarea id="quote-<?php echo $block->escapeHtml($block->getQuoteItem()->getId()); ?>-description"
+                  name="cart[<?php echo $block->escapeHtml($block->getQuoteItem()->getId()); ?>][description]"
+                  title="Description"
+                  placeholder="<?php echo $block->escapeHtml(__('Enter your comments at any time.')) ?>"
+                  class="input-text quotation-product-comment"
+                  data-role="content"
+                  maxlength="1024" disabled
+                  data-mage-init='{"productUpdater":{
+                        "itemId": <?php echo $block->escapeHtml($block->getQuoteItem()->getId()); ?>,
+                        "sessionProductKey": "description"
+               }}'></textarea>
+    </div>
+<?php endif; ?>

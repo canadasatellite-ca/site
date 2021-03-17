@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Request\Button\QuickQuote $block */
+?>
+<?php $buttonTitle = __('Request Quote'); ?>
+<?php if ($block->showButton() && !$block->showMessageNotLoggedIn()) : ?>
+    <button type="submit"
+            title="<?php echo $block->escapeHtml($buttonTitle) ?>"
+            class="action primary toquote disabled product-addtoquote-button"
+            id="product-addtoquote-button">
+        <span><?php echo $block->escapeHtml($buttonTitle) ?></span>
+    </button>
+    <?php echo $block->getModalHtml('addtoquote.quickquote.modal'); ?>
+<?php elseif ($block->showMessageNotLoggedIn()) : ?>
+    <button id="product-addtoquote-button"
+            class="action secondary toquote product-addtoquote-button"
+            disabled="disabled">
+        <span><?php echo $block->escapeHtml(__('Login to Request Quote')); ?></span>
+    </button>
+<?php endif; ?>

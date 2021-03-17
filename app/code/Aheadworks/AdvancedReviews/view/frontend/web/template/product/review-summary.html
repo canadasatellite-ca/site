@@ -1,0 +1,6 @@
+<div class="aw-advanced-reviews-summary-container" data-bind="css: isShortView() ? 'summary-short' : 'summary-full'">
+    <!-- ko if: statisticsData.reviewsCount -->
+        <!-- ko template: {name: ratingTmpl, data: {value: statisticsData.ratingValue, title: statisticsData.ratingTitle}} --><!-- /ko -->
+    <!-- /ko -->
+    <!-- ko template: {name: actionsTmpl} --><!-- /ko -->
+</div>

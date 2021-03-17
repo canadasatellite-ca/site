@@ -1,0 +1,26 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php
+/**
+ * @var \Cart2Quote\Quotation\Block\Proposal\Reject $block
+ */
+$quotationHelper = $block->getQuotationHelper();
+?>
+<?php if ($quotationHelper->canAccept($block->getQuote()) && $block->showCheckoutButton()) : ?>
+    <div class="quote main actions clearfix">
+        <?php if ($block->getIsRejectProposalEnabled()) : ?>
+            <button
+                    type="button"
+                    value="reject_proposal"
+                    title="Reject Proposal"
+                    class="action secondary cart2quote-reject-btn"
+                    onclick="window.location.href='<?php echo $block->getRejectUrl(); ?>'">
+                <span><?php echo $block->escapeHtml(__('Reject Proposal')) ?></span>
+            </button>
+        <?php endif; ?>
+    </div>
+<?php endif; ?>

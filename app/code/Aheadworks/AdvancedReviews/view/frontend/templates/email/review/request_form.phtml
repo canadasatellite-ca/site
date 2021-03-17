@@ -1,0 +1,157 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\AdvancedReviews\Block\Email\Review\RequestForm */
+?>
+<?php /** @var $_order \Magento\Sales\Model\Order */ $_order = $block->getOrder(); ?>
+<?php if ($_order): ?>
+    <?php
+    $items = $_order->getAllVisibleItems();
+    $ratingOptions = $block->getRatingValues();
+    $optionsCount = count($ratingOptions);
+    $recommendOptions = $block->getProductRecommendValues();
+    ?>
+    <?php $ratingOptions = $block->getRatingValues(); $test = 5; ?>
+    <div style="width:100%;padding:10px 0 20px 0;height:auto;min-height:360px" class="review-email-form-wrapper">
+        <!--[if !mso]><!-- -->
+        <form accept-charset="UTF-8" action="<?= $block->escapeUrl($block->getReviewPostUrl()); ?>" method="post" target="_blank">
+            <table width="100%">
+                <tr>
+                    <td><div style="display: block; font-weight: 700; font-size: 14px; color: #555555;"><?= /* @escapeNotVerified */ __('Choose a product to review:')?></div></td>
+                </tr>
+                <div class="order-items-container" style="margin-top: 10px;">
+                    <?php /** @var $item \Magento\Sales\Api\Data\OrderItemInterface */ ?>
+                    <?php foreach ($items as $item): ?>
+                        <tr>
+                            <td>
+                                <div style="margin-bottom: 20px; overflow: hidden;">
+                                    <input name="order_item_id" type="radio" style="margin-top: 4px; float: left;" value="<?= /* @escapeNotVerified */ $item->getItemId(); ?>" <?= /* @escapeNotVerified */ (count($items) == 1) ? 'checked' : '' ?>>
+                                    <label for="order_item_id" style="width:95%; display: inline-block; vertical-align: middle;">
+                                        <span><?= /* @escapeNotVerified */ $block->getProductName($item->getProductId()) . ' (' . $item->getSku() . ')'; ?></span>
+                                    </label>
+                                </div>
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                </div>
+                <tr>
+                    <td><div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;"><?= /* @escapeNotVerified */ __('How would you rate it:')?></div></td>
+                </tr>
+                <?php foreach ($ratingOptions as $ratingOption): ?>
+                <tr>
+                    <td>
+                        <span style="display:block; margin-bottom: 3px;">
+                            <input name="rating" type="radio" style="margin-top: 0; display: inline-block; vertical-align: middle;" value="<?= /* @escapeNotVerified */ $ratingOption['value'] ?>" <?= /* @escapeNotVerified */ ($optionsCount == 5) ? 'checked' : '' ?>>
+                            <label for="rating" style="display: inline-block; vertical-align: middle;">
+                                <span style="font-size: 18px; color: #ff5501;"><?= /* @escapeNotVerified */ str_repeat('★', $optionsCount--); ?></span>
+                            </label>
+                        </span>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
+            </table>
+            <br />
+            <table width="100%" style="margin-top: 5px;">
+                <tr>
+                    <td width="100%">
+                        <table cellspacing="0" cellpadding="0" border="0" style="width:100%">
+                            <tr>
+                                <td><div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;"><?= /* @escapeNotVerified */ __('Your nickname (as it will be displayed on our site):')?></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" name="nickname" style="height: 31px; padding: 0 4px; border-radius: 0;box-shadow: none;width: 100%;margin-bottom: 10px; display: block; max-width: 440px; height: 31px;" value="<?= /* @escapeNotVerified */ $_order->getCustomerFirstname(); ?>"><br>
+                                </td>
+                            </tr>
+                            <?php if ($block->isNeedToAddProsAndConsFields($block->getCurrentWebsiteId())): ?>
+                                <tr>
+                                    <td width="100%">
+                                        <div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;">
+                                            <?= /* @escapeNotVerified */ __('Advantages:')?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <textarea name="pros" cols="40" rows="5" style="border-radius: 0;box-shadow: none;width: 100%;margin-bottom: 10px; display: block; max-width: 440px;" placeholder="<?= /* @escapeNotVerified */ __('Tell others what you like about the product')?>"></textarea>
+                                        <br>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td width="100%">
+                                        <div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;">
+                                            <?= /* @escapeNotVerified */ __('Disadvantages:')?>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <textarea name="cons" cols="40" rows="5" style="border-radius: 0;box-shadow: none;width: 100%;margin-bottom: 10px; display: block; max-width: 440px;" placeholder="<?= /* @escapeNotVerified */ __('Tell others what you don\'t like about the product')?>"></textarea>
+                                        <br>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
+                            <tr>
+                                <td width="100%">
+                                    <div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;">
+                                        <?= /* @escapeNotVerified */ $block->isNeedToAddProsAndConsFields($block->getCurrentWebsiteId()) ? __('Your comment:') : __('Your review:')?>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <textarea name="content" cols="40" rows="5" style="border-radius: 0;box-shadow: none;width: 100%;margin-bottom: 10px; display: block; max-width: 440px;" placeholder="<?= /* @escapeNotVerified */ $block->isNeedToAddProsAndConsFields($block->getCurrentWebsiteId()) ? __('Add any other thoughts which you want to share with others') : __('Share your thoughts about the product')?>"></textarea>
+                                    <br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;"><?= /* @escapeNotVerified */ __('Short summary:')?></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="text" name="summary" style="padding: 0 4px; border-radius: 0;box-shadow: none;width: 100%;margin-bottom: 10px; display: block; max-width: 440px; height: 31px;"><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><div style="display: block; margin-bottom: 5px; font-weight: 700; font-size: 14px; color: #555555;"><?= /* @escapeNotVerified */ __('Do you recommend this product?')?></div></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select name="product_recommended"style="border-radius: 0;box-shadow: none;width: 100%;margin-bottom: 10px; display: block; max-width: 448px; height: 31px;">
+                                        <?php foreach ($recommendOptions as $recommendOption): ?>
+                                            <option value="<?= /* @escapeNotVerified */ $recommendOption['value'] ?>"><?= /* @escapeNotVerified */ $recommendOption['label'] ?></option>
+                                        <?php endforeach; ?>
+                                    </select><br>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="<?= /* @escapeNotVerified */ __('Submit Review')?>" style="margin-top: 20px;background-color: #ff5501;border: none;font-size: 15px;padding: 0;height: 40px;width: 200px;text-align: center; color: #ffffff; border-radius: 3px;">
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </form>
+        <!--<![endif]-->
+        <!--[if mso]>
+        <p><?= /* @escapeNotVerified */ __('The items you purchased may be found here:') ?></p>
+        <ul>
+            <?php /** @var $item \Magento\Sales\Api\Data\OrderItemInterface */ ?>
+            <?php foreach ($items as $item): ?>
+            <?php $productUrl=$block->getProductReviewUrl($item->getProductId()) ?>
+                <li>
+                    <?= /* @escapeNotVerified */ $item->getQtyOrdered() ?> x <a href="<?= $block->escapeUrl($productUrl) ?>"><?= /* @escapeNotVerified */ $block->getProductName($item->getProductId()) ?></a>
+                </li>
+            <?php endforeach; ?>
+        </ul>
+        <p><?= /* @escapeNotVerified */ __('We’d appreciate it if you found the time to leave a review and we hope that you choose %1 for your future purchases!', $_order->getStore()->getGroup()->getName()); ?></p>
+        <![endif]-->
+    </div>
+<?php endif; ?>

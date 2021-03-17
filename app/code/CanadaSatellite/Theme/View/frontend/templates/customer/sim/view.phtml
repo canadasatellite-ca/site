@@ -1,0 +1,14 @@
+<?php
+/** @var CanadaSatellite\Theme\Block\Customer\Sim\View $block */
+?>
+
+<div class="customer-ticket view">
+    <?php echo $block->getChildHtml()?>
+</div>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?php echo $block->getBackUrl() ?>">
+            <span><?php echo __("Back to My SIM List") ?></span>
+        </a>
+    </div>
+</div>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="aw_advanced_reviews_email_admin_template" label="AW Advanced Reviews - Email new review created"
+              file="admin_new_review.html" type="html" module="Aheadworks_AdvancedReviews" area="frontend"/>
+    <template id="aw_advanced_reviews_email_reminder_template" label="AW Advanced Reviews - Email review reminder"
+              file="review_reminder.html" type="html" module="Aheadworks_AdvancedReviews" area="frontend"/>
+    <template id="aw_advanced_reviews_email_review_approved_template" label="AW Advanced Reviews - Email review approved"
+              file="review_approved.html" type="html" module="Aheadworks_AdvancedReviews" area="frontend"/>
+    <template id="aw_advanced_reviews_email_review_comment_template" label="AW Advanced Reviews - Email review comment"
+              file="review_comment.html" type="html" module="Aheadworks_AdvancedReviews" area="frontend"/>
+    <template id="aw_advanced_reviews_email_template_for_abuse_report" label="AW Advanced Reviews - Email for abuse report"
+              file="admin_abuse_report.html" type="html" module="Aheadworks_AdvancedReviews" area="frontend"/>
+    <template id="aw_advanced_reviews_email_template_for_critical_review_alert" label="AW Advanced Reviews - Email for critical review alert"
+              file="admin_critical_review_alert.html" type="html" module="Aheadworks_AdvancedReviews" area="frontend"/>
+    <template id="aw_advanced_reviews_email_admin_new_comment_template"
+              label="AW Advanced Reviews - Email new comment created"
+              file="admin_new_comment.html"
+              type="html"
+              module="Aheadworks_AdvancedReviews"
+              area="frontend"/>
+</config>

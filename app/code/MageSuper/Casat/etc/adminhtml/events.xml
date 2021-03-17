@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="core_abstract_save_before">
+        <observer instance="MageSuper\Casat\Observer\CoreAbstractModelSaveBefore" name="magesuper_casat_core_abstract_save_before"/>
+    </event>
+    <event name="purchaseordersuccess_purchaseorder_save_before">
+        <observer instance="MageSuper\Casat\Observer\PurchaseorderSaveBefore" name="magesuper_casat_PurchaseorderSaveBefore"/>
+    </event>
+    <event name="controller_action_predispatch_catalog_product_attribute_save">
+        <observer instance="MageSuper\Casat\Observer\NewAttribute" name="magesuper_casat_newattribute"/>
+    </event>
+    <event name="sales_order_status_history_save_before">
+        <observer instance="MageSuper\Casat\Observer\StatusHistory" name="magesuper_casat_sales_order_status_history_save_before"/>
+    </event>
+</config>

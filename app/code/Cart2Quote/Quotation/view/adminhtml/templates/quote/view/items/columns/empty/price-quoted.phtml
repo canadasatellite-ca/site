@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Columns\PriceQuoted $block */
+if ($block->getTierItem()) {
+    $priceDataObject = $block->getTierItem();
+    $htmlId = 'tier_item_custom_price_new_' . $priceDataObject->getId();
+} else {
+    $priceDataObject = $block->getItem();
+    $htmlId = 'custom_price_' . $priceDataObject->getId();
+}
+
+$baseCustomPrice = $block->getPriceWithCorrectTax($priceDataObject->getBaseCustomPrice());
+$customPrice = $block->getPriceWithCorrectTax($priceDataObject->getCustomPrice());
+$minPrice = $block->getMinPrice();
+?>
+<div class="tier-item">
+    <div class="tier-item-price">
+        <?php if ($block->getQuote()->isCurrencyDifferent()) : ?>
+            <div class="price" data-mage-init='{"currency":{"inputSelector": "<?php echo $block->escapeHtml($htmlId) ?>"}}'>
+                <?php echo $block->getQuote()->formatBasePricePrecision(
+                    $baseCustomPrice,
+                    2
+                ) ?>
+            </div>
+            <br/>
+        <?php endif; ?>
+        <input id="<?php echo $block->escapeHtml($htmlId) ?>"
+               name="item[<?php echo $block->getItemId() ?>][tier_item][%template%][%increment%][custom_price]"
+               value="<?php echo $block->escapeHtml(sprintf("%.2f", $customPrice)) ?>"
+               class="input-text item-price admin__control-text"
+               data-minprice="<?php echo $block->escapeHtml($minPrice) ?>"
+               data-mage-init='{"priceQuoted":{}}'/>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */ ?>
+<?php $item = $block->getItem() ?>
+<tr style="<?php echo $block->getEmpty() ? 'display: none; ' : '' ?>"
+    class="quote-item-row <?php echo $block->escapeHtml($block->getSelectedTierClass()) ?>"
+    id="<?php echo $block->escapeHtml($block->getEmpty()) ?
+        'quote-item-tier-row-empty-' . $block->escapeHtml($block->getItem()->getId()) :
+        'quote-item-tier-row-' . $block->escapeHtml($block->getItem()->getTierItem()->getId()) ?>">
+    <?php if ($item->getIsFirstTierItem()) : ?>
+        <td style="padding: 1rem 1rem;" class="a-left col-sort-order ">
+            <span aria-hidden="true" class="abs-draggable-handle"></span>
+        </td>
+    <?php else : ?>
+        <td></td>
+    <?php endif; ?>
+    <?php $i = 0;
+    $columns = $block->getColumns();
+    $lastItemNumber = count($columns) ?>
+    <?php foreach ($columns as $columnName => $columnClass) : ?>
+        <?php $i++; ?>
+        <?php if ($item->getIsFirstTierItem() || $block->isTierColumn($columnName)) : ?>
+            <?php if (!$block->getEmpty()) : ?>
+                <td <?php echo $block->getRowSpan($columnName) ?>
+                        class="<?php echo $block->isTierColumn($columnName) ?
+                            'quote-item-row-tier' : 'quote-item-row-non-tier' ?> <?php
+                        echo $block->escapeHtml($columnClass) ?> <?php
+                        echo($i === $lastItemNumber ? ' last' : '') ?>">
+                    <?php echo $block->getColumnHtml($item, $columnName) ?>
+                </td>
+            <?php else : ?>
+                <td class="quote-item-row-small <?php echo $block->escapeHtml($columnClass) ?> <?php
+                echo($i === $lastItemNumber ? ' last' : '') ?>">
+                    <?php echo $block->getEmptyColumnHtml($item, $columnName) ?>
+                </td>
+            <?php endif; ?>
+        <?php endif; ?>
+    <?php endforeach; ?>
+</tr>
+<?php $block->setEmpty(false); ?>

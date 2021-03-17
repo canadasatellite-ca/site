@@ -1,0 +1,94 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var Cart2Quote\Quotation\Block\Quote\Email\Items $block */
+?>
+<?php
+$quote = $block->getQuote();
+?>
+<?php if ($quote) : ?>
+    <table class="email-items">
+        <?php foreach ($block->getSections() as $section) : ?>
+            <?php $sectionsItems = $block->getQuote()->getSectionItems($section->getSectionId()); ?>
+            <?php if (!empty($sectionsItems)) : ?>
+                <thead>
+                <?php if (!empty($section->getLabel())) : ?>
+                    <tr class="section-heading">
+                        <th colspan="5">
+                            <h2><b><?php echo $block->escapeHtml($section->getLabel()); ?></b></h2>
+                        </th>
+                    </tr>
+                <?php endif; ?>
+                <tr>
+                    <th class="item-info" colspan="2">
+                        <?php echo $block->escapeHtml(__('Items')); ?>
+                    </th>
+                    <th class="item-qty">
+                        <?php echo $block->escapeHtml(__('Qty')); ?>
+                    </th>
+                    <th class="item-price">
+                        <?php echo $block->escapeHtml(__('Quoted Price')); ?>
+                    </th>
+                    <th class="item-price">
+                        <?php echo $block->escapeHtml(__('Row Total')); ?>
+                    </th>
+                </tr>
+                <?php if ($quote->hasOptionalItems()) : ?>
+                    <tr>
+                        <th colspan="5">
+                            <span style="font-weight:normal; font-size:smaller;">
+                                <?php echo $block->escapeHtml(__('Products with * are optional')) ?>
+                            </span>
+                        </th>
+                    </tr>
+                <?php endif; ?>
+                </thead>
+                <?php foreach ($sectionsItems as $item) : ?>
+                    <?php if ($item->getParentItem()) : ?>
+                        <?php continue; ?>
+                    <?php endif; ?>
+                    <tbody>
+                    <?php echo $block->getItemHtml($item) ?>
+                    </tbody>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <tfoot class="order-totals">
+        <?php echo $block->getChildHtml('quote_totals') ?>
+        </tfoot>
+    </table>
+    <?php if ($block->getGiftMessageHelper()->isMessagesAllowed(
+        'quote',
+        $quote,
+        $quote->getStore()
+    ) && $quote->getGiftMessageId()
+    ) : ?>
+        <?php
+        $giftMessage = $block->getGiftMessageHelper()->getGiftMessage($quote->getGiftMessageId()); ?>
+        <?php if ($giftMessage) : ?>
+            <br/>
+            <table class="message-gift">
+                <tr>
+                    <td>
+                        <h3><?php echo $block->escapeHtml(__('Gift Message for this Quote')) ?></h3>
+                        <strong>
+                            <?php echo $block->escapeHtml(__('From:')); ?>
+                        </strong>&nbsp;<?php echo $block->escapeHtml($giftMessage->getSender()) ?>
+                        <br/>
+                        <strong>
+                            <?php echo $block->escapeHtml(__('To:')); ?>
+                        </strong>&nbsp;<?php echo $block->escapeHtml($giftMessage->getRecipient()) ?>
+                        <br/><strong>
+                            <?php echo $block->escapeHtml(__('Message:')); ?>
+                        </strong>
+                        <br/><?php echo $block->escapeHtml($giftMessage->getMessage()) ?>
+                    </td>
+                </tr>
+            </table>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

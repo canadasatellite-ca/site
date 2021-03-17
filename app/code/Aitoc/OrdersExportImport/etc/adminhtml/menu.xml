@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Aitoc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Aitoc_OrdersExportImport::export_profiles"
+             toolTip="Aitoc Extension"
+             title="Aitoc Export Orders"
+             module="Aitoc_OrdersExportImport"
+             parent="Magento_Integration::system_extensions"
+             action="ordersexportimport/profile"
+             resource="Aitoc_OrdersExportImport::manage"/>
+        <add id="Aitoc_OrdersExportImport::export_history"
+             toolTip="Aitoc Extension"
+             title="Aitoc Export Files"
+             module="Aitoc_OrdersExportImport"
+             parent="Magento_Integration::system_extensions"
+             action="ordersexportimport/export"
+             resource="Aitoc_OrdersExportImport::export_history"/>
+        <add id="Aitoc_OrdersExportImport::import_history"
+             toolTip="Aitoc Extension"
+             title="Aitoc Import Orders"
+             module="Aitoc_OrdersExportImport"
+             parent="Magento_Integration::system_extensions"
+             action="ordersexportimport/import"
+             resource="Aitoc_OrdersExportImport::import_history"/>
+    </menu>
+</config>

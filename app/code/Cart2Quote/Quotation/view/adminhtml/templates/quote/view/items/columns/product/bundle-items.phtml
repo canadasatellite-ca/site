@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */
+?>
+
+<?php if ($block->getItem()->getProductType() == \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) : ?>
+    <dl class="item-options">
+        <dt><?php echo __('Configuration: ') ?></dt>
+        <?php foreach ($block->getItem()->getChildren() as $child) : ?>
+            <?php $block->setPriceDataObject($child->getCurrentTierItem()); ?>
+            <?php $childProduct = $block->productRepositoryInterface->getById($child->getProductId(), false, $child->getStoreId()); ?>
+            <dt>
+                <?php echo sprintf('%s - ', $childProduct->getName()); ?>
+            </dt>
+            <dd>
+                <?php echo sprintf(
+                    '(%s x %s)',
+                    $child->getQty(),
+                    $block->displayPriceAttribute('custom_price')
+                ) ?>
+            </dd>
+        <?php endforeach; ?>
+    </dl>
+<?php endif; ?>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="quotation_quickquote_modal"/>
+    <head>
+        <css src="Cart2Quote_Quotation::css/quick-quote.css"/>
+    </head>
+    <body>
+        <referenceBlock name="category.products.list">
+            <action method="setTemplate" ifconfig="cart2quote_quotation/global/show_btn_list">
+                <argument name="template" xsi:type="string">Cart2Quote_Quotation::product/list.phtml</argument>
+            </action>
+            <block class="Cart2Quote\Quotation\Block\Quote\Request\FormContainer" name="catalog.product.list.form.container" as="product_list_form.container">
+                <arguments>
+                    <argument name="blockChildAlias" xsi:type="string">product_list_form</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

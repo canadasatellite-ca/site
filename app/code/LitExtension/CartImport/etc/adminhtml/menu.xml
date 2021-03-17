@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="LitExtension_CartImport::leci" title="Cart Import" module="LitExtension_CartImport" sortOrder="20" parent="LitExtension_Core::le" resource="LitExtension_CartImport::leci"/>
+        <add id="LitExtension_CartImport::leci_process" title="Import" module="LitExtension_CartImport" sortOrder="10" parent="LitExtension_CartImport::leci" action="leci/index/" resource="LitExtension_CartImport::leci_process"/>
+        <add id="LitExtension_CartImport::leci_config" title="Configuration" module="LitExtension_CartImport" sortOrder="20" parent="LitExtension_CartImport::leci" action="adminhtml/system_config/edit/section/leci" resource="LitExtension_CartImport::leci_config"/>
+    </menu>
+</config>

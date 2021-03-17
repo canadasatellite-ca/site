@@ -1,0 +1,61 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+
+<div class="file-upload-container">
+    <div class="step-title"><?php echo __('Upload files to quote request') ?></div>
+    <form class="import-ftp-form"
+          action="<?= $block->getPostUrl(); ?>"
+          method="POST"
+          enctype="multipart/form-data"
+          data-mage-init='{"fileUploader":{}}'>
+        <?php echo $block->getBlockHtml('formkey'); ?>
+        <div id="fileUpload" class="clearfix">
+            <div class="upload-header">
+                <p><?php echo __('Title') ?></p>
+                <p><?php echo __('File') ?></p>
+            </div>
+            <div class="upload-row clearfix">
+                <div class="upload-row-title">
+                    <input type="text" name="title_0"/>
+                </div>
+                <div class="upload-row-file">
+                    <input type="file" required class="required-entry" name="fileupload_0"/>
+                </div>
+            </div>
+        </div>
+
+        <ul onclick="newUploadRow()">
+            <li>
+                <span>
+                    <button type="button"><?php echo __('Add another file') ?></button>
+                </span>
+            </li>
+        </ul>
+        <ul class="uploaded-files">
+            <?php $uploadedFiles = $block->getUploadedFiles(); ?>
+            <?php if (is_array($uploadedFiles)) : ?>
+                <?php foreach ($uploadedFiles as $file) : ?>
+                    <?php $params = 'file/' . $file['file']; ?>
+                    <?php echo sprintf(
+                        '<li><a class="action action-delete" href="%s%s"><i class="icon-c2q_dustbin"></i>%s</a></li>',
+                        $block->getRemoveUrl(),
+                        $params,
+                        $file['file']
+                    ); ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        </ul>
+        <div class="messages upload-message">
+            <div class="message-info info message">
+                <div><?php echo __('Click the "Upload" button to add your file(s) to this quote request.') ?></div>
+            </div>
+        </div>
+        <button type="submit" class="action upload secondary"><span><span><?php echo __('Upload') ?></span></span>
+        </button>
+    </form>
+</div>

@@ -1,0 +1,153 @@
+<?php
+	$_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
+	$_persistentSession = $this->helper('Magento\Persistent\Helper\Session');
+
+    $registerParam = $block->getRequest()->getParam('register');
+    if ($registerParam || $registerParam === '') :
+?>
+    <script type="text/javascript">
+    	require([
+    		'jquery'
+    	], function($) {
+    		//<![CDATA[
+    			$(document).ready(function() {
+    				if ($('#login:register')) {
+		                $('#login:register').checked = true;
+		                checkout.setMethod();
+		            }
+    			});
+		    //]]>
+    	});
+    </script>
+<?php endif; ?>
+
+<div id="co-billing-form">
+	<ul class="form-list">
+		<?php if ($block->customerHasAddresses() && $_dataHelper->showAddressBook()): ?>
+			<li class="wide">
+				<label for="billing-address-select"><?php echo __('Select a billing address from your address book or enter a new address.') ?></label>
+				<div class="input-box">
+					<?php echo $block->getAddressesHtmlSelect('billing') ?>
+				</div>
+			</li>
+		<?php endif; ?>
+
+		<li id="billing-new-address-form">
+			<input type="hidden" name="billing[address_id]" value="<?php echo $block->getAddress()->getId() ?>" id="billing:address_id" />
+
+			<ul>
+				<div id="mw_onstepcheckout_billing_form">
+					<?php echo $block->getChildHtml('sortbilling');?>
+				</div>
+
+				<div style="clear:both;margin-top:5px;"></div>
+
+				<?php if (!$block->isCustomerLoggedIn()): ?>
+					<?php
+						if ($_dataHelper->haveProductDownloadable() 
+							|| (!$_dataHelper->getStoreConfig('onestepcheckout/general/allowguestcheckout') 
+								|| !$_dataHelper->getStoreConfig('checkout/options/guest_checkout') 
+								|| $_persistentSession->isPersistent()) 
+							|| ($registerParam || $registerParam === '')) :
+					?>
+						<?php
+							if($_persistentSession->isPersistent() || ($registerParam || $registerParam === '')) :
+						?>
+							<input type="hidden" name="checkout_method" id="login:register" value="register"/>
+						<?php endif; ?>
+
+						<li class="fields" id="register-customer-password">
+							<div class="field">
+								<label for="billing:customer_password" class="required"><em>*</em><?php echo __('Password') ?></label>
+
+								<div class="input-box">
+									<input type="password" name="billing[customer_password]" id="billing:customer_password" title="<?php echo __('Password') ?>" class="input-text inputtext required-entry validate-password" />
+								</div>
+							</div>
+
+							<div class="field">
+								<label for="billing:confirm_password" class="required"><em>*</em><?php echo __('Confirm Password') ?></label>
+
+								<div class="input-box">
+									<input type="password" name="billing[confirm_password]" title="<?php echo __('Confirm Password') ?>" id="billing:confirm_password" class="input-text inputtext required-entry validate-cpassword" />
+								</div>
+							</div>
+						</li>
+					<?php elseif ($_dataHelper->getStoreConfig('onestepcheckout/general/allowregister')) : ?>
+						<div style="clear:both;"></div>
+
+						<?php
+							$createAccountConfig = (int) $_dataHelper->getStoreConfig('onestepcheckout/general/create_account');
+						?>
+						<li>
+							<?php
+								if ($createAccountConfig == 1) {
+									$attributes = 'checked="checked" value = "1"';
+								} else {
+									$attributes = 'value="0"';
+								}
+							?>
+						    <input type="checkbox" name="register_new_account" <?php echo $attributes ?> title="<?php echo __('register new account') ?>" id="register_new_account" class="checkbox">
+						    <label for="register_new_account" style="float:none;"><?php echo __('Create an account for later use') ?></label>
+						</li>
+
+						<?php
+							if ($createAccountConfig == 1) {
+								$attributes = 'style="display:block;"';
+							} else {
+								$attributes = 'style="display:none;"';
+							}
+						?>
+						<li class="fields" id="register-customer-password" <?php echo $attributes ?>>
+							<div class="field">
+								<label for="billing:customer_password" class="required"><em>*</em><?php echo __('Password') ?></label>
+
+								<div class="input-box">
+									<input type="password" name="billing[customer_password]" id="billing:customer_password" title="<?php echo __('Password') ?>" class="input-text inputtext required-entry validate-password" />
+								</div>
+							</div>
+							<div class="field">
+								<label for="billing:confirm_password" class="required"><em>*</em><?php echo __('Confirm Password') ?></label>
+								<div class="input-box">
+									<input type="password" name="billing[confirm_password]" title="<?php echo __('Confirm Password') ?>" id="billing:confirm_password" class="input-text inputtext required-entry validate-cpassword" />
+								</div>
+							</div>
+						</li>
+					<?php endif; ?>
+				<?php endif ?>
+
+				<?php
+					if ($block->isCustomerLoggedIn()) :
+				?>
+					<li class="control">
+						<input type="checkbox" style="z-index: 99" name="billing[save_in_address_book]" value="0" title="<?php echo __('Save in address book') ?>" id="billing:save_in_address_book" <?php if ($block->getAddress()->getSaveInAddressBook()):?> checked="checked"<?php endif;?> class="checkbox" />
+						<label for="billing:save_in_address_book"><?php echo __('Save in address book') ?></label>
+					</li>
+
+					<?php if($_dataHelper->getStoreConfig('onestepcheckout/general/save_into_account')): ?>
+						<li>
+							<input type="checkbox" name="billing[save_into_account]" value="0" title="<?php echo __('Save as account information') ?>" id="billing:save_into_account"  class="checkbox" />
+							<label for="billing:save_into_account"><?php echo __('Update account information') ?></label>
+						</li>
+					<?php endif; ?>
+				<?php else :?>
+					<li class="no-display">
+						<input type="hidden" name="billing[save_in_address_book]" value="1" />
+					</li>
+				<?php endif; ?>
+			</ul>
+		</li>
+
+		<li style="margin-top:-7px; clear: both">
+			<?php if ($_dataHelper->getStoreConfig('onestepcheckout/general/allowshippingotheraddress')) : ?>
+				<?php if (!$_dataHelper->onlyProductDownloadable()) : ?>
+					<input type="checkbox" name="ship_to_same_address"  value="1" title="<?php echo __('ship to same address') ?>" id="ship_to_same_address" class="checkbox" checked="checked"> <label for="ship_to_same_address" style="float:none;"><?php echo __('Ship to same address') ?></label>
+				<?php else: ?>
+					<input type="hidden" name="ship_to_same_address"  value="1" title="<?php echo __('ship to same address') ?>">
+				<?php endif; ?>
+			<?php else: ?>
+				<input type="hidden" name="ship_to_same_address"  value="1" title="<?php echo __('ship to same address') ?>">
+			<?php endif; ?>
+		</li>
+	</ul>
+</div>

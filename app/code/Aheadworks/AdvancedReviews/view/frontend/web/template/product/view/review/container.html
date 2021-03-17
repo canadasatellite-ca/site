@@ -1,0 +1,16 @@
+<div class="aw-ar-main" id="reviews">
+    <div data-role="container-header" class="container-header">
+        <div class="title">
+            <h2><span data-bind="text: title" /></h2>
+        </div>
+        <each args="getRegion('container-header')" render="getTemplate()"/>
+    </div>
+
+    <div data-role="container-body" class="container-body">
+        <each args="getRegion('container-body')" render="getTemplate()"/>
+    </div>
+
+    <div data-role="container-footer" class="container-footer">
+        <each args="getRegion('container-footer')" render="getTemplate()"/>
+    </div>
+</div>

@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\System\Config\Grid\AddressField $block
+ */
+?>
+<div id="<?php echo $block->getElement()->getHtmlId() ?>-address-grid"
+     data-bind="scope:'<?php echo $block->getElement()->getHtmlId() ?>-address-grid'"
+     class="address-grid">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "<?php echo $block->getElement()->getHtmlId() ?>-address-grid": {
+                            "component": "Cart2Quote_Quotation/js/system/config/grid/address",
+                            "data": <?php echo \Zend_Json::encode($block->getAddressGridConfig()); ?>,
+                            "id": "<?php echo $block->getElement()->getHtmlId() ?>-address-grid"
+                        }
+                    }
+                }
+            }
+        }
+    
+    </script>
+</div>

@@ -1,0 +1,28 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:helloworld:Magento_Widget:etc/widget.xsd">
+    <widget class="BroSolutions\VideoSlider\Block\Widget\VideoSlider" id="bro_video_slider">
+        <label>Bro Video Slider</label>
+        <description>Videos</description>
+        <parameters>
+            <parameter name="video_urls" sort_order="1" visible="true" xsi:type="text">
+                <label>Video Urls</label>
+                <description>Comma separated urls</description>
+            </parameter>
+            <parameter name="dots" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="2">
+                <label translate="true">Dots</label>
+            </parameter>
+            <parameter name="infinite" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="3">
+                <label translate="true">Infinite</label>
+            </parameter>
+            <parameter name="autoplay" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="4">
+                <label translate="true">Autoplay</label>
+            </parameter>
+            <parameter name="arrows" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="5">
+                <label translate="true">Arrows</label>
+            </parameter>
+            <parameter name="adaptiveHeight" xsi:type="select" visible="true" source_model="Magento\Config\Model\Config\Source\Yesno" sort_order="6">
+                <label translate="true">adaptiveHeight</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

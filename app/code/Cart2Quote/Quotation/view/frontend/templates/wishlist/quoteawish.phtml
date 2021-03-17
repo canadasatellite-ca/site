@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Wishlist\QuoteAWish $block */ ?>
+<?php if (!$block->isWishlistQuotable() && $block->checkForWishlistDisplayVariables()) : ?>
+    <form class="form-wishlist-items" action="<?php echo $block->escapeUrl($block->getUrl('quotation/quote')) ?>"
+          method="post">
+        <button
+                data-mage-init='{"quoteawish": {"notquoteable" : "#notquotable"} }'
+                id="notquotable"
+                type="button"
+                name="move_wishlist_to_quote"
+                value="move_to_quote"
+                title="<?php echo $block->escapeHtml(__('Request a Quote')); ?>"
+                class="action primary notquotable">
+            <span><?php echo $block->escapeHtml(__('Your Wish List is not Quotable')); ?></span>
+        </button>
+    </form>
+<?php endif; ?>
+<?php if ($block->isWishlistQuotable() && $block->checkForWishlistDisplayVariables()) : ?>
+    <form class="form-wishlist-items" action="<?php echo $block->escapeUrl($block->getUrl('quotation/quote')) ?>"
+          method="post">
+        <button
+                data-mage-init='{"quoteawish": {"quoteable" : "#quoteawish"} }'
+                id="quoteawish"
+                type="button"
+                name="move_wishlist_to_quote"
+                value="move_to_quote"
+                title="<?php echo $block->escapeHtml(__('Request a Quote')); ?>"
+                class="action primary quoteawish">
+            <span><?php echo $block->escapeHtml(__('Move Wish List to Quote')); ?></span>
+        </button>
+    </form>
+<?php endif; ?>

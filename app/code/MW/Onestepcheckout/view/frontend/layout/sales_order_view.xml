@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+		<referenceBlock name="sales.order.info" ifconfig="onestepcheckout/general/enabled">
+			<action method="setTemplate">
+				<argument name="template" xsi:type="string">MW_Onestepcheckout::sales/order/info.phtml</argument>
+			</action>
+	        <block class="MW\Onestepcheckout\Block\Sales\Info\Deliverydate" name="deliverydate" as="deliverydate" template="MW_Onestepcheckout::sales/order/info/deliverydate.phtml"/>
+	        <block class="MW\Onestepcheckout\Block\Sales\Info\Customermessages" name="customer_messages" as="customer_messages" template="MW_Onestepcheckout::sales/order/info/customermessages.phtml"/>
+		</referenceBlock>
+
+		<referenceBlock name="order_totals" ifconfig="onestepcheckout/general/enabled">
+			<block class="MW\Onestepcheckout\Block\Sales\Order\Giftwrap" name="giftwrap_amount" />
+		</referenceBlock>
+	</body>
+</page>

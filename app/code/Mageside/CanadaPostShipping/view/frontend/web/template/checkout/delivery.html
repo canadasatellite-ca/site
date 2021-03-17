@@ -1,0 +1,28 @@
+<if args="canDeliveryToPostOffice">
+<div class="canadapost-d2po-field-wrapper">
+    <div class="field">
+        <input type="checkbox"
+               class="checkbox"
+               value="1"
+               name="delivery_to_postoffice"
+               ko-checked="isD2poSelected"
+               ko-disabled="isD2poDisabled"
+               attr="id: uid"/>
+
+        <label class="label" translate="'Delivery to nearest post office.'" attr="for: uid"/>
+    </div>
+    <if args="isD2poSelected">
+        <if args="selectedOffice()">
+            <div class="selected-office-wrapper">
+                <strong class="address-element" text="selectedOffice().name"/>
+                <span class="address-element" text="selectedOffice().address + ','"/>
+                <span class="address-element" text="selectedOffice().city + ' ' + selectedOffice().region + ' ' + selectedOffice().postcode"/>
+                <button class="action secondary" click="changeOffice" type="button"
+                        attr="title: $t('Change post office')">
+                    <span translate="'Change post office'" />
+                </button>
+            </div>
+        </if>
+    </if>
+</div>
+</if>

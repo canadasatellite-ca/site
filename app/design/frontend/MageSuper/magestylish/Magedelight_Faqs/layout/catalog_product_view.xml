@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="product.main.container">
+            <block ifconfig='md_faq/general/enabled_product' class="CanadaSatellite\Theme\Block\Frontend\ReCaptcha"
+                   name="faq.block" template="Magedelight_Faqs::faqfrom.phtml">
+                <container name="faq.form.additional.info" label="Form Additional Info">
+                    <block class="Magento\Captcha\Block\Captcha" name="captcha" after="-">
+                        <action method="setFormId">
+                            <argument name="formId" xsi:type="string">faq_form</argument>
+                        </action>
+                        <action method="setImgWidth">
+                            <argument name="width" xsi:type="string">230</argument>
+                        </action>
+                        <action method="setImgHeight">
+                            <argument name="width" xsi:type="string">50</argument>
+                        </action>
+                    </block>
+                    <block class="CanadaSatellite\Theme\Block\Frontend\ReCaptcha" name="msp-recaptcha-faq-v3" after="-"
+                           template="CanadaSatellite_Theme::msp_recaptcha.phtml">
+                    </block>
+                </container>
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Q&amp;A</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceBlock name="faq.tab" remove="true"/>
+
+        <referenceContainer name="faq.form.additional.info">
+            <referenceBlock name="msp-recaptcha" remove="true"/>
+        </referenceContainer>
+
+    </body>
+</page>

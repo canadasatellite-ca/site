@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="general-info">
+    <div class="help-and-general-form">
+        <?= $block->escapeHtml(__('Eligible product listings that are ready to be published to Amazon.')) ?>
+    </div>
+    <div class="help-button">
+        <button type="button"
+                class="action-default"
+                onclick="window.open('<?= $block->getUserGuideUrl() . $block->getListingInProgressUrl() ?>', '_blank')"
+                id="helpButton" >
+            <span><?= $block->escapeHtml(__('View User Guide')) ?></span>
+        </button>
+    </div>
+</div>
+

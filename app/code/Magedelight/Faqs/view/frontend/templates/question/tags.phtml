@@ -1,0 +1,77 @@
+<?php
+$faqQuestions = $block->getQuestionData();
+//echo "<pre>"; print_r($faqQuestions->getData()); exit();
+$firstchaild = 1;
+//print_r($faqQuestion->getData());
+?>
+
+<div class="main-faqs-page-index-view">
+    <h3 class="faqcat-title" style="color: #3399cc" title="Tag  Paypal">Tag : <?php echo $this->getRequest()->getParam('tag') ?></h3>
+    <div class="panel-group question-list" id="accordion" >
+        <?php foreach ($faqQuestions as $faqQuestion) { ?>
+        <div class="panel panel-default" style="margin-bottom: <?php echo $faqQuestion->getQuestionMarginBottom(); ?>">
+                <?php $randomNumber = rand(999, 9999); ?>
+                <div class="panel-heading faqcat-question"
+                     data-toggle="collapse"
+                     data-target="#collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>"
+                     data-parent="#accordion"
+                     data-animated="<?php echo $faqQuestion->getAnimationType(); ?>"
+                     data-color-active="<?php echo $faqQuestion->getTextColorActive(); ?>"
+                     data-bg-color-active="<?php echo $faqQuestion->getBackgrondActive(); ?>"
+                     data-color="<?php echo $faqQuestion->getTextColor(); ?>"
+                     data-bg-color="<?php echo $faqQuestion->getBackground(); ?>"
+                     style="background-color:<?php echo $faqQuestion->getBackground(); ?>;
+                     border-color: <?php echo $faqQuestion->getBorderColor(); ?>;
+                     border-width:<?php echo $faqQuestion->getBorderWidth(); ?>;
+                     border-radius: <?php echo $faqQuestion->getBorderRadius(); ?>;"
+                     >
+                    <h4 class="panel-title">
+                       <a class="accordion-toggle faq_questions_title" style="color:<?php echo $faqQuestion->getTextColor(); ?>;  font-size: <?php echo $faqQuestion->getfontSize(); ?>" href="javascript:void(0);">
+                    <?php  
+                        $icon = ($faqQuestion->getIconClass()) ? $faqQuestion->getIconClass() :'fa-plus-square-o';
+                        $iconActive = ($faqQuestion->getIconActive()) ? $faqQuestion->getIconActive() :'fa-minus-square-o';
+                    ?>
+                        <i data-icon="<?php echo $icon; ?>" data-icon-active=" <?php echo $iconActive; ?>" class="main_icon fa <?php echo $icon; ?>"></i> 
+                        &nbsp;<?php echo $block->escapeHtml($faqQuestion->getQuestion()); ?>
+                        </a>
+                    </h4>
+                </div>
+                <div  style="animation-duration: <?php echo $faqQuestion->getAnimationSpeed(); ?>;  -webkit-animation-duration: <?php echo $faqQuestion->getAnimationSpeed(); ?>;" id="collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>" class="panel-collapse collapse animated">   
+                    <div class="panel-body">
+                        <?php /* @noEscape */ echo $faqQuestion->getAnswer(); ?> ...
+                        <a style="color: #fc6b1f" href="<?php echo $block->getUrl('faqs/question/view/id/' . $faqQuestion->getId() . ''); ?>">Read more</a>
+                    </div>
+                </div>
+            </div>
+
+        <?php } ?>
+    </div>
+</div>
+
+<script>
+    require(['jquery', 'jquery.bootstrap'], function ($) {
+        $(document).ready(function () {
+            $('.collapse').on('shown.bs.collapse', function (e) {
+                var animated =  $(this).parent().find(".faqcat-question").attr('data-animated');
+                var colorActive =  $(this).parent().find(".faqcat-question").attr('data-color-active');
+                var bgColorActive =  $(this).parent().find(".faqcat-question").attr('data-bg-color-active');
+                var dataIcon =  $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive =  $(this).parent().find(".main_icon").attr('data-icon-active');
+                
+                $(this).addClass(animated);
+                $(this).parent().find('.main_icon').removeClass(dataIcon).addClass(dataIconActive);
+                $(this).parent().find(".faqcat-question").css("background-color",  bgColorActive);
+                $(this).parent().find(".faq_questions_title").css("color",  colorActive);
+                
+            }).on('hidden.bs.collapse', function () {
+                var color =  $(this).parent().find(".faqcat-question").attr('data-color');
+                var bgColor =  $(this).parent().find(".faqcat-question").attr('data-bg-color');
+                var dataIcon =  $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive =  $(this).parent().find(".main_icon").attr('data-icon-active');
+                $(this).parent().find('.main_icon').removeClass(dataIconActive).addClass(dataIcon);
+                $(this).parent().find(".faqcat-question").css("background-color",  bgColor);
+                $(this).parent().find(".faq_questions_title").css("color",  color);
+            });
+        });
+    });
+</script>

@@ -1,0 +1,23 @@
+<!--@subject {{trans 'New Review on %product_name' product_name=$product_name}} @-->
+<!--@vars {
+"var product_name":"Product Name",
+"var review":"Review",
+"var review_url": "Review Url"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="notification-content">
+    {{trans 'There is a new review on '}}{{var product_name|raw}}
+    <br>
+    <br>
+    <b>{{trans 'Review Summary:'}}</b> {{var review.summary}}<br>
+    <b>{{trans 'Review Rating:'}}</b> {{var review.absolute_rating}} {{trans 'star(s)'}}<br>
+    <b>{{trans 'Review Content:'}}</b>
+    <p class="review-content">
+    <i>{{var review.content}}</i>
+    </p>
+
+    Click <a href="{{var review_url}}">here</a> to approve it.
+</p>
+
+{{template config_path="design/email/footer_template"}}

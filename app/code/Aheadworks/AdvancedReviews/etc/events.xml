@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="aheadworks_advancedreviews_api_data_reviewinterface_save_after">
+        <observer name="legacy_model_aw_ar_review_after_save" instance="Magento\Framework\EntityManager\Observer\AfterEntitySave" />
+    </event>
+    <event name="aheadworks_advancedreviews_api_data_reviewinterface_delete_after">
+        <observer name="legacy_model_aw_ar_review_after_delete" instance="Magento\Framework\EntityManager\Observer\AfterEntityDelete" />
+    </event>
+    <event name="aheadworks_advancedreviews_api_data_commentinterface_save_after">
+        <observer name="legacy_model_aw_ar_comment_after_save" instance="Magento\Framework\EntityManager\Observer\AfterEntitySave" />
+    </event>
+    <event name="aheadworks_advancedreviews_api_data_commentinterface_delete_after">
+        <observer name="legacy_model_aw_ar_comment_after_delete" instance="Magento\Framework\EntityManager\Observer\AfterEntityDelete" />
+    </event>
+    <event name="customer_save_after_data_object">
+        <observer name="aw_ar_customer_save_after_observer" instance="Aheadworks\AdvancedReviews\Observer\CustomerSaveAfterObserver" />
+    </event>
+</config>

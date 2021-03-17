@@ -1,0 +1,26 @@
+<!--@subject {{trans "Activation Confirmation"}} @-->
+
+{{template config_path="design/email/header_template"}}
+ 
+<div class="main-wrapper">
+    <div class="header-email">
+        <p>Dear {{var data.firstname|raw}} {{var data.lastname|raw}}</p>
+        <p>
+            Your activation request has been confirmed.
+        </p>
+    </div>
+    <div class="request-data">
+        <h4>Activation Details</h4>
+        <p>{{var data.firstname|raw}} {{var data.lastname|raw}}</p>
+        <p>{{var data.company|raw}}</p>
+        <br/>
+        <p><b>Order #:</b> {{var data.order_number|raw}}</p>
+        <p><b>SIM:</b> {{var data.sim_number|raw}}</p>
+        <p><b>Phone number: {{var data.phone_number|raw}}</b></p>
+        <p><b>Expiration Date: {{var data.expiration_date|raw}}</b></p>
+        <br/>
+        <p><b>Comments:</b> {{var data.comments|raw}}</p>
+    </div>
+</div>
+
+{{template config_path="design/email/footer_template"}}

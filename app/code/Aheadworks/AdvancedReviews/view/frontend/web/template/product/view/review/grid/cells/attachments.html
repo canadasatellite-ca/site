@@ -1,0 +1,13 @@
+<div if="$row().attachments" class="aw-ar__attachments">
+    <div class="aw-ar__attach" repeat="foreach: $row().attachments, item: '$file'">
+        <a css="getImageAnchorClasses($file())"
+           attr="href: getFilePreview($file()), title: getFileTitle($file())" target="_blank">
+            <img if="getFilePreviewType($file()) === 'image'"
+                 tabindex="0"
+                 event="load: onPreviewLoad.bind($data)"
+                 attr=" src: getFilePreview($file()), alt: getFileTitle($file())">
+
+            <span if="getFilePreviewType($file()) !== 'image'" class="file-name" text="getFileTitle($file())"></span>
+        </a>
+    </div>
+</div>

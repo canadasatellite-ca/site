@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">amazon_listing_incomplete_grid.amazon_listing_incomplete_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>amazon_listing_incomplete_grid_columns</spinner>
+        <deps>
+            <dep>amazon_listing_incomplete_grid.amazon_listing_incomplete_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="amazon_listing_incomplete_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="cacheRequests" xsi:type="boolean">false</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+            <filterUrlParams>
+                <param name="merchant_id">*</param>
+            </filterUrlParams>
+        </settings>
+        <aclResource>Magento_SalesChannels::channel_amazon</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="amazon_listing_incomplete_grid_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="sticky" xsi:type="boolean">false</item>
+            </item>
+        </argument>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <exportButton name="export_button"/>
+        <filters name="listing_filters" />
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                </item>
+            </argument>
+            <action name="incomplete_automatch" class="Magento\Amazon\Ui\Component\MassAction\Amazon\Listing\Incomplete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">edit</item>
+                        <item name="label" xsi:type="string" translate="true">Re-attempt auto match to Amazon listing</item>
+                        <item name="listingAction" xsi:type="string">channel/amazon/account_listing_relistMassAction</item>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Re-Attempt Publishing To Amazon</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to re-attempt auto match to an Amazon listing?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="amazon_listing_incomplete_grid_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Id</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="account_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortOrder" xsi:type="number">23</item>
+                    <item name="label" xsi:type="string" translate="true">Store Name</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="seller_sku">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Amazon Seller SKU</item>
+                </item>
+            </argument>
+        </column>
+        <column name="catalog_sku">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Magento SKU</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="asin">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" xsi:type="string" translate="true">ASIN</item>
+                </item>
+            </argument>
+        </column>
+        <column name="name" class="Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\Incomplete\ProductName">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="resizeDefaultWidth" xsi:type="string">1</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/html</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="label" xsi:type="string" translate="true">Product Listing Name</item>
+                </item>
+            </argument>
+        </column>
+        <column name="condition" class="Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\ConditionOverride" >
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\Condition</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">80</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Condition</item>
+                </item>
+            </argument>
+        </column>
+        <column name="product_type">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                    <item name="label" xsi:type="string" translate="true">Product Type</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="list_price"  class="Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\ListPrice">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sortOrder" xsi:type="number">90</item>
+                    <item name="label" xsi:type="string" translate="true">Listing Price</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="shipping_price" class="Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\ShippingPrice">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="label" xsi:type="string" translate="true">Shipping Price</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="landed_price" class="Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\LandedPrice" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sortOrder" xsi:type="number">110</item>
+                    <item name="label" xsi:type="string" translate="true">Landed Price</item>
+                </item>
+            </argument>
+        </column>
+        <column name="qty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sortOrder" xsi:type="number">115</item>
+                    <item name="label" xsi:type="string" translate="true">Amazon Quantity</item>
+                </item>
+            </argument>
+        </column>
+        <column name="fulfilled_by">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\FulfilledBy</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">120</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Fulfilled By</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="list_status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\Incomplete\ListStatus</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions" class="Magento\Amazon\Ui\Component\Listing\Amazon\Account\Listing\Incomplete\Actions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>

@@ -1,0 +1,8 @@
+<?php
+
+/** @var \Magento\Amazon\Block\Adminhtml\Index $block */ ?>
+
+<div data-graphql-endpoint="<?= $block->escapeUrl($block->getGraphqlEndpoint()) ?>"
+     id="root"></div>
+
+<script src="<?= $block->escapeUrl($block->getFrontendUrl()) ?>"></script>

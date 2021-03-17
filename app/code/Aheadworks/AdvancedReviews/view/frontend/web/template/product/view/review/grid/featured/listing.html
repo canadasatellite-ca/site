@@ -1,0 +1,50 @@
+<div if="hasData()"
+     css="additionalClasses">
+    <h3 class="featured-review-title"><span data-bind="text: getFeaturedReviewLabel()"></span></h3>
+    <div class="block-content">
+        <div class="review-header">
+            <div if="isNeedToRenderSortingBlock()"
+                 class="review-sorting">
+                <span data-bind="i18n: 'Sort by'"></span>
+                <div outerfasteach="data: getSortableColumns(), as: '$col'" css="$col.getFieldClass()">
+                    <render args="$col.getHeader()"/>
+                </div>
+            </div>
+        </div>
+        <div class="review-items" data-role="aw-ar__review-items-list">
+            <div class="review-item" repeat="foreach: rows, item: '$row'">
+                <div class="review-item-info">
+
+                    <div if="getRegion('sidebar-main')().length"
+                         class="aw-ar__review-list-sidebar-main">
+                        <fastForEach args="data: getRegion('sidebar-main'), as: '$col'" >
+                            <render args="$col.getBody()"/>
+                        </fastForEach>
+                    </div>
+
+                    <div class="aw-ar__review-list-column-main">
+                        <div if="getRegion('column-main-top')().length"
+                             class="aw-ar__review-list-column-main-top">
+                            <fastForEach args="data: getRegion('column-main-top'), as: '$col'" >
+                                <render args="$col.getBody()"/>
+                            </fastForEach>
+                        </div>
+                        <div if="getRegion('column-main-middle')().length"
+                             class="aw-ar__review-list-column-main-middle content">
+                            <fastForEach args="data: getRegion('column-main-middle'), as: '$col'" >
+                                <render args="$col.getBody()"/>
+                            </fastForEach>
+                        </div>
+                        <div if="getRegion('column-main-bottom')().length"
+                             class="aw-ar__review-list-column-main-bottom">
+                            <fastForEach args="data: getRegion('column-main-bottom'), as: '$col'" >
+                                <render args="$col.getBody()"/>
+                            </fastForEach>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

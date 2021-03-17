@@ -1,0 +1,76 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php if ($detailedInfoGroup = $block->getGroupChildNames('detailed_info', 'getChildHtml')):
+    $newOrderTabbing = array('product.info.description', 'product.attributes', 'product.info.features.tab', 'product.tabsp', 'product.info.whats_included', 'product.info.rental_rates', 'product.info.calls_costs', 'product.info.coverage', 'product.info.videos', 'product.info.accessories', 'product.info.case_studies', 'product.info.support', 'product.info.tags', 'catalog.product.list.mageworx.downloads.attachments', 'product.aw.reviews.tab', 'faq.tab'); //custom add
+    ?>
+    <div class="product info detailed">
+        <?php $layout = $block->getLayout(); ?>
+        <div class="product data items">
+            <?php foreach ($newOrderTabbing as $name): ?>
+                <?php
+                $block1 = $layout->getBlock($name);
+                if (!$block1) {
+                    continue;
+                }
+                $html = $layout->renderElement($name);
+                if (!trim($html)) {
+                    continue;
+                }
+                $alias = $layout->getElementAlias($name);
+                $label = $block->getChildData($alias, 'title');
+                ?>
+                <div class="data item title"
+                     id="tab-label-<?php /* @escapeNotVerified */
+                echo $alias; ?>">
+                    <a class="data switch"
+                       href="#<?php /* @escapeNotVerified */
+                       echo $alias; ?>"
+                       id="tab-label-<?php /* @escapeNotVerified */
+                       echo $alias; ?>-title">
+                        <?php /* @escapeNotVerified */
+                        echo $label; ?>
+                    </a>
+                </div>
+            <?php endforeach; ?>
+        </div>
+        <div class="product data content">
+            <?php foreach ($newOrderTabbing as $name): ?>
+                <?php
+                $block1 = $layout->getBlock($name);
+                if (!$block1) {
+                    continue;
+                }
+                $html = $layout->renderElement($name);
+                if (!trim($html)) {
+                    continue;
+                }
+                $alias = $layout->getElementAlias($name);
+                $label = $block->getChildData($alias, 'title');
+                ?>
+                <div class="data item content" id="<?php /* @escapeNotVerified */
+                echo $alias; ?>" data-role="content">
+                    <?php /* @escapeNotVerified */
+                    echo $html; ?>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+<?php endif; ?>
+
+<?php
+$objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+$config = $objectManager->create('CanadaSatellite\Theme\Model\Config\Config');
+?>
+
+<script type="text/javascript">
+    require([], function () {
+        window.recaptchaReviewPublicKey = '<?php echo $config->getPublicKey() ?>';
+    });
+</script>

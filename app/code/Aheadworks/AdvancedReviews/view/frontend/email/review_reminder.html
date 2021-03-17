@@ -1,0 +1,23 @@
+<!--@subject {{trans 'Review your purchase on %store_name' store_name=$store.getFrontendName()}}@-->
+<!--@vars {
+"var customer_name":"Customer Name",
+"var order":"Order",
+"var unsubscribe_url":"Unsubscribe Url"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p style="font-size: 28px; color: #555555; margin-bottom: 10px;">
+    {{trans 'Hello %customer_name.' customer_name=$customer_name}}
+</p>
+<p style="font-size: 14px; color: #555555; margin-bottom: 10px;">
+    {{trans 'Thank you for your recent purchase from %store_name. Your opinion about the purchased product(s) would be greatly appreciated by other customers of our store.' store_name=$store.getFrontendName()}}
+</p>
+
+{{layout handle="aw_advanced_reviews_email_request_form" order=$order store=$store area="frontend"}}
+
+<p>
+    {{trans 'Thank you very much for your feedback!'}}
+</p>
+
+<p><a href="{{var unsubscribe_url}}">{{trans 'Unsubscribe from notifications'}}</a></p>
+{{template config_path="design/email/footer_template"}}

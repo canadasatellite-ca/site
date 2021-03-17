@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<layout xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_layout.xsd">
+
+    <!--Remove blocks of native reviews START-->
+    <referenceBlock name="product.reviews.wrapper" remove="true"/>
+    <!--Remove blocks of native reviews END-->
+
+    <referenceContainer name="product.info.details.after.wrapper.main">
+        <block class="Magento\Framework\View\Element\Template"
+               name="product.aw.reviews.wrapper"
+               after="product.attributes.wrapper"
+               template="Magento_PageBuilder::catalog/product/view/section_wrapper.phtml">
+            <arguments>
+                <argument name="title" translate="true" xsi:type="string">Reviews</argument>
+            </arguments>
+        </block>
+    </referenceContainer>
+    <move element="product.aw.reviews.tab" destination="product.aw.reviews.wrapper"/>
+</layout>

@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php
+/**
+ * Category view template
+ *
+ * @var $block \Magento\Catalog\Block\Category\View
+ */
+?>
+<?php if ($secondary_description = $block->getCurrentCategory()->getSecondaryDescription()): ?>
+    <div class="category-description">
+        <?php /* @escapeNotVerified */ echo $this->helper('Magento\Catalog\Helper\Output')->categoryAttribute($block->getCurrentCategory(), $secondary_description, 'secondary_description') ?>
+    </div>
+<?php endif; ?>

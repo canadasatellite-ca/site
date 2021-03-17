@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @category    CleverSoft
+ * @package     CleverTheme
+ * @copyright   Copyright © 2017 CleverSoft., JSC. All Rights Reserved.
+ * @author      ZooExtension.com
+ * @email       magento.cleversoft@gmail.com
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="cleversoft" translate="label" sortOrder="250">
+            <label>CleverSoft</label>
+        </tab>
+        <section id="cleverdeferjs" translate="label" type="text" sortOrder="140" showInDefault="1" showInWebsite="1" showInStore="1">
+            <class>separator-top</class>
+            <label>Clever Defer Js</label>
+            <tab>cleversoft</tab>
+            <resource>Magento_Backend::content</resource>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Options</label>
+                <field id="enable" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Defer Js</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Choose 'yes' to enable defer javascript module.]]></comment>
+                </field>
+                <field id="defer_iframes" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Defer Iframes</label>
+                    <depends><field id="enable">1</field></depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Choose 'yes' to enable defer load iframes.]]></comment>
+                </field>
+                <field id="exclude_controllers" translate="label" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude Controllers</label>
+                    <depends><field id="enable">1</field></depends>
+                    <frontend_model>CleverSoft\CleverDeferJs\Block\Adminhtml\Form\Field\Excludecontrollers</frontend_model>
+                    <backend_model>CleverSoft\CleverDeferJs\Model\System\Config\Backend\Excludecontrollers</backend_model>
+                    <comment><![CDATA[Listed controllers will be unaffected by defer javascript. Use: {module}_{controller}_{action}.]]></comment>
+                </field>
+                <field id="exclude_paths" translate="label" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude Paths</label>
+                    <depends><field id="enable">1</field></depends>
+                    <frontend_model>CleverSoft\CleverDeferJs\Block\Adminhtml\Form\Field\Excludepaths</frontend_model>
+                    <backend_model>CleverSoft\CleverDeferJs\Model\System\Config\Backend\Excludepaths</backend_model>
+                    <comment><![CDATA[Listed paths will be unaffected by defer javascript. Use: (Example: gear/bags.html).]]></comment>
+                </field>
+                <field id="exclude_homepage" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Exclude Home Page</label>
+                    <depends><field id="enable">1</field></depends>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Home page will be unaffected by defer javascript.]]></comment>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

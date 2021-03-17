@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+	<!-- Rewrite controllers -->
+	<preference for="Magento\Checkout\Controller\Onepage" type="MW\Onestepcheckout\Controller\Checkout\Onepage" />
+    <preference for="Magento\Checkout\Controller\Index\Index" type="MW\Onestepcheckout\Controller\Checkout\Index\Index" />
+
+	<!-- Rewrite blocks -->
+	<preference for="Magento\Config\Block\System\Config\Form\Field\Regexceptions" type="MW\Onestepcheckout\Block\Adminhtml\System\Config\Form\Field\Addtimerange" />
+	<preference for="Magento\Paypal\Block\Iframe" type="MW\Onestepcheckout\Block\Paypal\Iframe" />
+
+	<!-- Rewrite models -->
+    <preference for="Magento\Newsletter\Model\Subscriber" type="MW\Onestepcheckout\Model\Subscriber" />
+    <preference for="Magento\Customer\Model\Customer" type="MW\Onestepcheckout\Model\Customer\Customer" />
+    <preference for="Magento\Quote\Model\Quote\Address" type="MW\Onestepcheckout\Model\Quote\Address" />
+</config>

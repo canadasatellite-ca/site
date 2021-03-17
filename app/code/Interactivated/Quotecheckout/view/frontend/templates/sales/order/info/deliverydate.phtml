@@ -1,0 +1,10 @@
+<?php
+$order = $block->getOrderInformation();
+if ($order) :
+?>
+	<div class="box box-delivery-date" style="clear: both">
+	    <h4><?php echo __('Delivery Date') ?></h4>
+	    <?php echo __('Delivery date') ?>: <span style="font-weight:bold;"><?php echo $order->getMwDeliverydateDate(); ?></span><br/>
+		<?php echo __('Delivery time') ?>: <span style="font-weight:bold;"><?php echo $order->getMwDeliverydateTime(); ?></span><br/>
+	</div>
+<?php endif; ?>

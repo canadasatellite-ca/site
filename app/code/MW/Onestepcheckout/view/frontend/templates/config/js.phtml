@@ -1,0 +1,117 @@
+<?php
+
+$_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
+$_datetime = $_dataHelper->getDateTime();
+$currentCustomer = $block->getCustomer();
+
+$tempLayout = $_dataHelper->getStoreConfig('onestepcheckout/display_setting/style');
+if (!$tempLayout) {
+    $tempLayout = 1;
+}
+$tempFb = $_dataHelper->getStoreConfig('onestepcheckout/addfield/app_fb_id');
+if (!$tempFb) {
+    $tempFb = 1;
+}
+$roundCorner = $_dataHelper->getStoreConfig('onestepcheckout/display_setting/round_corner');
+if (!$roundCorner) {
+	$roundCorner = 1;
+}
+if ($this->isCurrentlySecure()) {
+	$paramHttps = ['_forced_secure' => true];
+} else {
+	$paramHttps = [];
+}
+$rangeDay = $_dataHelper->getStoreConfig("onestepcheckout/deliverydate/rangeday");
+if (!$rangeDay) {
+	$rangeDay = 0;
+}
+
+$checkoutButtonColor = $_dataHelper->getStoreConfig("onestepcheckout/display_setting/checkout_button_color");
+if(!$checkoutButtonColor) {
+	$checkoutButtonColor = 'EA7608';
+}
+$validVAT = 0;
+if($_dataHelper->getStoreConfig('onestepcheckout/general/valid_vat') 
+	&& $_dataHelper->getStoreConfig('onestepcheckout/addfield/taxvat_show') != ''
+) {
+	$validVAT = 1;
+}
+
+?>
+
+<script type="text/javascript">
+require([
+	'jquery'
+], function($) {
+	var mw_baseUrl = '<?php echo $block->getBaseUrl() ?>';
+	var mw_baseUrls = '<?php echo $block->getBaseUrl(["_secure" => true]) ?>';
+	var use_ssl = <?php echo $this->isCurrentlySecure() ?>;
+	var isLogged = 0;
+
+	window.onestepConfig = {
+	    url: {
+	    	mw_baseUrl 					: '<?php echo $block->getBaseUrl() ?>',
+	    	mw_baseUrls 				: '<?php echo $block->getBaseUrl(["_secure" => true]) ?>',
+	        save                        : '<?php echo $block->getUrl("onestepcheckout/index/save", $paramHttps) ?>',
+	        updCoupon                   : '<?php echo $block->getUrl("onestepcheckout/index/updatecoupon", $paramHttps) ?>',
+	        updRefferal                 : '<?php echo $block->getUrl("onestepcheckout/index/updateRefferal", $paramHttps) ?>',
+	        updOrderMethod              : '<?php echo $block->getUrl("onestepcheckout/index/updateordermethod", $paramHttps) ?>',
+	        saveOrder                   : '<?php echo $block->getUrl("checkout/onepage/saveOrder/form_key/" . $block->getFormKey(), $paramHttps) ?>',
+	        updateEmailMsg              : '<?php echo $block->getUrl("onestepcheckout/index/updateemailmsg", $paramHttps) ?>',
+	        udpateTimepicker            : '<?php echo $block->getUrl("onestepcheckout/index/updatetimepicker", $paramHttps) ?>',
+	        updateLogin                 : '<?php echo $block->getUrl("onestepcheckout/index/updatelogin", $paramHttps) ?>',
+	        forgotPass					: '<?php echo $block->getUrl("onestepcheckout/index/forgotpassword", $paramHttps) ?>'
+	    },
+	    delivery: {
+	        rangeDay        :   '<?php echo ($rangeDay != 0) ? "+".$rangeDay."w" : "" ?>',
+	        weekendDays     :   '<?php echo $_dataHelper->getStoreConfig("onestepcheckout/deliverydate/weekend") ?>',
+	        asaOption       :   <?php echo (int)$_dataHelper->getStoreConfig("onestepcheckout/deliverydate/asa_option") ?>,
+	        disabledDays    :   '<?php echo $_dataHelper->getNationaldays() ?>',
+	        enableDays      :   '<?php echo $_dataHelper->getAdditionaldays() ?>',
+	        formatDate      :   '<?php echo $_dataHelper->getStoreConfig("onestepcheckout/deliverydate/formatdate") ?>',
+	        isNowDay        :   '07/16/2015',
+	        isNowTime       :   '<?php echo date("G:i", $_datetime->timestamp(time())) ?>',
+	        isNow           :   '<?php echo date($_dataHelper->getStoreConfig("onestepcheckout/deliverydate/formatdate"), $_datetime->timestamp(time())) ?>',
+	        buttonImage     :   '<?php echo $block->getViewFileUrl("MW_Onestepcheckout::images/grid-cal.gif") ?>',
+	        clockImagePNG   :   '<?php echo $block->getViewFileUrl("MW_Onestepcheckout::images/clock.png") ?>',
+	        clockImageGIF   :   '<?php echo $block->getViewFileUrl("MW_Onestepcheckout::images/clock.gif") ?>'
+	    },
+
+	    ajaxPaymentOnShipping   : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_shipping_payment") ?>,
+	    ajaxShippingOnQty       : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_updatepro_shipping") ?>,
+	    ajaxShipping            : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_shipping") ?>,
+	    ajaxPayment             : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_payment") ?>,
+	    ajaxCountry             : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_country") ?>,
+	    ajaxShippingOnAddresss  : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_shippingmethod") ?>,
+	    ajaxPaymentOnAddresss   : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_paymentmethod") ?>,
+	    ajaxRegion              : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_region") ?>,
+	    ajaxZipcode             : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_zipcode") ?>,
+	    ajaxCity                : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_city") ?>,
+	    ajaxEmail               : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/allow_ajax/ajax_email") ?>,
+
+	    styleColor              : '<?php echo $_dataHelper->getStoreConfig("onestepcheckout/display_setting/style_color") ?>',
+		round_corner		  	: <?php echo $roundCorner ?>,
+	    checkOutColor           : '<?php echo $checkoutButtonColor ?>',
+
+	    pageLayout              : '<?php echo $_dataHelper->getStoreConfig("onestepcheckout/display_setting/page_layout") ?>',
+	    styleLayout             : <?php echo $tempLayout ?>,
+	    defaultShippingmethod   : '<?php echo $_dataHelper->getStoreConfig("onestepcheckout/general/default_shippingmethod") ?>',
+
+	    addfieldZip             : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/addfield/zip") ?>,
+	    addfieldState           : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/addfield/state") ?>,
+	    addfieldCountry         : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/addfield/country") ?>,
+
+	    hasDefaultBilling       : <?php echo ($currentCustomer->getDefaultBilling() ? 1 : 0) ?>,
+	    hasAddress              : <?php echo ($currentCustomer->getAddresses() ? 1 : 0) ?>,
+
+	    validVAT                : <?php echo $validVAT ?>,
+
+	    onlyProductDownloadable : <?php echo ($_dataHelper->onlyProductDownloadable() ? 1 : 0) ?>,
+	    isDeliveryDate          : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/deliverydate/allow_options") ?>,
+	    isGeoIp                 : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/general/enable_geoip") ?>,
+	    FbAppId                 : <?php echo $tempFb ?>,
+	    defaultCountry          : '<?php echo $_dataHelper->getStoreConfig("onestepcheckout/general/default_country") ?>',
+	    createAccount           : <?php echo $_dataHelper->getStoreConfig("onestepcheckout/general/create_account") ?>
+	};
+});
+</script>

@@ -1,0 +1,287 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!--Remove blocks of native reviews START-->
+        <referenceBlock name="reviews.tab" remove="true"/>
+        <!--Remove blocks of native reviews END-->
+
+        <referenceBlock name="product.info.details">
+            <block class="Aheadworks\AdvancedReviews\Block\Product\View\Review\Container"
+                   name="product.aw.reviews.tab"
+                   as="product_aw_reviews_tab"
+                   template="Aheadworks_AdvancedReviews::product/view/review/container.phtml"
+                   group="detailed_info">
+                <arguments>
+                    <argument name="sort_order" xsi:type="string">40</argument>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="awArReviewContainer" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/container</item>
+                                    <item name="title" xsi:type="string" translate="true">Customer Reviews</item>
+                                </item>
+                                <item name="children" xsi:type="array">
+                                    <item name="awArReviewSummary" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">1</item>
+                                        <item name="displayArea" xsi:type="string">container-header</item>
+                                        <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/summary/container</item>
+                                        <item name="deps" xsi:type="array">
+                                            <item name="0" xsi:type="string">awArReviewConfigProvider</item>
+                                        </item>
+                                        <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="brief_summary" xsi:type="array">
+                                                <item name="sortOrder" xsi:type="string">1</item>
+                                                <item name="displayArea" xsi:type="string">1-column</item>
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/summary/brief-summary</item>
+                                                <item name="isDisplayedRecommendCustomers" xsi:type="boolean">true</item>
+                                                <item name="deps" xsi:type="array">
+                                                    <item name="0" xsi:type="string">awArReviewBriefSummaryProvider</item>
+                                                </item>
+                                                <item name="provider" xsi:type="string">awArReviewBriefSummaryProvider</item>
+                                            </item>
+                                            <item name="detailed_summary" xsi:type="array">
+                                                <item name="sortOrder" xsi:type="string">1</item>
+                                                <item name="displayArea" xsi:type="string">2-column</item>
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/summary/detailed-summary</item>
+                                                <item name="deps" xsi:type="array">
+                                                    <item name="0" xsi:type="string">awArReviewDetailedSummaryProvider</item>
+                                                </item>
+                                                <item name="provider" xsi:type="string">awArReviewDetailedSummaryProvider</item>
+                                            </item>
+                                            <item name="awArWriteReviewControlHeader" xsi:type="array">
+                                                <item name="sortOrder" xsi:type="string">1</item>
+                                                <item name="displayArea" xsi:type="string">3-column</item>
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/write-review-control</item>
+                                                <item name="deps" xsi:type="array">
+                                                    <item name="0" xsi:type="string">awArReviewConfigProvider</item>
+                                                </item>
+                                                <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                            </item>
+                                        </item>
+                                    </item>
+
+                                    <item name="awArReviewForm" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">10</item>
+                                        <item name="displayArea" xsi:type="string">container-header</item>
+                                        <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/form</item>
+                                        <item name="buttonLabel" xsi:type="string" translate="true">Submit Review</item>
+                                        <item name="deps" xsi:type="array">
+                                            <item name="0" xsi:type="string">awArReviewFormProvider</item>
+                                            <item name="1" xsi:type="string">awArReviewConfigProvider</item>
+                                        </item>
+                                        <item name="dataScope" xsi:type="string">data</item>
+                                        <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                        <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                        <item name="namespace" xsi:type="string">aw_ar_product_review_form</item>
+                                        <item name="dataFormPartSelectors" xsi:type="array">
+                                            <item name="0" xsi:type="string">[name=captcha_string]</item>
+                                            <item name="1" xsi:type="string">[name=g-recaptcha-response]</item>
+                                            <item name="2" xsi:type="string">[data-role=aw-ar__agreements] input</item>
+                                        </item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="product_name" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
+                                                <item name="dataScope" xsi:type="string">product_name</item>
+                                                <item name="elementTmpl" xsi:type="string">ui/form/element/html</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="label" xsi:type="string" translate="true">You're reviewing:</item>
+                                                <item name="sortOrder" xsi:type="number">10</item>
+                                            </item>
+                                            <item name="nickname" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
+                                                <item name="dataScope" xsi:type="string">nickname</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="label" xsi:type="string" translate="true">Nickname</item>
+                                                <item name="validation" xsi:type="array">
+                                                    <item name="required-entry" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">20</item>
+                                            </item>
+                                            <item name="rating" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/review/rating</item>
+                                                <item name="dataScope" xsi:type="string">rating</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="elementTmpl" xsi:type="string">Aheadworks_AdvancedReviews/review/rating</item>
+                                                <item name="dataType" xsi:type="string">text</item>
+                                                <item name="formElement" xsi:type="string">radioset</item>
+                                                <item name="isEditable" xsi:type="boolean">true</item>
+                                                <item name="label" xsi:type="string" translate="true">Your Rating</item>
+                                                <item name="validation" xsi:type="array">
+                                                    <item name="required-entry" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="imports" xsi:type="array">
+                                                    <item name="options" xsi:type="string">${ $.configProvider }:data.review_form.rating_options</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">30</item>
+                                            </item>
+                                            <item name="content" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/previewable/textarea</item>
+                                                <item name="dataScope" xsi:type="string">content</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="label" xsi:type="string" translate="true">Review</item>
+                                                <item name="placeholder" xsi:type="string" translate="true">Share your thoughts about the product</item>
+                                                <item name="previewSettings" xsi:type="array">
+                                                    <item name="maxCountOfWords" xsi:type="number">5</item>
+                                                    <item name="sentenceEndCharacters" xsi:type="string">.!?</item>
+                                                    <item name="sentenceGapPlaceholder" xsi:type="string">...</item>
+                                                </item>
+                                                <item name="validation" xsi:type="array">
+                                                    <item name="required-entry" xsi:type="boolean">true</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">40</item>
+                                            </item>
+                                            <item name="summary" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/form/summary</item>
+                                                <item name="dataScope" xsi:type="string">summary</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="elementTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/form/element/trackable-input</item>
+                                                <item name="label" xsi:type="string" translate="true">Review Summary</item>
+                                                <item name="mask" xsi:type="string">{{content}}</item>
+                                                <item name="allowImport" xsi:type="boolean">true</item>
+                                                <item name="autoImportIfEmpty" xsi:type="boolean">false</item>
+                                                <item name="validation" xsi:type="array">
+                                                    <item name="required-entry" xsi:type="boolean">false</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">50</item>
+                                            </item>
+                                            <item name="product_recommended" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/select</item>
+                                                <item name="dataScope" xsi:type="string">product_recommended</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="dataType" xsi:type="string">number</item>
+                                                <item name="label" xsi:type="string" translate="true">Do you recommend this product?</item>
+                                                <item name="imports" xsi:type="array">
+                                                    <item name="options" xsi:type="string">${ $.configProvider }:data.review_form.product_recommended_options</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">55</item>
+                                            </item>
+                                            <item name="product_id" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/abstract</item>
+                                                <item name="dataScope" xsi:type="string">product_id</item>
+                                                <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="visible" xsi:type="boolean">false</item>
+                                                <item name="sortOrder" xsi:type="number">60</item>
+                                            </item>
+                                            <item name="agreements" xsi:type="array">
+                                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/agreements/view</item>
+                                                <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                                <item name="imports" xsi:type="array">
+                                                    <item name="areAgreementsEnabled" xsi:type="string">${ $.configProvider }:data.review_form.agreements_config.are_agreements_enabled</item>
+                                                    <item name="isNeedToShowForGuests" xsi:type="string">${ $.configProvider }:data.review_form.agreements_config.is_need_to_show_for_guests</item>
+                                                    <item name="isNeedToShowForCustomers" xsi:type="string">${ $.configProvider }:data.review_form.agreements_config.is_need_to_show_for_customers</item>
+                                                    <item name="isCustomerLoggedIn" xsi:type="string">${ $.configProvider }:data.is_customer_logged_in</item>
+                                                    <item name="agreementsData" xsi:type="string">${ $.configProvider }:data.review_form.agreements_config.agreements_data</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">80</item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="awArFeaturedReviewList" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">11</item>
+                                        <item name="displayArea" xsi:type="string">container-header</item>
+                                        <item name="component" xsi:type="string">Magento_Ui/js/form/components/insert-listing</item>
+                                        <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                        <item name="template" xsi:type="string">Aheadworks_AdvancedReviews/ui/form/insert</item>
+                                        <item name="autoRender" xsi:type="boolean">true</item>
+                                        <item name="render_url" xsi:type="url" path="mui/index/render"/>
+                                        <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                                        <item name="realTimeLink" xsi:type="boolean">true</item>
+                                        <item name="cssclass" xsi:type="string">aw-ar__review-list</item>
+                                        <item name="externalProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_product_featured_review_listing_data_source</item>
+                                        <item name="ns" xsi:type="string">aw_advanced_reviews_product_featured_review_listing</item>
+                                        <item name="loading" xsi:type="boolean">false</item>
+                                        <item name="imports" xsi:type="array">
+                                            <item name="product_id" xsi:type="string">${ $.configProvider }:data.review_list.product_id</item>
+                                        </item>
+                                        <item name="exports" xsi:type="array">
+                                            <item name="product_id" xsi:type="string">${ $.externalProvider }:params.product_id</item>
+                                        </item>
+                                    </item>
+                                    <item name="awArReviewList" xsi:type="array">
+                                        <item name="sortOrder" xsi:type="string">3</item>
+                                        <item name="displayArea" xsi:type="string">container-body</item>
+                                        <item name="component" xsi:type="string">Magento_Ui/js/form/components/insert-listing</item>
+                                        <item name="deps" xsi:type="array">
+                                            <item name="0" xsi:type="string">awArReviewConfigProvider</item>
+                                        </item>
+                                        <item name="configProvider" xsi:type="string">awArReviewConfigProvider</item>
+                                        <item name="template" xsi:type="string">Aheadworks_AdvancedReviews/ui/form/insert</item>
+                                        <item name="autoRender" xsi:type="boolean">true</item>
+                                        <item name="render_url" xsi:type="url" path="mui/index/render"/>
+                                        <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                                        <item name="realTimeLink" xsi:type="boolean">true</item>
+                                        <item name="cssclass" xsi:type="string">aw-ar__review-list</item>
+                                        <item name="externalProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_product_review_listing_data_source</item>
+                                        <item name="ns" xsi:type="string">aw_advanced_reviews_product_review_listing</item>
+                                        <item name="loading" xsi:type="boolean">false</item>
+                                        <item name="imports" xsi:type="array">
+                                            <item name="product_id" xsi:type="string">${ $.configProvider }:data.review_list.product_id</item>
+                                            <item name="comment_form_config" xsi:type="string">${ $.configProvider }:data.review_list.comment_form_config</item>
+                                            <item name="total_reviews_count" xsi:type="string">${ $.configProvider }:data.total_reviews_count</item>
+                                            <item name="is_allow_guest_submit_review" xsi:type="string">${ $.configProvider }:data.review_form.is_allow_guest_submit_review</item>
+                                            <item name="is_customer_logged_in" xsi:type="string">${ $.configProvider }:data.is_customer_logged_in</item>
+                                            <item name="is_logged_in" xsi:type="string">${ $.configProvider }:data.is_customer_logged_in</item>
+                                            <item name="is_guest_allowed" xsi:type="string">${ $.configProvider }:data.review_form.is_allow_guest_submit_review</item>
+                                            <item name="login_url" xsi:type="string">${ $.configProvider }:data.login_url</item>
+                                            <item name="register_url" xsi:type="string">${ $.configProvider }:data.register_url</item>
+                                        </item>
+                                        <item name="exports" xsi:type="array">
+                                            <item name="product_id" xsi:type="string">${ $.externalProvider }:params.product_id</item>
+                                            <item name="comment_form_config" xsi:type="string"> ${ $.ns }.${ $.ns }.aw_advanced_reviews_review_columns.comments:commentFormConfig</item>
+                                            <item name="is_logged_in" xsi:type="string"> ${ $.ns }.${ $.ns }.aw_advanced_reviews_review_columns.comments:isCustomerLoggedIn</item>
+                                            <item name="is_guest_allowed" xsi:type="string"> ${ $.ns }.${ $.ns }.aw_advanced_reviews_review_columns.comments:isGuestAllowed</item>
+                                            <item name="total_reviews_count" xsi:type="string">${ $.ns }.${ $.ns }.listing_bottom.awArWriteReviewControlListingBottom:reviewsCount</item>
+                                            <item name="is_allow_guest_submit_review" xsi:type="string">${ $.ns }.${ $.ns }.listing_bottom.awArWriteReviewControlListingBottom:isAllowGuestSubmitReview</item>
+                                            <item name="is_customer_logged_in" xsi:type="string">${ $.ns }.${ $.ns }.listing_bottom.awArWriteReviewControlListingBottom:isCustomerLoggedIn</item>
+                                            <item name="login_url" xsi:type="string">${ $.ns }.${ $.ns }.listing_bottom.awArWriteReviewControlListingBottom:loginUrl</item>
+                                            <item name="register_url" xsi:type="string">${ $.ns }.${ $.ns }.listing_bottom.awArWriteReviewControlListingBottom:registerUrl</item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="awArReviewBriefSummaryProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                            </item>
+                            <item name="awArReviewDetailedSummaryProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                            </item>
+                            <item name="awArReviewFormProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="submit_url" xsi:type="url" path="aw_advanced_reviews/review/submit"/>
+                                </item>
+                            </item>
+                            <item name="awArCommentFormProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/comment/form/provider</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="submit_url" xsi:type="url" path="aw_advanced_reviews/review/comment"/>
+                                </item>
+                            </item>
+                            <item name="awArReviewConfigProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">uiComponent</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

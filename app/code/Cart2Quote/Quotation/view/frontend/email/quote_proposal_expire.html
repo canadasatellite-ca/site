@@ -1,0 +1,49 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--@subject {{var store.frontend_name}}: {{trans "Expiry Quote request"}} # {{var quote.increment_id}} {{trans "will expire today"}} @-->
+<!--@vars {
+"var quote.increment_id":"Quote Id"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Cart2Quote_Quotation::css/email-inline_extend.css"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Hello %customer_name," customer_name=$quote_data_customer_name}}</p>
+
+            <p>
+                {{trans "Your Price Proposal #%increment_id placed on %quote_request_date, from %store_name will expire today." store_name=$store.frontend_name increment_id=$quote.increment_id quote_request_date=$quote_data_quotation_created_at |raw}}
+            </p>
+
+            <p>
+                {{trans "To accept the proposal visit your customer dashboard today or contact us via e-mail or phone."}}
+            </p>
+
+            <p>
+                {{trans "You can <a href="%account_urlquote_id/%quote_id">log in to your account</a> to review the proposal." account_url=$this.getUrl($store,'quotation/quote/view/quote_id/') quote_id=$quote_data_quote_id |raw}}
+            </p>
+            <br>
+
+            <p>
+                {{trans "Best Wishes."}}
+            </p>
+
+            <p>
+                {{trans "If you have questions about your quote request, you can email us at <a href="mailto:%store_email">%store_email</a>" store_email=$store_email |raw}}
+                {{depend store_phone}}
+                {{trans "or call us at <a href="tel:%store_phone">%store_phone</a>" store_phone=$store_phone |raw}}
+                {{/depend}}.
+                {{depend store_hours}}
+                {{trans "Our hours are <span class="no-link">%store_hours</span>." store_hours=$store_hours |raw}}
+                {{/depend}}
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

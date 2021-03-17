@@ -1,0 +1,12 @@
+<?xml version="1.0"?><!--
+/**
+ * Cart2Quote
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="items">
+            <block class="Cart2Quote\Quotation\Block\Quote\Email\Items\DefaultItems" name="item_price" template="email/quote/items/price/row.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Columns\QuoteMargin $block */
+?>
+<?php $margin = $block->getMargin($block->getItem());
+
+if ($margin) {
+    echo __("%1%", $margin);
+} else {
+    echo __("N/A");
+}

@@ -1,0 +1,35 @@
+<!--@subject {{trans "Activation Request Confirmation"}} @-->
+
+{{template config_path="design/email/header_template"}}
+ 
+<div class="main-wrapper">
+    <div class="header-email">
+        <p>Dear {{var data.firstname|raw}}</p>
+        <p>
+            Your activation request has been received and is in progress. The activation may take up to 2 business days to complete.
+            Once your service(s) are activated, you will receive an Activation Confirmation email,
+            which will include your new satellite phone number, expiry date (if applicable).
+        </p>
+    </div>
+    <div class="request-data">
+        <h4>Request Details</h4>
+        <p><b>SIM:</b> {{var data.sim_number|raw}}</p>
+        <p><b>Order Number:</b> {{var data.order_number|raw}}</p>
+        <p><b>Desired Activation Date:</b> {{var data.desired_activation_date|raw}}</p>
+
+        <br/>
+
+        <div class="contacts">
+            <p><b>Canada Satellite</b></p>
+            <p>www.CanadaSatellite.ca</p>
+            <p>2121 39 Avenue NE, BAY H</p>
+            <p>Calgary, Alberta, T2E 6R7</p>
+            <p>Canada</p>p>
+            <p>1 (403) 918-6300 (Main)</p>
+            <p>1 (855) 552-2623 (Toll Free)</p>
+            <p>1 (403) 910-0765 (Fax)</p>
+        </div>
+    </div>
+</div>
+
+{{template config_path="design/email/footer_template"}}

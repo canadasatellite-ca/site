@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">customer_select_form.customer_select_form_data_source</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <settings>
+        <namespace>customer_select_form</namespace>
+        <dataScope>data</dataScope>
+        <deps>
+            <dep>customer_select_form.customer_select_form_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="customer_select_form_data_source" component="Magento_Ui/js/form/provider">
+        <settings>
+            <submitUrl path="quotation/quote/duplicateAssignCustomer" />
+        </settings>
+        <dataProvider class="Cart2Quote\Quotation\Ui\Component\Form\Customer\DataProvider" name="customer_select_form_data_source">
+            <settings>
+                <requestFieldName>quote_id</requestFieldName>
+                <primaryFieldName>entity_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <modal name="select_customer_modal">
+        <settings>
+            <options>
+                <option name="title" xsi:type="string" translate="true">Select Customer(s)</option>
+                <option name="buttons" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="text" xsi:type="string">Cancel</item>
+                        <item name="class" xsi:type="string">action-secondary</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="targetName" xsi:type="string">${ $.name }</item>
+                                <item name="actionName" xsi:type="string">actionCancel</item>
+                            </item>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="text" xsi:type="string" translate="true">Select</item>
+                        <item name="class" xsi:type="string">action-primary</item>
+                        <item name="actions" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="targetName" xsi:type="string">${ $.parentName }</item>
+                                <item name="actionName" xsi:type="string">save</item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="targetName" xsi:type="string">${ $.name }</item>
+                                <item name="actionName" xsi:type="string">actionDone</item>
+                            </item>
+                        </item>
+                    </item>
+                </option>
+            </options>
+        </settings>
+        <insertListing name="customer_select_grid">
+            <settings>
+                <autoRender>true</autoRender>
+                <dataScope>customers</dataScope>
+                <ns>customer_select_grid</ns>
+                <externalProvider>customer_select_grid.customer_select_grid_data_source</externalProvider>
+                <selectionsProvider>customer_select_grid.customer_select_grid.customer_columns.ids</selectionsProvider>
+            </settings>
+        </insertListing>
+    </modal>
+    <fieldset name="general">
+        <settings>
+            <collapsible>false</collapsible>
+            <label />
+        </settings>
+    </fieldset>
+</form>

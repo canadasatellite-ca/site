@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magento_Amazon::css/source/module.css"/>
+        <css src="Magento_Amazon::css/source/spectrum.css"/>
+    </head>
+    <body>
+        <container name="analytics" after="content">
+            <block class="Magento\Amazon\Block\Adminhtml\Analytics" name="adobe_analytics" template="Magento_Amazon::analytics.phtml"/>
+        </container>
+        <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" /><referenceContainer name="content">
+            <block class="Magento\Amazon\Block\Adminhtml\Amazon\Attribute\Value\View" name="amazon_attribute_view_grid">
+                <block class="Magento\Amazon\Block\Adminhtml\Amazon\Attribute\Value\View\Tabs" name="amazon_attribute_edit_tabs">
+                    <block class="Magento\Amazon\Block\Adminhtml\Amazon\Attribute\Value\View\Tab\Actions" name="attribute_value_form.form.container"/>
+                    <action method="addTab">
+                        <argument name="name" xsi:type="string">attribute_value_form</argument>
+                        <argument name="block" xsi:type="string">attribute_value_form.form.container</argument>
+                    </action>
+                    <block class="Magento\Amazon\Block\Adminhtml\Amazon\Attribute\Value\View\Tab\Grid" name="attribute_value_grid.grid.container"/>
+                    <action method="addTab">
+                        <argument name="name" xsi:type="string">attribute_value_grid</argument>
+                        <argument name="block" xsi:type="string">attribute_value_grid.grid.container</argument>
+                    </action>
+                </block>
+            </block>
+        </referenceContainer>
+        <referenceBlock name="attribute_value_form.form.container">
+            <block class="Magento\Amazon\Block\Adminhtml\Amazon\General" name="amazon_general_attribute_value_form" template="Magento_Amazon::amazon/attribute/value/actions.phtml"/>
+            <uiComponent name="amazon_attribute_value_form"/>
+        </referenceBlock>
+        <referenceBlock name="attribute_value_grid.grid.container">
+            <block class="Magento\Amazon\Block\Adminhtml\Amazon\General" name="amazon_general_attribute_value_grid" template="Magento_Amazon::amazon/attribute/value/products.phtml"/>
+            <uiComponent name="amazon_attribute_value_grid"/>
+        </referenceBlock>
+    </body>
+</page>

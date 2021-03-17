@@ -1,0 +1,11 @@
+<div class="aw-ar__review-list-nav" afterRender="$data.setToolbarNode">
+    <div class="aw-ar__review-list-nav__inner">
+        <div class="left-column" ko-scope="requestChild('listing_paging')">
+            <div render=""/>
+        </div>
+        <div if="getRegion('right-column')().length"
+             class="right-column">
+            <each args="getRegion('right-column')" render="getTemplate()"/>
+        </div>
+    </div>
+</div>

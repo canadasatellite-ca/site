@@ -1,0 +1,50 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Info $block */
+?>
+<?php $quote = $block->getQuote() ?>
+<div class="block block-order-details-view">
+    <div class="block-title">
+        <strong><?php echo $block->escapeHtml(__('Quote Information')) ?></strong>
+    </div>
+    <div class="block-content">
+        <?php if (!$quote->getIsVirtual()) : ?>
+            <div class="box box-order-shipping-address">
+                <strong class="box-title"><span><?php echo $block->escapeHtml(__('Shipping Address')) ?></span></strong>
+
+                <div class="box-content">
+                    <address><?php echo $block->getFormattedAddress($quote->getShippingAddress()); ?></address>
+                </div>
+            </div>
+
+            <div class="box box-order-shipping-method">
+                <strong class="box-title">
+                    <span><?php echo $block->escapeHtml(__('Shipping Method')) ?></span>
+                </strong>
+
+                <div class="box-content">
+                    <?php if ($quote->getShippingDescription()) : ?>
+                        <?php echo $block->escapeHtml($quote->getShippingDescription()) ?>
+                    <?php else : ?>
+                        <?php echo $block->escapeHtml(__('No shipping information available')); ?>
+                    <?php endif; ?>
+                </div>
+            </div>
+        <?php endif; ?>
+
+        <div class="box box-order-billing-address">
+            <strong class="box-title">
+                <span><?php echo $block->escapeHtml(__('Billing Address')) ?></span>
+            </strong>
+
+            <div class="box-content">
+                <address><?php echo $block->getFormattedAddress($quote->getBillingAddress()); ?></address>
+            </div>
+        </div>
+    </div>
+</div>

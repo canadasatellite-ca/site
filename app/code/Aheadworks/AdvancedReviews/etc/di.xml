@@ -1,0 +1,294 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\ReviewInterface" type="Aheadworks\AdvancedReviews\Model\Review" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\ReviewAttachmentInterface" type="Aheadworks\AdvancedReviews\Model\Review\Attachment" />
+    <preference for="Aheadworks\AdvancedReviews\Api\ReviewRepositoryInterface" type="Aheadworks\AdvancedReviews\Model\ReviewRepository" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\ReviewSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\AdvancedReviews\Api\ReviewManagementInterface" type="Aheadworks\AdvancedReviews\Model\Service\ReviewService" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\StatisticsInterface" type="Aheadworks\AdvancedReviews\Model\Statistics" />
+    <preference for="Aheadworks\AdvancedReviews\Api\StatisticsRepositoryInterface" type="Aheadworks\AdvancedReviews\Model\StatisticsRepository" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\CommentInterface" type="Aheadworks\AdvancedReviews\Model\Review\Comment" />
+    <preference for="Aheadworks\AdvancedReviews\Api\CommentRepositoryInterface" type="Aheadworks\AdvancedReviews\Model\Review\CommentRepository" />
+    <preference for="Aheadworks\AdvancedReviews\Api\CommentManagementInterface" type="Aheadworks\AdvancedReviews\Model\Service\Review\CommentService" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\CommentSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\QueueItemInterface" type="Aheadworks\AdvancedReviews\Model\QueueItem" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\QueueItemSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\AdvancedReviews\Api\QueueRepositoryInterface" type="Aheadworks\AdvancedReviews\Model\QueueRepository" />
+    <preference for="Aheadworks\AdvancedReviews\Api\QueueManagementInterface" type="Aheadworks\AdvancedReviews\Model\QueueManagement" />
+    <preference for="Aheadworks\AdvancedReviews\Api\HelpfulnessManagementInterface" type="Aheadworks\AdvancedReviews\Model\Service\Review\HelpfulnessService" />
+    <preference for="Aheadworks\AdvancedReviews\Model\Email\EmailMetadataInterface" type="Aheadworks\AdvancedReviews\Model\Email\EmailMetadata" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\VoteResultInterface" type="Aheadworks\AdvancedReviews\Model\Review\Helpfulness\VoteResult" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\AbuseReportInterface" type="Aheadworks\AdvancedReviews\Model\AbuseReport" />
+    <preference for="Aheadworks\AdvancedReviews\Api\AbuseReportRepositoryInterface" type="Aheadworks\AdvancedReviews\Model\AbuseReportRepository" />
+    <preference for="Aheadworks\AdvancedReviews\Api\AbuseReportManagementInterface" type="Aheadworks\AdvancedReviews\Model\Service\AbuseReportService" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\AbuseReportSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\Email\SubscriberInterface" type="Aheadworks\AdvancedReviews\Model\Email\Subscriber" />
+    <preference for="Aheadworks\AdvancedReviews\Api\Data\Email\SubscriberSearchResultsInterface" type="Magento\Framework\Api\SearchResults" />
+    <preference for="Aheadworks\AdvancedReviews\Api\EmailSubscriberRepositoryInterface" type="Aheadworks\AdvancedReviews\Model\Email\Subscriber\Repository" />
+    <preference for="Aheadworks\AdvancedReviews\Api\EmailSubscriberManagementInterface" type="Aheadworks\AdvancedReviews\Model\Service\Email\SubscriberService" />
+
+    <type name="Magento\Framework\EntityManager\MetadataPool">
+        <arguments>
+            <argument name="metadata" xsi:type="array">
+                <item name="Aheadworks\AdvancedReviews\Api\Data\ReviewInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Review::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Review::MAIN_TABLE_ID_FIELD_NAME</item>
+                </item>
+                <item name="Aheadworks\AdvancedReviews\Api\Data\CommentInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Comment::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Comment::MAIN_TABLE_ID_FIELD_NAME</item>
+                </item>
+                <item name="Aheadworks\AdvancedReviews\Api\Data\QueueItemInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Queue::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Queue::MAIN_TABLE_ID_FIELD_NAME</item>
+                </item>
+                <item name="Aheadworks\AdvancedReviews\Api\Data\AbuseReportInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\AbuseReport::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\AbuseReport::MAIN_TABLE_ID_FIELD_NAME</item>
+                </item>
+                <item name="Aheadworks\AdvancedReviews\Api\Data\Email\SubscriberInterface" xsi:type="array">
+                    <item name="entityTableName" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Email\Subscriber::MAIN_TABLE_NAME</item>
+                    <item name="identifierField" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Email\Subscriber::MAIN_TABLE_ID_FIELD_NAME</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="importReviews" xsi:type="object">Aheadworks\AdvancedReviews\Console\Command\Import</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\EntityManager\Operation\ExtensionPool">
+        <arguments>
+            <argument name="extensionActions" xsi:type="array">
+                <item name="Aheadworks\AdvancedReviews\Api\Data\ReviewInterface" xsi:type="array">
+                    <item name="read" xsi:type="array">
+                        <item name="sharedStoresReader" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\SharedStores\ReadHandler</item>
+                        <item name="commentReader" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\Comment\ReadHandler</item>
+                        <item name="orderItemReader" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\OrderItem\ReadHandler</item>
+                        <item name="attachmentReader" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\Attachment\ReadHandler</item>
+                    </item>
+                    <item name="create" xsi:type="array">
+                        <item name="sharedStoresCreator" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\SharedStores\SaveHandler</item>
+                        <item name="orderItemCreator" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\OrderItem\SaveHandler</item>
+                        <item name="attachmentCreator" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\Attachment\SaveHandler</item>
+                    </item>
+                    <item name="update" xsi:type="array">
+                        <item name="sharedStoresUpdater" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\SharedStores\SaveHandler</item>
+                        <item name="attachmentUpdater" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Relation\Attachment\SaveHandler</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\AdvancedReviews\Model\ReviewRepository">
+        <arguments>
+            <argument name="collectionProcessor" xsi:type="object">Aheadworks\AdvancedReviews\Model\Api\SearchCriteria\CollectionProcessor</argument>
+        </arguments>
+    </type>
+    <virtualType name="Aheadworks\AdvancedReviews\Model\Api\SearchCriteria\CollectionProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="filters" xsi:type="object">Aheadworks\AdvancedReviews\Model\Api\SearchCriteria\CollectionProcessor\ReviewFilterProcessor</item>
+                <item name="sorting" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\SortingProcessor</item>
+                <item name="pagination" xsi:type="object">Magento\Framework\Api\SearchCriteria\CollectionProcessor\PaginationProcessor</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\AdvancedReviews\Model\Api\SearchCriteria\CollectionProcessor\ReviewFilterProcessor" type="Magento\Framework\Api\SearchCriteria\CollectionProcessor\FilterProcessor">
+        <arguments>
+            <argument name="customFilters" xsi:type="array">
+                <item name="store_id" xsi:type="object">Aheadworks\AdvancedReviews\Model\Api\SearchCriteria\CollectionProcessor\FilterProcessor\Review\StoreFilter</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\ProcessorPool">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="vote_like" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\Processor\VoteLike</item>
+                <item name="unvote_like" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\Processor\UnvoteLike</item>
+                <item name="vote_dislike" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\Processor\VoteDislike</item>
+                <item name="unvote_dislike" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\Processor\UnvoteDislike</item>
+                <item name="from_like_to_dislike" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\Processor\FromLikeToDislike</item>
+                <item name="from_dislike_to_like" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Helpfulness\Vote\Processor\FromDislikeToLike</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Model\ResourceModel\Order">
+        <plugin name="aw-ar-save-order-plugin" type="Aheadworks\AdvancedReviews\Plugin\Model\Order" sortOrder="100" disabled="false"/>
+    </type>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Review\Author\Resolver\Pool">
+        <arguments>
+            <argument name="resolvers" xsi:type="array">
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType::GUEST -->
+                <item name="1" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Author\Resolver\Type\Guest</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType::CUSTOMER -->
+                <item name="2" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Author\Resolver\Type\Customer</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType::ADMIN -->
+                <item name="3" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Author\Resolver\Type\Admin</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Pool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::ADMIN_NEW_REVIEW -->
+                <item name="1" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Admin</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::SUBSCRIBER_REVIEW_APPROVED -->
+                <item name="2" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Subscriber</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::SUBSCRIBER_NEW_COMMENT -->
+                <item name="3" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Subscriber</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::SUBSCRIBER_REVIEW_REMINDER -->
+                <item name="4" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Subscriber</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::ADMIN_REVIEW_ABUSE_REPORT -->
+                <item name="5" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Admin</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::ADMIN_COMMENT_ABUSE_REPORT -->
+                <item name="6" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Admin</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::ADMIN_CRITICAL_REVIEW_ALERT -->
+                <item name="7" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Admin</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::ADMIN_NEW_COMMENT_FROM_VISITOR -->
+                <item name="8" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\QueueItem\Validator\Type\Admin</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Email\Subscriber\Checker\Pool">
+        <arguments>
+            <argument name="checkers" xsi:type="array">
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::SUBSCRIBER_REVIEW_APPROVED -->
+                <item name="2" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\Subscriber\Checker\EmailType\ReviewApproved</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::SUBSCRIBER_NEW_COMMENT -->
+                <item name="3" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\Subscriber\Checker\EmailType\NewComment</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Email\Type::SUBSCRIBER_REVIEW_REMINDER -->
+                <item name="4" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\Subscriber\Checker\EmailType\ReviewReminder</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Aheadworks\AdvancedReviews\Model\Email\Subscriber\DataExtractor\NotificationFlags" type="Aheadworks\AdvancedReviews\Model\Data\Extractor">
+        <arguments>
+            <argument name="fieldNames" xsi:type="array">
+                <item name="0" xsi:type="const">Aheadworks\AdvancedReviews\Api\Data\Email\SubscriberInterface::IS_REVIEW_APPROVED_EMAIL_ENABLED</item>
+                <item name="1" xsi:type="const">Aheadworks\AdvancedReviews\Api\Data\Email\SubscriberInterface::IS_NEW_COMMENT_EMAIL_ENABLED</item>
+                <item name="2" xsi:type="const">Aheadworks\AdvancedReviews\Api\Data\Email\SubscriberInterface::IS_REVIEW_REMINDER_EMAIL_ENABLED</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Email\Subscriber\Updater">
+        <arguments>
+            <argument name="dataExtractor" xsi:type="object">Aheadworks\AdvancedReviews\Model\Email\Subscriber\DataExtractor\NotificationFlags</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Aheadworks\AdvancedReviews\Model\Service\ReviewService\Processor\Creation" type="Aheadworks\AdvancedReviews\Model\Review\Processor\Composite">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="status" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Processor\Creation\Status</item>
+                <item name="author_type" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Processor\AuthorType</item>
+                <item name="guest_email" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Processor\GuestEmail</item>
+                <item name="author_type_update" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Processor\AuthorType</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Review\Validator\Agreements\Pool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType::GUEST -->
+                <item name="1" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator\Agreements\AuthorType\Guest</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType::CUSTOMER -->
+                <item name="2" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator\Agreements\AuthorType\Customer</item>
+                <!-- Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType::ADMIN -->
+                <item name="3" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator\Agreements\AuthorType\Admin</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Aheadworks\AdvancedReviews\Model\Review\Validator" type="Aheadworks\AdvancedReviews\Model\Review\Validator\Composite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="1" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator\Common</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Aheadworks\AdvancedReviews\Model\Review\Validator\Creation" type="Aheadworks\AdvancedReviews\Model\Review\Validator\Composite">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="1" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator\Agreements</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Review">
+        <arguments>
+            <argument name="validator" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator</argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Service\ReviewService">
+        <arguments>
+            <argument name="creationProcessor" xsi:type="object">Aheadworks\AdvancedReviews\Model\Service\ReviewService\Processor\Creation</argument>
+            <argument name="creationValidator" xsi:type="object">Aheadworks\AdvancedReviews\Model\Review\Validator\Creation</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Collection\AggregatedContent\Expression" type="Magento\Framework\DB\Sql\ConcatExpression">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="pros" xsi:type="array">
+                    <item name="columnName" xsi:type="const">Aheadworks\AdvancedReviews\Api\Data\ReviewInterface::PROS</item>
+                </item>
+                <item name="cons" xsi:type="array">
+                    <item name="columnName" xsi:type="const">Aheadworks\AdvancedReviews\Api\Data\ReviewInterface::CONS</item>
+                </item>
+                <item name="content" xsi:type="array">
+                    <item name="columnName" xsi:type="const">Aheadworks\AdvancedReviews\Api\Data\ReviewInterface::CONTENT</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Collection">
+        <arguments>
+            <argument name="aggregatedContentExpression" xsi:type="object">Aheadworks\AdvancedReviews\Model\ResourceModel\Review\Collection\AggregatedContent\Expression</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="aw_advanced_reviews_queue_listing_data_source" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Queue\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Aheadworks\AdvancedReviews\Model\ResourceModel\Queue\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="const">Aheadworks\AdvancedReviews\Model\ResourceModel\Queue::MAIN_TABLE_NAME</argument>
+            <argument name="eventPrefix" xsi:type="string">aw_advanced_reviews_queue_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">queue_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Aheadworks\AdvancedReviews\Model\ResourceModel\Queue</argument>
+        </arguments>
+    </type>
+
+    <type name="Aheadworks\AdvancedReviews\Model\Email\UrlBuilder">
+        <arguments>
+            <argument name="frontendUrlBuilder" xsi:type="object">Magento\Framework\Url</argument>
+        </arguments>
+    </type>
+
+</config>

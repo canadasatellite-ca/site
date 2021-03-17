@@ -1,0 +1,71 @@
+<?php
+/** @var CanadaSatellite\Theme\Block\Customer\Card\ListCard $block */
+?>
+
+<?php 
+    $cards = $block->getCustomerCards() ;
+?>
+
+<?php if(count($cards) > 0): ?>
+    <button 
+        type="button"
+        title="<?php echo __("Add New Card") ?>" class="addcardbutton button action primary <?php if(count($cards) == 0 || count($cards) == null):?> addmargin <?php endif;?>" 
+        onclick="window.location='<?php echo $block->getAddCardUrl() ?>';">
+        <span><span><?php echo __("Add New Card") ?></span></span>
+    </button>
+
+    <div class="table-wrapper">
+        <table class="data table cards" id="my-saved-cards-table">
+            <col />
+            <col />
+            <col width="5"/>
+            <thead>
+                <tr>
+                    <th class="a-left view"><?php echo __('Card #') ?></th>
+                    <th class="a-center view"><?php echo __('Card Info') ?></th>
+                    <th class="a-right view"><?php echo __('Action') ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($cards as $_card): ?>
+                    <tr>
+                        <td class="a-left view"><strong><?php echo "XXXX-". $_card->getLastFourDigits() ?></strong></td>
+                        <td class="a-center view"><?php  echo $block->getInfoHtml($_card); ?></td>
+                        <td class="a-right view">
+                            <span class="nobr">
+                                    <a href="<?php echo $block->getEditCardUrl($_card) ?>" style="text-decoration: none;">
+                                        <button class="button action primary" name="profile_edit" value="edit" type="submit"> <span><span><?php echo __("Edit") ?></span></span></button>
+                                    </a>
+                                    <span class="separator">&nbsp;|&nbsp;</span>
+                                    <form onsubmit="return confirm('Are you sure want to delete credit card details?');" 
+                                          method="post" 
+                                          id="form_delete_<?php echo $_card->getId() ?>" 
+                                          name="form_delete_<?php echo $_card->getId() ?>" 
+                                          action="<?php echo $block->getDeleteCardUrl() ?>"
+                                          style="display:inline-block;">
+                                        <input type="hidden" name="card_id" value="<?php echo $_card->getId() ?>" />
+                                        <button class="button action primary" name="profile_delete" value="delete" type="submit"><span><span><?php echo __("Delete") ?></span></span></button>
+                                    </form>
+                            </span>
+                        </td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php else: ?>
+    <div class="message info empty"><span><?php echo __('You have no credit cards.') ?></span></div>
+    <button 
+        type="button"
+        title="<?php echo __("Add New Card") ?>" class="addcardbutton button action primary <?php if(count($cards) == 0 || count($cards) == null):?> addmargin <?php endif;?>" 
+        onclick="window.location='<?php echo $block->getAddCardUrl() ?>';">
+        <span><span><?php echo __("Add New Card") ?></span></span>
+    </button>
+<?php endif; ?>
+
+<div class="actions-toolbar">
+    <a href="<?php echo $block->getBackUrl() ?>" style="text-decoration: none;">
+        <button class="button action primary" type="submit"><span><span><?php echo __("Manage SIMs") ?></span></span>
+        </button>
+    </a>
+</div>

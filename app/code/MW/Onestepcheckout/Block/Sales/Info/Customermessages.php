@@ -1,0 +1,30 @@
+<?php
+
+namespace MW\Onestepcheckout\Block\Sales\Info;
+
+class Customermessages extends \Magento\Framework\View\Element\Template
+{
+	/**
+	 * @var \Magento\Framework\Registry
+	 */
+	protected $_coreRegistry;
+
+	public function __construct(
+		\Magento\Framework\View\Element\Template\Context $context,
+		\Magento\Framework\Registry $coreRegistry,
+		array $data = []
+	) {
+		$this->_coreRegistry = $coreRegistry;
+		parent::__construct($context, $data);
+	}
+
+	/**
+	 * Retrive current order
+	 * 
+	 * @return \Magento\Sales\Model\Order
+	 */
+	public function getOrderInformation()
+	{
+		return $this->_coreRegistry->registry('current_order');
+	}
+}

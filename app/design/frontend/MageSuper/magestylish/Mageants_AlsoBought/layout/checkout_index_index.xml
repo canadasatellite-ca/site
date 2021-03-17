@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+
+    <body>
+        <referenceContainer name="content">
+            <block class="Mageants\AlsoBought\Block\Catalog\Cart\Collection" name="cart.also.bought" template="Magento_Catalog::product/list/items.phtml" after="-" ifconfig="alsobought_section/alsobought_product/alsobought_product_display"/>
+        </referenceContainer>
+    </body>
+</page>

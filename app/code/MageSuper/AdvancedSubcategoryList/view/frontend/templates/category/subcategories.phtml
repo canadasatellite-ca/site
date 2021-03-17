@@ -1,0 +1,105 @@
+<?php
+$_subcategoriesCollection = $block->getCategoryList();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_columnclass = "col-md-";
+$_columnCount = $block->getCurrentCategoryChildernColumnCount();
+$_columnCountMobile = $block->getCurrentCategoryMobileChildernColumnCount();
+$_columnCountTablet = $block->getCurrentCategoryTabletChildernColumnCount();
+$_columnclassMobile = "col-xs-";
+$_columnclassTablet = "col-sm-";
+
+switch ($_columnCount) {
+    case "1":
+        $_columnclass .= "24";
+        break;
+    case "2":
+        $_columnclass .= "12";
+        break;
+    case "3":
+        $_columnclass .= "8";
+        break;
+    case "4":
+        $_columnclass .= "6";
+        break;
+    case "5":
+        $_columnclass .= "5new";
+        break;
+    case "6":
+        $_columnclass .= "4";
+        break;
+    default:
+        $_columnclass .= "4";
+}
+
+switch ($_columnCountMobile) {
+    case "1":
+        $_columnclassMobile .= "24";
+        break;
+    case "2":
+        $_columnclassMobile .= "12";
+        break;
+    case "3":
+        $_columnclassMobile .= "8";
+        break;
+    default:
+        $_columnclassMobile .= "24";
+}
+
+switch ($_columnCountTablet) {
+    case "1":
+        $_columnclassTablet .= "24";
+        break;
+    case "2":
+        $_columnclassTablet .= "12";
+        break;
+    case "3":
+        $_columnclassTablet .= "8";
+        break;
+    case "4":
+        $_columnclassTablet .= "6";
+        break;
+    case "6":
+        $_columnclassTablet .= "4";
+        break;
+    default:
+        $_columnclassTablet .= "8";
+}
+
+$plaholdeimage=$block->getPlaceholderImage();
+?>
+<?php $iterator = 1; ?>
+<?php if (!$_subcategoriesCollection->count()): ?>
+<?php else: ?>
+    <div class="subcategory-container">
+        <ul class="subcatlist">
+            <?php foreach ($_subcategoriesCollection as $subcategory): ?>
+                <li class="<?php echo $_columnclassTablet . ' ' . $_columnclass . ' ' . $_columnclassMobile?>">
+                    <div class="subcatitem">
+                        <?php
+                        if (!is_null($subcategory->getUrlPath())) {
+                            $link = $block->getBaseUrl().$subcategory->getUrlPath().'.htm';
+                        } else {
+                            $link = $block->getSpecificCategoryUrl($subcategory);
+                        }
+                        ?>
+                        <a href="<?php echo $link; ?>">
+                            <h3 class="subcat-title"><?php echo $subcategory->getName();?></h3>
+                            <div class="subcat-image">
+                                <?php	if ($_imgUrl = $block->getThumbnailUrl($subcategory)) :
+                                    $_imgHtml = '<img src="' . $_imgUrl . '" alt="' . $block->escapeHtml($subcategory->getName()) . '" title="' . $block->escapeHtml($subcategory->getName()) . '" class="image" />';
+                                    $_imgHtml = $_helper->categoryAttribute($subcategory, $_imgHtml, 'thumbnail');
+                                    /* @escapeNotVerified */ echo $_imgHtml;
+                                    ?>
+                                <?php else :?>
+                                    <img src="<?php echo $plaholdeimage ?>" title="<?php echo $subcategory->getName() ?>"/>
+                                <?php endif;?>
+                            </div>
+                        </a>
+                    </div>
+
+                </li>
+            <?php endforeach; ?>
+            <div class="clear"></div>
+        </ul>
+    </div>
+<?php endif; ?>

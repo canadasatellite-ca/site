@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="sales_order_create_load_block_data"/>
+    <body>
+        <referenceBlock name="data">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Cart2Quote_Quotation::quote/create/data.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="order.create.shipping.method.form">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Cart2Quote_Quotation::quote/create/shipping/method/form.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="comment">
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">Cart2Quote_Quotation::quote/create/comment.phtml</argument>
+            </action>
+        </referenceBlock>
+    </body>
+</page>

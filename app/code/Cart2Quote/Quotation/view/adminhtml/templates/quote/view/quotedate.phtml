@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+
+<div class="admin__field field-comment ">
+    <th>
+        <label for="quote-date" class="admin__field-label">
+            <span><?php echo $block->escapeHtml($block->getHeaderText()) ?></span>
+        </label>
+    </th>
+    <td>
+        <?php echo $block->escapeHtml($block->getFormattedQuoteLocaleDate()) ?>
+    </td>
+</div>

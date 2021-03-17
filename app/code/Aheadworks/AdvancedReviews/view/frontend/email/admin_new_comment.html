@@ -1,0 +1,24 @@
+<!--@subject {{trans 'New Comment on %product_name' product_name=$product_name}} @-->
+<!--@vars {
+"var product_name":"Product Name",
+"var review":"Review",
+"var comment":"Comment data",
+"var review_url": "Review Url"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="notification-content">
+    {{trans 'There is a new comment on '}}{{var product_name|raw}}
+    <br>
+    <br>
+    <b>{{trans 'Review Summary:'}}</b> {{var review.summary}}<br>
+    <b>{{trans 'Review Rating:'}}</b> {{var review.absolute_rating}} {{trans 'star(s)'}}<br>
+    <b>{{trans 'Comment Content:'}}</b>
+<p class="comment-content">
+    <i>{{var comment.content}}</i>
+</p>
+
+Click <a href="{{var review_url}}">here</a> to approve it.
+</p>
+
+{{template config_path="design/email/footer_template"}}

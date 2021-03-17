@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="buttons" xsi:type="array">
+            <item name="export" xsi:type="string">Aitoc\OrdersExportImport\Block\Adminhtml\Profile\Edit\ExportButton</item>
+        </item>
+    </argument>
+    <listingToolbar name="listing_top">
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    <item name="urlPath" xsi:type="string">ordersexportimport/profile/export</item>
+                <item name="paramName" xsi:type="string">profile_id</item>
+                </item>
+            </argument>
+            <action name="export_order">
+                <settings>
+                    <type>export_order</type>
+                    <label translate="true">Export</label>
+                    <actions class="Aitoc\OrdersExportImport\Ui\Component\MassAction\Profile\Options"/>
+                </settings>
+<!--                <argument name="data" xsi:type="array">-->
+<!--                    <item name="config" xsi:type="array">-->
+<!--                        <item name="type" xsi:type="string">export_order</item>-->
+<!--                        <item name="label" xsi:type="string" translate="true">Export</item>-->
+<!--                    </item>-->
+<!--                </argument>-->
+<!--                <argument name="actions" xsi:type="configurableObject">-->
+<!--                    <argument name="class" xsi:type="string">Aitoc\OrdersExportImport\Ui\Component\MassAction\Profile\Options</argument>-->
+<!--                    <argument name="data" xsi:type="array">-->
+<!--                        <item name="urlPath" xsi:type="string">ordersexportimport/profile/export</item>-->
+<!--                        <item name="paramName" xsi:type="string">profile_id</item>-->
+<!--                    </argument>-->
+<!--                </argument>-->
+            </action>
+        </massaction>
+    </listingToolbar>
+</listing>

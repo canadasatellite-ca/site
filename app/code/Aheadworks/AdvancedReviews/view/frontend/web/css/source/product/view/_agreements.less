@@ -1,0 +1,36 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-ar__agreements-block {
+    .aw-ar__agreements {
+      margin-bottom: @indent__base;
+    }
+
+    .action-show {
+      &:extend(.abs-action-button-as-link all);
+      vertical-align: baseline;
+    }
+  }
+
+  //  Agreements in popup
+  .aw-ar__agreements-items {
+    &:extend(.abs-reset-list all);
+    padding-bottom: @indent__l;
+
+    .aw-ar__agreements-item {
+      margin-bottom: @indent__base;
+    }
+
+    .aw-ar__agreements-item-title {
+      &:extend(.abs-checkout-title all);
+      border-bottom: 0;
+    }
+  }
+
+  //  Checkout Agreements
+  .aw-ar__agreement-item-content {
+    overflow: auto;
+  }
+}

@@ -1,0 +1,34 @@
+<div data-role="aw-ar__agreements" class="aw-ar__agreements-block" if="isNeedToRender()">
+    <div class="aw-ar__agreements">
+        <fastForEach args="data: agreementsData, as: 'agreementsDataRow'" >
+            <div if="agreementsDataRow.isRequired"
+                 class="aw-ar__agreement required">
+                <input type="checkbox" class="required-entry"
+                       data-bind="attr: {
+                                    'id': $parent.getCheckboxId(agreementsDataRow.agreementId),
+                                    'name': 'agreement[' + agreementsDataRow.agreementId + ']',
+                                    'value': agreementsDataRow.agreementId,
+                                    'data-errors-message-box': '#' + $parent.getErrorsMessageBoxId(agreementsDataRow.agreementId),
+                                    }"/>
+                <label data-bind="attr: {'for': $parent.getCheckboxId(agreementsDataRow.agreementId)}">
+                    <button type="button"
+                            class="action action-show"
+                            data-bind="click: function(data, event) { return $parent.showContent(data, event) }">
+                        <span data-bind="html: agreementsDataRow.checkboxText"></span>
+                    </button>
+                </label>
+                <div data-bind="attr: { 'id': $parent.getErrorsMessageBoxId(agreementsDataRow.agreementId) }"></div>
+            </div>
+            <div ifnot="agreementsDataRow.isRequired"
+                 class="aw-ar__agreement">
+                <button type="button" class="action action-show"
+                        data-bind="click: function(data, event) { return $parent.showContent(data, event) }">
+                    <span data-bind="html: agreementsDataRow.checkboxText"></span>
+                </button>
+            </div>
+        </fastForEach>
+        <div id="aw-ar__agreements-modal" data-bind="afterRender: initModal" style="display: none">
+            <div class="aw-ar__agreements-item-content" data-bind="html: modalContent"></div>
+        </div>
+    </div>
+</div>

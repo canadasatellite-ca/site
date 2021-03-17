@@ -1,0 +1,230 @@
+<?php
+$allCategories = $block->getAllCategories();
+$faqQuestions = $block->getMostViewedQuestion();
+$route = $block->getFaqsRoute();
+//echo "<pre>"; print_r($faqQuestions->getData()); exit();
+//print_r($faqQuestion->getData());
+?>
+<?php if(count($allCategories) > 0) { ?>
+<div class="main-faqs-page-index-view">
+    <div class="faq_search">
+        <div class="faq_search_control">
+            <form  id="md_faq_search" data-mage-init='{"validation": {}}' 
+                   action="<?php echo $block->escapeHtml($block->getFaqSearchUrl()); ?>" method="get">
+                <input type="text" class="input-text" 
+                       data-validate="{required:true}" 
+                       id="faq_text_search" name="sqr" 
+                       placeholder="<?php echo $block->escapeHtml(__('Search here...')); ?>"
+                       />
+            </form>
+        </div>
+    </div>
+</div>
+<?php } ?>
+<?php if(count($faqQuestions) > 0) { ?>
+<div class="main-faqs-page-index-view">
+    <h3 class="faqcat-title" style="color: #3399cc" title="Most FAQ">Most FAQ</h3>
+    <div class="panel-group question-list" id="accordion" >
+        <?php foreach ($faqQuestions as $faqQuestion) {
+            $textactiveColor=$faqQuestion->getTextColorActive();
+            if(!$textactiveColor){
+                $textactiveColor='#b60304';
+            }
+            ?>
+            <div class="panel panel-default" style="margin-bottom: <?php echo $faqQuestion->getQuestionMarginBottom(); ?>">
+                <?php $randomNumber = rand(999, 9999); ?>
+                <div class="panel-heading faqcat-question collapsed"
+                     data-toggle="collapse"
+                     data-target="#collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>"
+                     data-parent="#accordion"
+                     data-animated="<?php echo $faqQuestion->getAnimationType(); ?>"
+                     data-color-active="<?php echo $textactiveColor; ?>"
+                     data-bg-color-active="<?php echo $faqQuestion->getBackgrondActive(); ?>"
+                     data-color="<?php echo $faqQuestion->getTextColor(); ?>"
+                     data-bg-color="<?php echo $faqQuestion->getBackground(); ?>"
+                     style="background-color:<?php echo $faqQuestion->getBackground(); ?>;
+                     border-color: <?php echo $faqQuestion->getBorderColor(); ?>;
+                     border-width:<?php echo $faqQuestion->getBorderWidth(); ?>;
+                     border-radius: <?php echo $faqQuestion->getBorderRadius(); ?>;"
+                     >
+                    <h4 class="panel-title">
+                        <a class="accordion-toggle faq_questions_title" style="color:<?php echo $faqQuestion->getTextColor(); ?>;  font-size: <?php echo $faqQuestion->getfontSize(); ?>" href="javascript:void(0);">
+                    <?php  
+                        $icon = ($faqQuestion->getIconClass()) ? $faqQuestion->getIconClass() :'fa-plus-square-o';
+                        $iconActive = ($faqQuestion->getIconActive()) ? $faqQuestion->getIconActive() :'fa-minus-square-o';
+                    ?>
+                            <i data-icon="<?php echo $icon; ?>" data-icon-active=" <?php echo $iconActive; ?>" class="main_icon fa <?php echo $icon; ?>"></i> 
+                            &nbsp;<?php echo $block->escapeHtml($faqQuestion->getQuestion()); ?>
+                        </a>
+                    </h4>
+                </div>
+                <div  style="animation-duration: <?php echo $faqQuestion->getAnimationSpeed(); ?>;  -webkit-animation-duration: <?php echo $faqQuestion->getAnimationSpeed(); ?>;" id="collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>" class="panel-collapse collapse animated">   
+                    <div class="panel-body">
+                        <?php /* @noEscape */ echo $block->getAnswerContant($faqQuestion->getAnswer()); ?> ...
+                        <a style="color: #fc6b1f" href="<?php echo $block->getUrl('faqs/question/view/id/' . $faqQuestion->getId() . ''); ?>">Read more</a>
+                    </div>
+                </div>
+            </div>
+
+        <?php } ?>
+    </div>
+</div>
+<?php } ?>
+<div class="faq-index-list-view">
+    <?php
+    foreach ($allCategories as $category) {
+        $faqQuestions = $block->getQuestionCollection($category->getCategoryId());
+        $categoryModel = $block->LoadCategoryModel($category->getCategoryId());
+        $icon = ($category->getIcon()) ? $category->getIcon() :'fa-folder-open';
+        $color = ($category->getBackground()) ? $category->getBackground() :'#fc6b1f';
+        ?>
+        <div id="faqcategory-<?php echo $category->getCategoryId(); ?>" class="faqcat-block">
+            <a title="<?php echo $category->getTitle(); ?>" href="<?php echo $block->getUrl($route.'/' . $category->getUrlKey()); ?>">
+                    <h3 class="faqcat-title" style="color: <?php echo $color; ?>" title="<?php echo $category->getTitle(); ?>">
+                        <i class="line" style="border-bottom-color: <?php echo $color; ?>"></i>
+                        <i class="fa <?php echo $icon; ?>" style="color: <?php echo $color; ?>"></i>
+                        <small class="pull-right">
+                            <i class="fa fa-hdd-o fa-fw"></i><?php echo $faqQuestions->getSize(); ?></small>
+                        <?php echo $category->getTitle(); ?>				
+                    </h3>
+                </a>
+            <div class="faqcat-desc"><?php echo $category->getDescription(); ?></div>
+            <div class="main-faqs-page-index-view">
+                <div class="panel-group question-list " id="accordion-<?php echo $category->getCategoryId(); ?>" >
+                        <?php foreach ($faqQuestions as $faqQuestion) { ?>
+                        <div class="panel panel-default">
+        <?php $randomNumber = rand(999, 9999); ?>
+                            <div class="panel-heading faqcat-question collapsed"
+                                 data-toggle="collapse"
+                                 data-target="#collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>"
+                                 data-parent="#accordion-<?php echo $category->getCategoryId(); ?>"
+                                 data-animated="<?php echo $categoryModel->getAnimationType(); ?>"
+                                 data-color-active="<?php echo $categoryModel->getTextColorActive(); ?>"
+                                 data-bg-color-active="<?php echo $categoryModel->getBackgrondActive(); ?>"
+                                 data-color="<?php echo $categoryModel->getTextColor(); ?>"
+                                 data-bg-color="<?php echo $categoryModel->getBackground(); ?>"
+                                 style="background-color:<?php echo $categoryModel->getBackground(); ?>; border-color: <?php echo $categoryModel->getBorderWidth(); ?>; border-width:<?php echo $categoryModel->getBorderColor(); ?>;border-radius: <?php echo $categoryModel->getBorderRadius(); ?>; "
+                                 >
+                                <h4 class="panel-title">
+                                    <a class="accordion-toggle faq_questions_title" style="color:<?php echo $categoryModel->getTextColor(); ?>" href="javascript:void(0);">
+                        <?php  
+                        $iconCat = ($categoryModel->getIconClass()) ? $categoryModel->getIconClass() :'fa-plus-square-o';
+                        $iconActiveCat = ($categoryModel->getIconActive()) ? $categoryModel->getIconActive() :'fa-minus-square-o';
+                        ?>
+                        <i data-icon="<?php echo $iconCat; ?>" data-icon-active="<?php echo $iconActiveCat; ?>" class="main_icon fa <?php echo $iconCat; ?>"></i> 
+        <?php echo $block->escapeHtml($faqQuestion->getQuestion()); ?>
+                                    </a>
+                                </h4>
+                            </div>
+                            <div id="collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>" class="panel-collapse collapse animated">   
+                                <div class="panel-body">
+        <?php /* @noEscape */ echo $faqQuestion->getAnswer(); ?> ...
+                                    <a style="color: #fc6b1f" href="<?php echo $block->getUrl('faqs/question/view/id/' . $faqQuestion->getId() . ''); ?>">Read more</a>
+                                </div>
+                            </div>
+                        </div>
+
+    <?php } ?>
+                </div>
+            </div>
+        </div>
+<?php } ?>
+</div>
+
+<script>
+    require(['jquery', 'jquery.bootstrap','jquery/ui'], function ($) {
+        $.widget("custom.faqcomplete", $.ui.autocomplete, {
+            _create: function () {
+                this._super();
+                this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+            },
+            _renderMenu: function (ul, items) {
+                var that = this,
+                        currentCategory = "";
+                $.each(items, function (index, item) {
+                    var li;
+                    if (item.category != currentCategory) {
+                        ul.append("<li class='ui-autocomplete-category'>" + item.category + "</li>");
+                        currentCategory = item.category;
+                    }
+                    li = that._renderItemData(ul, item);
+
+                    if (item.category) {
+                        li.attr("aria-label", item.category + " : " + item.label);
+
+                    }
+                });
+            },
+            search: function (value, event) {
+                value = value != null ? value : this._value();
+
+                // always save the actual value, not the one passed as an argument
+                this.term = this._value();
+
+                if (value.length == 0) {
+                    message = '';
+                    this.liveRegion.text(message);
+                    return this.close(event);
+                }
+
+                if (this._trigger("search", event) === false) {
+                    return;
+                }
+
+                return this._search(value);
+            }
+
+        });
+        $(function () {
+            var data = <?php echo $block->getJsonData(); ?>;
+            if(data != 'null'){
+                data = <?php echo $block->getJsonData(); ?>;
+                $("#faq_text_search").faqcomplete({
+                delay: 0,
+                source: data,
+                select: function (event, ui) {
+                    var uiItems = ui.item;
+                    var categoryId = uiItems.category_id;
+                    $('#faq_text_search').val(uiItems.value);
+                    $( "#md_faq_search" ).submit();
+                }
+            });
+            }else{
+                $("#faq_text_search").faqcomplete({
+                delay: 0,
+                source: data,
+                select: function (event, ui) {
+                    var uiItems = ui.item;
+                    var categoryId = uiItems.category_id;
+                    $('#faq_text_search').val(uiItems.value);
+                    $( "#md_faq_search" ).submit();
+                }
+            });
+            } 
+        });
+        $(document).ready(function () {
+            $('.collapse').on('shown.bs.collapse', function (e) {
+                var animated = $(this).parent().find(".faqcat-question").attr('data-animated');
+                var colorActive = $(this).parent().find(".faqcat-question").attr('data-color-active');
+                var bgColorActive = $(this).parent().find(".faqcat-question").attr('data-bg-color-active');
+                var dataIcon = $(this).parent().find(".main_icon").attr('data-icon');
+
+                var dataIconActive = $(this).parent().find(".main_icon").attr('data-icon-active');
+                
+                $(this).addClass(animated);
+                $(this).parent().find('.main_icon').removeClass(dataIcon).addClass(dataIconActive);
+                $(this).parent().find(".faqcat-question").css("background-color", bgColorActive);
+                $(this).parent().find(".faq_questions_title").css("color", colorActive);
+
+            }).on('hidden.bs.collapse', function () {
+                var color = $(this).parent().find(".faqcat-question").attr('data-color');
+                var bgColor = $(this).parent().find(".faqcat-question").attr('data-bg-color');
+                var dataIcon = $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive = $(this).parent().find(".main_icon").attr('data-icon-active');
+                $(this).parent().find('.main_icon').removeClass(dataIconActive).addClass(dataIcon);
+                $(this).parent().find(".faqcat-question").css("background-color", bgColor);
+                $(this).parent().find(".faq_questions_title").css("color", color);
+            });
+        });
+    });
+</script>

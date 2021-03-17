@@ -1,0 +1,42 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th class="data-grid-th"><span data-bind="i18n: 'Status'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'No Limitation'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'Locked'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'Finalized'"></span></th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach: getstatusesFields()">
+    <tr style="text-align: center">
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <span data-bind="i18n: label"></span>
+        </td>
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <input data-bind="checked: limitation, checkedValue: name"
+                   type="checkbox"
+                   name="limitation"/>
+        </td>
+
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <input data-bind="checked: locked, checkedValue: name"
+                   type="checkbox"
+                   name="locked"/>
+        </td>
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <input data-bind="checked: finalized, checkedValue: name"
+                   type="checkbox"
+                   name="finalized"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<input data-bind="attr: { id: htmlId, name: name}, value: ko.toJSON(getstatusesFields())"
+       class=" input-text admin__control-text"
+       type="text"
+       style="display: none">

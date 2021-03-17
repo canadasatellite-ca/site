@@ -1,0 +1,49 @@
+<?php
+/**
+ * Cart2Quote
+ */
+?>
+
+<div class="quote-date date-zone"><?php echo __(
+    '<span class="label">Quote Request Date:</span> %1',
+    '<date>' . $block->formatDate(
+        $block->getQuote()->getCreatedAt(),
+        \IntlDateFormatter::LONG
+    )    . '</date>'
+)?></div>
+<?php if ($block->getQuote()->getExpiryEnabled()): ?>
+<div class="quote-expiry-date date-zone"><?php echo __(
+        '<span class="label">Proposal Valid Until:</span> %1',
+        '<date>' . $block->formatDate(
+            $block->getQuote()->getExpiryDate(),
+            \IntlDateFormatter::LONG
+        )    . '</date>'
+    )?></div>
+<?php endif; ?>
+<?php $_note = $block->getQuote()->getCustomerNote(); ?>
+<?php if (isset($_note)) : ?>
+    <div class="block block-order-details-view">
+        <strong class="box-title"><span><?php echo __('Remarks with proposal') ?></span></strong>
+
+        <div class="block-content">
+            <div class="box box-quote-remarks">
+                <div class="box-content">
+                    <?php echo $_note; ?>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<?php endif; ?>
+
+<?php
+$directory = \Magento\Framework\App\ObjectManager::getInstance()->get('\Magento\Framework\App\Filesystem\DirectoryList');
+$quote =$block->getQuote();
+$id = $quote->getIncrementId();
+$filePath = 'quotation/Canada-Satellite-Quote-'.$id.'.pdf';
+$path = $directory->getPath(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA) . DIRECTORY_SEPARATOR . $filePath;
+if(file_exists($path)): ?>
+    <div style="text-align: right;font-size: 16px">
+        <a href="<?php echo $this->getUrl('quotecheckout/quote/download',array('quote_id' => $quote->getEntityId()))?>"><?php echo __('Print Proposal')?></a>
+    </div>
+<?php endif;?>

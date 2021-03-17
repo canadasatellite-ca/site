@@ -1,0 +1,15 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<div id="co-guest-form">
+    <div data-bind="visible: showCreateAccount">
+        <input type="checkbox" id="chkbox-request-account"
+               data-bind="checkedValue: requestAccount, checked: requestAccount"/>
+        <label for="chkbox-request-account">
+            <span data-bind="i18n: 'Enter Shipping Details'"></span>
+            <span class="co-guest-form-explainer" data-bind="i18n: 'Enter your shipping and billing details to create an account, receive custom shipping prices and manage your quote requests online.'"></span>
+        </label>
+
+    </div>
+</div>

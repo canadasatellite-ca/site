@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\File $block */ ?>
+
+<?php $uploadedFiles = $block->getUploadedFiles(); ?>
+<?php if (is_array($uploadedFiles)) : ?>
+    <tr>
+        <th>
+            <label class="admin__field-label" for="uploaded_files">
+                <?php echo $block->escapeHtml(__('Uploaded Files:')) ?>
+            </label>
+        </th>
+        <td class="uploaded-files">
+        <?php foreach ($uploadedFiles as $file) : ?>
+                <?php echo sprintf('<li><a href="%s">%s</a></li>', $block->getDownloadUrl($file), $block->trimFileName($file)); ?>
+            <?php endforeach; ?>
+        </td>
+    </tr>
+<?php endif; ?>

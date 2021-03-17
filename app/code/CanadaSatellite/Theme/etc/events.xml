@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_type_onepage_save_order_after">
+        <observer name="checkout_type_onepage_save_order_after"
+                  instance="CanadaSatellite\Theme\Observer\CheckoutTypeOnepageSaveOrderAfterObserver"/>
+    </event>
+    <event name="controller_action_predispatch_aw_advanced_reviews_review_submit">
+        <observer name="captcha_review_product_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+    <event name="controller_action_predispatch_aw_advanced_reviews_review_comment">
+        <observer name="captcha_comment_product_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+    <event name="controller_action_predispatch_newsletter_subscriber_new">
+        <observer name="captcha_subscribe_newsletter_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+    <event name="controller_action_predispatch_customer_account_createpost">
+        <observer name="captcha_register_customer_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+    <event name="controller_action_predispatch_onestepcheckout_index_updateordermethod">
+        <observer name="captcha_submitcheckout_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+    <event name="sales_quote_address_save_before">
+        <observer name="sales_quote_address_save_before_fix_extension"
+                  instance="CanadaSatellite\Theme\Observer\QuoteFixExtension"/>
+    </event>
+    <event name="catalog_product_save_before">
+        <observer name="catalog_product_save_before_bundle_sum_simple_prices"
+                  instance="CanadaSatellite\Theme\Observer\BundleSumSimplePrices"/>
+    </event>
+</config>

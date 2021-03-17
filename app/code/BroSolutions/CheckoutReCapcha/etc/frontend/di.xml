@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <type name="Magento\Checkout\Block\Onepage">
+        <arguments>
+            <argument name="layoutProcessors" xsi:type="array">
+                <item name="msp_checkout_payment_recaptcha" xsi:type="object">\BroSolutions\CheckoutReCapcha\Block\LayoutProcessor\Checkout\Onepage</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="MSP\ReCaptcha\Model\LayoutSettings">
+        <plugin name="msp_layout_checkout_payment_settings" type="BroSolutions\CheckoutReCapcha\Plugin\LayoutSettings" />
+    </type>
+
+    <virtualType name="BroSolutions\CheckoutReCapcha\Model\Provider\IsCheckRequired\Frontend\CheckoutPayment"
+                 type="MSP\ReCaptcha\Model\IsCheckRequired">
+        <arguments>
+            <argument name="enableConfigFlag"
+                      xsi:type="string">msp_securitysuite_recaptcha/frontend/enabled_checkout_payment</argument>
+            <argument name="area" xsi:type="string">frontend</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="BroSolutions\CheckoutRecapcha\Observer\Frontend\CheckoutPaymentObserver"
+                 type="MSP\ReCaptcha\Observer\ReCaptchaObserver">
+        <arguments>
+            <argument name="isCheckRequired"
+                      xsi:type="object">BroSolutions\CheckoutReCapcha\Model\Provider\IsCheckRequired\Frontend\CheckoutPayment</argument>
+            <argument name="failureProvider"
+                      xsi:type="object">BroSolutions\CheckoutReCapcha\Model\Provider\Failure\CheckoutPaymentResponseFailure</argument>
+        </arguments>
+    </virtualType>
+
+</config>

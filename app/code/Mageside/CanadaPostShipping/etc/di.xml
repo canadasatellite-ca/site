@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Model\Order\Shipment">
+        <plugin name="ms_afterSaveShipment"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Sales\Model\Order\Shipment"/>
+    </type>
+    <type name="Magento\Shipping\Model\Shipping\LabelGenerator">
+        <plugin name="ms_beforeCreateLabel"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Shipping\Model\Shipping\LabelGenerator"/>
+    </type>
+
+    <!--Fix to get available custom attributes list-->
+    <type name="Magento\Quote\Model\Quote\Address\CustomAttributeList">
+        <plugin name="ms_afterGetCustomAttributes"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Quote\Model\Quote\Address\CustomAttributeList"/>
+    </type>
+    <!--Fix to set custom attributes to quote address object-->
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin name="ms_beforeSetData"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Quote\Model\Address"/>
+    </type>
+    <!--Fix saving custom attributes to order address-->
+    <type name="Magento\Sales\Model\Order\Address">
+        <plugin name="ms_aroundSetCustomAttribute"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Sales\Model\Order\Address"/>
+    </type>
+    <!--Fix to set custom attributes to addresses list on checkout-->
+    <type name="Magento\Customer\Model\Metadata\AddressMetadata">
+        <plugin name="ms_aroundGetCustomAttribute"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Customer\Model\Metadata\AddressMetadata"/>
+    </type>
+    <!--Fix to get custom attributes on change address in checkout page-->
+    <!--<type name="Magento\Customer\Api\Data\AddressInterface">-->
+        <!--<plugin name="ms_afterGetCustomAttributes"-->
+                <!--type="Mageside\CanadaPostShipping\Model\Plugin\Customer\Api\Data\AddressInterface"/>-->
+    <!--</type>-->
+
+    <virtualType name="Mageside\CanadaPostShipping\Model\Grid\Collection\ManifestVirtual"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mageside_canadapost_manifest</argument>
+            <argument name="resourceModel" xsi:type="string">Mageside\CanadaPostShipping\Model\ResourceModel\Manifest</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Mageside\CanadaPostShipping\Model\Grid\Collection\LogsVirtual"
+                 type="Magento\Framework\View\Element\UiComponent\DataProvider\SearchResult">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">mageside_canadapost_logs</argument>
+            <argument name="resourceModel" xsi:type="string">Mageside\CanadaPostShipping\Model\ResourceModel\RequestLog</argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="mageside_canadapost_manifest_listing_data_source" xsi:type="string">Mageside\CanadaPostShipping\Model\Grid\Collection\ManifestVirtual</item>
+                <item name="mageside_canadapost_shipment_listing_data_source" xsi:type="string">Mageside\CanadaPostShipping\Ui\DataProvider\Listing\Collection\Shipment</item>
+                <item name="mageside_canadapost_logs_listing_data_source" xsi:type="string">Mageside\CanadaPostShipping\Model\Grid\Collection\LogsVirtual</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Mageside\CanadaPostShipping\Model\Currency\Currency">
+        <arguments>
+            <argument name="services" xsi:type="array">
+                <item name="FixerIo" xsi:type="string">Mageside\CanadaPostShipping\Model\Currency\FixerIo</item>
+                <item name="CurrencyConverterAPI" xsi:type="string">Mageside\CanadaPostShipping\Model\Currency\CurrencyConverterApi</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Config">
+        <plugin name="ms_append_attribute"
+                type="Mageside\CanadaPostShipping\Model\Plugin\Quote\Model\Quote\Config"/>
+    </type>
+</config>

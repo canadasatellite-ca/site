@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <script src="MageSuper_Casat::js/mage/postcode-validation.js"/>
+    </head>
+    <body>
+        <referenceBlock name="data">
+            <block class="MageSuper\Casat\Block\Adminhtml\Order\Create\Form\Account" template="Magento_Sales::order/create/form/account.phtml" name="form_account"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Address" template="MageSuper_Casat::order/create/form/address.phtml" name="shipping_address"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\Create\Billing\Address" template="MageSuper_Casat::order/create/form/address.phtml" name="billing_address"/>
+        </referenceBlock>
+    </body>
+</page>

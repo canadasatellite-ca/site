@@ -1,0 +1,7 @@
+<!-- ko if: $col.isFieldHasData($row()) -->
+    <div class="clear-float"></div>
+    <div class="data-grid-cell-content-wrapper">
+        <strong class="cell-title" data-bind="text: label"></strong>
+        <div class="data-grid-cell-content review-data" text="$col.getLabel($row())"/>
+    </div>
+<!-- /ko -->

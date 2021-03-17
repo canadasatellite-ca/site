@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <customshipprice>
+                <active>1</active>
+				<!--<allowed_methods>customshipprice</allowed_methods>
+				<methods>customshipprice</methods>
+				-->
+                <sallowspecific>0</sallowspecific>
+                <model>Digit\Customshipprice\Model\Carrier\Customshipprice</model>
+                <name>Admin Shipping</name>
+                <title>Admin Shipping</title>
+				<handling_type>F</handling_type>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </customshipprice>
+        </carriers>
+    </default>
+</config>

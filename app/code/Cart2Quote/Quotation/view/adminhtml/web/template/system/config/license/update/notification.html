@@ -1,0 +1,6 @@
+<div data-bind="blockLoader: isLoading, visible: isVisible()">
+    <div class="message update-available">
+        <!-- ko i18n: 'New update available.' --><!-- /ko -->&nbsp
+        <a data-bind="attr: { href: releaseNotesUrl() }, text: releaseNotesLinkText()" target="_blank" />
+    </div>
+</div>

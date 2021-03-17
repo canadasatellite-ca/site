@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Email\Items\Quote\Column $block */
+
+?>
+
+<?php if ($block->getItem()->getDescription()) : ?>
+    <tr>
+        <td class="item-comment" colspan="5">
+            <div class="item-comment-container">
+                <span class="product-name"><?php echo __('Comment'); ?></span>
+                <?php echo $block->escapeHtml($block->getItem()->getDescription()); ?>
+            </div>
+        </td>
+    </tr>
+<?php endif; ?>

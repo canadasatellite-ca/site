@@ -1,0 +1,62 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */
+?>
+
+<?php $htmlName = 'test' ?>
+
+<div class="tier-item">
+    <div class="tier-item-price">
+
+    </div>
+</div>
+<table>
+    <tr>
+        <td class="col-price">
+            <?php if ($block->getQuote()->isCurrencyDifferent()) : ?>
+                <div class="price" data-mage-init='{"currency":{"inputSelector": "<?php echo $tierItemHtmlId ?>"}}'>
+                    <?php
+                    echo $block->getQuote()->formatBasePricePrecision(
+                        $block->getTierItem()->getBaseCustomPrice(),
+                        2
+                    );
+                    ?>
+                </div>
+                <br/>
+            <?php endif; ?>
+            <input id="tier_item_id_<?php echo $block->getTierItem()->getId() ?>"
+                   name="tierItem[<?php echo $block->getTierItem()->getId() ?>][custom_price]"
+                   value="<?php echo sprintf("%.2f", $block->getTierItem()->getCustomPrice()) ?>"
+                   class="input-text item-price admin__control-text"/>
+        </td>
+        <td class="col-qty" style="padding-left: 1rem">
+            <input class="qty required-entry validate-greater-than-zero input-text"
+                   type="text"
+                   name="<?php echo $block->escapeHtml($htmlName) ?>[<%- data.index %>][price_qty]"
+                   value="1"
+                   id="tier_price_row_<%- data.index %>_qty">
+        </td>
+
+        <td class="col-delete">
+            <input type="hidden"
+                   name="<?php echo $block->escapeHtml($htmlName) ?>[<%- data.index %>][delete]"
+                   class="delete"
+                   value=""
+                   id="tier_price_row_<%- data.index %>_delete"/>
+            <button title="<?php echo $block->escapeHtml(__('Delete Tier')); ?>"
+                    type="button"
+                    class="action- scalable delete icon-btn delete-product-option"
+                    id="tier_price_row_<%- data.index %>_delete_button"
+                    onclick="return tierPriceControl.deleteItem(event);">
+            <span>
+                <?php echo $block->escapeHtml(__("Delete")) ?>
+            </span>
+            </button>
+        </td>
+    </tr>
+</table>

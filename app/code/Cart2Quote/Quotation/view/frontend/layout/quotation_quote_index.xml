@@ -1,0 +1,38 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="quotation_quote_item_renderers"/>
+    <update handle="quotation_quote_checkout"/>
+    <body>
+        <referenceContainer name="page.messages">
+            <block class="Magento\Checkout\Block\Cart\ValidationMessages" name="quotation.quote.validationmessages"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Cart2Quote\Quotation\Block\Quote" name="quotation.quote" template="quote.phtml" cacheable="false">
+                <container name="quotation.quote.items" as="with-items">
+                    <container name="quotation.quote.widget" as="checkout_cart_widget" label="Shopping Cart Items After"/>
+                    <container name="quotation.quote.container" htmlTag="div" htmlClass="cart-container" before="-">
+                        <container name="quotation.quote.form.before" as="form_before" label="Quotation Quote Items Before" htmlTag="div" htmlClass="rewards" before="quotation.quote.form"/>
+                        <block class="Cart2Quote\Quotation\Block\Quote" name="quotation.quote.form" as="quote-items" template="quote/form.phtml">
+                            <block class="Magento\Framework\View\Element\RendererList" name="quotation.quote.item.renderers" as="renderer.list"/>
+                            <block class="Magento\Framework\View\Element\Text\ListText" name="quotation.quote.quote.actions"/>
+                        </block>
+                        <block class="Cart2Quote\Quotation\Block\Quote\QuoteCheckout\File" name="upload_file_quote"  template="Cart2Quote_Quotation::quote/upload/file_upload.phtml" ifconfig="cart2quote_advanced/general/file_upload"/>
+                    </container>
+                </container>
+                <container name="quotation.quote.noitems" as="no-items">
+                    <block class="Cart2Quote\Quotation\Block\Quote" name="quotation.quote.empty" before="-" template="quote/noItems.phtml"/>
+                    <container name="quotation.quote.empty.widget" as="quotation.quote_empty_widget" label="Empty Quotation Quote Content Before"/>
+                </container>
+            </block>
+        </referenceContainer>
+        <block class="Magento\Checkout\Block\Cart\Additional\Info" name="additional.product.info" template="cart/additional/info.phtml">
+            <block class="Cart2Quote\Quotation\Block\Quote\Item\Renderer\DefaultRenderer" name="quotation.product.comment" template="Cart2Quote_Quotation::quote/item/comment.phtml"/>
+        </block>
+    </body>
+</page>

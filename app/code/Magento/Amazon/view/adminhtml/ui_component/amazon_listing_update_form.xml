@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">amazon_listing_update_form.amazon_listing_update_form_data_source</item>
+            <item name="deps" xsi:type="string">amazon_listing_update_form.amazon_listing_update_form_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">amazon_listing_update_form</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">amazon_listing_update_form</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Amazon Seller Account Listing Update</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <dataSource name="amazon_listing_update_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Amazon\Ui\DataProvider\Form\Amazon\Account\Listing\Update\DataProvider</argument>
+            <argument name="name" xsi:type="string">amazon_listing_update_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="channel/amazon/account_listing_update_save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="listing_update">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true"></item>
+                <item name="sortOrder" xsi:type="number">1</item>
+                <item name="visible" xsi:type="boolean">false</item>
+            </item>
+        </argument>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="dataScope" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="list_condition_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true"></item>
+                <item name="sortOrder" xsi:type="number">10</item>
+            </item>
+        </argument>
+        <container name="listing_update_condition_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_update_condition_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Update\View\Help\Condition</argument>
+            </htmlContent>
+        </container>
+        <field name="condition">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Overrides\ConditionSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Condition</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">condition</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="listing_needsasin">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true"></item>
+                <item name="sortOrder" xsi:type="number">40</item>
+            </item>
+        </argument>
+        <container name="listing_update_needsasin_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_update_needsasin_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Update\View\Help\Needsasin</argument>
+            </htmlContent>
+        </container>
+        <field name="actual_asin">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Assign ASIN</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">actual_asin</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="placeholder" xsi:type="string">Please enter a valid ASIN for this product.</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-alphanum" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="listing_multiples">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true"></item>
+                <item name="sortOrder" xsi:type="number">70</item>
+            </item>
+        </argument>
+        <container name="listing_update_multiples_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_update_multiples_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Update\View\Help\Multiples</argument>
+            </htmlContent>
+        </container>
+        <field name="multiple_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Update\MultipleSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">90</item>
+                    <item name="label" xsi:type="string" translate="true">Select Correct Amazon Listing</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/multiple-id</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">multiple_id</item>
+                    <item name="notice" xsi:type="string" translate="true">If none of the presented options are correct, select "Manually Enter Correct ASIN" from the drop down to change the parent or child ASIN assignment.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="multiple_asin">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Manually Assign ASIN</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">multiple_asin</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="placeholder" xsi:type="string" translate="true">Please enter a valid ASIN for this product.</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-alphanum" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="listing_variants">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">false</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true"></item>
+                <item name="sortOrder" xsi:type="number">110</item>
+            </item>
+        </argument>
+        <container name="listing_update_variants_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">120</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_update_multiples_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Update\View\Help\Variants</argument>
+            </htmlContent>
+        </container>
+        <field name="variant_id">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Update\VariantsSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="label" xsi:type="string" translate="true">Select Correct Amazon Listing</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/variant-id</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">variant_id</item>
+                    <item name="notice" xsi:type="string" translate="true">If none of the presented options are correct, select "Manually Enter Correct ASIN" from the drop down to change the parent or child ASIN assignment.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="variant_asin">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Manually Assign ASIN</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">variant_asin</item>
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="placeholder" xsi:type="string" translate="true">Please enter a valid ASIN for this product.</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-alphanum" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

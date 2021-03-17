@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2016 Aitoc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Aitoc_OrdersExportImport::profile" title="Export Profiles (by Aitoc)" sortOrder="900">
+                    <resource id="Aitoc_OrdersExportImport::manage" title="All Profiles" translate="title" sortOrder="10"/>
+                    <resource id="Aitoc_OrdersExportImport::save" title="Save Profiles" translate="title" sortOrder="20"/>
+                    <resource id="Aitoc_OrdersExportImport::export_history" title="History Exports" translate="title" sortOrder="30"/>
+                    <resource id="Aitoc_OrdersExportImport::import_history" title="History Imports" translate="title" sortOrder="40"/>
+                    <resource id="Aitoc_OrdersExportImport::import" title="Import file" translate="title" sortOrder="50"/>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

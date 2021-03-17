@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php
+/**
+ * Quotation quote template extra css
+ * @var \Cart2Quote\Quotation\Block\Css $block
+ */
+
+if ($block->isThemeEnabled()) {
+    $extraCss = $block->getExtraCSS();
+    if (isset($extraCss) && !empty($extraCss)) {
+        echo '<style data-note="Cart2Quote Advanced settings">';
+        echo $block->getExtraCSS();
+        echo '</style>';
+    }
+}

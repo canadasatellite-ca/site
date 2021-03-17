@@ -1,0 +1,150 @@
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     Desk
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+
+.new-message{
+    background-color: #f2fafd;
+    border-left: 2px solid #54BBE2;
+}
+
+.message-details{
+    border-top: 1px solid #e4e4e4;
+    padding-top: 15px;
+}
+
+.message-name{
+    font-weight: bold;
+}
+
+.message-date{
+    color: #a6a6a6;
+    font-size: 0.8em;
+    float:right;
+}
+
+.message-content{
+    padding: 10px;
+}
+
+.message{
+    padding: 20px;
+}
+
+.ticket-details{
+    background: #f5f5f5;
+    padding: 15px 0;
+}
+
+.ticket-details{
+    width: 25%;
+    float: left;
+    padding: 15px;
+}
+
+.ticket-messages{
+    width: 65%;
+    margin-right: 4%;
+    float: left;
+}
+
+.ticket-details-title{
+    display: block;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.ticket-details-field{
+    display: block;
+    margin-top: 15px;
+    margin-bottom: 15px;
+}
+
+.ticket-details-label{
+    font-weight: bold;
+    display: block;
+}
+
+.ticket-details-value{
+    display: block;
+}
+
+.special-title{
+    font-weight: 300;
+    color: #333333;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-style: normal;
+    line-height: 1.42857143;
+    font-size: 18px;
+}
+
+.ticket-subject{
+    margin: 0 0 25px 0;
+}
+
+.page-title{
+    margin-bottom: 0;
+}
+
+.create-message .actions-toolbar .primary{
+    float: right;
+    margin-bottom: 30px;
+}
+
+.create-message .actions-toolbar .primary button{
+    margin: 0;
+}
+
+.desk-customer-index .actions-toolbar{
+    float: right;
+    display: inline-block;
+    margin-top: 5px;
+}
+
+.tickets{
+    margin-top: 20px;
+}
+
+.customer-ticket{
+    margin-top: 25px;
+}
+
+#ticket-subject{
+    font-size: 2.2rem;
+    font-weight: 300;
+    border-top: 0;
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 1px solid #c2c2c2;
+    padding: 20px 9px;
+}
+
+.owner-admin{
+    background-color: #f8f8f8;
+}
+
+.ticket-go-back{
+    float: right;
+    padding: 0 15px;
+}

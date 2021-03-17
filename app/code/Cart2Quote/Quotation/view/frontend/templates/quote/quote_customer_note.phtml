@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<div class="content" data-role="content" role="tabpanel" aria-hidden="false" style="display: block;">
+    <fieldset class="fieldset estimate">
+        <legend class="legend">
+            <span><?php echo $block->escapeHtml(__('Remarks')) ?></span>
+        </legend>
+        <br>
+
+        <p class="field note"> <?php echo $block->escapeHtml(__('Do you have a general remark with this Quote Request?')); ?> </p>
+
+        <div class="field">
+            <div class="control">
+                <textarea title="<?php echo $block->escapeHtml(__('Remarks')) ?>"
+                          id="quote_customer_note"
+                          name="quote[customer_note]"
+                          class="customer-note input-textarea"
+                ><?php echo $block->escapeHtml($block->getQuote()->getCustomerNote()) ?></textarea>
+            </div>
+        </div>
+    </fieldset>
+</div>

@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+/** @var $block \Mageside\CanadaPostShipping\Block\Adminhtml\Shipment\Manifest */
+?>
+<?php if ($block->canChooseManifest()) : ?>
+    <div id="create_manifest"
+         class="field choice admin__field admin__field-option field-create"
+         style="display: none;">
+        <select class="admin__control-select"
+               name="shipment[canadapost_manifest_id]">
+            <optgroup label="<?php /* @escapeNotVerified */ echo __('Choose Canada Post Manifest') ?>">
+                <option value="new">
+                    <?php /* @escapeNotVerified */ echo __('Create New Canada Post Manifest') ?>
+                </option>
+                <?php foreach ($block->getAvailableManifests() as $manifestId) : ?>
+                    <option value="<?php /* @escapeNotVerified */ echo $manifestId; ?>">
+                        <?php /* @escapeNotVerified */ echo '#' . $manifestId; ?>
+                    </option>
+                <?php endforeach; ?>
+            </optgroup>
+        </select>
+    </div>
+    <script>
+        require(["jquery"], function($) {
+            $('#create_shipping_label').change(function() {
+                if ($(this).is(':checked')) {
+                    $('#create_manifest').show();
+                } else {
+                    $('#create_manifest').hide();
+                }
+            });
+        });
+    </script>
+<?php endif ?>

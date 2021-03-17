@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\View $block */
+?>
+<div class="order-details-items ordered">
+    <?php $quote = $block->getQuote(); ?>
+    <div class="order-title">
+        <strong><?php echo $block->escapeHtml(__('Items Requested')) ?></strong>
+    </div>
+    <?php echo $block->getChildHtml('quote_items') ?>
+    <?php $orderViewUrls = $block->getOrderViewUrlByQuotationId($quote->getEntityId()); ?>
+    <?php if ($quote->getStatus() == \Cart2Quote\Quotation\Model\Quote\Status::STATUS_ORDERED
+        && !empty($orderViewUrls)) : ?>
+        <?php echo __("Your related order: ") ?>
+        <?php foreach ($orderViewUrls as $key => $val) : ?>
+            <a href="<?php echo $val; ?>">#<?php echo $key; ?></a>
+        <?php endforeach; ?>
+    <?php endif; ?>
+    <div class="actions-toolbar">
+        <div class="secondary">
+            <a class="action back" href="<?php echo $block->escapeHtml($block->getBackUrl()) ?>">
+                <span><?php echo $block->escapeHtml($block->getBackTitle()) ?></span>
+            </a>
+        </div>
+    </div>
+</div>

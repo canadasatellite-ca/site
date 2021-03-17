@@ -1,0 +1,254 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page layout="1column" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+		<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.description_abovepricing" template="Magento_Catalog::product/view/customattributes/attribute.phtml" >
+			<arguments>
+				<argument name="at_call" xsi:type="string">getDescriptionAbovepricing</argument>
+				<argument name="at_code" xsi:type="string">description_abovepricing</argument>
+				<argument name="css_class" xsi:type="string">description_abovepricing</argument>
+				<argument name="at_label" xsi:type="string">none</argument>
+				<argument name="title" translate="true" xsi:type="string">Overview</argument>
+			</arguments>
+		</block>
+
+		<block class="CanadaSatellite\Theme\Block\Catalog\Product\Attachments"
+			   name="catalog.product.top.list.mageworx.downloads.attachments"
+			   template="CanadaSatellite_Theme::attachment_container.phtml"
+		/>
+
+		<move element="product.info.description_abovepricing" destination="product.info.main" before="product.price.final"/>
+		<move element="catalog.product.top.list.mageworx.downloads.attachments" destination="product.info.main" after="product.info.description_abovepricing"/>
+		<move element="product.price.final" destination="product.info.main" after="page.main.title"/>
+		<move element="product.price.tier" destination="product.info.main" after="product.price.final"/>
+		<move element="product.info.container" destination="product.info.main" after="product.price.tier"/>
+		<move element="product.info.custom.attribute" destination="product.info.container" after="product.extra.information"/>
+		<referenceBlock name="product.info.sku" remove="true" />
+        <move element="product.info.stock.sku" destination="product.extra.custom.attribure" after="product.info.warranty"/>
+        <move element="product.info.review" destination="page.main.title" after="product.info.stock.sku"/>
+		<referenceBlock name="product.info.overview" template="Magento_Catalog::product/view/short_description.phtml">
+			<arguments>
+				<argument name="at_call" xsi:type="string">getShortDescription</argument>
+				<argument name="at_code" xsi:type="string">short_description</argument>
+				<argument name="css_class" xsi:type="string">overview</argument>
+				<argument name="at_label" translate="true" xsi:type="string">Overview</argument>
+				<argument name="title" translate="true" xsi:type="string">Overview</argument>
+				<argument name="add_attribute" xsi:type="string">itemprop="description"</argument>
+			</arguments>
+		</referenceBlock>
+		   <container name="product.info.custom.attribute">
+			<container name="product.extra.custom.attribure" label="Product Static Block" htmlTag="div" htmlClass="product-extra-custom-information" >
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.brand" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getbrand</argument>
+						<argument name="at_code" xsi:type="string">brand</argument>
+						<argument name="css_class" xsi:type="string">brand</argument>
+						<argument name="at_label" xsi:type="string">default</argument>
+						<argument name="at_type" xsi:type="string">text</argument>
+					</arguments>
+				</block>
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.model" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getModel</argument>
+						<argument name="at_code" xsi:type="string">model</argument>
+						<argument name="css_class" xsi:type="string">model</argument>
+						<argument name="at_label" xsi:type="string">default</argument>
+					</arguments>
+				</block>
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.partno" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getPart</argument>
+						<argument name="at_code" xsi:type="string">part</argument>
+						<argument name="css_class" xsi:type="string">part</argument>
+						<argument name="at_label" xsi:type="string">default</argument>
+					</arguments>
+				</block>
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.origin" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getCountryOfManufacture</argument>
+						<argument name="at_code" xsi:type="string">country_of_manufacture</argument>
+						<argument name="css_class" xsi:type="string">country_of_manufacture</argument>
+						<argument name="at_label" xsi:type="string">ORIGIN</argument>
+						<argument name="at_type" xsi:type="string">text</argument>
+					</arguments>
+				</block>
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.warranty" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getWarranty</argument>
+						<argument name="at_code" xsi:type="string">warranty</argument>
+						<argument name="css_class" xsi:type="string">warranty</argument>
+						<argument name="title" translate="true" xsi:type="string">Warranty </argument>
+						<argument name="at_type" xsi:type="string">text</argument>
+						<argument name="at_label" xsi:type="string">default</argument>
+					</arguments>
+				</block>
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.shipping" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getShipping</argument>
+						<argument name="at_code" xsi:type="string">shipping</argument>
+						<argument name="css_class" xsi:type="string">shipping</argument>
+						<argument name="at_label" xsi:type="string">default</argument>
+						<argument name="at_type" xsi:type="string">text</argument>
+					</arguments>
+				</block>
+				<block  class="Magento\Catalog\Block\Product\View\Description" name="product.info.availability" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml" >
+					<arguments>
+						<argument name="at_call" xsi:type="string">getAvailability</argument>
+						<argument name="at_code" xsi:type="string">availability</argument>
+						<argument name="css_class" xsi:type="string">availability</argument>
+						<argument name="title" translate="true" xsi:type="string">Availability</argument>
+						<argument name="at_type" xsi:type="string">text</argument>
+						<argument name="at_label" xsi:type="string">default</argument>
+					</arguments>
+				</block>
+				<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.productcode" template="Magento_Catalog::product/view/tabs/custom_attribute.phtml">
+					<arguments>
+						<argument name="at_call" xsi:type="string">getSku</argument>
+						<argument name="at_code" xsi:type="string">sku</argument>
+						<argument name="css_class" xsi:type="string">sku</argument>
+						<argument name="at_label" xsi:type="string">Product Code</argument>
+						<argument name="title" translate="true" xsi:type="string">Product Code</argument>
+					</arguments>
+				</block>
+			</container>
+		</container>
+		<referenceBlock name="product.info.details">
+			<referenceBlock name="product.attributes">
+				<arguments>
+					<argument translate="true" name="title" xsi:type="string">Specifications</argument>
+				</arguments>
+			</referenceBlock>
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.features.tab" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml" group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getFeaturesTab</argument>
+					<argument name="at_code" xsi:type="string">features_tab</argument>
+					<argument name="css_class" xsi:type="string">features_tab</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Features</argument>
+				</arguments>
+			</block>
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.tabsp"  template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getSpecifications</argument>
+					<argument name="at_code" xsi:type="string">specifications</argument>
+					<argument name="css_class" xsi:type="string">specifications</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Specifications</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.whats_included" as="whats_included" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getWhatsIncluded</argument>
+					<argument name="at_code" xsi:type="string">whats_included</argument>
+					<argument name="css_class" xsi:type="string">whats_included</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">What's Included</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.rental_rates" as="rental_rates" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getRentalRates</argument>
+					<argument name="at_code" xsi:type="string">rental_rates</argument>
+					<argument name="css_class" xsi:type="string">rental_rates</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Rental Rates</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.calls_costs" as="call_costs" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getCallCosts</argument>
+					<argument name="at_code" xsi:type="string">call_costs</argument>
+					<argument name="css_class" xsi:type="string">call_costs</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Call Costs</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.coverage" as="coverage" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getCoverage</argument>
+					<argument name="at_code" xsi:type="string">coverage</argument>
+					<argument name="css_class" xsi:type="string">coverage</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Coverage</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.videos" as="videos" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getVideos</argument>
+					<argument name="at_code" xsi:type="string">videos</argument>
+					<argument name="css_class" xsi:type="string">videos</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Videos</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.accessories" as="accessories" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getAccessories</argument>
+					<argument name="at_code" xsi:type="string">accessories</argument>
+					<argument name="css_class" xsi:type="string">accessories</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Accessories</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.case_studies" as="case_studies" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getCaseStudies</argument>
+					<argument name="at_code" xsi:type="string">case_studies</argument>
+					<argument name="css_class" xsi:type="string">case_studies</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Case Studies</argument>
+				</arguments>
+			</block> 
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.support" as="support" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getSupport</argument>
+					<argument name="at_code" xsi:type="string">support</argument>
+					<argument name="css_class" xsi:type="string">support</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Support</argument>
+				</arguments>
+			</block>
+			<block class="Magento\Catalog\Block\Product\View\Description" name="product.info.tags" as="tags" template="Magento_Catalog::product/view/tabs/tab_attribute.phtml"  group="detailed_info">
+				<arguments>
+					<argument name="at_call" xsi:type="string">getTags</argument>
+					<argument name="at_code" xsi:type="string">tags</argument>
+					<argument name="css_class" xsi:type="string">tags</argument>
+					<argument name="at_label" xsi:type="string">none</argument>
+					<argument name="title" translate="true" xsi:type="string">Product Tags</argument>
+				</arguments>
+			</block> 
+		</referenceBlock>
+		<referenceBlock name="product.info.addto" as="addto" />
+		<move element="product.info.addto" destination="product.info.media" after="-" />
+		<referenceContainer name="product.info.social" as="social">
+			<block class="Magento\Catalog\Block\Product\View" name="product.info.social.links" as="social" template="Magento_Catalog::product/view/social.phtml" after="-" />
+		</referenceContainer>
+		<move element="product.info.social.links" destination="product.info.media" after="product.info.addto" />
+		<container name="product.info.container">
+			<container name="product.extra.information" label="Product Static Block" htmlTag="div" htmlClass="product-extra-information" />
+		</container>
+		<referenceContainer name="product.info">
+			<container name="product.info.staticblock" label="Product Static Block" htmlTag="div" htmlClass="product-info-staticblock" before="-" />							
+		</referenceContainer>
+		<referenceContainer name="content">
+			<container name="product.main.container" htmlTag="div" htmlClass="container" before='-'>
+				<container name="product.main.content" htmlTag="div" htmlClass="product-main-content" before='-'></container>					
+			</container>	
+		</referenceContainer>
+		<move element="product.info.media" destination="product.main.content" before='-'/>
+		<move element="product.info.main" destination="product.main.content" />
+		<move element="product.info.details" destination="product.main.container" after='product.main.content'/>
+		<move element="product.info.overview" destination="product.extra.information"/>
+
+		<referenceContainer name="product.info.price">
+			<block class="Magento\Catalog\Block\Product\View" name="page.price.based_on_usd" after="product.price.final" template="MageSuper_Casat::product/view/price/based_on_usd.phtml"></block>
+		</referenceContainer>
+		<move element="page.price.based_on_usd" destination="product.info.main" after="product.price.final"/>
+		<referenceBlock name="addtocart.shortcut.buttons.additional" remove="true" />
+    </body>
+</page>

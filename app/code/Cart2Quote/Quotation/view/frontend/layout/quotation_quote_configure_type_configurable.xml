@@ -1,0 +1,20 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link src="Magento_Swatches::js/configurable-customer-data.js"/>
+    </head>
+    <update handle="catalog_product_view_type_configurable"/>
+    <body>
+        <referenceBlock name="product.info.options.swatches">
+            <arguments>
+                <argument name="cache_lifetime" xsi:type="null"/>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

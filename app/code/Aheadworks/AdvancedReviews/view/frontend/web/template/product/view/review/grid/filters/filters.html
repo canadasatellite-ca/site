@@ -1,0 +1,4 @@
+<div if="isDisplay()" class="aw-ar__data-grid-filters-wrap" data-part="filter-form" keyboard="{ 13: apply }">
+    <fieldset class="admin__form-field" outereach="getRanges()" visible="$parent.isFilterVisible($data)" render=""/>
+    <div class="aw-ar__form-field-wrap" outereach="getPlain()" visible="$parent.isFilterVisible($data)" render=""/>
+</div>

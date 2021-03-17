@@ -1,0 +1,17 @@
+<div if="isNeedToRenderComponent()"
+     class="aw-ar-write-review-control">
+
+    <button if="isNeedToRenderWriteReviewButton()"
+            type="button"
+            data-role="aw-ar-write-review-btn"
+            class="action primary"
+            click="showReviewForm">
+        <span data-bind="i18n: 'Write a Review'"></span>
+    </button>
+
+    <div if="isNeedToRenderMessageForGuest()"
+         class="guest-message">
+        <span html="getMessageForGuest()"/>
+    </div>
+
+</div>

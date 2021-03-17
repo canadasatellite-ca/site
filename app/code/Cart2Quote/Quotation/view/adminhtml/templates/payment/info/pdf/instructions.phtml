@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\Payment\Info\Instructions $block
+ * @see Cart2Quote\Quotation\Block\Adminhtml\Payment\Info\Instruction
+ */
+?>
+<?php if ($block->isInstructionsEnabled()) : ?>
+    <?php
+    $instructions = str_replace(PHP_EOL, '{{pdf_row_separator}}', $block->escapeHtml($block->getInstructions()));
+    /* @noEscape */
+    echo $instructions;
+    ?>
+    {{pdf_row_separator}}
+<?php endif; ?>

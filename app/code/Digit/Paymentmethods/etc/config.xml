@@ -1,0 +1,53 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+	 <default>
+        <payment>
+            <creditcardphone>
+				<active>1</active>
+                <model>Digit\Paymentmethods\Model\Method\Creditcardphone</model>
+                <order_status>pending</order_status>
+                <title>Credit Card by Phone</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+			</creditcardphone>
+			<creditcardinstore>
+				<active>1</active>
+                <model>Digit\Paymentmethods\Model\Method\Creditcardinstore</model>
+                <order_status>pending</order_status>
+                <title>Credit Card in Store</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+			</creditcardinstore>
+			<wiretransfer>
+				<active>1</active>
+                <model>Digit\Paymentmethods\Model\Method\Wiretransfer</model>
+                <order_status>pending</order_status>
+                <title>Wire Transfer</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+			</wiretransfer>
+			<cash>
+				<active>1</active>
+                <model>Digit\Paymentmethods\Model\Method\Cash</model>
+                <order_status>pending</order_status>
+                <title>Cash</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+			</cash>
+			<checkbymail>
+				<active>1</active>
+                <model>Digit\Paymentmethods\Model\Method\Checkbymail</model>
+                <order_status>pending</order_status>
+                <title>Check by Mail</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+			</checkbymail>
+        </payment>
+    </default>
+</config>

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="advanced_reviews_content">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Product Reviews</item>
+            </item>
+        </argument>
+        <insertListing name="aw_advanced_reviews_review_listing" component="Aheadworks_AdvancedReviews/js/ui/form/components/insert-listing">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="cssclass" xsi:type="string">aw-advanced-reviews-review-listing</item>
+                    <item name="autoRender" xsi:type="boolean">true</item>
+                    <item name="dataScope" xsi:type="string">aw_advanced_reviews_review_listing</item>
+                    <item name="externalProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_review_listing_data_source</item>
+                    <item name="ns" xsi:type="string">aw_advanced_reviews_review_listing</item>
+                    <item name="externalFilterMode" xsi:type="boolean">true</item>
+                    <item name="isNeedToIgnoreBookmarks" xsi:type="boolean">true</item>
+                    <item name="authorTypeColumnVisibility" xsi:type="boolean">false</item>
+                    <item name="params" xsi:type="array">
+                        <item name="is_need_to_ignore_bookmarks" xsi:type="string">${$.isNeedToIgnoreBookmarks}</item>
+                    </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="id" xsi:type="string">${ $.provider }:data.customer.entity_id</item>
+                    </item>
+                    <item name="exports" xsi:type="array">
+                        <item name="id" xsi:type="string">${ $.externalProvider }:params.current_customer_id</item>
+                        <item name="isNeedToIgnoreBookmarks" xsi:type="string">${ $.externalProvider }:params.is_need_to_ignore_bookmarks</item>
+                        <item name="authorTypeColumnVisibility" xsi:type="string">${ $.ns }.${ $.ns }.aw_advanced_reviews_review_columns.author_type:visible</item>
+                    </item>
+                </item>
+            </argument>
+        </insertListing>
+    </fieldset>
+    <htmlContent name="reviews_content">
+        <block class="Aheadworks\AdvancedReviews\Block\NativeReview\Adminhtml\ReviewTabDisabler" name="reviews" />
+    </htmlContent>
+</form>

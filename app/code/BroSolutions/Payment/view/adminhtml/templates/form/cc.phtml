@@ -1,0 +1,94 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Payment\Block\Adminhtml\Transparent\Form $block
+ */
+$code = $block->escapeHtml($block->getMethodCode());
+$ccType = $block->getInfoData('cc_type');
+$ccExpMonth = $block->getInfoData('cc_exp_month');
+$ccExpYear = $block->getInfoData('cc_exp_year');
+?>
+<fieldset class="admin__fieldset payment-method" id="payment_form_<?= /* @noEscape */ $code ?>"
+          style="display:none">
+    <div class="field-type admin__field _required">
+        <div class="admin__field-control">
+            <input type="hidden" id="<?= /* @noEscape */$code ?>_cc_type" name="payment[cc_type]"
+                   class="admin__control-text"
+                   value=""
+            />
+            <div class="cc-type-error"
+                 style="display:none; width: auto; height: auto; background-color: pink; text-align: center; font-size: 14px;">
+                This credit card type is not allowed for this payment method.
+            </div>
+            <?php foreach ($block->getCcAvailableTypes() as $code => $type): ?>
+                <?php $icon = $this->getViewFileUrl('Magento_Payment/images/cc/' . strtolower($code) . '.png'); ?>
+                <?php if ($icon): ?>
+                    <img src="<?= $icon ?>"
+                         title="<?= $type ?>"
+                         class="payment-icons payment-icon-<?= strtolower($code) ?>"
+                         style="padding: 10px"
+                    />
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
+    </div>
+    <div class="field-number admin__field _required">
+        <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_cc_number">
+            <span><?= $block->escapeHtml(__('Credit Card Number')) ?></span>
+        </label>
+        <div class="admin__field-control">
+            <input type="text" id="<?= /* @noEscape */ $code ?>_cc_number" name="payment[cc_number]"
+                   title="<?= $block->escapeHtmlAttr(__('Credit Card Number')) ?>" class="admin__control-text"
+                   value="<?= /* @noEscape */ $block->getInfoData('cc_number') ?>"
+                   data-mage-init='{
+                   "BroSolutions_Payment/js/cc-type": {
+                   "availableTypes": "<?= str_replace('"', '\"', json_encode($block->getCcAvailableTypes())) ?>"
+                   }
+                   }'
+            />
+        </div>
+    </div>
+    <div class="field-date admin__field _required">
+        <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_expiration">
+            <span><?= $block->escapeHtml(__('Expiration Date')) ?></span>
+        </label>
+        <div class="admin__field-control">
+            <select id="<?= /* @noEscape */ $code ?>_expiration" name="payment[cc_exp_month]"
+                    class="admin__control-select admin__control-select-month validate-cc-exp required-entry">
+                <?php foreach ($block->getCcMonths() as $k => $v) : ?>
+                    <option value="<?= $block->escapeHtmlAttr($k) ?>"
+                            <?php if ($k == $ccExpMonth) : ?>selected="selected"<?php endif ?>>
+                        <?= $block->escapeHtml($v) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+            <select id="<?= /* @noEscape */ $code ?>_expiration_yr" name="payment[cc_exp_year]"
+                    class="admin__control-select admin__control-select-year required-entry">
+                <?php foreach ($block->getCcYears() as $k => $v) : ?>
+                    <option value="<?= /* @noEscape */ $k ? $block->escapeHtml($k) : '' ?>"
+                            <?php if ($k == $ccExpYear) : ?>selected="selected"<?php endif ?>>
+                        <?= $block->escapeHtml($v) ?>
+                    </option>
+                <?php endforeach ?>
+            </select>
+        </div>
+    </div>
+
+    <?php if ($block->hasVerification()) : ?>
+        <div class="field-number required admin__field _required">
+            <label class="admin__field-label" for="<?= /* @noEscape */ $code ?>_cc_cid">
+                <span><?= $block->escapeHtml(__('Card Verification Number')) ?></span>
+            </label>
+            <div class="admin__field-control">
+                <input type="text" title="<?= $block->escapeHtmlAttr(__('Card Verification Number')) ?>"
+                       class="required-entry validate-cc-cvn admin__control-cvn admin__control-text"
+                       id="<?= /* @noEscape */ $code ?>_cc_cid"
+                       name="payment[cc_cid]" value="<?= /* @noEscape */ $block->getInfoData('cc_cid') ?>"/>
+            </div>
+        </div>
+    <?php endif; ?>
+</fieldset>

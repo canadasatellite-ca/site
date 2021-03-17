@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="faqs_save_before">
+        <observer name="magesuper_check_time_faq_save_before" instance="MageSuper\Faq\Observer\CheckFaqTime" />
+    </event>
+
+    <event name="controller_action_predispatch_custom_faqs_faq_addquetion">
+        <observer name="custom_faq_category_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+
+    <event name="controller_action_predispatch_faqs_faq_addquetion">
+        <observer name="captcha_faq_product_check_recaptcha" instance="MageSuper\Faq\Observer\CheckRecaptcha3" />
+    </event>
+</config>

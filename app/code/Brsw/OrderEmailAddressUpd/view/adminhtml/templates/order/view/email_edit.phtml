@@ -1,0 +1,44 @@
+<div class="block so-email-edit so-email-edit-content" id="sales-order-email-edit">
+    <div class="messages">
+        <div class="message message-error error">
+            <div></div>
+        </div>
+    </div>
+    <div class="intro">
+        <h2><?php /* @escapeNotVerified */ echo __('Sales Order E-Mail change:'); ?></h2>
+    </div>
+    <div class="content">
+        <form class="form email-edit"
+              novalidate="novalidate"
+              action="<?php /* @escapeNotVerified */ echo $block->getFormActionUrl(); ?>"
+              method="post"
+              data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+              id="email-edit-validate-detail">
+            <div><input name="form_key" type="hidden" value="<?php /* @escapeNotVerified */ echo $block->getFormKey() ?>" /></div>
+            <div class="field email-edit">
+                <div class="control">
+                    <input name="email" type="email" id="popup-email-field"
+                           placeholder="<?php /* @escapeNotVerified */ echo __('Enter your email address'); ?>"
+                           data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+            </div>
+            <button id="email-edit-submit"
+                    title="Submit"
+                    type="button"
+                    class="action-default edit primary"
+                    data-ui-id="widget-button-0">
+                <span>Submit</span>
+            </button>
+        </form>
+    </div>
+</div>
+<script type="text/x-magento-init">
+    {
+        "#sales-order-email-edit": {
+            "Brsw_OrderEmailAddressUpd/js/email-edit": {
+                "popupTitle": "<?php /* @escapeNotVerified */ echo __('Email edit'); ?>",
+                "orderId": "<?php /* @escapeNotVerified */ echo $block->getCurrentOrderId()?>"
+            }
+        }
+    }
+</script>

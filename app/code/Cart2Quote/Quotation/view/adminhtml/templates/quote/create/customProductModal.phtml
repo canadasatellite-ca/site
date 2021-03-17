@@ -1,0 +1,71 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+
+<div id="custom_product_modal" style="display:none;">
+    <form id="custom_product_form" data-mage-init='{"validation":{}}'>
+        <fieldset class="admin__fieldset">
+            <div class="admin__field required">
+                <label for="name" class="admin__field-label">
+                    <span><?php echo $block->escapeHtml(__('Name')) ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text" id="name"
+                           name="name"
+                           class="admin__control-text"
+                           data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="admin__field required">
+                <label for="sku" class="admin__field-label">
+                    <span><?php echo $block->escapeHtml(__('Sku')) ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text" id="sku"
+                           name="sku"
+                           class="admin__control-text"
+                           data-validate="{required:true}">
+                </div>
+            </div>
+            <div class="admin__field required">
+                <label for="price" class="admin__field-label">
+                    <span><?php echo $block->escapeHtml(__('Price')) ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text" id="price"
+                           name="price"
+                           class="admin__control-text"
+                           data-validate="{required:true, 'validate-number':true}">
+                </div>
+            </div>
+            <div class="admin__field required">
+                <label for="qty" class="admin__field-label">
+                    <span><?php echo $block->escapeHtml(__('Qty')) ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="text" id="qty"
+                           name="qty"
+                           class="admin__control-text"
+                           data-validate="{required:true, 'validate-item-quantity':true}">
+                </div>
+            </div>
+            <div class="admin__field">
+                <label for="setting" class="admin__field-label">
+                    <span><?php echo $block->escapeHtml(__('Save product in catalog')) ?></span>
+                </label>
+                <div class="admin__field-control">
+                    <input type="checkbox" id="setting"
+                           name="setting"
+                           class="admin__field-option"
+                           value="1">
+                </div>
+            </div>
+        </fieldset>
+        <?php echo $block->getBlockHtml('formkey'); ?>
+    </form>
+</div>

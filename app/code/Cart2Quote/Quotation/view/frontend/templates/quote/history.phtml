@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var Cart2Quote\Quotation\Block\Quote\History $block */
+?>
+<?php $quotes = $block->getQuotes(); ?>
+<?php echo $block->getChildHtml('info'); ?>
+<?php if ($quotes && $quotes->getSize()) : ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items history" id="my-quotes-table">
+            <caption class="table-caption"><?php echo $block->escapeHtml(__('Quotes')) ?></caption>
+            <thead>
+            <tr>
+                <th scope="col" class="col id"><?php echo $block->escapeHtml(__('Quote #')) ?></th>
+                <th scope="col" class="col date"><?php echo $block->escapeHtml(__('Date')) ?></th>
+                <th scope="col" class="col status"><?php echo $block->escapeHtml(__('Quote Request Status')) ?></th>
+                <th scope="col" class="col status"><?php echo $block->escapeHtml(__('Total Price')) ?></th>
+                <th scope="col" class="col actions">&nbsp;</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            /** @var \Cart2Quote\Quotation\Model\Quote $quote */
+            foreach ($quotes as $quote) : ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__('Quote #')) ?>"
+                        class="col id"><?php echo $block->escapeHtml($quote->getIncrementId()) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Date')) ?>"
+                        class="col date"><?php echo $block->escapeHtml($block->formatDate($quote->getQuotationCreatedAt())) ?></td>
+                    <td data-th="<?php echo $block->escapeHtml(__('Status')) ?>"
+                        class="col status"><?php echo $block->escapeHtml($quote->getStatusLabel()) ?></td>
+                    <?php if ($block->isHidePrices($quote)) : ?>
+                        <td data-th="<?php echo $block->escapeHtml(__('Total Price')) ?>" class="col status">
+                            <?php echo $block->formatValue($quote) ?>
+                        </td>
+                    <?php else: ?>
+                        <td data-th="<?php echo $block->escapeHtml(__('Total Price')) ?>" class="col status"></td>
+                    <?php endif; ?>
+                    <td data-th="<?php echo $block->escapeHtml(__('Actions')) ?>" class="col actions">
+                        <a href="<?php echo $block->escapeHtml($block->getViewUrl($quote)) ?>" class="action view">
+                            <span><?php echo $block->escapeHtml(__('View Quote')) ?></span>
+                        </a>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($block->getPagerHtml()) : ?>
+        <div class="order-products-toolbar toolbar bottom"><?php echo $block->getPagerHtml(); ?></div>
+    <?php endif ?>
+<?php else : ?>
+    <div class="message info empty"><span><?php echo $block->escapeHtml(__('You have no quote requests.')); ?></span></div>
+<?php endif ?>

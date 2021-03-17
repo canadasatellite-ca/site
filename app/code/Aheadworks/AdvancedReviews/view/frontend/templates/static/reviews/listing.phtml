@@ -1,0 +1,170 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="block aw-ar__review-list">
+    <div class="block-content">
+        <div class="review-header">
+            <?php if (count($viewModel->getSortableColumnsHeaders())): ?>
+                <div class="review-sorting">
+                    <span data-bind="i18n: 'Sort by'"><?= $block->escapeHtml(__("Sort by")) ?></span>
+                    <?php foreach ($viewModel->getSortableColumnsHeaders() as $headerTitle): ?>
+                        <div>
+                            <div class="data-grid-header _sortable">
+                                <span class="data-grid-header-content"><?= $block->escapeHtml(__($headerTitle)) ?></span>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                </div>
+            <?php endif; ?>
+        </div>
+        <div class="review-items">
+            <?php foreach ($viewModel->getReviewsData() as $reviewsDataRow): ?>
+                <div class="review-item" itemprop="review" itemscope itemtype="https://schema.org/Review">
+                    <div class="review-item-info">
+                        <div class="aw-ar__review-list-sidebar-main">
+                            <!-- nickname -->
+                            <?php if ($viewModel->getReviewNickname($reviewsDataRow)): ?>
+                                <div class="data-grid-cell-content nickname" itemprop="author" itemscope itemtype="https://schema.org/Person">
+                                    <span itemprop="name">
+                                        <?= $block->escapeHtml($viewModel->getReviewNickname($reviewsDataRow)) ?>
+                                    </span>
+                                </div>
+                            <?php endif; ?>
+                            <!-- is_verified_buyer -->
+                            <?php if ($viewModel->getReviewVerifiedBuyerLabel($reviewsDataRow)): ?>
+                                <div class="data-grid-cell-content is_verified_buyer">
+                                    <?= $block->escapeHtml($viewModel->getReviewVerifiedBuyerLabel($reviewsDataRow)) ?>
+                                </div>
+                            <?php endif; ?>
+                            <!-- product_recommended -->
+                            <?php if ($viewModel->getReviewProductRecommendedLabel($reviewsDataRow)): ?>
+                                <div class="product_recommended">
+                                    <?= $block->escapeHtml($viewModel->getReviewProductRecommendedLabel($reviewsDataRow)) ?>
+                                </div>
+                            <?php endif; ?>
+                        </div>
+                        <div class="aw-ar__review-list-column-main">
+                            <!-- summary -->
+                            <?php if ($viewModel->getReviewSummary($reviewsDataRow)): ?>
+                                <div class="data-grid-cell-content summary" itemprop="name">
+                                    <?= $block->escapeHtml($viewModel->getReviewSummary($reviewsDataRow)) ?>
+                                </div>
+                            <?php endif; ?>
+                            <!-- product -->
+                            <div class="aw-ar__block-url" itemprop="itemReviewed" itemscope itemtype="https://schema.org/Thing">
+                                <span><?= $block->escapeHtml(__("about")) ?></span>
+                                <a href="<?= $block->escapeUrl($viewModel->getReviewProductUrl($reviewsDataRow)) ?>">
+                                    <span itemprop="name">
+                                        <?= $block->escapeHtml($viewModel->getReviewProductLabel($reviewsDataRow)) ?>
+                                    </span>
+                                </a>
+                                <meta itemprop="url" content="<?= $block->escapeUrl($viewModel->getReviewProductUrl($reviewsDataRow)) ?>" />
+                            </div>
+                            <!-- rating -->
+                            <div class="data-grid-cell-content rating-list" itemprop="reviewRating" itemscope itemtype="https://schema.org/Rating">
+                                <div class="aw-advanced-reviews-admin-control-label aw-ar-rating">
+                                    <div class="not-editable">
+                                        <div class="aw-ar-rating-container" itemprop="ratingValue">
+                                            <?= $block->escapeHtml($viewModel->getReviewRatingAbsoluteValue($reviewsDataRow)) ?>
+                                        </div>
+                                        <meta itemprop="bestRating" content="<?= $block->escapeHtml($viewModel->getReviewRatingMaximumAbsoluteValue()) ?>">
+                                        <meta itemprop="worstRating" content="<?= $block->escapeHtml($viewModel->getReviewRatingMinimumAbsoluteValue()) ?>">
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- created_at -->
+                            <?php if ($viewModel->getReviewCreatedAt($reviewsDataRow)): ?>
+                                <meta itemprop="datePublished" content="<?= $block->escapeHtml($viewModel->getReviewCreatedAtInIsoFormat($reviewsDataRow)) ?>">
+                                <div class="data-grid-cell-content date created_at" >
+                                    <?= $block->escapeHtml($viewModel->getReviewCreatedAt($reviewsDataRow)) ?>
+                                </div>
+                            <?php endif; ?>
+                            <div class="review-body" itemprop="reviewBody">
+                                <!-- pros -->
+                                <?php if ($viewModel->getReviewAdvantages($reviewsDataRow)): ?>
+                                    <div class="data-grid-cell-content content">
+                                        <h3><?= $block->escapeHtml(__("Advantages")) ?></h3>
+                                        <?= $block->escapeHtml($viewModel->getReviewAdvantages($reviewsDataRow)) ?>
+                                    </div>
+                                <?php endif; ?>
+                                <!-- cons -->
+                                <?php if ($viewModel->getReviewDisadvantages($reviewsDataRow)): ?>
+                                    <div class="data-grid-cell-content content">
+                                        <h3><?= $block->escapeHtml(__("Disadvantages")) ?></h3>
+                                        <?= $block->escapeHtml($viewModel->getReviewDisadvantages($reviewsDataRow)) ?>
+                                    </div>
+                                <?php endif; ?>
+                                <!-- content -->
+                                <div class="data-grid-cell-content content">
+                                    <?php if ($viewModel->getReviewAdvantages($reviewsDataRow) || $viewModel->getReviewDisadvantages($reviewsDataRow)): ?>
+                                        <h3><?= $block->escapeHtml(__("Comment")) ?></h3>
+                                    <?php endif; ?>
+                                    <?= $block->escapeHtml($viewModel->getReviewContent($reviewsDataRow)) ?>
+                                </div>
+                            </div>
+                            <!-- attachments -->
+                            <?php if (count($viewModel->getReviewAttachments($reviewsDataRow))): ?>
+                                <div class="aw-ar__attachments">
+                                    <?php foreach ($viewModel->getReviewAttachments($reviewsDataRow) as $reviewAttachmentData): ?>
+                                        <div class="aw-ar__attach">
+                                            <a class="preview-link"
+                                               href="<?= $block->escapeUrl($viewModel->getReviewAttachmentUrl($reviewAttachmentData)) ?>"
+                                               title="<?= $block->escapeHtml($viewModel->getReviewAttachmentTitle($reviewAttachmentData)) ?>"
+                                               target="_blank">
+                                                <?php if ($viewModel->isReviewAttachmentImage($reviewAttachmentData)): ?>
+                                                    <img tabindex="0"
+                                                         src = "<?= $block->escapeUrl($viewModel->getReviewAttachmentUrl($reviewAttachmentData)) ?>"
+                                                         alt = "<?= $block->escapeHtml($viewModel->getReviewAttachmentTitle($reviewAttachmentData)) ?>">
+                                                <?php else: ?>
+                                                    <span class="file-name">
+                                                        <?= $block->escapeHtml($viewModel->getReviewAttachmentTitle($reviewAttachmentData)) ?>
+                                                    </span>
+                                                <?php endif; ?>
+                                            </a>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            <?php endif; ?>
+                            <!-- helpfulness -->
+                            <div class="review-helpful-report-wrapper">
+                                <div class="helpful" >
+                                    <span class="text-h" ><?= $block->escapeHtml(__("Was this review helpful?")) ?></span>
+                                    <span><?= $block->escapeHtml(__("Yes") . '(' . $viewModel->getReviewVotesPositive($reviewsDataRow) . ')') ?></span>
+                                    <span><?= $block->escapeHtml(__("No") . '(' . $viewModel->getReviewVotesNegative($reviewsDataRow) . ')') ?></span>
+                                </div>
+                            </div>
+                            <!-- comments -->
+                            <div class="data-grid-cell-content comments-block">
+                                <div class="comments">
+                                    <?php foreach ($viewModel->getReviewComments($reviewsDataRow) as $reviewCommentData): ?>
+                                        <div class="comment">
+                                            <div class="comment-wrapper">
+                                                <div class="nickname">
+                                                    <?= $block->escapeHtml($viewModel->getReviewCommentNickname($reviewCommentData)) ?>
+                                                </div>
+                                                <div class="comment-date">
+                                                    <?= $block->escapeHtml($viewModel->getReviewCommentCreatedAt($reviewCommentData)) ?>
+                                                </div>
+                                                <div class="comment-content">
+                                                    <?= $block->escapeHtml($viewModel->getReviewCommentContent($reviewCommentData)) ?>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
+    </div>
+</div>

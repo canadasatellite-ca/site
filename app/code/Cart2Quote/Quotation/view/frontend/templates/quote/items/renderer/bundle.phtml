@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Magento\Bundle\Block\Sales\Order\Items\Renderer $block */
+?>
+<?php $parentItem = $block->getItem() ?>
+<?php $items = array_merge([$parentItem], $parentItem->getChildren()); ?>
+<?php $count = count($items) ?>
+<?php $index = 0 ?>
+
+<?php $_prevOptionId = '' ?>
+
+<?php foreach ($items as $item) : ?>
+    <?php if ($item->getOptions() || $parentItem->getDescription()) : ?>
+        <?php $showlastRow = true ?>
+    <?php else : ?>
+        <?php $showlastRow = false ?>
+    <?php endif; ?>
+
+    <?php echo $block->getParentBlock()->getChildBlock('quotation.bundlerenderer')
+        ->setItem($item)
+        ->setCount($count)
+        ->getChildHtml('', $useCache = false) ?>
+<?php endforeach;

@@ -1,0 +1,24 @@
+<?php if ($block->getTotals()) : ?>
+	<tfoot>
+		<?php
+			$_dataHelper = $this->helper('Interactivated\Quotecheckout\Helper\Data');
+			$numcol = 3;
+			if ($_dataHelper->showImageProduct()) {
+				$numcol = $numcol + 1;
+			}
+			if ($_dataHelper->getStoreConfig("onestepcheckout/general/allowremoveproduct")) {
+				$numcol = $numcol + 1;
+			}
+		?>
+
+		<?php if ($_dataHelper->getStoreConfig("onestepcheckout/general/updateqtyproduct")) : ?>
+		<tr class='first'>
+			<td class="a-right" colspan="<?php echo $numcol + 1 ?>">
+				<button class="button btn-update-cart" title="<?php echo __('Update Quote') ?>" type="button">
+					<span><span><?php echo __('Update Quote') ?></span></span>
+				</button>
+			</td>
+		</tr>
+		<?php endif; ?>
+	</tfoot>
+<?php endif; ?>

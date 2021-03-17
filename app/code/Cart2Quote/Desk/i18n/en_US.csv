@@ -1,0 +1,93 @@
+"Edit Ticket #","Edit Ticket #"
+"New Ticket","New Ticket"
+"Submit as %1","Submit as %1"
+Previous,Previous
+Next,Next
+Open,Open
+"Delete Ticket","Delete Ticket"
+"Are you sure you want to do this?","Are you sure you want to do this?"
+open,open
+NEW,NEW
+" [deleted]"," [deleted]"
+Customer,Customer
+Priority,Priority
+Assignee,Assignee
+Unassigned,Unassigned
+Store,Store
+ID,ID
+Created,Created
+Updated,Updated
+Subject,Subject
+"Customer Name","Customer Name"
+"Customer Email","Customer Email"
+Status,Status
+"Store View","Store View"
+Action,Action
+Edit,Edit
+Delete,Delete
+"Are you sure?","Are you sure?"
+"Pending Ticket of Customer `%1`","Pending Ticket of Customer `%1`"
+"Pending Ticket","Pending Ticket"
+"All Tickets of Customer `%1`","All Tickets of Customer `%1`"
+"All Ticket of Product `%1`","All Ticket of Product `%1`"
+"All Tickets","All Tickets"
+"Ask a question","Ask a question"
+"The ticket has been deleted.","The ticket has been deleted."
+"Something went wrong deleting this ticket.","Something went wrong deleting this ticket."
+"Customer Support Desk is currently disabled. Please contact your Magento administrator to enable Customer Support Desk again.","Customer Support Desk is currently disabled. Please contact your Magento administrator to enable Customer Support Desk again."
+Tickets,Tickets
+"The ""%s"" block is not set for the handle ""%s"".","The ""%s"" block is not set for the handle ""%s""."
+"Please select ticket(s).","Please select ticket(s)."
+"A total of %1 record(s) have been deleted.","A total of %1 record(s) have been deleted."
+"Something went wrong while deleting these records.","Something went wrong while deleting these records."
+"<a href=""%1"">Ticket #%2 has been created.</a>","<a href=""%1"">Ticket #%2 has been created.</a>"
+"<a href=""%1"">Ticket #%2 has been updated.</a>","<a href=""%1"">Ticket #%2 has been updated.</a>"
+"My Tickets","My Tickets"
+"Message send.","Message send."
+"Create New Ticket","Create New Ticket"
+"Ticket #%1","Ticket #%1"
+"Ticket Details","Ticket Details"
+"""<a href=""%1"">Ticket #%2 (%3) has been "" . . '.</a>'","""<a href=""%1"">Ticket #%2 (%3) has been "" . . '.</a>'"
+"Storage key was not set","Storage key was not set"
+"%fieldName1 or %fieldName2 needs to be set, you cannot them both unset.","%fieldName1 or %fieldName2 needs to be set, you cannot them both unset."
+"%fieldName1 or %fieldName2 cannot be both set, you need to set only the %fieldName1 or %fieldName2.","%fieldName1 or %fieldName2 cannot be both set, you need to set only the %fieldName1 or %fieldName2."
+"Enter your subject","Enter your subject"
+"Public reply","Public reply"
+"Internal note","Internal note"
+"Enter your message","Enter your message"
+Requested,Requested
+Actions,Actions
+"See Details","See Details"
+"You have submitted no tickets.","You have submitted no tickets."
+Back,Back
+"Back to My Tickets","Back to My Tickets"
+"View all Tickets","View all Tickets"
+"Created at","Created at"
+"Assigned to","Assigned to"
+"The Subject","The Subject"
+Send,Send
+"* Required Fields","* Required Fields"
+"Write Us","Write Us"
+"Jot us a note and we’ll get back to you as quickly as possible.","Jot us a note and we’ll get back to you as quickly as possible."
+"First name","First name"
+"Last name","Last name"
+Email,Email
+"What’s on your mind?","What’s on your mind?"
+Submit,Submit
+"Thank you for your question.","Thank you for your question."
+"View your ticket","View your ticket"
+"Ask a new question","Ask a new question"
+"Ask a question about:","Ask a question about:"
+Message,Message
+"Ask Question","Ask Question"
+"Thank you for your question about:","Thank you for your question about:"
+Sending...,Sending...
+"Message Send","Message Send"
+"Question Send","Question Send"
+"Ask a Question","Ask a Question"
+"Customer Support Desk","Customer Support Desk"
+General,General
+"Enabled Customer Support Desk","Enabled Customer Support Desk"
+"Default settings","Default settings"
+"Default Priority","Default Priority"
+"Product Page Visibility","Product Page Visibility"

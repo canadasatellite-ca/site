@@ -1,0 +1,85 @@
+<?php
+/** @var CanadaSatellite\Theme\Block\Customer\Card\AddCard $block */
+?>
+<?php 
+$methodCode = "casat_customer_card"; 
+?>
+<form action="<?php echo $block->getSaveUrl() ?>" id="firstdata_add_card" name="firstdata_add_card"  data-hasrequired="<?php echo __('* Required Fields') ?>"
+      data-mage-init='{"validation":{}}'id="firstdata_add_card" method="post">
+
+    <fieldset class="fieldset">
+        <h2 class="legend"><?php echo __('Card Information') ?></h2>
+        <?php echo $block->getBlockHtml('formkey')?>
+        <div class="field cc_type required">
+            <label for="<?php echo $methodCode ?>_cc_type" class="label"><?php echo __('Credit Card Type') ?></label>
+            <div class="control">
+                <select id="<?php echo $methodCode ?>_cc_type" name="<?php echo $methodCode ?>[payment_info][cc_type]" class="validate-select">
+                    <option value=""><?php echo __('--Please Select--')?></option>
+                    <?php foreach ($block->getCcAvailableTypes() as $_typeCode => $_typeName): ?>
+                        <option value="<?php echo $_typeCode ?>"><?php echo $_typeName ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
+        </div>
+         <div class="field _cc_number required">
+            <label for="<?php echo $methodCode ?>_cc_number" class="label"><?php echo __('Credit Card Number') ?></label>
+            <div class="control">
+                <input type="text" id="<?php echo $methodCode ?>_cc_number" class="input-text" value="" data-validate='{"required-number":true, "validate-cc-number":"#<?php echo $methodCode ?>_cc_number"}' name="<?php echo $methodCode ?>[payment_info][cc_number]" title="<?php echo __('Credit Card Number') ?>" value="" autocomplete="off" />
+            </div>
+        </div>
+        <div class="field name-firstname required">
+            <label for="<?php echo $methodCode ?>_firstname" class="label"><?php echo __('Cardholder Name') ?></label>
+            <div class="control">
+                <input type="text" id="<?php echo $methodCode ?>_firstname" name="<?php echo $methodCode ?>[payment_info][cc_cardholder_name]" value="" title="<?php echo __('Cardholder Name') ?>" maxlength="255" class="input-text required-entry" />
+            </div>
+        </div>
+        <div class="field expiration required">
+            <label for="expiration" class="label"><?php echo __('Expiration Date') ?></label>
+            <div class="input-box">
+                <div class="v-fix">
+                    <?php $_ccExpMonth = '' ?>
+                    <select id="<?php echo $methodCode ?>_expiration" name="<?php echo $methodCode ?>[payment_info][cc_exp_month]" class="select month" data-validate='{required:true, "validate-cc-exp":"#<?php echo $methodCode ?>_expiration_yr"}'  style="width: 150px; margin-right: 10px;">
+                        <?php foreach ($block->getCcMonths() as $k=>$v): ?>
+                            <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpMonth): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                            <?php endforeach ?>
+                    </select>
+                </div>
+                <div class="v-fix">
+                    <?php $_ccExpYear = ''; ?>
+                    <select id="<?php echo $methodCode ?>_expiration_yr" name="<?php echo $methodCode ?>[payment_info][cc_exp_year]" class="select year" data-validate='{required:true}' style="width: 150px;">
+                        <?php foreach ($block->getCcYears() as $k=>$v): ?>
+                            <option value="<?php echo $k?$k:'' ?>"<?php if($k==$_ccExpYear): ?> selected="selected"<?php endif ?>><?php echo $v ?></option>
+                            <?php endforeach ?>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="field cc_cvn required">
+            <label for="<?php echo $methodCode ?>_cc_cvn" class="label"><?php echo __('CVV') ?></label>
+            <div class="input-box">
+                <div class="v-fix">
+                    <input type="text" title="<?php echo __('Card Verification Number') ?>" data-validate='{"required-number":true, "validate-length":true}'}' class="input-text" id="<?php echo $methodCode ?>_cc_cvn" name="<?php echo $methodCode ?>[payment_info][cc_cvn]" value="" maxlength="3" minlength="3" autocomplete="off" />
+                </div>
+            </div>
+        </div>
+
+        <div class="buttons-set">
+            <input type="hidden" name="<?php echo $methodCode ?>[card_mode]" value="add" />
+            <p class="back-link"><a href="<?php echo $block->getBackUrl() ?>"><small>&laquo; </small><?php echo __('Back') ?></a></p>
+            <button type="button"  onclick="saveCardForm()" title="<?php echo __('Save Card') ?>" class="button button action tocart primary" id="firstdata_add_card_btn"><span><span><?php echo __('Save Card') ?></span></span></button>
+        </div>  
+        
+    </fieldset>
+</form>
+
+<script type="text/javascript">
+ function saveCardForm()
+ {
+     var dataForm = jQuery('#firstdata_add_card');
+    dataForm.mage('validation');
+    if (jQuery('#firstdata_add_card').valid()) {
+              jQuery('#firstdata_add_card_btn').attr('disabled',true);
+              jQuery('#firstdata_add_card').submit();
+     }
+ }
+</script>

@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Sitemap Products</title>
+        <css src="Vsourz_HtmlSitemap/css/htmlsitemap.css" media="all"/>
+    </head>
+    <body>
+        <referenceContainer name="main">
+            <container name="htmlsitemap-container" label="HtmlSitemap Container" htmlTag="div" htmlClass="htmlsitemap-container outer">
+                <container name="bottom-sitemap-container" htmlTag="div" htmlClass="bottom-sitemap-container">
+                    <container name="productlist-container" htmlTag="div" htmlClass="products-container sitemap-section">
+                        <block class="Vsourz\HtmlSitemap\Block\ProductsList" name="sitemapProductsList" template="Vsourz_HtmlSitemap::product/list-custom.phtml" ifconfig="htmlsitemap/general/product_enabled">
+                            <action method="setToolbarBlockName">
+                                <argument name="name" xsi:type="string">product_list_toolbar_sitemap</argument>
+                            </action>
+                        </block>
+                    </container>
+                </container>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

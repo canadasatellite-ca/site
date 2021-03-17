@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="content.aside">
+            <block class="Mageants\AlsoBought\Block\Catalog\Product\Collection" name="product.also.bought" template="Magento_Catalog::product/list/items.phtml" after="catalog.product.related" ifconfig="alsobought_section/alsobought_product/alsobought_product_display"/>
+        </referenceBlock>
+    </body>
+</page>

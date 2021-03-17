@@ -1,0 +1,17 @@
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+.color-select{
+    padding-left:40px;
+}
+.question_window {
+    height: 27px;
+    margin-left: 4px;
+    margin-top: 11px;
+    position: absolute;
+    border: 1px solid #adadad;
+    top: -8px;
+    width: 32px;
+}

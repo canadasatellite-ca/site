@@ -1,0 +1,5 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="checkout_issue_report" label="Hello World" file="checkout_issue.html" type="html"
+              module="BroSolutions_IssueNotification" area="frontend"/>
+</config>

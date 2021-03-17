@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="md_faq" translate="label" sortOrder="300">
+            <label>Magedelight</label>
+        </tab>
+        <section id="md_faq" translate="label" type="text" sortOrder="1" showInStore="1" showInDefault="1" showInWebsite="1">
+            <class>separator-top</class>
+            <label>FAQ</label>
+            <tab>md_faq</tab>
+            <resource>Magedelight_Faqs::config_faq</resource>
+            <group id="license" translate="label" type="text" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>License Configuration</label>
+                <field id="serial_key" translate="label" type="text" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Serial Key</label>
+                    <comment><![CDATA[Enter the serial key that you received at time of purchase.]]></comment>
+                </field>
+                <field id="activation_key" translate="label" type="text" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Activation Key</label>
+                    <comment><![CDATA[Enter the activation key that you received at time of purchase.]]></comment>
+                </field>
+            </group>
+            <group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>General FAQ Configuration</label>
+                <field id="enabled_product" type="select" translate="label" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enable Product QA</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enabled_faq" type="select" translate="label" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enable Generic FAQ</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="general_product" translate="label" type="text" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>Product QA Configuration</label>
+                <field id="enabled_product_guest" type="select" translate="label" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Enable product Faq For Guest</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="faq_general" translate="label" type="text" sortOrder="1" showInDefault="1" showInStore="1" showInWebsite="1">
+                <label>Generic FAQ Configuration</label>
+                <field id="faq_tabs_jquery" type="select" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Category Linkable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Category Tabs is Linkable to Category view page</comment>
+                </field>
+                <field id="faq_view" type="select" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Layout</label>
+                    <source_model>Magedelight\Faqs\Model\Config\Source\Layout</source_model>
+                    <depends>
+                        <field id="faq_tabs_jquery">1</field>
+                    </depends>
+                </field>
+                <field id="authorinfo" type="select" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Display Author Information</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="sociallinks" type="select" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Display Social links</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <!--field id="faq_per_page_value" type="text" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ per Page on Default Value</label>
+                    <validate>validate-number</validate>
+                    <comment>FAQ per Page on Default Value Ex. 10</comment>
+                </field-->
+                <field id="faq_link_title" type="text" translate="label" sortOrder="2" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Link Title</label>
+                    <comment>This is the title of the link displayed on the frontend.</comment> 
+                </field>
+                <field id="faq_page_title" type="text" translate="label" sortOrder="3" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Page Title</label>
+                    <comment>This is the title of the header of FAQ sections</comment>
+                </field>
+                <field id="faq_page_route" type="text" translate="label" sortOrder="3" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Route Name</label>
+                    <comment>This is Router of FAQ sections</comment>
+                </field>
+                <field id="faq_page_url_key" type="text" translate="label" sortOrder="4" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Page Url Key</label>
+                    <comment>This is the key of FAQ page url.</comment>
+                    <validate>validate-identifier</validate>
+                </field>
+                <field id="faq_page_url_suffix" type="text" translate="label" sortOrder="5" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Page Url Suffix</label>
+                    <comment>This is the url suffix of FAQ page url.</comment>
+                </field>
+                <field id="faq_meta_keywords" type="textarea" translate="label" sortOrder="6" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>FAQ Page Meta Keywords</label>
+                </field>
+                <field id="faq_meta_description" type="textarea" translate="label" sortOrder="7" showInDefault="1" showInStore="1" showInWebsite="1">
+                    <label>Meta Description</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

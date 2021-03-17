@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.info.options.configurable" class="Cart2Quote\Quotation\Block\Catalog\Product\View\Type\Configurable" template="Cart2Quote_Quotation::catalog/product/view/type/options/configurable.phtml" />
+        <referenceBlock name="product.info.options.wrapper.bottom">
+            <block class="Cart2Quote\Quotation\Block\Product\View" name="product.info.addtoquote" as="addtoquote" ifconfig="cart2quote_quotation/global/enable" template="Cart2Quote_Quotation::product/view/addtoquoteconfigurablebottom.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

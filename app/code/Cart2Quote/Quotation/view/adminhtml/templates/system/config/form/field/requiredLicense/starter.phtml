@@ -1,0 +1,17 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\System\Config\Form\Field\RequiredLicense\Starter $block
+ */
+?>
+<small style="display: block; margin-top: -22px;">
+<?php echo __(
+    'This feature requires at least a Starter license: %1',
+    $block->getLink($block->getCart2QuoteUpgradeUrl(), __('Upgrade'))
+); ?>
+</small>

@@ -1,0 +1,14 @@
+<!-- ko if: visible() -->
+    <!-- ko if: hasData() -->
+        <a class="aw-advanced-reviews-admin-control-mailto"
+           data-bind="
+            attr: {
+                href: ('mailto:' + value())
+            },
+            text: value()">
+        </a>
+    <!-- /ko -->
+    <!-- ko if: !hasData() -->
+        <label class="aw-advanced-reviews-admin-control-label" text="getDefaultLabel()" />
+    <!-- /ko -->
+<!-- /ko -->

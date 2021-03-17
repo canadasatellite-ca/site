@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="mageworx_downloads">
+            <group id="main">
+                <field id="sort_order">
+                    <source_model>CanadaSatellite\Theme\Model\Attachment\Source\SortOrder</source_model>
+                </field>
+
+                <field id="limit_qty_links" translate="label comment" type="text" sortOrder="125" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Limit qty for Above Price links</label>
+                </field>
+            </group>
+        </section>
+
+        <section id="msp_securitysuite_recaptcha">
+            <group id="general_V3" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General(ReCaptcha V3)</label>
+                <field id="public_key_v3" translate="label comment" type="text" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Google API website key(V3)</label>
+                </field>
+                <field id="private_key_v3" translate="label comment" type="password" sortOrder="20" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Google API secret key(V3)</label>
+                </field>
+            </group>
+        </section>
+
+        <section id="onestepcheckout">
+            <group id="addfield">
+                <field id="extension_phone" translate="label" type="select" sortOrder="26" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Extension</label>
+                    <source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+                </field>
+            </group>
+
+            <group id="options_sort">
+                <field id="sort_extension_phone" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Extension Order</label>
+                </field>
+                <field id="sort_fax" translate="label" type="text" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Fax Order</label>
+                </field>
+            </group>
+
+        </section>
+
+        <section id="customer">
+            <group id="address">
+                <field id="extension_phone" translate="label" type="select" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Show Extension</label>
+                    <source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+                    <backend_model>Magento\Customer\Model\Config\Backend\Show\AddressOnly</backend_model>
+                </field>
+            </group>
+        </section>
+
+    </system>
+</config>

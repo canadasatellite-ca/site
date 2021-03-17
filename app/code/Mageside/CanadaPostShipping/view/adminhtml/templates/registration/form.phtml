@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+/** @var $block \Mageside\CanadaPostShipping\Block\Adminhtml\Registration\Signin */
+?>
+
+<form id="canada-post-registration" action="<?= /* @escapeNotVerified */ $block->getRegistrationMerchantUrl() ?>" method="post">
+    <input type="hidden" name="return-url" value="<?= /* @escapeNotVerified */ $block->getReturnUrl() ?>" />
+    <input type="hidden" name="platform-id"  value="<?= /* @escapeNotVerified */ $block->getPlatformId() ?>" />
+    <input type="hidden" name="token-id" value="<?= /* @escapeNotVerified */ $block->getTokenId() ?>" />
+</form>
+<?php if ($block->getTokenId()) : ?>
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        'use strict';
+        $('#canada-post-registration').submit();
+    });
+</script>
+<?php endif; ?>

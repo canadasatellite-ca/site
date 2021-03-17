@@ -1,0 +1,393 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Interfaces -->
+    <preference for="Magento\Amazon\Api\Data\AccountInterface" type="Magento\Amazon\Model\Amazon\Account" />
+    <preference for="Magento\Amazon\Api\Data\ListingInterface" type="Magento\Amazon\Model\Amazon\Listing" />
+    <preference for="Magento\Amazon\Api\Data\AccountListingInterface" type="Magento\Amazon\Model\Amazon\Account\Listing" />
+    <preference for="Magento\Amazon\Api\Data\AccountOrderInterface" type="Magento\Amazon\Model\Amazon\Account\Order" />
+    <preference for="Magento\Amazon\Api\Data\ListingRuleInterface" type="Magento\Amazon\Model\Amazon\Listing\Rule" />
+    <preference for="Magento\Amazon\Api\Data\PricingRuleInterface" type="Magento\Amazon\Model\Amazon\Pricing\Rule" />
+    <preference for="Magento\Amazon\Api\Data\MultipleInterface" type="Magento\Amazon\Model\Amazon\Listing\Multiple" />
+    <preference for="Magento\Amazon\Api\Data\VariantInterface" type="Magento\Amazon\Model\Amazon\Listing\Variant" />
+    <preference for="Magento\Amazon\Api\Data\ActionInterface" type="Magento\Amazon\Model\Amazon\Action" />
+    <preference for="Magento\Amazon\Api\Data\OrderInterface" type="Magento\Amazon\Model\Amazon\Order" />
+    <preference for="Magento\Amazon\Api\Data\OrderItemInterface" type="Magento\Amazon\Model\Amazon\Order\Item" />
+    <preference for="Magento\Amazon\Api\Data\OrderTrackingInterface" type="Magento\Amazon\Model\Amazon\Order\Tracking" />
+    <preference for="Magento\Amazon\Api\Data\AttributeInterface" type="Magento\Amazon\Model\Amazon\Attribute" />
+    <preference for="Magento\Amazon\Api\Data\AttributeValueInterface" type="Magento\Amazon\Model\Amazon\Attribute\Value" />
+
+    <!-- Repositories Interfaces -->
+    <preference for="Magento\Amazon\Api\AccountManagementInterface" type="Magento\Amazon\Model\Amazon\AccountManagement" />
+    <preference for="Magento\Amazon\Api\AccountRepositoryInterface" type="Magento\Amazon\Model\Amazon\AccountRepository" />
+    <preference for="Magento\Amazon\Api\AccountListingRepositoryInterface" type="Magento\Amazon\Model\Amazon\Account\AccountListingRepository" />
+    <preference for="Magento\Amazon\Api\AccountOrderRepositoryInterface" type="Magento\Amazon\Model\Amazon\Account\AccountOrderRepository" />
+    <preference for="Magento\Amazon\Api\ListingRuleRepositoryInterface" type="Magento\Amazon\Model\Amazon\Listing\ListingRuleRepository" />
+    <preference for="Magento\Amazon\Api\PricingRuleRepositoryInterface" type="Magento\Amazon\Model\Amazon\Pricing\PricingRuleRepository" />
+    <preference for="Magento\Amazon\Api\ListingRepositoryInterface" type="Magento\Amazon\Model\Amazon\ListingRepository" />
+    <preference for="Magento\Amazon\Api\MultipleRepositoryInterface" type="Magento\Amazon\Model\Amazon\Listing\MultipleRepository" />
+    <preference for="Magento\Amazon\Api\VariantRepositoryInterface" type="Magento\Amazon\Model\Amazon\Listing\VariantRepository" />
+    <preference for="Magento\Amazon\Api\AttributeRepositoryInterface" type="Magento\Amazon\Model\Amazon\AttributeRepository" />
+    <preference for="Magento\Amazon\Api\OrderRepositoryInterface" type="Magento\Amazon\Model\Amazon\OrderRepository" />
+    <preference for="Magento\Amazon\Api\OrderItemRepositoryInterface" type="Magento\Amazon\Model\Amazon\Order\OrderItemRepository" />
+    <preference for="Magento\Amazon\Api\OrderTrackingRepositoryInterface" type="Magento\Amazon\Model\Amazon\Order\OrderTrackingRepository" />
+
+    <!-- Management Interfaces -->
+    <preference for="Magento\Amazon\Api\ConfigManagementInterface" type="Magento\Amazon\Model\ConfigManagement" />
+    <preference for="Magento\Amazon\Api\ListingManagementInterface" type="Magento\Amazon\Model\Amazon\ListingManagement" />
+    <preference for="Magento\Amazon\Api\OrderManagementInterface" type="Magento\Amazon\Model\Amazon\OrderManagement" />
+    <preference for="Magento\Amazon\Api\ProductManagementInterface" type="Magento\Amazon\Model\Amazon\Account\ProductService" />
+    <preference for="Magento\Amazon\Api\CustomerManagementInterface" type="Magento\Amazon\Model\Amazon\Order\CustomerService" />
+    <preference for="Magento\Amazon\Api\OrderTrackingManagementInterface" type="Magento\Amazon\Model\Amazon\Order\OrderTrackingManagement" />
+
+    <preference for="Magento\CatalogRule\Model\Rule\Condition\Product" type="Magento\Amazon\Model\Rule\ProductOverride"/>
+    <preference for="Magento\CatalogRule\Model\Rule" type="Magento\Amazon\Model\Rule\RuleOverride"/>
+    <preference for="Magento\Sales\Model\Order\Email\Sender\OrderCommentSender" type="Magento\Amazon\Model\Sales\OrderCommentSenderOverride"/>
+
+    <type name="Magento\Framework\Console\CommandListInterface">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="goAmazonRun" xsi:type="object">Magento\Amazon\Console\Cron\Amazon\Run</item>
+                <item name="cleanupAddresses" xsi:type="object">\Magento\Amazon\Console\CleanUpCustomerAddresses</item>
+                <item name="cleanupLogs" xsi:type="object">\Magento\Amazon\Console\CleanUpLogs</item>
+                <item name="cleanupQuotes" xsi:type="object">\Magento\Amazon\Console\CleanUpQuotes</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Amazon\GraphQl\ResolverProvider">
+        <arguments>
+            <argument name="queries" xsi:type="array">
+                <item name="attributes" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\Attributes\Proxy</item>
+                <item name="stores" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\Stores\Proxy</item>
+                <item name="store" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\Store\Proxy</item>
+                <item name="websites" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\Websites\Proxy</item>
+                <item name="magentoAttributes" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\MagentoAttributes\Proxy</item>
+                <item name="magentoUrl" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\MagentoUrl\Proxy</item>
+                <item name="storePageUrl" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\StorePageUrl\Proxy</item>
+                <item name="marketplaces" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\Marketplaces\Proxy</item>
+                <item name="heartbeat" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\Heartbeat\Proxy</item>
+                <item name="servicesConnector" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\ServicesConnector\Proxy</item>
+                <item name="magentoSettings" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Query\MagentoSettings\Proxy</item>
+            </argument>
+            <argument name="fields" xsi:type="array">
+                <item name="Store.irpUrl" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreIrpUrl\Proxy</item>
+                <item name="Store.orders" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreOrders\Proxy</item>
+                <item name="StoreOrder.orderItems" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreOrderItems\Proxy</item>
+                <item name="StoreOrder.orderTracking" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreOrderTracking\Proxy</item>
+                <item name="Store.listings" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreListings\Proxy</item>
+                <item name="StoreReport.revenue" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreReportRevenue\Proxy</item>
+                <item name="StoreReport.lifetime" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Field\StoreReportLifetime\Proxy</item>
+            </argument>
+            <argument name="mutations" xsi:type="array">
+                <item name="createStore" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\CreateStore\Proxy</item>
+                <item name="deleteStore" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\DeleteStore\Proxy</item>
+                <item name="updateStore" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\UpdateStore\Proxy</item>
+                <item name="activateStore" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\ActivateStore\Proxy</item>
+                <item name="deactivateStore" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\DeactivateStore\Proxy</item>
+                <item name="verifyAuthentication" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\VerifyAuthentication\Proxy</item>
+                <item name="reimportAttributes" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\ReimportAttributes\Proxy</item>
+                <item name="updateOrder" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\UpdateOrder\Proxy</item>
+                <item name="cancelOrder" xsi:type="object">Magento\Amazon\GraphQl\Resolver\Mutation\CancelOrder\Proxy</item>
+            </argument>
+            <argument name="resultTransformers" xsi:type="array">
+                <item name="Marketplace" xsi:type="object">Magento\Amazon\GraphQl\Resolver\ResultTransformer\Marketplace\Proxy</item>
+                <item name="MagentoWebsite" xsi:type="object">Magento\Amazon\GraphQl\Resolver\ResultTransformer\MagentoWebsite\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="\Magento\Amazon\Comm\Amazon\UpdateHandler">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <!-- Order matters here. You cannot save attribute value if attribute does not exist yet, etc. -->
+                <item name="RemoveDefect" sortOrder="100" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\RemoveDefect</item>
+                <item name="RemoveListing" sortOrder="200" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\RemoveListing</item>
+                <item name="Listing" sortOrder="300" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Listing</item>
+                <item name="Defect" sortOrder="400" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Defect</item>
+                <item name="Attribute" sortOrder="500" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Attribute</item>
+                <item name="AttributeValue" sortOrder="600" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\AttributeValue</item>
+                <item name="BbbPrice" sortOrder="700" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\BbbPrice</item>
+                <item name="LowestPrice" sortOrder="800" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\LowestPrice</item>
+                <item name="Error" sortOrder="900" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Error</item>
+                <item name="Log" sortOrder="1000" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Log</item>
+                <item name="Multiple" sortOrder="1100" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Multiple</item>
+                <item name="ListStatus" sortOrder="1200" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\ListStatus</item>
+                <item name="Variant" sortOrder="1300" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Variant</item>
+                <item name="Order" sortOrder="1400" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\Order</item>
+                <item name="OrderItem" sortOrder="1500" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\OrderItem</item>
+                <item name="ReportRun" sortOrder="1600" xsi:type="object">\Magento\Amazon\Comm\Amazon\UpdateHandler\ReportRun</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Amazon\Logger\Handler\AscClientLogHandler">
+        <arguments>
+            <argument name="filesystem" xsi:type="object">Magento\Framework\Filesystem\Driver\File</argument>
+        </arguments>
+    </type>
+
+    <type name="\Magento\Amazon\Logger\Processor\AddIntrospection">
+        <arguments>
+            <argument name="skipClassesPartials" xsi:type="array">
+                <item name="channels_logger" xsi:type="string">Magento\Amazon\Logger\</item>
+                <item name="magento_logger" xsi:type="string">Magento\Framework\Logger\</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Logger\AscClientLogger">
+        <arguments>
+            <argument name="name" xsi:type="string">marketplaces</argument>
+            <argument name="handlers"  xsi:type="array">
+                <!--system log--><item name="system" xsi:type="object">Magento\Amazon\Logger\Handler\SystemLogHandler</item>
+                <!--emergency-->
+                <!--alert-->
+                <!--critical-->
+                <!--error-->
+                <!--warning-->
+                <!--notice-->
+                <!--info-->
+                <!--debug--><item name="debug" xsi:type="object">Magento\Amazon\Logger\Handler\AscClientLogHandler</item>
+            </argument>
+            <argument name="processors" xsi:type="array">
+                <item name="filter_debug_data" xsi:type="object">\Magento\Amazon\Logger\Processor\FilterDebugData</item>
+                <item name="account_data" xsi:type="object">\Magento\Amazon\Logger\Processor\ExtractAccountData</item>
+                <item name="area_code" xsi:type="object">\Magento\Amazon\Logger\Processor\AreaCode</item>
+                <item name="magento_mode" xsi:type="object">\Magento\Amazon\Logger\Processor\MagentoMode</item>
+                <item name="module_version" xsi:type="object">\Magento\Amazon\Logger\Processor\ModuleVersion</item>
+                <item name="introspection" xsi:type="object">\Magento\Amazon\Logger\Processor\AddIntrospection</item>
+                <item name="psr_log_message" xsi:type="object">\Monolog\Processor\PsrLogMessageProcessor</item>
+                <item name="exception_stacktrace" xsi:type="object">\Magento\Amazon\Logger\Processor\AddStackTraceToException</item>
+                <item name="errors_for_aggregate_exception" xsi:type="object">\Magento\Amazon\Logger\Processor\AddErrorsForAggregatedException</item>
+                <item name="http_response_for_api_exceptions" xsi:type="object">\Magento\Amazon\Logger\Processor\LogHttpResponseForApiExceptions</item>
+                <item name="previous_exception" xsi:type="object">\Magento\Amazon\Logger\Processor\LogPreviousException</item>
+                <item name="trim_path" xsi:type="object">\Magento\Amazon\Logger\Processor\TrimMagentoBaseDirFromLog</item>
+                <item name="cleanup_objects" xsi:type="object">\Magento\Amazon\Logger\Processor\CleanUpObjectsFromLogs</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="amazon_listing_active_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Active\Grid\Collection</item>
+                <item name="amazon_listing_inactive_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Inactive\Grid\Collection</item>
+                <item name="amazon_listing_incomplete_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Incomplete\Grid\Collection</item>
+                <item name="amazon_listing_ineligible_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Ineligible\Grid\Collection</item>
+                <item name="amazon_listing_thirdparty_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Thirdparty\Grid\Collection</item>
+                <item name="amazon_listing_ended_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Ended\Grid\Collection</item>
+                <item name="amazon_listing_published_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Published\Grid\Collection</item>
+                <item name="amazon_listing_overrides_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Override\Grid\Collection</item>
+                <item name="amazon_listing_details_activity_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Details\Activity\Grid\Collection</item>
+                <item name="amazon_listing_details_bestbuybox_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Details\Bestbuybox\Grid\Collection</item>
+                <item name="amazon_listing_details_lowest_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Details\Lowest\Grid\Collection</item>
+                <item name="amazon_account_pricing_rules_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Pricing\Rule\Grid\Collection</item>
+                <item name="amazon_listing_defect_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Report\Defect\Grid\Collection</item>
+                <item name="amazon_listing_pricing_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Report\Pricing\Grid\Collection</item>
+                <item name="amazon_attribute_value_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Attribute\Value\Grid\Collection</item>
+                <item name="amazon_activity_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Log\Grid\Collection</item>
+                <item name="amazon_error_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Error\Log\Grid\Collection</item>
+                <item name="amazon_order_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Order\Grid\Collection</item>
+                <item name="amazon_order_item_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Order\Item\Grid\Collection</item>
+                <item name="amazon_order_tracking_grid_data_source" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Order\Tracking\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Active\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_active_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_active_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Inactive\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_inactive_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_inactive_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Incomplete\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_incomplete_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_incomplete_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Published\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_published_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_published_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Thirdparty\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_thirdparty_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_thirdparty_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Ended\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_ended_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_ended_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Ineligible\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_ineligible_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_ineligible_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Override\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_overrides_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_overrides_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Details\Activity\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing_log</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_details_activity_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_details_activity_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Log</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Details\Bestbuybox\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_details_bestbuybox_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_details_bestbuybox_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Details\Lowest\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_details_lowest_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_details_lowest_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Pricing\Rule\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_pricing_rule</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_pricing_rules_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_pricing_rules_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Pricing\Rule</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Report\Defect\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_defect</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_listing_defect_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_listing_defect_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Defect</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Report\Pricing\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_account_report_pricing_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_account_report_pricing_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Attribute\Value\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_attribute_value</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_attribute_value_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_attribute_value_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Attribute\Value</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Listing\Log\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_listing_log</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_listing_log_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_listing_log_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Listing\Log</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Error\Log\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_error_log</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_error_log_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_error_log_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Error\Log</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Order\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_order</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_order_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_order_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Order</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Order\Item\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_order_item</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_order_item_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_order_item_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Order\Item</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\ResourceModel\Amazon\Order\Tracking\Grid\Collection">
+        <arguments>
+            <argument name="mainTable" xsi:type="string">channel_amazon_order_tracking</argument>
+            <argument name="eventPrefix" xsi:type="string">magento_amazon_amazon_order_tracking_grid_collection</argument>
+            <argument name="eventObject" xsi:type="string">channel_amazon_order_tracking_grid_collection</argument>
+            <argument name="resourceModel" xsi:type="string">Magento\Amazon\Model\ResourceModel\Amazon\Order\Tracking</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Domain\Command\CommandDispatcher">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Comm\Amazon\Push">
+        <arguments>
+            <argument name="serializer" xsi:type="object">Magento\Framework\Serialize\Serializer\Json</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Mview\Config\Reader">
+        <plugin name="amazon_remove_inventory_mview" type="Magento\Amazon\Plugin\RemoveRedundantInventoryMview" sortOrder="10"/>
+    </type>
+    <type name="Magento\Amazon\Model\Stock\StockResolver">
+        <arguments>
+            <argument name="stocks" xsi:type="array">
+                <item name="msi_stock" xsi:type="object">Magento\Amazon\Model\Stock\MsiStock</item>
+                <item name="msi_stock_with_reservations" xsi:type="object">Magento\Amazon\Model\Stock\MsiStockWithReservations</item>
+                <item name="legacy_stock" xsi:type="object">Magento\Amazon\Model\Stock\LegacyStock</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Amazon\Model\Order\OrderHandlerResolver">
+        <arguments>
+            <argument name="orderHandlers" xsi:type="array">
+                <item name="msi_order_handler" xsi:type="object">Magento\Amazon\Model\Order\MsiOrderHandler</item>
+                <item name="legacy_order_handler" xsi:type="object">Magento\Amazon\Model\Order\LegacyOrderHandler</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

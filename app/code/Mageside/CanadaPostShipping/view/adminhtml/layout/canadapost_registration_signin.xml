@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Mageside\CanadaPostShipping\Block\Adminhtml\Registration\Signin"
+                   template="Mageside_CanadaPostShipping::registration/form.phtml"
+                   name="sign.in.form" />
+        </referenceContainer>
+    </body>
+</page>

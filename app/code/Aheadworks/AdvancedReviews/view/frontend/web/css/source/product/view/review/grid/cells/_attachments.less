@@ -1,0 +1,70 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-ar {
+    &__attachments {
+        overflow: hidden;
+        margin-top: 10px;
+
+        &::before {
+          content: '';
+          clear: both;
+        }
+    }
+
+    &__attach {
+      float: left;
+      background-color: @aw-ar-attach__background-color;
+      border: 1px solid @aw-ar-attach__border-color;
+      margin: 0 5px 5px 0;
+
+      img {
+        max-height: 100%;
+        height: 100%;
+      }
+
+      .preview-link {
+        height: 100%;
+        width: 100%;
+        .lib-vendor-prefix-display();
+        .lib-vendor-box-align(center);
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        justify-content: center;
+        color: @aw-ar-uploader-file-name-link__color;
+      }
+
+      .file-name {
+        margin: auto;
+        padding: 15px;
+      }
+    }
+  }
+}
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .aw-ar {
+    &__attach {
+      height: 80px;
+      max-width: 142px;
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .aw-ar {
+    &__attach {
+      height: 96px;
+      max-width: 170px;
+    }
+  }
+}

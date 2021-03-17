@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="dashboard-container row">
+    <?= $block->getChildHtml('amazon_attribute_edit_tabs') ?>
+    <?php if (is_array($block->getChildBlock('amazon_attribute_edit_tabs')->getTabsIds())) : ?>
+        <div id="amazon_attribute_value_index" class="amazon_attribute_value_index"></div>
+    <?php endif; ?>
+</div>

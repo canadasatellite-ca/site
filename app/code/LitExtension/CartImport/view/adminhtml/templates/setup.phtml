@@ -1,0 +1,70 @@
+<?php
+/**
+ * @project: CartImport
+ * @author : LitExtension
+ * @url    : http://litextension.com
+ * @email  : litextension@gmail.com
+ */
+?>
+<?php $notice = $block->getNotice(); ?>
+<form action="" method="post" id="form-setup" enctype="multipart/form-data">
+    <?php if(\LitExtension\CartImport\Model\Cart::DEMO_MODE): ?>
+        <div class="section_guide">
+            <h2>Migration Demo</h2>
+            <div>
+                <p><b>1.</b> This is demo migration therefore we <b>limit the number of entities which can be migrated of Product, Category,
+                        Customer, Order to 10</b> as well as disable some extensive options.</p>
+                <p><b>2.</b> <b>You have full privileges to delete your migrated data</b> on this demo magento store, for any confidential reasons.</p>
+                <p><b>3.</b> If by some case the module does not work as expected with your Source Store, <b>we can help you fix that</b>,
+                    please <a target="blank" href="http://litextension.com/contacts/">"contact us"</a> to let us know your case, thank you!</p>
+                <p></p>
+            </div>
+        </div>
+    <?php endif; ?>
+    <?php if($block->checkShowWarning()){ ?>
+        <div class="lecm-warning" style="text-align: left;">
+            <p><strong>Warning:</strong></p>
+            <?php if(!$block->checkFolderMediaPermission()){ ?><p> - Folder "media" is not writable, images could not be saved!</p><?php } ?>
+            <?php if(!$block->checkAllowUrlFOpen()){ ?><p> - PHP variable allow_url_fopen = Off, need to change to allow_url_fopen = On, please click <a href="https://www.google.com/?gws_rd=ssl#q=allow_url_fopen+php" target="_blank">here</a> for detail</p><?php } ?>
+            <?php if(!$block->getConfig('system/smtp/disable')){?><p> - You have email notification turned on, this can send welcome emails to your customers during migration, it is recommended to turn it off and turn back on when migration is completed. To turn it off: Stores > Configuration > Advanced Tab > System > Mail Sending Settings > Disable Email Communications = "Yes"</p><?php } ?>
+        </div>
+    <?php } ?>
+    <div class="container">
+        <div class="form-group">
+            <div class="label-field">
+                <p>
+                    <label><?php echo __("Cart Type:"); ?>
+                        <span class="required">*</span>
+                    </label>
+                </p>
+            </div>
+            <div class="input-field">
+                <select id="cart_type" name="cart_type" class="required-entry input-text select admin__control-select">
+                    <?php echo $block->getCartsOption($notice['config']['cart_type']);?>
+                </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="label-field">
+                <p>
+                    <label><?php echo __("Cart Url:"); ?>
+                        <span class="required">*</span>
+                    </label>
+                </p>
+            </div>
+            <div class="input-field">
+                <input type="text" name="cart_url" id="cart_url" class="required-entry input-text validate-url" value="<?php echo $notice['config']['cart_url'];?>"/>
+                <p style="font-size: 11px;float: left;width: 100%;">Please enter correct Source Cart Url as it will be registered as the migration domain.</p>
+            </div>
+        </div>
+        <div id="file-upload">
+            <?php echo $block->getChildBlock('leci.upload')->setListUpload($notice['config']['file_data'])->setCartType($notice['config']['cart_type'])->toHtml();?>
+        </div>
+        <div class="form-submit">
+            <div id="form-setup-loading" class="form-loading"><?php echo __('Connecting')?> ... </div>
+            <div id="form-setup-submit" class="button-submit" style="display: none;">
+                <a href="javascript:void(0)" class="lecaip-button"><?php echo __('Next') ?> &raquo;</a>
+            </div>
+        </div>
+    </div>
+</form>

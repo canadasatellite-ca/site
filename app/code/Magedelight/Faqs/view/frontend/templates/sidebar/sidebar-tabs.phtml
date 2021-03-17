@@ -1,0 +1,53 @@
+<?php
+$categoryCollection = $block->getFaqCategories();
+$tagsColletion = $block->getAllTags();
+$tabOption = $block->isCategoryLinkable();
+$route = $block->getFaqsRoute();
+$firstCategory = 1;
+if(count($categoryCollection) > 0) {
+?>
+<div class="main-faqs-page-index">
+    <div class="md_faq_main_left block">
+        <div class="block-title">Category</div>
+        <?php if($tabOption) { ?> 
+        <ul class="category-all-list">
+            <?php foreach ($categoryCollection as $category) { ?>
+                <li class="faq-category-list">
+                    <a target="_blank" href="<?php echo $block->getUrl($route.'/' . $category->getUrlKey()); ?>" title="<?php echo $category->getTitle(); ?>"><?php echo $category->getTitle(); ?></a></li>
+            <?php } ?>
+        </ul>
+        <?php } else { ?>
+        <ul class="category-all-list">
+                <?php foreach ($categoryCollection as $category) : ?>
+                   <li class="faq-category-list <?php if($firstCategory == 1) { ?> ui-state-active <?php } ?>">
+                       <a href="javascript:void(0);" rel="<?php echo $block->escapeHtml($category->getCategoryId()); ?>">
+                            <?php echo $block->escapeHtml($category->getTitle()); ?>
+                       </a>
+                   </li>
+                <?php $firstCategory++; endforeach; ?>
+        </ul>
+        <?php } ?>
+        
+    </div>
+</div>
+<?php }  if(count($tagsColletion) > 0) { ?>
+<div class="main-faqs-page-tags">
+    <div class="md_faq_main_left block">
+        <div class="block-title">
+            Tags			
+        </div>
+        <div class="block-content faq-widget-content">
+            <ul class="tags-all-list">
+                <?php foreach ($tagsColletion as $tags) { ?>
+                    <li class="faq-tag-list">
+                        <?php $query = ['tag' => $tags]; 
+                        $counter = $block->getCountByTag($tags);
+                        ?> 
+                        <a href="<?php echo $block->getUrl('faqs/question/tags/tag/'.$tags); ?>" title="deal"><?php echo $tags; ?> <span> (<?php echo $counter; ?>)</span></a>
+                    </li>
+                <?php } ?>
+            </ul>
+        </div>
+    </div>
+</div>
+<?php } ?>

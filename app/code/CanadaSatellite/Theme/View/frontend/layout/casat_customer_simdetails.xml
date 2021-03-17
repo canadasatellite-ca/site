@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <head>
+        <title>View SIM details</title>
+    </head>
+    <body>
+        <!-- <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">View SIMs</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="CanadaSatellite\Theme\Block\Customer\Sim\ListSim" name="customer_sim_list" template="customer/sim/list.phtml" cacheable="false"/>
+        </referenceContainer> -->
+
+        <!--<referenceContainer name="page.main.title">
+            <block class="Magento\Framework\View\Element\Template" name="page.title.canadasatellite.theme.customer.back" template="CanadaSatellite_Theme::customer/sim/details/back.phtml"/>
+        </referenceContainer>-->
+        <referenceContainer name="content">
+            <block class="CanadaSatellite\Theme\Block\Customer\Sim\View" name="customer_sim_view" as="sim" cacheable="false" template="customer/sim/view.phtml">
+                <!--
+                <block class="Cart2Quote\Desk\Block\Customer\Ticket\View\Message" name="customer_ticket_view_messages" as="ticket.messages" cacheable="false" template="customer/ticket/view/messages.phtml">
+                    <block class="Cart2Quote\Desk\Block\Customer\Ticket\View\Message" name="customer_ticket_view_message" as="ticket.message" cacheable="false" template="customer/ticket/view/message.phtml"/>
+                    <block class="Cart2Quote\Desk\Block\Customer\Ticket\View\Message" name="customer_ticket_view_messages_form" as="ticket.messages.form" cacheable="false" template="customer/ticket/view/messages/form/edit.phtml">
+                        <block class="Cart2Quote\Desk\Block\Customer\Ticket\View\Message" name="customer_ticket_view_messages_form_fields" as="ticket.messages.form.fields" cacheable="false" template="customer/ticket/view/messages/form/fields.phtml"/>
+                    </block>
+                </block>
+                -->
+                <block class="CanadaSatellite\Theme\Block\Customer\Sim\View" name="customer_sim_view_details" as="sim.details" cacheable="false" template="customer/sim/details/details.phtml"/>
+            </block>
+        </referenceContainer>
+
+    </body>
+</page>

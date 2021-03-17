@@ -1,0 +1,25 @@
+<form if="isNeedToRenderForm()"
+      data-bind="
+            submit:save,
+            visible: isVisible(),
+            attr: {
+                id: getFormId()
+            },
+            css: getFormCss()">
+    <div class="aw-ar-wrapper-fieldset">
+        <div class="fieldset">
+            <each args="data: elems, as: 'element'">
+                <render if="hasTemplate()"/>
+            </each>
+        </div>
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action action-submit primary"><span data-bind="text: buttonLabel"></span></button>
+            </div>
+            <div if="isDisplayCancel" class="secondary">
+                <button type="button" click="onCancel" class="action action-cancel"><span translate="'Cancel'"></span></button>
+            </div>
+        </div>
+    </div>
+</form>
+

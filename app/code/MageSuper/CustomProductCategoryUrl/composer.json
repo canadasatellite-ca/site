@@ -1,0 +1,21 @@
+{
+    "name": "magesuper/module-customproductcategoryurl",
+    "description": "",
+    "license": "proprietary",
+    "authors": [
+        {
+            "email": "info@mage2gen.com",
+            "name": "Mage2Gen"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {},
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "MageSuper\\CustomProductCategoryUrl\\": ""
+        }
+    }
+}

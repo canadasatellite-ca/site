@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Info $block */
+?>
+
+<section class="admin__page-section quote-view-account-information">
+    <div class="admin__page-section-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Quote & Account Information')) ?></span>
+    </div>
+    <div class="admin__page-section-content">
+        <?php echo $block->getChildHtml(); ?>
+    </div>
+</section>

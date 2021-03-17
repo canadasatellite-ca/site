@@ -1,0 +1,24 @@
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <preference for="Mirasvit\SearchAutocomplete\Index\Magento\Catalog\Product\Mapper"
+                type="BroSolutions\SearchAutocomplete\Index\Mirasvit\SearchAutocomplete\Magento\Catalog\Product\Mapper"/>
+
+<!--    <type name="Mirasvit\SearchAutocomplete\Api\Repository\IndexRepositoryInterface">-->
+<!--        <arguments>-->
+<!--            <argument name="instances" xsi:type="array">-->
+<!--                <item name="catalogsearch_fulltext" xsi:type="object">BroSolutions\SearchAutocomplete\Index\Mirasvit\SearchAutocomplete\Magento\Catalog\Product\Mapper</item>-->
+<!--            </argument>-->
+<!--        </arguments>-->
+<!--    </type>-->
+
+<!--    <type name="Mirasvit\Search\Index\Magento\Catalog\Product\Index">-->
+<!--        <arguments>-->
+<!--            <argument name="dataMappers" xsi:type="array">-->
+<!--                <item name="engine-elastic-autocomplete" xsi:type="object">BroSolutions\SearchAutocomplete\Index\Mirasvit\SearchAutocomplete\Magento\Catalog\Product\Mapper</item>-->
+<!--                <item name="engine-sphinx-autocomplete" xsi:type="object">BroSolutions\SearchAutocomplete\Index\Mirasvit\SearchAutocomplete\Magento\Catalog\Product\Mapper</item>-->
+<!--            </argument>-->
+<!--        </arguments>-->
+<!--    </type>-->
+
+</config>

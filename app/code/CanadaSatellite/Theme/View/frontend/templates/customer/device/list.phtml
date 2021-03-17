@@ -1,0 +1,105 @@
+<?php
+/** @var CanadaSatellite\Theme\Block\Customer\Device\ListDevice $block */
+?>
+
+<?php
+$registry = $block->getRegistry();
+if ($block->getDevices() && count($block->getDevices())) : ?>
+    <div class="table-wrapper tickets">
+        <table class="data table table-tickets" id="my-tickets-table">
+            <caption class="table-caption"><?php echo $block->escapeHtml(__("Devices")) ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col description"><?php echo $block->escapeHtml(__("Order #")) ?></th>
+                    <th scope="col" class="col date"><?php echo $block->escapeHtml(__("Sale Date")) ?></th>
+                    <th scope="col" class="col description"><?php echo $block->escapeHtml(__("IMEI")) ?></th>
+                    <th scope="col" class="col description"><?php echo $block->escapeHtml(__("Product")) ?></th>
+                    <th scope="col" class="col files"><?php echo $block->escapeHtml(__("Files")) ?></th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+    foreach ($block->getDevices() as $device) : ?>
+    <?php $attachmentOutput = ''; ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__("Order #")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($device->getOrderNumber()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Sale Date")) ?>" class="col date">
+                        <?php
+                        $saleDate = $device->getSaleDate();
+                        if (!empty($saleDate)) {
+                            echo $block->escapeHtml(date("Y-m-d", $saleDate));
+                        } ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("IMEI")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($device->getImei()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Product")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($device->getProduct()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Files")) ?>" class="col files attachment-title-holder" align="center">
+                        <?php
+                        try{
+                            $product = $block->getProductByName($device->getProduct());
+                            if($product){
+                                $registry->unregister('product');
+                                $registry->register('product', $product);
+                                $attachmentOutput = $this->getLayout()
+                                    ->createBlock('MageWorx\Downloads\Block\Catalog\Product\Attachments')
+                                    ->setTemplate('CanadaSatellite_Theme::attachment_container_table.phtml')
+                                    ->setProduct($product)
+                                    ->setTitle(__('File Downloads'))
+                                    ->setData('product_id', $product->getId())
+                                    ->setProductId($product->getId())
+                                    ->toHtml();
+                                if($attachmentOutput){
+                               echo '<a href="#" onclick="return false;">'. __("View").'</a>';
+                                }
+
+                            }
+                            else{
+                                echo "-";
+                            }
+                        }
+                        catch(\Exception $e){
+                        }
+
+                        ?>
+                    </td>
+                </tr>
+        <?php if($attachmentOutput){
+            echo $attachmentOutput;
+        }
+    endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+    if ($block->getToolbarHtml()): ?>
+        <div class="toolbar products-tickets-toolbar bottom">
+            <?php echo $block->getToolbarHtml() ?>
+        </div>
+    <?php
+    endif; ?>
+    <?php
+else: ?>
+    <div class="message info empty"><span><?php echo $block->escapeHtml(__("You have no devices.")) ?></span></div>
+    <?php
+endif; ?>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?php echo $block->escapeUrl($block->getBackUrl()) ?>">
+            <span><?php echo $block->escapeHtml(__("Back")) ?></span>
+        </a>
+    </div>
+</div>
+<script type="text/javascript">
+    require([
+        'jquery',
+    ], function($){
+        $(".attachment-title-holder").click(function() {
+            $(this).closest("tr").next(".product-attachment-container").toggle();
+        });
+    });
+</script>

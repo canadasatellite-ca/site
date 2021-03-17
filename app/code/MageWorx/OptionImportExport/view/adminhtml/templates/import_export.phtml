@@ -1,0 +1,189 @@
+<?php
+/**
+ * Copyright © MageWorx. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+?>
+
+<?php /**@var $block \MageWorx\OptionImportExport\Block\Adminhtml\ImportExport */ ?>
+<?php $importFromCustomerGroupIds = $block->getImportFromCustomerGroupIds(); ?>
+<?php $importFromStoreIds = $block->getImportFromStoreIds(); ?>
+<?php $importToCustomerGroups = $block->getCustomerGroups(); ?>
+<?php $importToStores = $block->getStores(); ?>
+<?php $actionUrls = $block->getActionUrls(); ?>
+<?php $fileMagentoVersion = $block->getFileMagentoVersion(); ?>
+<?php $assignedProducts = $block->getAssignedProducts(); ?>
+<?php $hasMissingProducts = $block->hasMissingProducts(); ?>
+<div class="mageworx-optiontemplates-import-export">
+    <?php if (!$block->getIsReadonly()): ?>
+        <div class="mageworx-optiontemplates-import">
+            <?php if ($block->getUseContainer()): ?>
+            <form id="import-form" class="admin__fieldset"
+                  action=""
+                  method="post"
+                  enctype="multipart/form-data"
+            >
+                <?php endif; ?>
+                <?= $block->getBlockHtml('formkey') ?>
+                <?php if (!empty($assignedProducts) && is_array($assignedProducts)) : ?>
+                    <legend class="admin__legend legend">
+                        <span><?= $block->escapeHtml(__("Assigned Products")) ?></span>
+                    </legend>
+                    <div class="fieldset admin__field">
+                        <label for="mageworx_optiontemplates_import_from_customer_groups"
+                               class="admin__field-label">
+                                <span>
+                                    <?php if ($hasMissingProducts) : ?>
+                                        <?= $block->escapeHtml(__("Apply templates to linked products and ignore missing products")) ?>
+                                    <?php else : ?>
+                                        <?= $block->escapeHtml(__("Apply templates to linked products")) ?>
+                                    <?php endif; ?>
+                                </span>
+                        </label>
+                        <div class="admin__field-control">
+                            <select type="select"
+                                    id="mageworx_optiontemplates_import_is_need_to_apply_templates"
+                                    name="mageworx_optiontemplates_import_is_need_to_apply_templates"
+                                    class="select admin__control-select"
+                            >
+                                <option value="0"><?= $block->escapeHtml(__('No')) ?></option>
+                                <option value="1"><?= $block->escapeHtml(__('Yes')) ?></option>
+                            </select>
+                        </div>
+                    </div>
+                <?php endif; ?>
+                <?php if (!empty($importFromCustomerGroupIds) && is_array($importFromCustomerGroupIds)) : ?>
+                    <legend class="admin__legend legend">
+                        <span><?= $block->escapeHtml(__("Customer Groups")) ?></span>
+                    </legend>
+                    <?php foreach ($importFromCustomerGroupIds as $importFromCustomerGroupId): ?>
+                        <div class="fieldset admin__field">
+                            <label for="mageworx_optiontemplates_import_from_customer_groups"
+                                   class="admin__field-label">
+                                <span>
+                                    <?= $block->escapeHtml(__(
+                                        "Select equivalent for Magento %1 customer group", $fileMagentoVersion
+                                    ) . " '" . $importFromCustomerGroupId . "'") ?>
+                                </span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select type="select"
+                                        id="mageworx_optiontemplates_import_from_customer_groups"
+                                        name="mageworx_optiontemplates_import_from_customer_groups[<?= $block->escapeHtmlAttr($importFromCustomerGroupId) ?>]"
+                                        class="select admin__control-select"
+                                >
+                                    <option value><?= $block->escapeHtml(__('Ignore')) ?></option>
+                                    <?php foreach ($importToCustomerGroups as $importToCustomerGroup): ?>
+                                        <option value="<?= $block->escapeHtmlAttr($importToCustomerGroup['value']) ?>">
+                                            <?= $block->escapeHtml($importToCustomerGroup['label']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <?php if (!empty($importFromStoreIds) && is_array($importFromStoreIds)) : ?>
+                    <legend class="admin__legend legend">
+                        <span><?= $block->escapeHtml(__("Stores")) ?></span>
+                    </legend>
+                    <?php foreach ($importFromStoreIds as $importFromStoreId): ?>
+                        <div class="fieldset admin__field">
+                            <label for="mageworx_optiontemplates_import_from_stores"
+                                   class="admin__field-label">
+                                <span>
+                                    <?= $block->escapeHtml(__(
+                                        "Select equivalent for Magento %1 store", $fileMagentoVersion
+                                    ) . " '" . $importFromStoreId . "'") ?>
+                                </span>
+                            </label>
+                            <div class="admin__field-control">
+                                <select type="select"
+                                        id="mageworx_optiontemplates_import_from_stores"
+                                        name="mageworx_optiontemplates_import_from_stores[<?= $block->escapeHtmlAttr($importFromStoreId) ?>]"
+                                        class="select admin__control-select"
+                                >
+                                    <option value><?= $block->escapeHtml(__('Ignore')) ?></option>
+                                    <?php foreach ($importToStores as $importToStore): ?>
+                                        <option value="<?= $block->escapeHtmlAttr($importToStore['value']) ?>">
+                                            <?= $block->escapeHtml($importToStore['label']) ?>
+                                        </option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </div>
+                        </div>
+                    <?php endforeach; ?>
+                <?php endif; ?>
+                <legend class="admin__legend legend">
+                    <span><?= $block->escapeHtml(__("Import")) ?></span>
+                </legend>
+                <div class="fieldset admin__field">
+                    <label for="mageworx_optiontemplates_import_magento_one_file"
+                           class="admin__field-label"><span><?= $block->escapeHtml(__(
+                                'Import Magento 1 Option Templates'
+                            )) ?></span></label>
+                    <div class="admin__field-control">
+                        <input type="file" id="mageworx_optiontemplates_import_magento_one_file"
+                               name="mageworx_optiontemplates_import_magento_one_file"
+                               class="input-file"/>
+                        <?= $block->getButtonHtml(
+                            __('Import Magento 1 Option Templates'),
+                            '',
+                            'import-submit',
+                            'm1-import-submit'
+                        ) ?>
+                    </div>
+                </div>
+                <div class="fieldset admin__field">
+                    <label for="mageworx_optiontemplates_import_magento_two_file"
+                           class="admin__field-label"><span><?= $block->escapeHtml(__(
+                                'Import Magento 2 Option Templates'
+                            )) ?></span></label>
+                    <div class="admin__field-control">
+                        <input type="file" id="mageworx_optiontemplates_import_magento_two_file"
+                               name="mageworx_optiontemplates_import_magento_two_file"
+                               class="input-file"/>
+                        <?= $block->getButtonHtml(
+                            __('Import Magento 2 Option Templates'),
+                            '',
+                            'import-submit',
+                            'm2-import-submit'
+                        ) ?>
+                    </div>
+                </div>
+                <?php if ($block->getUseContainer()): ?>
+            </form>
+        <?php endif; ?>
+            <script>
+                require(['jquery', "mage/mage", "loadingPopup"], function (jQuery) {
+
+                    jQuery('#import-form').mage('form').mage('validation');
+                    (function ($) {
+                        $('.import-submit').click(function () {
+                            if (this.id === 'm1-import-submit') {
+                                this.form.action = '<?= $block->escapeJs($actionUrls['m1-action-url']) ?>';
+                                if ($(':input[name="mageworx_optiontemplates_import_magento_one_file"]').val()) {
+                                    $('body').loadingPopup({
+                                        timeout: false
+                                    });
+
+                                    $(this.form).submit();
+                                }
+                            } else if (this.id === 'm2-import-submit') {
+                                this.form.action = '<?= $block->escapeJs($actionUrls['m2-action-url']) ?>';
+                                if ($(':input[name="mageworx_optiontemplates_import_magento_two_file"]').val()) {
+                                    $('body').loadingPopup({
+                                        timeout: false
+                                    });
+
+                                    $(this.form).submit();
+                                }
+                            }
+                        });
+                    })(jQuery);
+
+                });
+            </script>
+        </div>
+    <?php endif; ?>
+</div>

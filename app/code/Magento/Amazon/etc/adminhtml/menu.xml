@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <!-- channels -->
+        <add id="Magento_Amazon::channel_amazon" title="Channels" translate="title" module="Magento_Amazon" sortOrder="12" parent="Magento_Backend::marketing" dependsOnModule="Magento_Amazon" resource="Magento_SalesChannels::channel" />
+        <add id="Magento_Amazon::channel_amazon_index" title="Amazon Sales Channel" translate="title" module="Magento_Amazon" sortOrder="5" parent="Magento_Amazon::channel_amazon" action="channel/amazon" resource="Magento_SalesChannels::channel_amazon" />
+    </menu>
+</config>

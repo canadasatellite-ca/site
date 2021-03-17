@@ -1,0 +1,29 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<li id="billing" class="block"
+    data-bind="fadeVisible: allowToUseForm, mageInit: {'collapsible': {'openedState': 'active', 'active': false, 'collapsible': true}}">
+    <div class="step-title title" data-role="title"><strong data-bind="i18n: 'Billing Address'"></strong></div>
+    <div id="checkout-step-billing"
+         class="step-content"
+         data-role="content">
+        <div class="billing-same-as-shipping" data-bind="visible: !isVirtual()">
+            <input type="checkbox" name="billing-address-same-as-shipping"
+                   data-bind="checked: isAddressSameAsShipping, click: useShippingAddress, attr: {id: 'billing-address-same-as-shipping'}"/>
+            <label data-bind="attr: {for: 'billing-address-same-as-shipping'}"><span
+                    data-bind="i18n: 'My billing and shipping address are the same'"></span></label>
+        </div>
+
+        <div class="addressDetailsContainer" data-bind="visible: isVirtual()">
+            <!-- ko template: 'Magento_Checkout/billing-address/details' --><!-- /ko -->
+        </div>
+        <fieldset class="fieldset" data-bind="visible: !isAddressDetailsVisible() || isVirtual() && !currentBillingAddress()">
+            <!-- ko template: 'Cart2Quote_Quotation/quote-checkout/view/billing-address/list' --><!-- /ko -->
+            <!-- ko template: 'Magento_Checkout/billing-address/form' --><!-- /ko -->
+        </fieldset>
+    </div>
+</li>

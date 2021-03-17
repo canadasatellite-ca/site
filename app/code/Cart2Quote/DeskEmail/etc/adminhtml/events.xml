@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     DeskEmail
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="desk_adminhtml_save_message_after">
+        <observer name="deskemail_adminhtml_send_message" instance="Cart2Quote\DeskEmail\Observer\Adminhtml\SaveMessageAfterObserver" />
+    </event>
+    <event name="desk_adminhtml_new_ticket">
+        <observer name="deskemail_adminhtml_new_ticket" instance="Cart2Quote\DeskEmail\Observer\Adminhtml\NewTicketObserver" />
+    </event>
+</config>

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd" label="Email Order Items List" design_abstraction="custom">
+    <body>
+        <referenceBlock name="items">
+            <block class="CanadaSatellite\Theme\Block\Catalog\Product\Attachments"
+                   name="catalog.product.top.list.mageworx.downloads.attachments"
+                   template="CanadaSatellite_Theme::attachment_container_quote.phtml"
+            />
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Mview/etc/mview.xsd">
+    <view id="aw_ar_statistics" class="Aheadworks\AdvancedReviews\Model\Indexer\Statistics" group="indexer">
+        <subscriptions>
+            <table name="aw_ar_review" entity_column="id" />
+        </subscriptions>
+    </view>
+</config>

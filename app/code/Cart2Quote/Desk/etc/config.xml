@@ -1,0 +1,111 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     Desk
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <cart2quote>
+            <totals_sort>
+                <discount>20</discount>
+                <grand_total>100</grand_total>
+                <shipping>30</shipping>
+                <subtotal>10</subtotal>
+                <tax>40</tax>
+            </totals_sort>
+            <reorder>
+                <allow>1</allow>
+            </reorder>
+            <minimum_order>
+                <tax_including>1</tax_including>
+            </minimum_order>
+            <orders>
+                <delete_pending_after>480</delete_pending_after>
+            </orders>
+        </cart2quote>
+        <cart2quote_email>
+            <general>
+                <async_sending>0</async_sending>
+            </general>
+            <order>
+                <enabled>1</enabled>
+                <template>sales_email_order_template</template>
+                <guest_template>sales_email_order_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </order>
+            <order_comment>
+                <enabled>1</enabled>
+                <template>sales_email_order_comment_template</template>
+                <guest_template>sales_email_order_comment_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </order_comment>
+            <invoice>
+                <enabled>1</enabled>
+                <template>sales_email_invoice_template</template>
+                <guest_template>sales_email_invoice_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </invoice>
+            <invoice_comment>
+                <enabled>1</enabled>
+                <template>sales_email_invoice_comment_template</template>
+                <guest_template>sales_email_invoice_comment_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </invoice_comment>
+            <shipment>
+                <enabled>1</enabled>
+                <template>sales_email_shipment_template</template>
+                <guest_template>sales_email_shipment_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </shipment>
+            <shipment_comment>
+                <enabled>1</enabled>
+                <template>sales_email_shipment_comment_template</template>
+                <guest_template>sales_email_shipment_comment_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </shipment_comment>
+            <creditmemo>
+                <enabled>1</enabled>
+                <template>sales_email_creditmemo_template</template>
+                <guest_template>sales_email_creditmemo_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </creditmemo>
+            <creditmemo_comment>
+                <enabled>1</enabled>
+                <template>sales_email_creditmemo_comment_template</template>
+                <guest_template>sales_email_creditmemo_comment_guest_template</guest_template>
+                <identity>sales</identity>
+                <copy_method>bcc</copy_method>
+            </creditmemo_comment>
+        </cart2quote_email>
+    </default>
+</config>

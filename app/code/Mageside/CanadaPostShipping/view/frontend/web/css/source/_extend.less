@@ -1,0 +1,59 @@
+//
+//    Common
+//--------------------------------------
+
+& when (@media-common = true) {
+  .canadapost-map-modal {
+    .content-wrapper {
+      display: flex;
+      flex-wrap: wrap;
+      .offices-list {
+        flex-grow: 1;
+        nav > ul {
+          padding: 0 10px 0 0;
+          margin: 0;
+          font-size: 1.2rem;
+        }
+      }
+      .map-content {
+        height:400px;
+        flex-grow: 10;
+      }
+    }
+  }
+  .canadapost-d2po-field-wrapper {
+    .field {
+      padding: 10px 0 5px;
+    }
+    .selected-office-wrapper {
+      padding-bottom: 20px;
+      .address-element {
+        padding-right: 5px;
+      }
+    }
+  }
+}
+
+//
+//    Desktop styles
+//--------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+  .canadapost-map-modal {
+    .content-wrapper {
+      flex-direction: row;
+    }
+  }
+}
+
+//
+//    Mobile styles
+//--------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+  .canadapost-map-modal {
+    .content-wrapper {
+      flex-direction: column-reverse;
+    }
+  }
+}

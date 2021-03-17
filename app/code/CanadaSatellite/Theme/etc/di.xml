@@ -1,0 +1,266 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection">
+        <plugin name="cs_theme_fulltext_collection" type="CanadaSatellite\Theme\Model\ResourceModel\Fulltext\CollectionPlugin" sortOrder="10" />
+    </type>
+    <preference for="Magento\Framework\View\Page\Config\Renderer" type="CanadaSatellite\Theme\View\Page\Config\Renderer" />
+    <preference for="Magento\Bundle\Observer\AppendUpsellProductsObserver" type="CanadaSatellite\Theme\Observer\AppendUpsellProductsObserver" />
+    <preference for="Magento\Config\Model\Config\Backend\Serialized" type="CanadaSatellite\Theme\Model\Config\Backend\Serialized" />
+    <preference for="Magento\Config\Model\Config\Backend\Serialized\ArraySerialized" type="CanadaSatellite\Theme\Model\Config\Backend\Serialized\ArraySerialized" />
+    <type name="Magento\Theme\Block\Html\Topmenu">
+        <plugin name="catalogTopmenu" disabled="true" />
+        <plugin name="csCatalogTopmenu" type="CanadaSatellite\Theme\Plugin\Block\Topmenu" />
+    </type>
+    <type name="MageWorx\Downloads\Model\ResourceModel\Attachment\Collection">
+        <plugin name="more.options.for.sort.order"
+                type="CanadaSatellite\Theme\Plugin\Model\AttachmentCollection"
+                sortOrder="10" />
+    </type>
+    <type name="MageWorx\Downloads\Block\Catalog\Product\Attachments">
+        <plugin name="call.add.sort.order.in.collection"
+                type="CanadaSatellite\Theme\Plugin\Block\ProductAttachments"
+                sortOrder="10" />
+    </type>
+    <type name="MageWorx\Downloads\Block\Catalog\Product\Link">
+        <plugin name="get.and.rewrite.attachment.url"
+                type="CanadaSatellite\Theme\Plugin\Block\ProductLink"
+                sortOrder="10" />
+    </type>
+    <type name="Magedelight\Faqs\Controller\Faq\Addquetion">
+        <plugin name="add.phone.data"
+                type="CanadaSatellite\Theme\Plugin\Controller\FaqAddquetion"
+                sortOrder="10" />
+    </type>
+
+    <type name="Mageside\CanadaPostShipping\Model\Carrier">
+        <plugin name="get.shipping.address.in.quote"
+                type="CanadaSatellite\Theme\Plugin\Model\CarrierSetRequest"
+                sortOrder="10" />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product\Option\Type\DefaultType">
+        <plugin name="mageworx_optionbase_validate_add_to_cart"
+                type="MageWorx\OptionBase\Plugin\ValidateAddToCart"
+                sortOrder="10"
+                disabled="true"
+        />
+    </type>
+    <type name="Magento\Catalog\Model\Product\Option\Type\DefaultType">
+        <plugin name="canadasatellite_validate_add_to_cart"
+                type="CanadaSatellite\Theme\Plugin\Model\ValidateAddToCart"
+                sortOrder="10"
+        />
+    </type>
+    <type name="Magento\CatalogSearch\Model\Adapter\Aggregation\Checker\Query\CatalogView">
+        <plugin name="has_anchor_category_layered_navigation"
+                type="CanadaSatellite\Theme\Plugin\Model\Adapter\Aggregation\Checker\Query\CatalogView"
+                sortOrder="10"
+        />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product">
+        <plugin
+                name="interactivated-productprice"
+                type="Interactivated\Price\Plugin\Product"
+                sortOrder="30"
+                disabled="true"
+        />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="canadasatellite_set_product_currency"
+                type="CanadaSatellite\Theme\Plugin\Model\ProductSetCurrency"
+                sortOrder="10"
+        />
+    </type>
+
+
+    <type name="Magento\Catalog\Helper\Product\Compare">
+        <plugin name="canadasatellite_compare_list_url"
+                type="CanadaSatellite\Theme\Plugin\Helper\Product\Compare"
+                sortOrder="10"
+        />
+    </type>
+
+    <type name="Magento\Directory\Model\Currency">
+        <plugin name="canadasatellite_save_prices_after_update_currency"
+                type="CanadaSatellite\Theme\Plugin\Model\Currency"
+                sortOrder="10"
+        />
+    </type>
+
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Save">
+          <plugin name="canadasatellite_update_product_currency"
+                  type="CanadaSatellite\Theme\Plugin\Model\ProductUpdateCurrency"
+                  sortOrder="10"
+          />
+    </type>
+
+    <virtualType name="CanadaSatellite\Theme\Model\LayoutSettings" type="MSP\ReCaptcha\Model\LayoutSettings">
+        <arguments>
+            <argument name="config" xsi:type="object" shared="false">
+                CanadaSatellite\Theme\Model\Config\Config
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="CanadaSatellite\Theme\Block\Frontend\ReCaptcha">
+        <arguments>
+            <argument name="layoutSettings" xsi:type="object">CanadaSatellite\Theme\Model\LayoutSettings</argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Controller\AbstractController\Reorder">
+        <plugin name="canadasatellite_reorder_issued_product"
+                type="CanadaSatellite\Theme\Plugin\Controller\Reorder"
+                sortOrder="10"
+        />
+    </type>
+
+    <preference for="Magento\Review\Controller\Product\Post" type="CanadaSatellite\Theme\Controller\Product\Post" />
+    <preference for="Magento\Newsletter\Controller\Subscriber\NewAction" type="CanadaSatellite\Theme\Controller\Subscriber\NewAction" />
+    <preference for="Magento\Customer\Controller\Account\CreatePost" type="CanadaSatellite\Theme\Controller\Customer\CreatePost" />
+
+    <type name="Magento\Framework\View\Asset\Config">
+        <plugin name="canadasatellite_bundle_config_for_admin"
+                type="CanadaSatellite\Theme\Plugin\View\Asset\Config"
+                sortOrder="10"
+        />
+    </type>
+
+    <preference for="Magento\Catalog\Controller\Product\Compare\Index" type="CanadaSatellite\Theme\Controller\Product\Compare\Index" />
+
+    <type name="Magento\Catalog\Controller\Product\Compare\Remove">
+        <plugin name="canadasatellite_set_redirect_url_after_remove_from_compare"
+                type="CanadaSatellite\Theme\Plugin\Controller\Product\Compare\Remove"
+                sortOrder="10"
+        />
+    </type>
+
+    <preference for="Magento\Catalog\Controller\Product\Compare\Add" type="CanadaSatellite\Theme\Controller\Product\Compare\Add" />
+
+    <type name="Magento\Catalog\Block\Product\Compare\ListCompare">
+        <plugin name="canadasatellite_set_correct_items_incognito_mode"
+                type="CanadaSatellite\Theme\Plugin\Block\Product\Compare\ListCompare"
+                sortOrder="10"
+        />
+    </type>
+
+    <preference for="Magento\Sales\Block\Order\History" type="CanadaSatellite\Theme\Block\Order\History" />
+    <preference for="Cart2Quote\Quotation\Block\Quote\History" type="CanadaSatellite\Theme\Block\Quote\History" />
+    <preference for="Magento\Framework\Stdlib\Cookie\PhpCookieManager" type="CanadaSatellite\Theme\Model\Stdlib\Cookie\PhpCookieManager" />
+    <preference for="Mageplaza\AutoRelated\Block\Product\ProductList\ProductList" type="CanadaSatellite\Theme\Block\Product\ProductList" />
+    <preference for="Magedelight\Subscribenow\Model\Subscription" type="CanadaSatellite\Theme\Model\Subscription" />
+
+    <type name="Magento\Framework\View\Element\AbstractBlock">
+        <plugin
+                name="casat_block_cache_segmentation"
+                type="CanadaSatellite\Theme\Plugin\Framework\AbstractBlock"
+                sortOrder="80"/>
+    </type>
+
+    <type name="Magento\Framework\App\PageCache\Identifier">
+        <plugin
+                name="casat_page_cache_segmentation"
+                type="CanadaSatellite\Theme\Plugin\PageCache\Identifier"
+                sortOrder="90"/>
+    </type>
+
+    <type name="Magento\Framework\View\Asset\MergeService">
+        <plugin
+                name="casat_unset_stylesl_for_mobile"
+                type="CanadaSatellite\Theme\Plugin\View\Asset\MergeService"/>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote\Address">
+        <plugin
+                name="casat_not_add_null_rates"
+                type="CanadaSatellite\Theme\Plugin\Model\QuoteAddress" />
+    </type>
+
+    <preference for="MW\Onestepcheckout\Controller\Index\Save"
+                type="CanadaSatellite\Theme\Controller\Quote\Save" />
+
+    <preference for="Auctane\Api\Model\Action\Export"
+                type="CanadaSatellite\Theme\Model\Action\Export" />
+
+    <preference for="Aheadworks\AdvancedReviews\Controller\Review\Submit"
+                type="CanadaSatellite\Theme\Controller\Product\SubmitReview" />
+
+    <preference for="Aheadworks\AdvancedReviews\Controller\Review\Comment"
+                type="CanadaSatellite\Theme\Controller\Product\CommentReview" />
+
+    <preference for="Aheadworks\AdvancedReviews\Model\Product\Layout\Processor\Review\ConfigDataProvider"
+                type="CanadaSatellite\Theme\Model\Product\Layout\Processor\ReviewConfigDataProvider" />
+
+    <preference for="Magento\Framework\Mail\Message"
+                type="CanadaSatellite\Theme\Model\Mail\Message" />
+
+    <preference for="Amasty\Acart\Model\History"
+                type="CanadaSatellite\Theme\Model\Acart\History" />
+
+    <preference for="Magento\Customer\Block\Address\Edit"
+                type="CanadaSatellite\Theme\Block\Customer\Address\Edit" />
+
+    <type name="Magento\Catalog\Block\Product\View\Options">
+        <plugin name="mageworx_optionbase_around_options_html"
+                type="MageWorx\OptionBase\Plugin\AroundOptionsHtml"
+                sortOrder="10"
+                disabled="true"/>
+    </type>
+
+    <type name="Magento\Catalog\Block\Product\View\Options">
+        <plugin name="casat_mageworx_optionbase_around_options_html"
+                type="CanadaSatellite\Theme\Plugin\Block\Product\View\AroundOptionsHtml"
+                sortOrder="11"
+                disabled="false"/>
+    </type>
+
+    <type name="Magento\Catalog\Model\Product\Type\Price">
+        <plugin name="mageworx-optionfeatures-around-get-base-price"
+                type="MageWorx\OptionFeatures\Plugin\AroundGetBasePrice"
+                sortOrder="10"
+                disabled="true"
+        />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product\Type\Price">
+        <plugin name="casat-around-get-base-price"
+                type="CanadaSatellite\Theme\Plugin\Model\AroundGetFinalPrice"
+                sortOrder="10"
+                disabled="false"
+        />
+    </type>
+
+    <type name="Magento\Catalog\Model\Product\Option\Type\Select">
+        <plugin name="mageworx-optionfeatures-around-get-option-price"
+                type="MageWorx\OptionFeatures\Plugin\AroundGetOptionPrice"
+                sortOrder="10"
+                disabled="true"
+        />
+        <plugin name="casat-around-get-option-price"
+                type="CanadaSatellite\Theme\Plugin\Model\AroundGetOptionPrice"
+                sortOrder="10"
+                disabled="false"
+        />
+    </type>
+
+    <type name="Magento\Framework\Console\CommandList">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="bundleProductResave" xsi:type="object">CanadaSatellite\Theme\Console\BundleProductResave</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <preference for="MageWorx\OptionBase\Observer\ApplyAttributesOnProduct"
+                type="CanadaSatellite\Theme\Observer\ApplyAttributesOnProduct" />
+
+    <preference for="Magento\Checkout\Model\Session"
+                type="CanadaSatellite\Theme\Model\Session" />
+
+    <preference for="Magento\Framework\Mail\EmailMessage"
+                type="CanadaSatellite\Theme\Model\Mail\EmailMessage" />
+
+</config>

@@ -1,0 +1,73 @@
+<?php 
+/**
+ * Copyright © 2015 Iksanika. All rights reserved.
+ * See IKS-LICENSE.txt for license details.
+ */
+    if (   !$block->getScopeConfig()->getValue('iksanika_ajaxcart/general/enabled')
+        || !$block->getScopeConfig()->getValue('iksanika_ajaxcart/addToWishlist/enabled')
+//        || !$customer->isLoggedIn()
+    )
+    {
+        return;
+    }
+?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "iacAjaxWishlist": <?php echo $block->getWidgetConfigurationOptions() ?>
+        }
+    }
+</script>
+<?php
+    if (!$block->getScopeConfig()->getValue('iksanika_ajaxcart/addToWishlist/enabledForm'))
+    {
+        return;
+    }
+?>
+
+<div class="ajaxcart-popup" style="display:none">
+    <div class="ajaxcart-popup-container">
+        <div class="ajaxcart-popup-positionier">
+
+            <div id="ajaxcart-addtowishlist-form" class="ajaxcart-form ajaxcart-addtowishlist-form">
+
+                <div class="ajaxcart-message" id="ajaxcart-message"></div>
+<!--                <div class="ajaxcart-popup-content" id="ajaxcart-popup-content"></div>-->
+
+                <div class="ajaxcart-popup-row ajaxcart-popup-buttons-row ajaxcart-popup-action-1">
+                    <button class="ajaxcart-button-big ajaxcart-continue-button ajaxcart-button button action">
+                        <span><?php echo __('Continue shopping')?></span>
+                    </button>
+                </div>
+
+                <div class="ajaxcart-popup-row ajaxcart-popup-buttons-row ajaxcart-popup-action-2">
+                    <div class="row-column">
+                        <button class="ajaxcart-button-big ajaxcart-continue-button ajaxcart-button button action">
+                            <span><?php echo __('Continue shopping')?></span>
+                        </button>
+                        <?php /*
+                        <button class="ajaxcart-button-big ajaxcart-cancel-button ajaxcart-button button action">
+                            <span><?php echo __('Cancel')?></span>
+                        </button> */ ?>
+                    </div>
+                    <?php /*
+                    <div class="row-column">
+                        <button type="button" title="<?php echo __('Go to Wishlist'); ?>" class="action primary checkout ajaxcart-wishlistview-button ajaxcart-button ajaxcart-button-big">
+                            <span><?php echo __('Go to Wishlist'); ?></span>
+                        </button>
+                    </div> */?>
+                    <div class="row-column">
+                        <button type="button"
+                                class="action primary ajaxcart-addtowishlist-button ajaxcart-button ajaxcart-button-big"
+                                data-action="submit"
+                                data-form="ajaxcart-product_addtocart_form"
+                                data-mage-init='{"iacCatalogAddToCartPopup": {}}'>
+                            <?php echo __('Add To Cart') ?>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

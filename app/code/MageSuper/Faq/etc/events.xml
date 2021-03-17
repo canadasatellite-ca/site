@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="faqs_save_after">
+         <observer name="custom_faq_category_save_after" instance="MageSuper\Faq\Observer\CategorySave" />
+    </event>
+    <event name="core_abstract_save_after">
+        <observer name="custom_faq_category_save_after" instance="MageSuper\Faq\Observer\CategorySave" />
+    </event>
+    <event name="controller_action_predispatch_review_product_post">
+        <observer name="custom_faq_category_save_after" instance="MageSuper\Faq\Observer\Frontend\FaqNewQuestion" />
+    </event>
+    <event name="controller_action_predispatch_custom_faqs_faq_addquetion">
+        <observer name="custom_faq_category_save_after" instance="MageSuper\Faq\Observer\Frontend\FaqNewQuestion" />
+    </event>
+
+</config>

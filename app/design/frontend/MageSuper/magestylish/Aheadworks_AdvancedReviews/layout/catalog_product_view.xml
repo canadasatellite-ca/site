@@ -1,0 +1,27 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="product.aw.reviews.tab">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="awArReviewContainer" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="awArReviewForm" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="recaptcha_response_v3_product_review" xsi:type="array">
+                                            <item name="component" xsi:type="string">CanadaSatellite_Theme/js/review-recaptcha-ui-component</item>
+                                            <item name="dataScope" xsi:type="string">recaptcha_response_v3_product_review</item>
+                                            <item name="provider" xsi:type="string">awArReviewFormProvider</item>
+                                            <item name="template" xsi:type="string">ui/form/element/hidden</item>
+                                            <item name="sortOrder" xsi:type="number">58</item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

@@ -1,0 +1,73 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+/** @var $block \Magento\Bundle\Block\Sales\Order\Items\Renderer */
+?>
+<?php $parentItem = $block->getItem() ?>
+<?php $items = array_merge([$parentItem], $parentItem->getChildren()); ?>
+<?php $count = count($items) ?>
+<?php $index = 0 ?>
+
+<?php $_prevOptionId = '' ?>
+
+<?php foreach ($items as $item): ?>
+
+    <?php if ($item->getOptions() || $parentItem->getDescription()): ?>
+        <?php $showlastRow = true ?>
+    <?php else: ?>
+        <?php $showlastRow = false ?>
+    <?php endif; ?>
+
+    <?php if ($item->getParentItem()): ?>
+        <tr class="options-label">
+            <?php $attributes = json_decode($item->getOptionByCode('bundle_selection_attributes')->getValue()); ?>
+            <td class="col label" colspan="6"><?php echo $attributes->option_label; ?></td>
+        </tr>
+    <?php endif; ?>
+    <tr id="order-item-row-<?php echo $item->getItemId() ?>" class="<?php if ($item->getParentItem()): ?>item-options-container<?php else: ?>item-parent<?php endif; ?>"<?php if ($item->getParentItem()): ?> data-th="<?php echo $item->getName() ?>"<?php endif; ?>>
+        <?php if (!$item->getParentItem()): ?>
+            <td colspan="1" class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+                <a href="<?php echo $block->escapeHtml($item->getProduct()->getProductUrl()) ?>">
+                    <strong class="product name product-item-name"><?php echo $item->getName() ?></strong>
+                </a>
+            </td>
+        <?php else: ?>
+            <td class="col value" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+                <?php echo $block->escapeHtml($item->getQty() . ' x ' . $item->getName()) ?>
+                <span class="price">
+                    &nbsp;<?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($item->getPrice() * $item->getQty(),true,false) ?>
+                </span>
+            </td>
+        <?php endif; ?>
+        <td class="col sku" data-th="<?php echo $block->escapeHtml(__('SKU')); ?>"><?php echo $block->prepareSku($item->getSku()) ?></td>
+        <td class="col price" data-th="<?php echo $block->escapeHtml(__('Price')); ?>">
+            <?php if (!$item->getParentItem()): ?>
+                <?php if(!$item->getProduct()->getResource()->getAttributeRawValue($item->getProduct()->getEntityId(),'quote_hide_price',$item->getStoreId())):?>
+                    <?php echo $block->getItemPriceHtml(); ?>
+                <?php else: ?>
+                    --
+                <?php endif;?>
+            <?php else: ?>
+                &nbsp;
+            <?php endif; ?>
+        </td>
+        <td class="col qty" data-th="<?php echo $block->escapeHtml(__('Quantity')); ?>">
+            <?php if ($item->getParentItem()): ?>
+                <?php echo $item->getQty() * $item->getParentItem()->getQty(); ?>
+            <?php endif; ?>
+        </td>
+        <td class="col subtotal" data-th="<?php echo $block->escapeHtml(__('Subtotal')); ?>">
+            <?php if (!$item->getParentItem()): ?>
+                <?php if(!$item->getProduct()->getResource()->getAttributeRawValue($item->getProduct()->getEntityId(),'quote_hide_price',$item->getStoreId())):?>
+                    <?php echo $block->getItemRowTotalHtml(); ?>
+                <?php else: ?>
+                    --
+                <?php endif;?>
+            <?php else: ?>
+                &nbsp;
+            <?php endif; ?>
+        </td>
+    </tr>
+<?php endforeach; ?>

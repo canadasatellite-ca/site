@@ -1,0 +1,89 @@
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true){
+  .aw-ar__review-list {
+    &.customer {
+      padding-top: 30px;
+      margin-top: 40px;
+      border-top: 1px solid @aw-ar-customer-table__border-color;
+    }
+  }
+
+  .aw-ar-email-subscriber-form {
+    .admin__fieldset {
+      border: none;
+      margin-bottom: 10px;
+      padding-left: 0;
+    }
+
+    .fieldset-wrapper-title {
+      margin-bottom: 10px;
+    }
+  }
+}
+
+
+//
+//  Mobile
+//  _____________________________________________
+
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+  .aw-ar__review-list {
+    &.customer {
+      .table-wrapper {
+        border-top: none;
+        border-bottom: none;
+
+        .table {
+          tr td {
+            border-top: none;
+
+            &[data-th]:before{
+              float: left;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__s) {
+  .aw-ar__review-list {
+    &.customer {
+      .summary {
+        word-break: break-word;
+      }
+    }
+  }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__l){
+  .aw-ar__review-list {
+    &.customer {
+      .summary {
+        min-width: 200px;
+      }
+
+      .product_name {
+        width: 100%;
+      }
+    }
+  }
+}

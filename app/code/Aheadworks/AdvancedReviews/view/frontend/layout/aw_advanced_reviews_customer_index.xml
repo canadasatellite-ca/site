@@ -1,0 +1,96 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="customer_account"/>
+    <body>
+        <referenceContainer name="content">
+            <block class="Aheadworks\AdvancedReviews\Block\Customer\Email\Subscriber\Form"
+                   name="customer.aw.reviews.email.subscriber.form"
+                   template="Aheadworks_AdvancedReviews::customer/email/subscriber/form.phtml"
+                   cacheable="false">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="awArEmailSubscriberForm" xsi:type="array">
+                                <item name="sortOrder" xsi:type="string">10</item>
+                                <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form</item>
+                                <item name="buttonLabel" xsi:type="string" translate="true">Save</item>
+                                <item name="formId" xsi:type="string">email-subscriber-form</item>
+                                <item name="formCss" xsi:type="string">aw-ar-email-subscriber-form</item>
+                                <item name="deps" xsi:type="array">
+                                    <item name="0" xsi:type="string">awArEmailSubscriberFormProvider</item>
+                                </item>
+                                <item name="dataScope" xsi:type="string">data</item>
+                                <item name="provider" xsi:type="string">awArEmailSubscriberFormProvider</item>
+                                <item name="namespace" xsi:type="string">aw_ar_email_subscriber_form</item>
+                                <item name="children" xsi:type="array">
+                                    <item name="notifications" xsi:type="array">
+                                        <item name="component" xsi:type="string">Magento_Ui/js/form/components/fieldset</item>
+                                        <item name="label" xsi:type="string" translate="true">Notifications</item>
+                                        <item name="opened" xsi:type="boolean">true</item>
+                                        <item name="collapsible" xsi:type="boolean">false</item>
+                                        <item name="children" xsi:type="array">
+                                            <item name="is_review_reminder_email_enabled" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/boolean</item>
+                                                <item name="dataScope" xsi:type="string">is_review_reminder_email_enabled</item>
+                                                <item name="provider" xsi:type="string">awArEmailSubscriberFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="elementTmpl" xsi:type="string">ui/form/element/checkbox</item>
+                                                <item name="description" xsi:type="string" translate="true">Remind me to write a review after a purchase</item>
+                                                <item name="dataType" xsi:type="string">boolean</item>
+                                                <item name="sortOrder" xsi:type="number">20</item>
+                                            </item>
+                                            <item name="is_review_approved_email_enabled" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/boolean</item>
+                                                <item name="dataScope" xsi:type="string">is_review_approved_email_enabled</item>
+                                                <item name="provider" xsi:type="string">awArEmailSubscriberFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="elementTmpl" xsi:type="string">ui/form/element/checkbox</item>
+                                                <item name="description" xsi:type="string" translate="true">Notify me when a review was approved</item>
+                                                <item name="dataType" xsi:type="string">boolean</item>
+                                                <item name="imports" xsi:type="array">
+                                                    <item name="visible" xsi:type="string">!${ $.provider }:is_auto_approve_reviews_enabled</item>
+                                                </item>
+                                                <item name="sortOrder" xsi:type="number">30</item>
+                                            </item>
+                                            <item name="is_new_comment_email_enabled" xsi:type="array">
+                                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/boolean</item>
+                                                <item name="dataScope" xsi:type="string">is_new_comment_email_enabled</item>
+                                                <item name="provider" xsi:type="string">awArEmailSubscriberFormProvider</item>
+                                                <item name="template" xsi:type="string">ui/form/field</item>
+                                                <item name="elementTmpl" xsi:type="string">ui/form/element/checkbox</item>
+                                                <item name="description" xsi:type="string" translate="true">Notify me about a new comment on my review</item>
+                                                <item name="dataType" xsi:type="string">boolean</item>
+                                                <item name="sortOrder" xsi:type="number">40</item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="awArEmailSubscriberFormProvider" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="submit_url" xsi:type="url" path="aw_advanced_reviews/customer/updateSubscriber"/>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+            <block class="Aheadworks\AdvancedReviews\Block\Customer\Review\Listing"
+                   name="customer.aw.reviews.list"
+                   template="Aheadworks_AdvancedReviews::customer/review/listing.phtml"
+                   cacheable="false">
+                <arguments>
+                    <argument name="uiComponent" xsi:type="string">aw_advanced_reviews_customer_review_listing</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Bundle\Ui\DataProvider\Product\Form\Modifier\Composite">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="bundleAdvancedPricing" xsi:type="string">MageSuper\Casat\Ui\DataProvider\Product\Form\Modifier\BundleAdvancedPricing</item>
+            </argument>
+        </arguments>
+    </type>
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="profitMarginAdvancedPricing" xsi:type="array">
+                    <item name="class" xsi:type="string">MageSuper\Casat\Ui\DataProvider\Product\Form\Modifier\ProfitMarginAdvancedPricing</item>
+                    <item name="sortOrder" xsi:type="number">90</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Bundle\Ui\DataProvider\Product\Form\Modifier\Composite">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="casatBundlePanel" xsi:type="string">MageSuper\Casat\Ui\DataProvider\Product\Form\Modifier\BundlePanel</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Magestore\SupplierSuccess\Ui\DataProvider\Supplier\DataForm\Modifier\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="casat-information" xsi:type="array">
+                    <item name="class" xsi:type="string">MageSuper\Casat\Ui\DataProvider\Supplier\Form\Modifier\Information</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+                <item name="casat-shipping-payment" xsi:type="array">
+                    <item name="class" xsi:type="string">MageSuper\Casat\Ui\DataProvider\Supplier\Form\Modifier\ShippingPayment</item>
+                    <item name="sortOrder" xsi:type="number">32</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="orderSuccessPurchaseOrderModifierPool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="casat-general" xsi:type="array">
+                    <item name="class" xsi:type="string">MageSuper\Casat\Ui\DataProvider\PurchaseOrder\Form\Modifier\General</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magestore\SupplierSuccess\Service\Supplier\ProductService">
+        <plugin name="beforeSupplierProductService" type="MageSuper\Casat\Plugin\SupplierSuccess\Service\Supplier\ProductService"/>
+    </type>
+
+    <type name="\Magento\Catalog\Block\Adminhtml\Product\Attribute\Edit\Tab\Front">
+        <plugin name="attribute_specification_position" type="\MageSuper\Casat\Block\Plugin\FrontTabPlugin" />
+    </type>
+
+    <type name="Magento\Bundle\Block\Adminhtml\Sales\Order\View\Items\Renderer">
+        <plugin name="orderItemBundleMarginProfit" type="MageSuper\Casat\Block\Adminhtml\Sales\Order\View\Items\BundleRenderer" />
+    </type>
+
+    <type name="Magento\Backend\Block\Widget\Button\Toolbar">
+        <plugin name="orderFormToolbarButtonShoHideProfitMargin" type="MageSuper\Casat\Block\Adminhtml\Sales\Order\View\Toolbar" />
+    </type>
+
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Billing\Address" type="MageSuper\Casat\Block\Adminhtml\Order\Create\Billing\Address" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Shipping\Address" type="MageSuper\Casat\Block\Adminhtml\Order\Create\Shipping\Address" />
+
+</config>

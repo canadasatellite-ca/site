@@ -1,0 +1,41 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Checkout\Cart\Item\Renderer $block */
+$item = $block->getParentBlock()->getItem();
+$tierItems = $block->getTierItemCollection($item);
+?>
+
+<?php foreach ($tierItems as $tieritem): ?>
+    <?php $tierItemId = $tieritem->getId();
+    $itemId = $tieritem->getItemId();
+    $elementId = "tier-item-" . $tierItemId;
+    $divId = "div-tier-item-" . $tierItemId;
+    $qty = (int)$tieritem->getQty();
+    ?>
+    <div class="actions-toolbar" id="<?php echo $block->escapeHtml($divId) ?>">
+        <input type="number"
+               onchange="updateTier(
+                   '<?php echo $block->escapeHtml($elementId) ?>',
+                   '<?php echo $block->escapeHtml($itemId) ?>',
+                   '<?php echo $block->escapeHtml($tierItemId) ?>'
+                   )"
+               id="<?php echo $block->escapeHtml($elementId) ?>"
+               class="input-text tierqty"
+               value="<?php echo $block->escapeHtml($qty) ?>"
+               data-validate="{required:true,'validate-greater-than-zero':true}"
+        </input>
+        <a href="#"
+           class="action action-delete"
+           title="Remove item"
+           onclick="removeSavedTier(
+               '<?php echo $block->escapeHtml($divId) ?>',
+               '<?php echo $block->escapeHtml($tierItemId) ?>'
+               )">
+        </a>
+    </div>
+<?php endforeach; ?>

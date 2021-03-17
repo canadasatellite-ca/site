@@ -1,0 +1,82 @@
+body {
+    color: rgb(40, 40, 40);
+    font: 400 13px/1.35 "Helvetica Neue", Arial, sans-serif;
+}
+.page-title-wrapper {text-transform: uppercase;}
+h1.page-title{
+    font: 500 24px/1.35 "Helvetica Neue", Arial, sans-serif;
+    margin: 0px 0px 20px;
+}
+.action.primary {
+    color: rgb(255, 255, 255);
+    cursor: pointer;
+    display: inline-block;
+    box-sizing: border-box;
+    vertical-align: top;
+    margin-bottom: 5px;
+    background: rgb(182, 3, 4);
+    border-width: 3px;
+    border-style: solid;
+    border-color: rgb(182, 3, 4);
+    border-image: initial;
+    padding: 8px 15px;
+    font: 600 14px/1.35 Poppins, "Helvetica Neue", Verdana, Arial, sans-serif;
+    border-radius: 0;
+}
+.action.button:hover,
+.action.continue:hover,
+.action.primary:hover {
+    background: #ec2623 !important;
+    border: 3px solid #ec2623 !important;
+    color: #fff !important;
+}
+.action.primary:focus,
+.action.primary:active {
+    background: #fff;
+    border: 3px solid #b60304;
+    color: #b60304;
+}
+div.mage-error {
+    display: none;
+}
+.col-xs-24 {
+    width: 100%;
+    position: relative;
+    min-height: 1px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+@media (min-width: 768px) {
+    .col-sm-18 {width: 75%;}
+    .page-main {
+        width: 100% !important;
+        padding-left: 60px !important;
+        padding-right: 40px !important;
+        -webkit-flex-grow: 1 !important;
+        flex-grow: 1 !important;
+        -webkit-flex-shrink: 0 !important;
+        flex-shrink: 0 !important;
+        -webkit-flex-basis: auto !important;
+        flex-basis: auto !important;
+    }
+    .page-layout-1column .columns {
+        margin-bottom: 40px;
+        background-color: #fff;
+        padding: 20px;
+        box-shadow: 1px 3px 1px rgba(50,50,50,0.04);
+        -moz-box-shadow: 1px 3px 1px rgba(50,50,50,0.04);
+        -webkit-box-shadow: 1px 3px 1px rgba(50,50,50,0.04);
+        -o-box-shadow: 1px 3px 1px rgba(50,50,50,0.04);
+        -ms-box-shadow: 1px 3px 1px rgba(50,50,50,0.04);
+        -webkit-border-radius: 0;
+        -moz-border-radius: 0;
+        border-radius: 0;
+    }
+}
+@media (min-width: 992px) {
+    .col-md-14 {width: 58.33333%;}
+}
+@media (min-width: 1200px) {
+    .col-lg-12 {width: 50%;}
+}
+

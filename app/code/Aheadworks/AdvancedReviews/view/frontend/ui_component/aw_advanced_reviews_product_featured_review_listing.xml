@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_advanced_reviews_product_featured_review_listing.aw_advanced_reviews_product_featured_review_listing_data_source</item>
+            <item name="deps" xsi:type="string">aw_advanced_reviews_product_featured_review_listing.aw_advanced_reviews_product_featured_review_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">aw_advanced_reviews_review_columns</item>
+    </argument>
+    <dataSource name="aw_advanced_reviews_product_featured_review_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Frontend\Product\Featured\ListingDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_advanced_reviews_product_featured_review_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/grid/data-storage</item>
+                        <item name="indexField" xsi:type="string">id</item>
+                        <item name="cacheRequests" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <columns name="aw_advanced_reviews_review_columns" component="Aheadworks_AdvancedReviews/js/product/view/review/grid/featured/listing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">aw-ar__review-list container-featured-review</item>
+                <item name="featuredReviewLabel" xsi:type="string" translate="true">Featured review(s)</item>
+                <item name="attachmentIdentifierClass" xsi:type="string">featured-preview-link</item>
+            </item>
+        </argument>
+        <column name="nickname" sortOrder="1" displayArea="sidebar-main">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Nickname</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="nickname" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <column name="is_verified_buyer" sortOrder="2" displayArea="sidebar-main">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Verified Buyer</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="is_verified_buyer" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <column name="product_recommended" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Frontend\Listing\Column\ProductRecommended" sortOrder="3" displayArea="sidebar-main">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Do you recommend this product?</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/grid/columns/product-recommended</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/cells/product-recommended</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="product_recommended" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <column name="summary" sortOrder="1" displayArea="column-main-top">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Summary</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="summary" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <column name="rating" sortOrder="2" displayArea="column-main-top">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Rating</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/grid/columns/rating</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="created_at" sortOrder="3" displayArea="column-main-top">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/grid/columns/column</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="label" xsi:type="string" translate="true">Newest</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="date" xsi:type="boolean">true</item>
+                        <item name="created_at" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <column name="pros" sortOrder="1" displayArea="column-main-middle">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Advantages</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/grid/columns/prosandcons</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/cells/prosandcons</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="cons" sortOrder="2" displayArea="column-main-middle">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Disadvantages</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/grid/columns/prosandcons</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/cells/prosandcons</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+        <column name="content" sortOrder="3" displayArea="column-main-middle">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Comment</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/grid/columns/review-content</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/cells/content</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="fieldsProsAndCons" xsi:type="array">
+                        <item name="reviewAdvantagesField" xsi:type="string">pros</item>
+                        <item name="reviewDisadvantagesField" xsi:type="string">cons</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+        <column name="attachments" sortOrder="1" displayArea="column-main-bottom">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Attachments</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/product/view/review/grid/columns/attachments</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/cells/attachments</item>
+                    <item name="headerTmpl" xsi:type="string">Aheadworks_AdvancedReviews/product/view/review/grid/columns/text</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="attachmentIdentifierClass" xsi:type="string">${ $.parentName }:attachmentIdentifierClass</item>
+                    </item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

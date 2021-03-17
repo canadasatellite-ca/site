@@ -1,0 +1,21 @@
+<?php
+/** @var \Magento\Catalog\Block\Product\View $block */
+$product = $block->getProduct();
+$show = $product->getData('usd_is_base_price');
+if ($show):
+
+    $price_usd = $product->getData('price_usd');
+    $special_price_usd = $product->getData('special_price_usd');
+    if (!$special_price_usd || $price_usd<$special_price_usd){
+        $price = $price_usd;
+    } else {
+        $price = $special_price_usd;
+    }
+    if ($price):
+        $price = number_format($price,2);
+        ?>
+        <div class="based_on_usd">
+            <?php echo __('Based on a USD price of $%1 and today\'s exchange rate.',array($price))?>
+        </div>
+    <?php endif;?>
+<?php endif;?>

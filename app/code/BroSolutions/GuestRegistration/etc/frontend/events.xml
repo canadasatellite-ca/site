@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="load_customer_quote_before">
+        <observer name="brosolutions_sales_order_place_before"
+                  instance="BroSolutions\GuestRegistration\Observer\SetCustomerIsGuest"/>
+    </event>
+
+</config>

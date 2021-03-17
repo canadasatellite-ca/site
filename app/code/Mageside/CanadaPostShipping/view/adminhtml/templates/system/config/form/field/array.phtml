@@ -1,0 +1,113 @@
+<?php
+/**
+ * Copyright © 2013-2018 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\Methods $block */
+
+?>
+
+<?php
+$_htmlId = $block->getHtmlId() ? $block->getHtmlId() : '_' . uniqid();
+?>
+
+<div class="design_theme_ua_regexp" id="grid<?php /* @escapeNotVerified */ echo $_htmlId; ?>">
+    <div class="admin__control-table-wrapper">
+        <table class="admin__control-table shipping-labels">
+            <thead>
+            <tr>
+                <?php foreach ($block->getColumns() as $columnName => $column): ?>
+                    <?php if ($column['type'] != 'hidden') : ?>
+                        <th><?php /* @escapeNotVerified */ echo $column['label']; ?></th>
+                    <?php endif;?>
+                <?php endforeach;?>
+                <th class="col-actions">Action</th>
+            </tr>
+            </thead>
+            <tbody id="addRow<?php /* @escapeNotVerified */ echo $_htmlId; ?>"></tbody>
+        </table>
+    </div>
+
+    <script>
+        require([
+            'jquery',
+            'mage/template',
+            'prototype'
+        ], function (jQuery, mageTemplate) {
+        // create row creator
+        window.arrayRow<?php /* @escapeNotVerified */ echo $_htmlId ?> = {
+
+            // define row prototypeJS template
+            template: mageTemplate(
+                    '<tr id="<%- _id %>">'
+                        + '<td>' + '<?php /* @escapeNotVerified */ echo $block->renderCellTemplate('code')?>'
+                        + '<?php /* @escapeNotVerified */ echo $block->renderCellTemplate('default_label')?>'
+                        + '<?php /* @escapeNotVerified */ echo $block->renderCellTemplate('renamed_label')?>' + '<\/td>'
+                        + '<td>' + '<?php /* @escapeNotVerified */ echo $block->renderCellTemplate('non_delivery')?>' + '<\/td>'
+                        + '<td class="col-actions"><button onclick="arrayRow<?php /* @escapeNotVerified */ echo $_htmlId ?>.restore(\'<%- _id %>\')" class="action-restore" type="button">'
+                        + '<span class="text"><?php /* @escapeNotVerified */ echo __('Restore'); ?><\/span><\/button><\/td>'
+                    + '<\/tr>'
+            ),
+
+            add: function(rowData, insertAfterId) {
+                // generate default template data
+                var templateValues;
+
+                // Prepare template values
+                if (rowData) {
+                    templateValues = rowData;
+                } else {
+                    var d = new Date();
+                    templateValues = {
+                    <?php foreach ($block->getColumns() as $columnName => $column): ?>
+                        <?php /* @escapeNotVerified */ echo $columnName ?>: '',
+                        'option_extra_attrs': {},
+                    <?php endforeach; ?>
+                        _id: '_' + d.getTime() + '_' + d.getMilliseconds()
+                    };
+                }
+
+                    // Insert new row after specified row or at the bottom
+                    if (insertAfterId) {
+                        Element.insert($(insertAfterId), {after: this.template(templateValues)});
+                    } else {
+                        Element.insert($('addRow<?php /* @escapeNotVerified */ echo $_htmlId ?>'), {bottom: this.template(templateValues)});
+                    }
+
+                // Fill controls with data
+                if (rowData) {
+                    var rowInputElementNames = Object.keys(rowData.column_values);
+                    for (var i = 0; i < rowInputElementNames.length; i++) {
+                        if ($(rowInputElementNames[i])) {
+                            $(rowInputElementNames[i]).value = rowData.column_values[rowInputElementNames[i]];
+                        }
+                    }
+                }
+            },
+
+            del: function(rowId) {
+                $(rowId).remove();
+            },
+
+            restore: function(rowId) {
+                var defaultValue = jQuery('#' + rowId + '_default_label').val();
+                jQuery('#' + rowId + '_renamed_label').val(defaultValue);
+            }
+        };
+
+        // add existing rows
+        <?php
+            foreach ($block->getArrayRows() as $_rowId => $_row) {
+                /* @escapeNotVerified */ echo "arrayRow{$_htmlId}.add(" . $_row->toJson() . ");\n";
+            }
+        ?>
+
+        // Toggle the grid availability, if element is disabled (depending on scope)
+        <?php if ($block->getElement()->getDisabled()) : ?>
+            toggleValueElements({checked: true}, $('grid<?php /* @escapeNotVerified */ echo $_htmlId; ?>').parentNode);
+        <?php endif;?>
+
+        });
+    </script>
+</div>

@@ -1,0 +1,65 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Tax $block */
+?>
+<?php
+$quote = $block->getQuote();
+$source = $block->getSource();
+$fullInfo = $this->helper(\Magento\Tax\Helper\Data::class)->getCalculatedTaxes($source);
+// @codingStandardsIgnoreStart
+// phpcs:disable
+global $taxIter;
+// phpcs:enable
+// @codingStandardsIgnoreEnd
+$taxIter++;
+?>
+
+<?php if ($fullInfo && $block->displayFullSummary()) :
+?><?php foreach ($fullInfo as $info) :
+?><?php
+    $percent = $info['percent'];
+    $amount = $info['tax_amount'];
+    $baseAmount = $info['base_tax_amount'];
+    $title = $info['title'];
+    $planeMode = ($block->getIsPlaneMode()) ? ' plane' : '';
+    ?>
+    <tr class="totals tax details details-<?php echo $block->escapeHtml($taxIter); ?> <?php echo $block->escapeHtml($planeMode); ?>">
+        <td <?php echo $block->getLabelProperties(); ?>>
+            <?php echo $block->escapeHtml($title); ?>
+            <?php if (!$percent !== null) : ?>
+                (<?php echo (float)$percent; ?>%)
+            <?php endif; ?>
+            <br/>
+        </td>
+        <td <?php echo $block->getValueProperties() ?> rowspan="1">
+            <?php echo $quote->formatPrice($amount); ?>
+        </td>
+    </tr>
+<?php endforeach; ?><?php
+endif; ?>
+
+<?php if ($block->displayFullSummary() && $fullInfo && !$block->getIsPlaneMode()) : ?>
+<tr class="totals-tax-summary">
+<?php elseif ($block->displayFullSummary() && $fullInfo && $block->getIsPlaneMode()) : ?>
+<tr class="totals-tax-summary plane">
+<?php else : ?>
+<tr class="totals-tax">
+<?php endif; ?>
+    <th <?php echo $block->getLabelProperties(); ?> scope="row">
+        <?php if ($block->displayFullSummary()) : ?>
+            <div class="detailed"><?php echo $block->escapeHtml(__('Tax')); ?></div>
+        <?php else :
+?><?php echo $block->escapeHtml(__('Tax')); ?><?php
+        endif; ?>
+    </th>
+    <td <?php echo $block->getValueProperties() ?> data-th="<?php echo $block->escapeHtml(__('Tax')); ?>">
+        <?php echo $quote->formatPrice($source->getTaxAmount()) ?>
+    </td>
+    <td>&nbsp;</td>
+    <td>&nbsp;</td>
+</tr>

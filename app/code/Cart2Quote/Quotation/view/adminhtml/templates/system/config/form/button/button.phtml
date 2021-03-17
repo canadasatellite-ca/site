@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\System\Config\Form\Button\Button $block
+ */
+echo $block->getLayout()
+    ->createBlock(\Magento\Backend\Block\Widget\Button::class)
+    ->setData([
+        'id' => $block->escapeHtml($block->getHtmlId()),
+        'label' => $block->escapeHtml($block->getButtonLabel())
+    ])->toHtml();
+?>
+<script>
+    require(['jquery'], function ($) {
+        $("#<?php echo $block->escapeHtml($block->getHtmlId())?>").click(function (event) {
+            event.preventDefault();
+            $.ajax({
+                data: {
+                    'type': $("#cart2quote_quote_form_settings_quote_form_custom_fields_add_custom_field_types").val()
+                },
+                type: 'POST',
+                url: '<?php echo $block->escapeHtml($block->getAjaxUrl()) ?>',
+                success: function (data) {
+                    if (data.success == true) {
+                        location.reload();
+                    }
+                },
+                showLoader: true
+            });
+            return false;
+        });
+    });
+</script>

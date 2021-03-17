@@ -1,0 +1,14 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<div id="co-select-form" data-bind="visible: showSwitcher()">
+    <div>
+        <input type="radio" name="request-mode" value="email" id="radio-email" data-bind="checked: radioSelection"/>
+        <label for="radio-email" data-bind="i18n: 'Email my Quote'"></label>
+    </div>
+    <div>
+        <input type="radio" name="request-mode" value="phone" id="radio-telephone" data-bind="checked: radioSelection"/>
+        <label for="radio-telephone" data-bind="i18n: 'Call me with Quote'"></label>
+    </div>
+</div>

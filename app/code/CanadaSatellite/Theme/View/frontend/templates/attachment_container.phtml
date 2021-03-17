@@ -1,0 +1,19 @@
+<?php /** @var \CanadaSatellite\Theme\Block\Catalog\Product\Attachments $block */ ?>
+<?php $attachments = $block->getAttachments(); ?>
+<?php if ($attachments) : ?>
+    <div class="product-attachment-container">
+
+        <?php foreach ($attachments as $attachment): ?>
+            <?php echo $block->getAttachmentHtml($attachment); ?>
+        <?php endforeach; ?>
+
+        <?php if ($block->isShowHowToDownloadMessage()): ?>
+            <div class="access-notice"><span>* <?php echo $block->getHowToDownloadMessage() ?></span></div>
+        <?php endif; ?>
+
+        <div class="see-all">
+            <a href="#mageworx_product_attachments"><?php echo strtoupper('See All Downloads') ?></a>
+        </div>
+
+    </div>
+<?php endif; ?>

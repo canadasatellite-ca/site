@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+  <!-- you can change this event name -->
+  <event name="layout_generate_blocks_before"> 
+     <observer name="alsobought_position" instance="Mageants\AlsoBought\Observer\SetBlockPosition" />
+  </event>
+</config>

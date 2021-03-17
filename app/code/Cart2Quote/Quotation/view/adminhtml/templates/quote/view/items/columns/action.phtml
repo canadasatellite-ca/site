@@ -1,0 +1,39 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block
+ * @var \Cart2Quote\Quotation\Api\Data\Quote\SectionInterface[] $sections
+ * @var \Cart2Quote\Quotation\Api\Data\Quote\SectionInterface $currentSection
+ */
+$sections = $block->getQuote()->getSections(['label' => __('Not Assigned')]);
+$currentSection = $block->getItem()->getExtensionAttributes()->getSection();
+?>
+<?php if ($block->getIsFirstTierItem()) : ?>
+    <select class="admin__control-select"
+            name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][action]" <?php echo $block->getDisabledHtml() ?>>
+        <option value=""><?php echo $block->escapeHtml(__('Please select')) ?></option>
+        <?php if(!$block->getItem()->getProduct()->canConfigure()): ?>
+        <option value="duplicate"><?php echo $block->escapeHtml(__('Duplicate Item')) ?></option>
+        <?php endif; ?>
+        <?php if(count($sections) > 1): ?>
+        <optgroup label="Move to section">
+            <?php foreach ($sections as $section) : ?>
+                <?php if ($currentSection->getSectionId() != $section->getSectionId()) : ?>
+                    <option data-action="move-to-section"
+                            data-name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][section_id]"
+                            value="<?php echo $block->escapeHtml($section->getSectionId()) ?>">
+                        <?php echo $block->escapeHtml(__($section->getLabel())); ?>
+                    </option>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </optgroup>
+        <?php endif; ?>
+        <option value="remove"><?php echo $block->escapeHtml(__('Remove')) ?></option>
+    </select>
+<?php endif; ?>

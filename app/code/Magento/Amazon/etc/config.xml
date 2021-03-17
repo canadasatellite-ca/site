@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <amazonshipping>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>Magento\Amazon\Model\Carrier\Method</model>
+                <name>Amazon Channel Shipping</name>
+                <title>Amazon Channel Shipping</title>
+                <specificerrmsg>This shipping method is not available. To use this shipping method, please contact us.</specificerrmsg>
+            </amazonshipping>
+        </carriers>
+        <payment>
+            <amazonpayment>
+                <active>1</active>
+                <model>Magento\Amazon\Model\Payment\Method</model>
+                <order_status>pending</order_status>
+                <title>Amazon Channel Payment</title>
+                <allowspecific>0</allowspecific>
+                <group>offline</group>
+            </amazonpayment>
+        </payment>
+        <channel>
+            <amazon>
+                <frontend_url/>
+                <endpoint>
+                    <use_services_connector>1</use_services_connector>
+                    <use_services_connector_sandbox_api_key>0</use_services_connector_sandbox_api_key>
+                    <base_directory>channels/amazon/</base_directory>
+                </endpoint>
+            </amazon>
+        </channel>
+        <saleschannels>
+            <general>
+                <show_chart>1</show_chart>
+                <cron_source>1</cron_source>
+                <log_history>7</log_history>
+                <debug_logging>0</debug_logging>
+            </general>
+        </saleschannels>
+    </default>
+</config>

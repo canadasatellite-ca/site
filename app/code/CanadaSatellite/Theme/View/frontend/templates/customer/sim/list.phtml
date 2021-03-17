@@ -1,0 +1,162 @@
+<?php
+/** @var CanadaSatellite\Theme\Block\Customer\Sim\ListSim $block */
+use CanadaSatellite\DynamicsIntegration\Enums\Sims\SimTableField;
+use CanadaSatellite\DynamicsIntegration\Enums\Sims\FilterNetworkStatus;
+use CanadaSatellite\DynamicsIntegration\Enums\Sims\SortingDirection;
+?>
+
+<script>
+    function OnClickSubmit(curField)
+    {
+        var sortingElem = document.getElementById('sortingParam');
+        var fieldElem = document.getElementById('fieldParam');
+        if (curField === fieldElem.value)
+        {
+            if (sortingElem.value === "1")
+                sortingElem.value = "0";
+            else
+                sortingElem.value = "1";
+        }
+        else
+        {
+            sortingElem.value = "1";
+        }
+        fieldElem.value = curField;
+        document.getElementById('sortingSIMs').submit();
+    }
+
+    function OnFilterSubmit()
+    {
+        document.getElementById('sortingSIMs').submit();
+    }
+</script>
+
+<?php
+if ($block->getSims() && count($block->getSims())) : ?>
+    <div class="table-wrapper tickets">
+        <form method="post" id="sortingSIMs" action="<?php echo $block->sortingSimsUrl() ?>"></form>
+        <input id="sortingParam" type="hidden" <?php echo 'name="' . SortingDirection::RequestParam . '"' ?> value="<?php echo $block->getSorting() ?>" form="sortingSIMs">
+        <input id="fieldParam" type="hidden" <?php echo 'name="' . SimTableField::RequestParam . '"' ?> value="<?php echo $block->getField() ?>" form="sortingSIMs">
+        <table class="data table table-tickets" id="my-tickets-table">
+            <caption class="table-caption"><?php echo $block->escapeHtml(__("Sims")) ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::NetworkStatus ?>')"><span><?php echo $block->formatFieldName(SimTableField::NetworkStatus) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::SimSharp ?>')"><span><?php echo $block->formatFieldName(SimTableField::SimSharp) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::SatSharp ?>')"><span><?php echo $block->formatFieldName(SimTableField::SatSharp) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::Network ?>')"><span><?php echo $block->formatFieldName(SimTableField::Network) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::Plan ?>')"><span><?php echo $block->formatFieldName(SimTableField::Plan) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::CurrentMinutes ?>')"><span><?php echo $block->formatFieldName(SimTableField::CurrentMinutes) ?></span></span></th>
+                    <th scope="col" class="col date"><span onclick="OnClickSubmit('<?php echo SimTableField::ExpiryDate ?>')"><span><?php echo $block->formatFieldName(SimTableField::ExpiryDate) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::Nickname ?>')"><span><?php echo $block->formatFieldName(SimTableField::Nickname) ?></span></span></th>
+                    <th scope="col" class="col description"><span onclick="OnClickSubmit('<?php echo SimTableField::Select ?>')"><span><?php echo $block->formatFieldName(SimTableField::Select) ?></span></span></th>
+                    <th scope="col" class="col actions">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+    foreach ($block->getSims() as $sim) : ?>
+                <tr data-sim-id="<?php echo $block->escapeHtml($sim->getId()) ?>">
+                    <td data-th="<?php echo $block->escapeHtml(__("Network Status")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getNetworkStatus()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("SIM #")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getSimNumber()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Sat #")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getSatelliteNumber()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Network")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getNetwork()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Plan")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getPlan()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Current Minutes")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getCurrentMinutes()) ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Expiry Date")) ?>" class="col date">
+                        <?php
+                        $expiryDate = $sim->getExpiryDate();
+                        if (!empty($expiryDate)) {
+                            echo $block->escapeHtml(date("Y-m-d", $expiryDate)); // FIXME $block->dateFormat($expiryDate)
+                        } ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Nickname")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($sim->getNickname()) ?>
+                    </td>
+                    <td class="col description">
+                        <input type="checkbox" class="cb-activate-sim" <?php if (!$sim->isIssued() || $block->wasRecentlyActivated($sim)) { echo "disabled"; } ?> style="width: 100%;"/>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Actions")) ?>" class="col actions">
+                        <a href="<?php echo $block->getSimLink() ?>id/<?php echo $sim->getId() ?>"
+                           class="action more">
+                            <span><?php echo $block->escapeHtml(__("See Details")) ?></span>
+                        </a>
+                    </td>
+
+                </tr>
+                <?php
+    endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+    if ($block->getToolbarHtml()): ?>
+        <div class="toolbar products-tickets-toolbar bottom">
+            <?php echo $block->getToolbarHtml() ?>
+        </div>
+    <?php
+    endif; ?>
+
+    <div style="float:right;">
+        <form action="<?php echo $block->getActivateUrl() ?>" id="activate_sim" name="activate_sim" method="post">
+            <button class="btn-activate button action primary" type="submit" disabled> <span><span><?php echo __("Activate") ?></span></span></button>
+        </form>
+    </div>
+
+    <div style="float:right;">
+        <select <?php echo 'name="' . FilterNetworkStatus::RequestParam . '"' ?> form="sortingSIMs" onchange="OnFilterSubmit()">
+            <option <?php echo $block->getSelected(FilterNetworkStatus::None) ?> value="<?php echo FilterNetworkStatus::None ?>">None</option>
+            <option <?php echo $block->getSelected(FilterNetworkStatus::Active) ?> value="<?php echo FilterNetworkStatus::Active ?>">Active</option>
+            <option <?php echo $block->getSelected(FilterNetworkStatus::Issued) ?> value="<?php echo FilterNetworkStatus::Issued ?>">Issued</option>
+            <option <?php echo $block->getSelected(FilterNetworkStatus::Expired) ?> value="<?php echo FilterNetworkStatus::Expired ?>">Expired</option>
+            <option <?php echo $block->getSelected(FilterNetworkStatus::Deactivated) ?> value="<?php echo FilterNetworkStatus::Deactivated ?>">Deactivated</option>
+        </select>
+    </div>
+
+    <?php
+else: ?>
+        <?php if ($block->getFilter() !== FilterNetworkStatus::None) :?>
+            <div class="message info empty">
+                <span><?php echo $block->escapeHtml(__("You have no SIMs with selected filter. Filter is reset.")) ?></span>
+            </div>
+            <?php $block->resetSimsFilter() ?>
+            <form action="<?php echo $block->sortingSimsUrl() ?>" method="post">
+                <button class="button action primary" type="submit" style="float:right;">
+                    <span><span><?php echo __("Ok") ?></span></span>
+                </button>
+            </form>
+        <?php else: ?>
+            <div class="message info empty">
+                <span><?php echo $block->escapeHtml(__("You have no SIMs.")) ?></span>
+            </div>
+        <?php endif; ?>
+    <?php
+endif; ?>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?php echo $block->escapeUrl($block->getBackUrl()) ?>">
+            <span><?php echo $block->escapeHtml(__("Back")) ?></span>
+        </a>
+    </div>
+    <a href="<?php echo $block->getCardsUrl() ?>" style="text-decoration: none;">
+         <button class="button action primary" type="submit"> <span><span><?php echo __("Manage cards") ?></span></span></button>
+    </a>
+</div>
+
+<script type="text/javascript">
+    require(['activateSim'], function(activateSim) {
+
+    });
+</script>

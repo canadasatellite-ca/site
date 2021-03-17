@@ -1,0 +1,16 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Sales:etc/sales.xsd">
+    <section name="quote">
+        <group name="totals">
+            <item name="original_subtotal" instance="Cart2Quote\Quotation\Model\Quote\Address\Total\OriginalSubtotal" sort_order="80"/>
+            <item name="quote_adjustment" instance="Cart2Quote\Quotation\Model\Quote\Address\Total\QuoteAdjustment" sort_order="90"/>
+            <item name="quote_profit" instance="Cart2Quote\Quotation\Model\Quote\Address\Total\QuoteProfit" sort_order="999"/>
+        </group>
+    </section>
+</config>

@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\System\Config\Grid\Statuses $block
+ */
+?>
+<div id="statuses-grid"
+     data-bind="scope:'statuses-grid'"
+     class="address-grid">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+        {
+            "*": {
+                "Magento_Ui/js/core/app": {
+                    "components": {
+                        "statuses-grid": {
+                            "component": "Cart2Quote_Quotation/js/system/config/grid/statuses",
+                            "data": <?php echo \Zend_Json::encode($block->getStatusesGridConfig()); ?>,
+                            "id": "statuses-grid"
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+</div>

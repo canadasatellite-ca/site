@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" label="Email Quote Items List" design_abstraction="custom">
+<body>
+    <referenceBlock name="quote_items">
+        <block class="CanadaSatellite\Theme\Block\Catalog\Product\Attachments"
+               name="catalog.product.top.list.mageworx.downloads.attachments"
+               template="CanadaSatellite_Theme::attachment_container_quote.phtml"
+        />
+    </referenceBlock>
+</body>
+</page>

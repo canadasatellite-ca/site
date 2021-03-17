@@ -1,0 +1,56 @@
+<?xml version="1.0" ?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget class="BroSolutions\CryptoCoins\Block\Widget\Crypto" id="brosolutions_crypto_currency_exchange">
+        <label>Crypto Currency Exchange</label>
+        <description></description>
+        <parameters>
+            <parameter name="crypto_coins_title" sort_order="10" visible="true" xsi:type="text">
+                <label>Title</label>
+            </parameter>
+            <parameter name="crypto_coins_price_change_percent"
+                       xsi:type="select"
+                       visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno"
+                       sort_order="20">
+                <label translate="true">Show Price Change Percent</label>
+            </parameter>
+            <parameter name="crypto_coins_price_change"
+                       xsi:type="select"
+                       visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno"
+                       sort_order="30">
+                <label translate="true">Show Price Change</label>
+            </parameter>
+            <parameter name="crypto_coins_high_price_change"
+                       xsi:type="select"
+                       visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno"
+                       sort_order="40">
+                <label translate="true">Show High Price</label>
+            </parameter>
+            <parameter name="crypto_coins_high_price_change"
+                       xsi:type="select"
+                       visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno"
+                       sort_order="40">
+                <label translate="true">Show High Price</label>
+            </parameter>
+            <parameter name="crypto_coins_low_price_change"
+                       xsi:type="select"
+                       visible="true"
+                       source_model="Magento\Config\Model\Config\Source\Yesno"
+                       sort_order="40">
+                <label translate="true">Show Low Price</label>
+            </parameter>
+            <parameter name="crypto_coins_limit" sort_order="50" visible="true" xsi:type="text">
+                <label>Limit</label>
+            </parameter>
+            <parameter name="crypto_coins_cta_link" sort_order="60" visible="true" xsi:type="text">
+                <label>CTA Link</label>
+            </parameter>
+            <parameter name="crypto_coins_cta_text" sort_order="70" visible="true" xsi:type="text">
+                <label>CTA Text</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

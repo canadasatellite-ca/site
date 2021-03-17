@@ -1,0 +1,79 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Extra\Remark $block */
+?>
+
+<tr>
+    <!-- Empty td for product description -->
+    <td></td>
+
+    <td class="col-comment" colspan="4">
+        <div class="checkboxes-container">
+
+            <!-- Optional enable/disable -->
+            <div class="make-optional">
+                <input type="checkbox"
+                       class="admin__control-checkbox"
+                       name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][tier_item][<?php echo $block->escapeHtml($block->getTierItemId()) ?>][make_optional]"
+                       id="make_optional_<?php echo $block->escapeHtml($block->getTierItemId()) ?>"
+                    <?php if ($block->getTierItem() && $block->getTierItem()->getMakeOptional()) : ?>
+                        checked="checked"
+                    <?php endif; ?>
+                    <?php if (!$block->isActiveMakeOptional()) :?>
+                        disabled="disabled"
+                    <?php endif; ?> />
+                <label class="normal admin__field-label"
+                       for="make_optional_<?php echo $block->escapeHtml($block->getTierItemId()) ?>">
+                    <span><?php echo $block->escapeHtml(__('Make Optional')) ?></span>
+                </label>
+            </div>
+
+            <!-- Item comment enable/disable -->
+            <div class="item-comment-block">
+                <input type="checkbox"
+                       class="admin__control-checkbox"
+                       name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][item_has_comment]"
+                       id="item_has_comment_<?php echo $block->escapeHtml($block->getItemId()) ?>"
+                       style="<?php echo $block->getDescriptionHideInput(); ?>"
+                    <?php echo $block->escapeHtml($block->getDescriptionChecked()); ?>
+                       onclick="quote.toggleProductRemark(
+                               this,
+                               'tier_item_comment_<?php echo $block->escapeHtml($block->getItemId()) ?>',
+                               'item_tier_comment_<?php echo $block->escapeHtml($block->getItemId()) ?>');"/>
+                <label class="normal admin__field-label"
+                       for="item_has_comment_<?php echo $block->escapeHtml($block->getItemId()) ?>">
+                    <span><?php echo $block->escapeHtml(__('Add Product Comment')) ?></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- Item comment -->
+        <textarea id="tier_item_comment_<?php echo $block->escapeHtml($block->getItemId()) ?>"
+                  name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][description]"
+                  class="admin__control-textarea"
+                  style="<?php echo $block->getDescriptionHideInput(); ?>"
+        ><?php echo $block->escapeHtml($block->getItemDescription()) ?></textarea>
+    </td>
+
+    <!-- Add new tier item -->
+    <td class="col-tier-control-add">
+        <button title="<?php echo $block->escapeHtml(__('Add tier')); ?>"
+                type="button"
+                class="action-add-tier scalable add-tier icon-btn"
+                id="tier_price_row_<%- data.index %>_add_button"
+                data-mage-init='{"tierControl": {
+                        "action": "addRow",
+                        "itemId": <?php echo $block->escapeHtml($block->getItemId()) ?>,
+                        "increment": 5,
+                        "highestQty": <?php echo $block->escapeHtml($block->getMaxTierItemQty($block->getItem()->getTierItems())); ?>
+                        }}'>
+            <span><?php echo $block->escapeHtml(__('Add Qty Tier')) ?></span>
+        </button>
+    </td>
+</tr>

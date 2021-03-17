@@ -1,0 +1,26 @@
+<!--@subject {{trans 'Abuse report'}} @-->
+<!--@vars {
+"var report_type":"Report Type",
+"var review":"Review",
+"var comment":"Review Comment",
+"var review_url": "Review Url"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="notification-content">
+    <h2>{{trans 'Hello!'}}</h2>
+    <p>{{trans 'Someone has reported abuse on the following %report_type:' report_type=$report_type}}</p>
+    <p class="content">
+        {{if review}}
+            <i>{{var review.summary}}</i><br>
+            <i>{{var review.content}}</i>
+        {{/if}}
+        {{if comment}}
+            <i>{{var comment.content}}</i>
+        {{/if}}
+    </p>
+    <p>{{trans 'Note, The review may also contain some images which may be the reason for the report.'}}</p>
+    <p>{{trans 'Here is a link to the review: <a href="%url">to the review</a>.' url=$review_url |raw}}</p>
+</div>
+
+{{template config_path="design/email/footer_template"}}

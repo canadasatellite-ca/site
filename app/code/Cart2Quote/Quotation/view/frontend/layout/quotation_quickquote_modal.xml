@@ -1,0 +1,31 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="quotation_quickquote_item_renderers" />
+    <head>
+        <css src="Cart2Quote_Quotation::css/quick-quote.css" />
+    </head>
+    <body>
+        <block class="Magento\Framework\View\Element\Template" name="addtoquote.quickquote.modal" as="addtoquote.quickquote.modal" template="Cart2Quote_Quotation::product/view/quote/request/quickquote/modal.phtml">
+            <block class="Cart2Quote\Quotation\Block\Quote\Request\QuickQuote\Modal" name="addtoquote.quickquote.modal.content" as="addtoquote.quickquote.modal.content" template="Cart2Quote_Quotation::product/view/quote/request/quickquote/modal/content.phtml">
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="quickquote_modal_content" xsi:type="array">
+                                <item name="component" xsi:type="string">Cart2Quote_Quotation/js/quote/request/quickquote/modal/content</item>
+                                <item name="config" xsi:type="array">
+                                    <item name="template" xsi:type="string">Cart2Quote_Quotation/quote/request/quickquote/modal/content</item>
+                                </item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </block>
+    </body>
+</page>

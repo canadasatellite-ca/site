@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <xs:redefine schemaLocation="urn:magento:framework:View/Layout/etc/layout_merged.xsd">
+        <xs:complexType name="linkType">
+        	<xs:complexContent>
+	        	<xs:extension base="linkType">
+		        	<xs:attribute name="after" type="xs:string"/>
+		        </xs:extension>
+	    	</xs:complexContent>
+	    </xs:complexType>
+
+	    <xs:complexType name="headType">
+        	<xs:complexContent>
+	        	<xs:extension base="headType">
+		        	<xs:attribute name="ifconfig" type="xs:string"/>
+		        </xs:extension>
+	    	</xs:complexContent>
+	    </xs:complexType>
+
+	    <xs:complexType name="blockReferenceType">
+        	<xs:complexContent>
+	        	<xs:extension base="blockReferenceType">
+		        	<xs:attribute name="as" type="xs:string"/>
+		        	<xs:attribute name="ifconfig" type="xs:string"/>
+		        </xs:extension>
+	    	</xs:complexContent>
+	    </xs:complexType>
+
+	    <xs:complexType name="containerReferenceType">
+        	<xs:complexContent>
+	        	<xs:extension base="containerReferenceType">
+		        	<xs:attribute name="as" type="xs:string"/>
+		        </xs:extension>
+	    	</xs:complexContent>
+	    </xs:complexType>
+
+	    <xs:complexType name="updateType">
+        	<xs:complexContent>
+	        	<xs:extension base="updateType">
+		        	<xs:attribute name="ifconfig" type="xs:string"/>
+		        </xs:extension>
+	    	</xs:complexContent>
+	    </xs:complexType>
+
+    </xs:redefine>
+</xs:schema>

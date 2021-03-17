@@ -1,0 +1,80 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var Cart2Quote\Quotation\Block\Quote\Items $block */
+?>
+<?php
+$quote = $block->getQuote();
+$canAccept = $quote->canAccept();
+$displayPrices = $block->isHidePrices($quote);
+?>
+<div class="table-wrapper order-items">
+    <table class="data table table-order-items" id="my-quotes-table"
+           summary="<?php echo $block->escapeHtml(__('Items Requested')) ?>">
+        <caption class="table-caption"><?php echo $block->escapeHtml(__('Items Requested')) ?></caption>
+        <?php foreach ($block->getSections() as $section) : ?>
+            <?php $sectionsItems = $quote->getSectionItems($section->getSectionId()); ?>
+            <?php if (!empty($sectionsItems)) : ?>
+                <thead>
+                <?php if (!empty($section->getLabel())) : ?>
+                    <tr class="table-section">
+                        <th colspan="9">
+                            <h2><b><?php echo $block->escapeHtml($section->getLabel()); ?></b></h2>
+                        </th>
+                    </tr>
+                <?php endif; ?>
+                <tr class="table-heading">
+                    <th class="col name" colspan="3"><?php echo $block->escapeHtml(__('Product Name')) ?></th>
+                    <th class="col sku"><?php echo $block->escapeHtml(__('SKU')) ?></th>
+                    <?php if ($displayPrices) : ?>
+                        <th class="col price"><?php echo $block->escapeHtml(__('Price')) ?></th>
+                    <?php endif; ?>
+                    <th class="col qty"><?php echo $block->escapeHtml(__('Qty')) ?></th>
+                    <?php if ($displayPrices) : ?>
+                        <th class="col subtotal"><?php echo $block->escapeHtml(__('Subtotal')) ?></th>
+                    <?php endif; ?>
+                    <th class="col del">&nbsp;</th>
+                    <?php if ($canAccept) : ?>
+                        <th class="col tier"><?php echo $block->escapeHtml(__('Tier')) ?></th>
+                    <?php endif; ?>
+                </tr>
+                </thead>
+                <?php foreach ($sectionsItems as $item) : ?>
+                    <?php if (!$item->getParentItem()) : ?>
+                        <tbody>
+                        <?php echo $block->getItemHtml($item) ?>
+                        </tbody>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+        <?php if ($displayPrices) : ?>
+            <tfoot>
+            <?php echo $block->getChildHtml('quote_totals') ?>
+            </tfoot>
+        <?php endif; ?>
+    </table>
+</div>
+<script>
+    require([
+        "jquery",
+        'mage/url'
+    ], function (jQuery, url) {
+        jQuery("input.qty-tier:radio").change(function () {
+            jQuery.ajax({
+                url: url.build("quotation/quote/updatetier/quote_id/" + "<?php echo $block->escapeHtml($quote->getId()) ?>"),
+                type: "POST",
+                data: {"tier_item_id": this.value, "item_id": this.name},
+                showLoader: true,
+                context: jQuery(".order-details-items"),
+                success: function (data) {
+                    jQuery('#my-quotes-table > tfoot').html(data)
+                }
+            });
+        });
+    });
+</script>

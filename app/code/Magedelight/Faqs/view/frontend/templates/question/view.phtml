@@ -1,0 +1,95 @@
+<?php
+$questionData = $block->getQuestionData();
+//print_r($questionData->getData());
+?>
+<div class="row question-details">
+    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+        <div class="question-detail">
+            <h2 class="faq-cat-title"><?php echo $questionData->getQuestion(); ?></h2>
+            <div class="question-content"><?php echo $block->getAnswerContant($questionData->getAnswer()); ?></div>
+            <?php if ($block->getAutherInfoVisible()) { ?>
+                <div class="question-create-data">
+                    <span class="post-author"> Created by <b><?php echo $questionData->getCustomerName(); ?></b></span>
+                </div>
+            <?php } ?>
+        </div>
+        <div id="like-dislike-button">
+            <span class="like-text">Was this article helpful ? </span>
+            <div class="like-button">
+                <button class="btn magebtn-like btn-success">
+                    <i class="fa fa-thumbs-up" aria-hidden="true"></i> Like 
+                    <span class="like_disklike"><?php echo $questionData->getLike(); ?></span></button>
+                <button class="btn magebtn-dislike btn-danger">
+                    <i class="fa fa-thumbs-down" aria-hidden="true"></i> Dislike
+                    <span class="like_disklike"><?php echo $questionData->getDislike(); ?></span></button>
+                <div class="post-message"></div>
+            </div>
+        </div>
+
+                <?php if ($block->getSocialLinksVisible()) { ?>
+            <script type="text/javascript" src="http://s7.addthis.com/js/300/addthis_widget.js#pubid=ra-58c2521faa7f6d38" async="async"></script> 
+            <!-- Go to www.addthis.com/dashboard to customize your tools -->
+            <div class="mage-faq-social">
+                <div class="addthis_inline_share_toolbox"></div>
+            </div>
+        <?php } ?>
+
+        
+
+    </div>
+</div>
+<span class="votelike" style="display: none; color: hsl(2, 64%, 58%);">You have already voted.</span>
+<style>
+    .mage-faq-social {
+        float: right;
+    }
+    .question-details .like-text {
+        font-weight: 600;
+        float: left;
+        padding: 8px 8px 8px 0px;
+    }
+</style>
+<script>
+    require(['jquery'], function ($) {
+        $(".magebtn-like.btn-success").click(function () {
+            var question_id = '<?php echo $questionData->getQuestionId(); ?>';
+            var VisiterLikeIP = 'counter' + question_id;
+            var refreshCounterLike = 1;
+            var OnloadRefreshlike = localStorage.getItem(VisiterLikeIP);
+
+            if (OnloadRefreshlike == null) {
+                $.ajax({
+                    url: '<?php echo $block->getUrl('faqs/question/like') ?>',
+                    type: "POST",
+                    data: {question_id: question_id},
+                    success: function (data) {
+                        $('.magebtn-like.btn-success .like_disklike').html(data);
+                    }
+                });
+            } else {
+                $(".votelike").show().delay(8000).fadeOut();
+            }
+            localStorage.setItem(VisiterLikeIP, refreshCounterLike);
+        });
+
+        $(".magebtn-dislike.btn-danger").click(function () {
+            var question_id = '<?php echo $questionData->getQuestionId(); ?>';
+            var VisiterDisLikeIP = 'counter' + question_id;
+            var refreshCounterDisLike = 1;
+            var OnloadRefreshDislike = localStorage.getItem(VisiterDisLikeIP);
+            if (OnloadRefreshDislike == null) {
+                $.ajax({
+                    url: '<?php echo $block->getUrl('faqs/question/like') ?>',
+                    type: "POST",
+                    data: {question_id: question_id},
+                    success: function (data) {
+                        $('.magebtn-dislike.btn-danger .like_disklike').html(data);
+                    }
+                });
+            } else {
+                $(".votelike").show().delay(8000).fadeOut();
+            }
+            localStorage.setItem(VisiterDisLikeIP, refreshCounterDisLike);
+        });
+    });
+</script>

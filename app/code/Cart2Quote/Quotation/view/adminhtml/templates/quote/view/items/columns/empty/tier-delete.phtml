@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */
+?>
+<?php if ($block->getTierItem()) :?>
+<button title="<?php echo $block->escapeHtml(__('Delete')); ?>"
+        type="button"
+        class="action- scalable delete icon-btn delete-item-price-tier"
+        id="tier_price_row_<?php echo $block->getTierItem()->getId() ?>_delete_button"
+        onclick="jQuery(this).closest('tr').remove()">
+    <span></span>
+</button>
+<?php endif; ?>

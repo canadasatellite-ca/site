@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="aw_advanced_reviews_review" class="Aheadworks\AdvancedReviews\Block\Widget\Review" ttl="86400">
+        <label translate="true">Review Widget by Aheadworks</label>
+        <description translate="true">Content of a Certain Review</description>
+        <parameters>
+            <parameter name="review_id" xsi:type="text" visible="true" required="true" sort_order="10">
+                <label translate="true">Review ID</label>
+            </parameter>
+            <parameter name="template" xsi:type="select" visible="true" required="true" sort_order="20">
+                <label translate="true">Template</label>
+                <options>
+                    <option name="default" value="widget/review/default.phtml" selected="true">
+                        <label translate="true">Review Widget Default Template</label>
+                    </option>
+                </options>
+            </parameter>
+            <parameter name="content_height" xsi:type="text" visible="true" required="false" sort_order="30">
+                <label translate="true">Review Content Height</label>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>
