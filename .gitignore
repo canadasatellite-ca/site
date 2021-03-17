@@ -10,6 +10,9 @@
 !/app/etc/config.php
 !/lib/internal/ArimoFont/**/*
 # 2021-03-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "How to fix product images in Magento ≥ 2.3.5 in Windows?": https://mage2.pro/t/6210
+!/vendor/magento/framework/Image/Adapter/Gd2.php
+# 2021-03-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "How to fix the «Invalid template file» / «require_js.phtml» failure of Magento ≥ 2.3 in Windows?":
 # https://mage2.pro/t/5774
 !/vendor/magento/framework/View/Element/Template/File/Validator.php
