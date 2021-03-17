@@ -8,6 +8,7 @@
 !/app/code/**/*
 !/app/design/frontend/MageSuper/**/*
 !/app/etc/config.php
+!/lib/internal/ArimoFont/**/*
 /update/
 /dev
 /vendor/codeception
