@@ -1,0 +1,20 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+?>
+<?php /** @var $block \Cart2Quote\Quotation\Block\Checkout\Cart\Copytoquote */ ?>
+<?php if ($block->getIsQuotationEnabled() && !$block->getShowOrderReferences()) : ?>
+<div class="cart main actions">
+    <button type="submit"
+            name="copy_to_quote_action"
+            value="copy_to_quote"
+            title="<?php echo $block->escapeHtml(__('Copy to Quotation')); ?>"
+            class="action copytoquote"
+            onclick="window.location.href='/quotation/copytoquote'"
+        >
+        <span><?php echo __('Copy to Quotation'); ?></span>
+    </button>
+</div>
+<?php endif; ?>

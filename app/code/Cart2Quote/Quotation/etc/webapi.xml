@@ -1,0 +1,144 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/quotes/" method="GET">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="getQuotesList"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/:quoteId" method="GET">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="get"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/:quoteId/items/" method="GET">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="getItems"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/:quoteId/items" method="POST">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="saveItems"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/:quoteId/items/:itemId" method="PUT">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="saveItems"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/:quoteId/items/:itemId" method="DELETE">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions" />
+        </resources>
+    </route>
+    <route url="/V1/quotes/" method="PUT">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="saveQuote"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/" method="POST">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="saveQuote"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/:quoteId" method="DELETE">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="deleteQuote"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+    <route url="/V1/quotes/submit/:quoteId" method="POST">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="submitQuote"/>
+        <resources>
+            <resource ref="Cart2Quote_Quotation::actions"/>
+        </resources>
+    </route>
+
+    <!-- Managing my quote cart -->
+    <route url="/V1/quotecarts/mine" method="POST">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartManagementInterface" method="createEmptyQuoteCartForCustomer"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine" method="GET">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartManagementInterface" method="getQuoteCartForCustomer"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine" method="PUT">
+        <service class="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine/items" method="GET">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartItemRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine/items" method="POST">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartItemRepositoryInterface" method="save"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine/items/:itemId" method="PUT">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartItemRepositoryInterface" method="editQuoteItem"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine/items/:itemId" method="DELETE">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartItemRepositoryInterface" method="deleteById"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+    <route url="/V1/quotecarts/mine/request" method="PUT">
+        <service class="Cart2Quote\Quotation\Api\QuoteCartManagementInterface" method="requestQuote"/>
+        <resources>
+            <resource ref="self" />
+        </resources>
+        <data>
+            <parameter name="customerId" force="true">%customer_id%</parameter>
+        </data>
+    </route>
+</routes>

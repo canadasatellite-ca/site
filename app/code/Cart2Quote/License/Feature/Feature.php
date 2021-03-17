@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\License\Feature; final class Feature extends \Cart2Quote\License\Feature\AbstractFeature { protected function allowedStates() { return $this->{"\x64\x65\146\141\165\x6c\x74\101\154\154\x6f\167\x65\144\123\164\x61\164\x65\x73"}; } protected function allowedEdition() { return $this->{"\x6c\x69\x74\145"}; } }

@@ -1,0 +1,239 @@
+/*
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/* Blank/Luma Theme Styling */
+.no-link.valid-date {
+    font-size: 15px;
+}
+
+.email-information .message-info {
+    margin-bottom: 10px;
+}
+
+.checkout-button-row {
+    padding-bottom: 20px !important;
+    padding-left: 10px !important;
+    padding-right: 10px !important;
+    padding-top: 20px !important;
+    text-align: right;
+}
+
+.checkout-button-container .checkout-button-container-row {
+    padding: 0 !important;
+}
+
+.checkout-button-container .checkout-button-container-row .inner-wrapper {
+    text-align: right;
+    width: auto;
+}
+
+.checkout-button-container .checkout-button-container-row .checkout-button-container-row-background {
+    background: none !important;
+}
+
+.checkout-button-container .checkout-button-container-row .checkout-button-container-row-background a.button {
+    background-color: rgb(25, 121, 195);
+}
+
+.custom-dashboard-button {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-dashboard-button .custom-dashboard-button-row {
+    margin: 0;
+    padding: 0;
+}
+
+.custom-dashboard-button .custom-dashboard-button-column {
+    margin: 0;
+    padding: 0 !important;
+}
+
+.custom-dashboard-button .custom-dashboard-button-column a.button {
+    font-size: 10px;
+    text-decoration: underline;
+}
+
+.options-label.options-label-header .col.label {
+    font-style: italic;
+    font-weight: bold;
+    padding-bottom: 2px !important;
+    padding-left: 20px !important;
+    padding-right: 20px !important;
+    padding-top: 2px !important;
+}
+
+.value-padding {
+    padding-bottom: 2px !important;
+    padding-left: 40px !important;
+    padding-top: 0 !important;
+}
+
+.item-comment {
+    padding-bottom: 10px !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+}
+
+.item-comment .item-comment-container {
+    background: #fbf5e7;
+    margin: 0 15px;
+    padding: 5px 10px !important;
+}
+
+.item-comment .item-comment-container .product-name {
+    display: block !important;
+    margin: 0 !important;
+    padding: 0;
+}
+
+table.main td.main-content .order-totals .quote-totals-header {
+    background: #fff;
+    padding-bottom: 5px;
+    padding-top: 5px !important;
+    text-align: right;
+}
+
+table.main td.main-content .order-totals .quote-totals-content {
+    background: #fff;
+    padding-bottom: 5px;
+    padding-top: 5px !important;
+    text-align: right;
+}
+
+table.main td.main-content .order-totals .totals-tax .tax-header {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+table.main td.main-content .order-totals .totals-tax .tax-content {
+    padding-bottom: 5px;
+    padding-top: 5px;
+}
+
+table.main td.main-content tr.subtotal th,
+table.main td.main-content tr.subtotal td {
+    border-top: 1px solid rgb(204, 204, 204);
+    padding-top: 15px;
+}
+
+.item-qty-last {
+    border-collapse: separate;
+}
+
+.subtotal-padding {
+    padding: 10px;
+    text-align: right;
+}
+
+.options-label-content {
+    font-style: italic;
+    font-weight: bold;
+    padding-bottom: 2px !important;
+    padding-left: 28px !important;
+    padding-right: 20px !important;
+    padding-top: 2px !important;
+}
+
+tr.last-element td {
+    padding-bottom: 10px !important;
+}
+
+tr.section-heading th {
+    border-top: 1px solid #d1d1d1 !important;
+    padding-bottom: 0 !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+    padding-top: 0 !important;
+}
+
+thead tr th {
+    background-color: #f2f2f2 !important;
+}
+
+.section-heading h2 {
+    border-bottom: 1px solid rgb(209, 209, 209);
+    display: block;
+    font-size: 18px;
+    line-height: 1.1;
+    margin: 0;
+    padding: 5px 10px;
+}
+
+.section-heading h2 b {
+    display: block;
+    padding: 0 !important;
+}
+
+.email-items {
+    border: 1px solid #d1d1d1 !important;
+}
+
+.item-details {
+    width: 100%;
+}
+
+.item-details td {
+    padding: 0 !important;
+    vertical-align: top;
+}
+
+.item-details .item-price span,
+.item-details .subtotal span,
+.item-details .price span {
+    line-height: 1;
+}
+
+.item-details .item-price .both-prices-including,
+.item-details .subtotal .both-prices-including,
+.item-details .price .both-prices-including {
+    padding-bottom: 10px;
+}
+
+.item-details .item-price .price-including,
+.item-details .subtotal .price-including,
+.item-details .price .price-including,
+.item-details .item-price .price-excluding,
+.item-details .subtotal .price-excluding,
+.item-details .price .price-excluding {
+    padding-bottom: 4px;
+}
+
+.item-details .item-price .tax-label,
+.item-details .subtotal .tax-label,
+.item-details .price .tax-label {
+    display: block;
+    font-size: 8px;
+    margin-bottom: -3px;
+}
+
+.item-details {
+    display: table;
+    margin: 0;
+    padding: 0;
+}
+
+.item-details .item-qty .price-including .price,
+.item-details .item-qty .price-excluding .price,
+.item-details .item-qty .price-including,
+.item-details .item-qty .price-excluding {
+    line-height: 1;
+}
+
+.item-details .item-qty .price-including,
+.item-details .item-qty .price-excluding {
+    padding-bottom: 7px;
+}
+
+.item-details .item-qty .both-prices-including {
+    padding-bottom: 39px;
+}
+
+.product-thumbnail {
+    float: left;
+    margin-right: 10px;
+}

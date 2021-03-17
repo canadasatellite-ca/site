@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\CustomRemark; final class DefaultRenderer extends \Cart2Quote\License\Plugin\AbstractPlugin { public function afterToHtml(\Cart2Quote\Quotation\Block\Quote\Item\Renderer\DefaultRenderer $ocJzO, $olBZM) { if (!($ocJzO->getTemplate() == "\103\141\162\x74\62\x51\x75\157\x74\x65\137\x51\165\x6f\164\141\164\151\157\x6e\72\x3a\161\165\x6f\x74\145\x2f\x69\x74\x65\155\x2f\143\157\155\x6d\145\x6e\164\x2e\x70\x68\x74\x6d\x6c" && !$this->{"\x69\163\101\x6c\x6c\157\x77\145\144"}())) { goto tJRgO; } return ''; tJRgO: return $olBZM; } }

@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_advanced_reviews_comment_listing.aw_advanced_reviews_comment_listing_data_source</item>
+            <item name="deps" xsi:type="string">aw_advanced_reviews_comment_listing.aw_advanced_reviews_comment_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">aw_advanced_reviews_comment_columns</item>
+    </argument>
+    <dataSource name="aw_advanced_reviews_comment_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Comment\ListingDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_advanced_reviews_comment_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <bookmark name="bookmarks" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\Bookmark"/>
+        <columnsControls name="columns_controls"/>
+        <massaction name="listing_massaction">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="selectProvider" xsi:type="string">aw_advanced_reviews_comment_listing.aw_advanced_reviews_comment_listing.aw_advanced_reviews_comment_columns.ids</item>
+                    <item name="displayArea" xsi:type="string">bottom</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/tree-massactions</item>
+                    <item name="indexField" xsi:type="string">id</item>
+                </item>
+            </argument>
+            <action name="delete">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">delete</item>
+                        <item name="label" xsi:type="string" translate="true">Delete</item>
+                        <item name="url" xsi:type="url" path="aw_advanced_reviews/comment/massDelete"/>
+                        <item name="confirm" xsi:type="array">
+                            <item name="title" xsi:type="string" translate="true">Delete items</item>
+                            <item name="message" xsi:type="string" translate="true">Are you sure you want to delete selected items?</item>
+                        </item>
+                    </item>
+                </argument>
+            </action>
+            <action name="status">
+                <argument name="primaryFieldName" xsi:type="string">id</argument>
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">status</item>
+                        <item name="label" xsi:type="string" translate="true">Change Status</item>
+                    </item>
+                </argument>
+                <argument name="actions" xsi:type="configurableObject">
+                    <argument name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\Component\Comment\Listing\MassAction\Statuses</argument>
+                    <argument name="data" xsi:type="array">
+                        <item name="urlPath" xsi:type="string">aw_advanced_reviews/comment/massStatus</item>
+                        <item name="paramName" xsi:type="string">status</item>
+                    </argument>
+                </argument>
+            </action>
+            <action name="ignore_abuse_report">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">ignore_abuse_report</item>
+                        <item name="label" xsi:type="string" translate="true">Ignore Abuse Reports</item>
+                        <item name="url" xsi:type="url" path="aw_advanced_reviews/comment/massIgnore"/>
+                    </item>
+                </argument>
+            </action>
+        </massaction>
+        <filters name="listing_filters">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="templates" xsi:type="array">
+                        <item name="filters" xsi:type="array">
+                            <item name="select" xsi:type="array">
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/ui-select</item>
+                                <item name="template" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    <columns name="aw_advanced_reviews_comment_columns">
+        <selectionsColumn name="ids">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/comment/grid/columns/comment-id</item>
+                </item>
+            </argument>
+        </selectionsColumn>
+        <column name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">ID</item>
+                    <item name="filter" xsi:type="string">textRange</item>
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </column>
+        <column name="type">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\Comment\Type</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="label" xsi:type="string" translate="true">Type</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+        <column name="nickname" class="Aheadworks\AdvancedReviews\Ui\Component\Comment\Listing\Column\Nickname">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Nickname</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </column>
+        <column name="content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Comment</item>
+                    <item name="filter" xsi:type="string">text</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+        </column>
+        <column name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\Comment\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </column>
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="filter" xsi:type="string">dateRange</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/date</item>
+                    <item name="dataType" xsi:type="string">date</item>
+                    <item name="label" xsi:type="string" translate="true">Created</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </column>
+        <column name="new_abuse_reports_count">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Abuse Reported</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/columns/cells/abuse-reported</item>
+                    <item name="fieldClass" xsi:type="string">comment-abuse</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+        </column>
+        <actionsColumn name="actions" class="Aheadworks\AdvancedReviews\Ui\Component\Comment\Listing\Column\Actions">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="indexField" xsi:type="string">id</item>
+                    <item name="bodyTmpl" xsi:type="string">ui/grid/cells/actions</item>
+                    <item name="actions" xsi:type="array">
+                        <item name="approve" xsi:type="array">
+                            <item name="url_route" xsi:type="string">aw_advanced_reviews/comment/approve</item>
+                            <item name="id_key" xsi:type="string">id</item>
+                            <item name="label" xsi:type="string" translate="true">Approve</item>
+                        </item>
+                        <item name="disapprove" xsi:type="array">
+                            <item name="url_route" xsi:type="string">aw_advanced_reviews/comment/disapprove</item>
+                            <item name="id_key" xsi:type="string">id</item>
+                            <item name="label" xsi:type="string" translate="true">Disapprove</item>
+                        </item>
+                        <item name="delete" xsi:type="array">
+                            <item name="url_route" xsi:type="string">aw_advanced_reviews/comment/delete</item>
+                            <item name="id_key" xsi:type="string">id</item>
+                            <item name="label" xsi:type="string" translate="true">Delete</item>
+                        </item>
+                        <item name="abuse_ignore" xsi:type="array">
+                            <item name="url_route" xsi:type="string">aw_advanced_reviews/comment/ignore</item>
+                            <item name="id_key" xsi:type="string">id</item>
+                            <item name="label" xsi:type="string" translate="true">Ignore</item>
+                        </item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">200</item>
+                </item>
+            </argument>
+        </actionsColumn>
+    </columns>
+</listing>

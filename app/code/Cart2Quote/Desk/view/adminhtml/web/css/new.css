@@ -1,0 +1,41 @@
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     Desk
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+
+/* Status */
+.desk-ticket-new .page-title-wrapper h1{display:inline-block;}
+.desk-ticket-new .ticket-status {display:table-cell;text-align:right;vertical-align:middle;font-size:16px;margin-top:5px;margin-right:20px;float:left;}
+.desk-ticket-new .ticket-status span {display:inline-block;border-radius:100px;font-size:80%;color:#ffffff;padding:5px 20px;cursor:default;}
+.desk-ticket-new .ticket-status.new span {background:#f5ca00;}
+.desk-ticket-new .ticket-status.new span:after {content:'New';}
+.desk-ticket-new .ticket-status.open span {background:#e82a2a;}
+.desk-ticket-new .ticket-status.open span:after {content:'Open';}
+.desk-ticket-new .ticket-status.pending span {background:#47aede;}
+.desk-ticket-new .ticket-status.pending span:after {content:'Pending';}
+.desk-ticket-new .ticket-status.on-hold span {background:#000000;}
+.desk-ticket-new .ticket-status.on-hold span:after {content:'On-hold';}
+.desk-ticket-new .ticket-status.solved span {background:#828282;}
+.desk-ticket-new .ticket-status.solved span:after {content:'Solved';}
+

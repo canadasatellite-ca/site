@@ -1,0 +1,54 @@
+<!--
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject {{trans "Update to your %store_name order" store_name=$store.getFrontendName()}} @-->
+<!--@vars {
+"var billing.getName()":"Guest Customer Name",
+"var comment":"Order Comment",
+"var order.increment_id":"Order Id",
+"var order.getStatusLabel()":"Order Status"
+} @-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+</head>
+<body>
+    <table>
+        <tr>
+            <td>
+                <p>{{trans "%name," name=$billing.getName()}}</p>
+                <p>
+                    {{trans
+                        "Your order #%increment_id
+                        has been updated with a status of <strong>%order_status</strong>."
+
+                        increment_id=$order.increment_id
+                        order_status=$order.getStatusLabel()
+                    |raw}}
+                </p>
+                <p>
+                    {{trans 'If you have questions about your order, you can email us at
+                    <a href="mailto:%store_email">%store_email</a>' store_email=$store_email |raw}}{{depend store_phone}} {{trans 'or call us at <a href="tel:%store_phone">%store_phone</a>' store_phone=$store_phone |raw}}{{/depend}}.
+                    {{depend store_hours}}
+                        {{trans 'Our hours are <span class="no-link">%store_hours</span>.' store_hours=$store_hours |raw}}
+                    {{/depend}}
+                </p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                {{depend comment}}
+                <p>
+                    {{var comment|escape|nl2br}}
+                </p>
+                {{/depend}}
+            </td>
+        </tr>
+    </table>
+</body>

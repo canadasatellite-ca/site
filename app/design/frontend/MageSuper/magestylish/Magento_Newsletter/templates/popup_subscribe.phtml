@@ -1,0 +1,58 @@
+<?php
+/**
+ * Copyright © 2015 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="block block-subscribe">
+	<form class="form subscribe"
+		novalidate
+		action="javascript:void(0);<?php /* @escapeNotVerified */ // echo $block->getFormActionUrl() ?>"
+		method="post"
+		data-mage-init='{"validation": {"errorClass": "mage-error"}}'
+		id="newsletter-validate-detail">
+		<div class="field newsletter">
+			<div class="control">
+				<input class="input-text" name="email" type="email" id="newsletter-popup"
+							placeholder="<?php /* @escapeNotVerified */ echo __('Enter your email address') ?>"
+							data-validate="{required:true, 'validate-email':true}"/>
+			</div>
+		</div>
+		<div class="actions">
+			<button id="submit_subscribe" class="action subscribe primary btn" title="<?php /* @escapeNotVerified */ echo __('Subscribe') ?>" type="submit">
+				<?php /* @escapeNotVerified */ echo __('Subscribe') ?>
+			</button>
+		</div>
+	</form>
+</div>
+<div class="checkbox"><label for="dont_show"> <input type="checkbox" onclick="dontShowPopup('dont_show')" id="dont_show"> Don't show this popup again </label></div>
+
+<script type="text/javascript">
+
+		jQuery('#submit_subscribe').click(function(event) {
+			var data = {};
+                var email = jQuery(' input#newsletter-popup').val();
+                
+                data['email'] = email;
+                if(data['email'] != ''){
+                    jQuery.ajax({
+                        url: "<?php echo $block->getFormActionUrl() ?>",
+                        method: "POST",
+                        data: jQuery.param(data),
+                        success: function (data) {
+                            alert('checked');
+                        }
+                    });
+                    return true;
+                }else{
+                    return false;
+                }
+			
+		});
+</script>
+
+
+

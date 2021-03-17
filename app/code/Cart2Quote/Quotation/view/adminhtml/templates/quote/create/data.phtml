@@ -1,0 +1,92 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<div class="page-create-order">
+    <script>
+        require(["Magento_Sales/order/create/form"], function () {
+            order.setCurrencySymbol('<?php echo $block->escapeHtml($block->getCurrencySymbol($block->getCurrentCurrencyCode())) ?>')
+        });
+    </script>
+    <div class=
+         "order-details
+        <?php if ($block->getCustomerId()) : ?>
+        order-details-existing-customer
+        <?php endif; ?>
+        ">
+
+        <div id="order-errors" class="order-errors"><?php echo $block->getChildHtml('errors') ?></div>
+
+        <section id="order-form_account" class="admin__page-section order-account-information">
+            <?php echo $block->getChildHtml('form_account') ?>
+        </section>
+
+        <section id="order-addresses" class="admin__page-section order-addresses">
+            <div class="admin__page-section-title">
+                <span class="title"><?php echo $block->escapeHtml(__('Address Information')) ?></span>
+            </div>
+            <div class="admin__page-section-content">
+                <div id="order-billing_address" class="admin__page-section-item order-billing-address">
+                    <?php echo $block->getChildHtml('billing_address') ?>
+                </div>
+                <div id="order-shipping_address" class="admin__page-section-item order-shipping-address">
+                    <?php echo $block->getChildHtml('shipping_address') ?>
+                </div>
+            </div>
+        </section>
+        <?php
+        /**
+         * dummy section used in Magento_Sales/order/create/scripts -> isPaymentValidationAvailable
+         */
+        ?>
+        <section id="order-methods" class="admin__page-section order-methods" style="display: none;">
+            <div class="admin__page-section-content">
+                <div id="order-billing_method" class="admin__page-section-item order-billing-method">
+                </div>
+            </div>
+            <div id="order-shipping_method" class="admin__page-section-item order-shipping-method">
+                <?php echo $block->getChildHtml('shipping_method') ?>
+            </div>
+        </section>
+
+        <?php echo $block->getChildHtml('gift_options') ?>
+
+        <section class="quote-actions">
+            <div class="order-totals-actions">
+                <div class="actions">
+                    <?php echo $block->getButtonHtml('Create Quote', 'order.submit()', 'save primary') ?>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <?php if ($block->getCustomerId()) : ?>
+        <div class="order-sidebar">
+            <div class="store-switcher order-currency">
+                <label class="admin__field-label" for="currency_switcher">
+                    <?php echo $block->escapeHtml(__('Quote Currency:')) ?>
+                </label>
+                <select id="currency_switcher"
+                        class="admin__control-select"
+                        name="order[currency]"
+                        onchange="order.setCurrencyId(this.value);
+                            order.setCurrencySymbol(
+                                this.options[this.selectedIndex].getAttribute('symbol')
+                            );">
+                    <?php foreach ($block->getAvailableCurrencies() as $_code) : ?>
+                        <option value="<?php echo $block->escapeHtml($_code) ?>"
+                                symbol="<?php echo $block->escapeHtml($block->getCurrencySymbol($_code)) ?>"
+                            <?php if ($_code == $block->getCurrentCurrencyCode()) : ?>
+                                selected="selected"
+                            <?php endif; ?>>
+                            <?php echo $block->escapeHtml($block->getCurrencyName($_code)) ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </div>
+        </div>
+    <?php endif; ?>
+</div>

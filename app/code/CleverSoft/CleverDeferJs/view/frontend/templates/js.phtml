@@ -1,0 +1,32 @@
+<?php
+/**
+ * @category    CleverSoft
+ * @package     CleverDeferJs
+ * @copyright   Copyright © 2017 CleverSoft., JSC. All Rights Reserved.
+ * @author 		ZooExtension.com
+ * @email       magento.cleversoft@gmail.com
+ */
+?>
+<?php 
+$helper = $this->helper('CleverSoft\CleverDeferJs\Helper\Data');
+$deferIframes = $helper->getConfig('cleverdeferjs/general/defer_iframes');
+?>
+<?php if($deferIframes):?>
+    <script>
+        require(['jquery'],function($){
+            $(function(){
+                $('body','html').find('iframe').each(function(){
+                    var $iframe = $(this);
+                    var $src = $iframe.attr('src');
+                    $iframe.attr('src','');
+                    $iframe.attr('data-src',$src);
+                });
+            })
+            window.onload = function(){
+                $('body','html').find('iframe').each(function(){
+                    $(this).attr('src', $(this).attr('data-src'));
+                });
+            }
+        })
+    </script>
+<?php endif;?>

@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Item\Renderer\Column $block */
+
+?>
+<td class="col del" data-th="<?php echo $block->escapeHtml(__('Delete')); ?>">
+    <?php $tierItems = $block->getItem()->getTierItems(); ?>
+    <?php if (isset($tierItems)): ?>
+        <?php foreach ($tierItems as $tierItem) : ?>
+            <?php if ($tierItem->getMakeOptional()) : ?>
+                <a class="action action-delete"
+                   href="<?php echo $block->getDeleteUrl($block->getItem()->getId()); ?>"></a>
+                <?php break; ?>
+            <?php endif; ?>
+        <?php endforeach; ?>
+    <?php endif; ?>
+</td>

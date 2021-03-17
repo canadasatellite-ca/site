@@ -1,0 +1,25 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="bundle.summary" class="Cart2Quote\Quotation\Block\Product\View" template="Cart2Quote_Quotation::catalog/product/view/summary.phtml">
+            <block class="Cart2Quote\Quotation\Block\Product\View" name="product.info.addtoquote.bundle" as="addtoquote" after="product.info.addtocart.bundle" ifconfig="cart2quote_quotation/global/enable" template="Cart2Quote_Quotation::product/view/addtoquote.phtml">
+                <block class="Cart2Quote\Quotation\Block\Quote\Request\ButtonContainer" name="product.info.addtoquote.button.container" as="addtoquote.button.container"/>
+            </block>
+        </referenceBlock>
+        <referenceBlock name="product.info.bundle.options" class="Cart2Quote\Quotation\Block\Catalog\Product\View\Type\Bundle" template="Cart2Quote_Quotation::catalog/product/view/type/bundle/options.phtml" />
+        <referenceBlock name="product.info.addtocart.bundle">
+            <block class="Cart2Quote\Quotation\Block\Product\View" name="product.info.addtoquote" as="addtoquote" ifconfig="cart2quote_quotation/global/enable" template="Cart2Quote_Quotation::product/view/addtoquote.phtml">
+                <block class="Cart2Quote\Quotation\Block\Quote\Request\ButtonContainer" name="product.info.addtoquote.addtoquote.strategy" as="addtoquote.strategy" />
+            </block>
+        </referenceBlock>
+        <referenceContainer name="product.info.main">
+            <block class="Cart2Quote\Quotation\Block\Product\View" name="customize.button" template="Cart2Quote_Quotation::product/view/customize.phtml" as="customize_button" after="product.info.price" ifconfig="cart2quote_quotation/global/enable" />
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_cart_add_product_complete">
+        <observer name="mw_onestepcheckout_checkout_cart_add_product_complete" instance="MW\Onestepcheckout\Observer\CheckDisableShoppingCartPage" />
+    </event>
+    <event name="sales_order_save_after">
+        <observer name="mw_onestepcheckout_sales_order_save_after" instance="MW\Onestepcheckout\Observer\SaveOrderAfter" />
+    </event>
+    <event name="sales_order_save_before">
+        <observer name="mw_onestepcheckout_sales_order_save_before" instance="MW\Onestepcheckout\Observer\SaveOrderBefore" />
+    </event>
+    <event name="payment_cart_collect_items_and_amounts">
+    	<observer name="mw_onestepcheckout_payment_cart_collect_items_and_amounts" instance="MW\Onestepcheckout\Observer\CollectCustomItems" />
+    </event>
+    <event name="sales_order_invoice_save_after">
+        <observer name="mw_onestepcheckout_sales_order_invoice_save_after" instance="MW\Onestepcheckout\Observer\InvoiceSaveAfter" />
+    </event>
+    <event name="sales_order_creditmemo_save_after">
+        <observer name="mw_onestepcheckout_sales_order_creditmemo_save_after" instance="MW\Onestepcheckout\Observer\CreditmemoSaveAfter" />
+    </event>
+    <event name="sales_model_service_quote_submit_before">
+        <observer name="mw_onestepcheckout_sales_model_service_quote_submit_before" instance="MW\Onestepcheckout\Observer\SalesEventQuoteSubmitBefore" />
+    </event>
+    <event name="checkout_type_multishipping_create_orders_single">
+        <observer name="mw_onestepcheckout_checkout_type_multishipping_create_orders_single" instance="MW\Onestepcheckout\Observer\MultishippingEventCreateOrders" />
+    </event>
+</config>

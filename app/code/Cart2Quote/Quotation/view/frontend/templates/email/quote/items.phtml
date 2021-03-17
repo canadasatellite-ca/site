@@ -1,0 +1,66 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Email\Items $block */
+?>
+<?php $quote = $block->getQuote() ?>
+<?php if ($quote) : ?>
+    <?php $items = $quote->getAllItems(); ?>
+    <table class="email-items">
+        <thead>
+        <tr>
+            <th class="item-info">
+                <?php echo $block->escapeHtml(__('Items')); ?>
+            </th>
+            <?php $colspan = $block->hidePrice() ? 2 : 1; ?>
+            <th colspan="<?php echo $colspan ?>" class="item-qty item-qty-last">
+                <?php echo $block->escapeHtml(__('Qty')); ?>
+            </th>
+            <?php if (!$block->hidePrice()) : ?>
+                <th class="item-price">
+                    <?php echo $block->escapeHtml(__('Price')); ?>
+                </th>
+            <?php endif; ?>
+        </tr>
+        </thead>
+        <?php foreach ($items as $item) : ?>
+            <?php
+            if ($item->getParentItem()) {
+                continue;
+            }
+            ?>
+            <tbody>
+            <?php echo $block->getItemHtml($item) ?>
+            </tbody>
+        <?php endforeach; ?>
+    </table>
+    <?php if ($block->getGiftMessageHelper()->isMessagesAllowed(
+        'quote',
+        $quote,
+        $quote->getStore()
+    ) && $quote->getGiftMessageId()
+    ) : ?>
+        <?php
+        $giftMessageHelper = $block->getGiftMessageHelper();
+        $giftMessage = $giftMessageHelper->getGiftMessage($quote->getGiftMessageId());
+        ?>
+        <?php if ($giftMessage) : ?>
+            <br/>
+            <table class="message-gift">
+                <tr>
+                    <td>
+                        <h3><?php echo $block->escapeHtml(__('Gift Message for this Quote')) ?></h3>
+                        <strong><?php echo $block->escapeHtml(__('From:')); ?></strong> <?php echo $block->escapeHtml($giftMessage->getSender()) ?>
+                        <br/><strong><?php echo $block->escapeHtml(__('To:')); ?></strong> <?php echo $block->escapeHtml($giftMessage->getRecipient()) ?>
+                        <br/><strong><?php echo $block->escapeHtml(__('Message:')); ?></strong>
+                        <br/><?php echo $block->escapeHtml($giftMessage->getMessage()) ?>
+                    </td>
+                </tr>
+            </table>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

@@ -1,0 +1,282 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="carriers">
+            <group id="canadapost" translate="label comment" type="text" sortOrder="150" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Canada Post</label>
+                <group id="hint" translate="label comment" type="text" sortOrder="0" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <frontend_model>Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Fieldset\Hint</frontend_model>
+                </group>
+                <field id="active" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enabled for Checkout</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="title" translate="label comment" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Title</label>
+                </field>
+                <field id="locale" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Locale</label>
+                    <comment>Indicates your language preference for receiving error messages.</comment>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\Locale</source_model>
+                </field>
+                <field id="sandbox_mode" translate="label comment" type="select" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Sandbox Mode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="button_sign_in" translate="label" type="button" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Sign In</label>
+                    <comment>Use this button to sign up for Canada Post services and automatically fill up API details of your Canada Post account.</comment>
+                    <frontend_model>Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\SignInButton</frontend_model>
+                    <depends>
+                        <field id="sandbox_mode">0</field>
+                    </depends>
+                </field>
+                <field id="customer_number" translate="label comment" type="obscure" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Customer Number</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="contract_id" translate="label comment" type="obscure" sortOrder="45" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Contract ID</label>
+                    <comment>If you are a Canada Post commercial customer with a parcel agreement, please fill your contract id.</comment>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                </field>
+                <field id="username" translate="label comment" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Username</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="sandbox_mode">0</field>
+                    </depends>
+                </field>
+                <field id="password" translate="label comment" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Password</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="sandbox_mode">0</field>
+                    </depends>
+                </field>
+                <field id="username_development" translate="label comment" type="obscure" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Username (Development)</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="sandbox_mode">1</field>
+                    </depends>
+                </field>
+                <field id="password_development" translate="label comment" type="obscure" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>API Password (Development)</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="sandbox_mode">1</field>
+                    </depends>
+                </field>
+                <field id="certificate_path" translate="label comment" type="text" sortOrder="65" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Certificate Path</label>
+                    <comment><![CDATA[Absolute path to your trusted certificate authority pem file. Canada Post highly recommends to use your own SSL certificate in production environments. It allows to ensure that you are only establishing secure connections using trusted certificate signers. You can read about that <a href="https://www.canadapost.ca/cpo/mc/emailcampaigns/developer/technical_developer_program_march2018.html" target="_blank">here</a>.]]></comment>
+                </field>
+                <field id="max_package_weight" translate="label comment" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Max Package Weight</label>
+                    <comment>In kilogram. 0 - unlimited weight.</comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="quote_type" translate="label comment" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Quote Type</label>
+                    <comment>Commercial - will return the discounted price for the commercial customer or Solutions for Small Business member. Counter - will return the regular price paid by consumers.</comment>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\QuoteType</source_model>
+                </field>
+                <field id="rates_price_type" translate="label comment" type="select" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Rates Price Type</label>
+                    <source_model>Magento\Tax\Model\System\Config\Source\PriceType</source_model>
+                </field>
+                <field id="rates_min_price" translate="label comment" type="text" sortOrder="95" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Rates Minimal Price</label>
+                    <validate>required-entry validate-zero-or-greater validate-number</validate>
+                </field>
+                <field id="lead_days" translate="label comment" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Lead Days</label>
+                    <comment>Expected mailing date after working days.</comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="working_days" translate="label comment" type="multiselect" sortOrder="101" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Working Days</label>
+                    <source_model>Magento\Config\Model\Config\Source\Locale\Weekdays</source_model>
+                </field>
+                <field id="estimated_delivery_date" translate="label comment" type="select" sortOrder="102" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Show Estimated Delivery Date</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="default_box_length" translate="label comment" type="text" sortOrder="103" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Default Box Length</label>
+                    <comment>Value in centimeters. Used for rating calculation. 0 - to ignore this setting.</comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="default_box_width" translate="label comment" type="text" sortOrder="104" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Default Box Width</label>
+                    <comment>Value in centimeters. Used for rating calculation. 0 - to ignore this setting.</comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="default_box_height" translate="label comment" type="text" sortOrder="105" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Default Box Height</label>
+                    <comment>Value in centimeters. Used for rating calculation. 0 - to ignore this setting.</comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+
+                <field id="collect_on_delivery" translate="label comment" type="select" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Collect On Delivery</label>
+                    <comment><![CDATA[<a href="https://www.canadapost.ca/web/en/kb/details.page?article=how_to_send_and_rece&cattype=kb&cat=sending&subcat=generalinformation" target="_blank">Read more.</a> <br/><strong style="color:red">Warning!</strong> Has conflicts with options: "Deliver to Post Office", "Leave at door" <br/>This option affects only shipments within Canada.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="coverage_threshold" translate="label comment" type="text" sortOrder="111" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Coverage Threshold</label>
+                    <comment>The minimum price at which postal insurance coverage should be added to the rate quote. "0" for all shipments, some value higher than any expected order price to disable, eg: "99999".</comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="signature_threshold" translate="label comment" type="text" sortOrder="112" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Signature Threshold</label>
+                    <comment><![CDATA[The minimum order price at which the Canada Post "Signature" option is added to the rate quote. Set to "0" for Signature required on all shipments. Set to a value higher than any expected order price to disable, eg: "99999". <br/><strong style="color:red">Warning!</strong> Has conflicts with options: "Leave at door", "Proof of age required"]]></comment>
+                    <validate>required-entry validate-zero-or-greater validate-digits</validate>
+                </field>
+                <field id="shipment_options" translate="label comment" type="select" sortOrder="113" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Delivery Options</label>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\ShipmentOptions</source_model>
+                    <comment><![CDATA[This option affects only shipments within Canada.]]></comment>
+                </field>
+                <field id="delivery_instructions" translate="label comment" type="select" sortOrder="115" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Delivery Instructions</label>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\DeliveryInstructions</source_model>
+                    <depends>
+                        <field id="shipment_options" separator="," negative="1">LAD,DNS</field>
+                    </depends>
+                    <comment><![CDATA[This option affects only shipments within Canada.]]></comment>
+                </field>
+                <field id="enable_d2po" translate="label comment" type="select" sortOrder="117" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Enabled Delivery to Post Office</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[This option affects only shipments within Canada.]]></comment>
+                </field>
+                <field id="google_maps_api_key" translate="label comment" type="obscure" sortOrder="118" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Google Maps API Key</label>
+                    <backend_model>Magento\Config\Model\Config\Backend\Encrypted</backend_model>
+                    <depends>
+                        <field id="enable_d2po">1</field>
+                    </depends>
+                </field>
+
+                <field id="notification" translate="label comment" type="multiselect" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Notification</label>
+                    <comment>Contains client preferences with respect to email notification for tracking events e.g. delivery.</comment>
+                    <can_be_empty>1</can_be_empty>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\NotificationOptions</source_model>
+                </field>
+
+                <field id="output_format" translate="label comment" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Print Output Format</label>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\PrintOutputFormat</source_model>
+                </field>
+                <field id="reason_for_export" translate="label comment" type="select" sortOrder="145" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Reason For Export</label>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\ReasonForExport</source_model>
+                </field>
+                <field id="other_reason_for_export" translate="label comment" type="text" sortOrder="147" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Other Reason</label>
+                    <comment>Maximum 44 characters</comment>
+                    <validate>required-entry</validate>
+                    <depends>
+                        <field id="reason_for_export">OTH</field>
+                    </depends>
+                </field>
+                <field id="allowed_methods" translate="label comment" type="multiselect" sortOrder="190" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Allowed Methods</label>
+                    <comment><![CDATA[Enable 'No Rate Method' if you want to show default shipping method for cases when Canada Post API does not return any rates for specified shipping address.<br/> <strong style="color:red">Warning!</strong> You will not be available to create shipping labels for orders with this method from Magento panel.]]></comment>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\Method</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="norates_price" translate="label comment" type="text" sortOrder="195" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>No Rates Method Price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+                <field id="non_delivery_handling" translate="label comment" type="select" sortOrder="199" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Non-delivery handling</label>
+                    <comment>Default value for all services</comment>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\NonDeliveryHandling</source_model>
+                </field>
+                <field id="shipping_methods_labels" translate="label comment" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Shipping Methods Labels</label>
+                    <frontend_model>Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\Methods</frontend_model>
+                    <backend_model>Mageside\CanadaPostShipping\Model\System\Config\Backend\Methods</backend_model>
+                </field>
+                <field id="handling_type" translate="label comment" type="select" sortOrder="204" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Calculate Handling Fee</label>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\HandlingType</source_model>
+                </field>
+                <field id="handling_action" translate="label comment" type="select" sortOrder="205" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Handling Applied</label>
+                    <source_model>Magento\Shipping\Model\Source\HandlingAction</source_model>
+                </field>
+                <field id="handling_fee_fixed" translate="label comment" type="text" sortOrder="206" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Handling Fee Fixed</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="handling_type" separator=",">F,FP</field>
+                    </depends>
+                </field>
+                <field id="handling_fee_percent" translate="label comment" type="text" sortOrder="208" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Handling Fee Percent</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="handling_type" separator=",">P,FP</field>
+                    </depends>
+                </field>
+                <field id="free_methods" translate="label" sortOrder="209" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="0">
+                    <label>Free Methods</label>
+                    <frontend_model>Mageside\CanadaPostShipping\Block\Adminhtml\Form\Field\FreeMethods</frontend_model>
+                    <backend_model>Mageside\CanadaPostShipping\Model\System\Config\Backend\FreeMethods</backend_model>
+                </field>
+                <field id="free_methods_threshold_price" translate="label" type="select" sortOrder="215" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Free Methods Threshold Price</label>
+                    <source_model>Magento\Tax\Model\System\Config\Source\PriceType</source_model>
+                </field>
+                <field id="non_mailable_attribute" translate="label" type="select" sortOrder="230" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Non-mailable Attributes</label>
+                    <source_model>Mageside\CanadaPostShipping\Model\Source\NonMailableAttribute</source_model>
+                </field>
+                <field id="sallowspecific" translate="label comment" type="select" sortOrder="250" showInDefault="1" showInWebsite="1" showInStore="0" canRestore="1">
+                    <label>Ship to Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+                <field id="specificcountry" translate="label comment" type="multiselect" sortOrder="260" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Ship to Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="debug" translate="label comment" type="select" sortOrder="270" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="button_log" translate="label" type="button" sortOrder="275" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>View Debug Logs</label>
+                    <frontend_model>Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\ViewLogsButton</frontend_model>
+                    <depends>
+                        <field id="debug">1</field>
+                    </depends>
+                </field>
+                <field id="showmethod" translate="label comment" type="select" sortOrder="280" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Show Method if Not Applicable</label>
+                    <frontend_class>shipping-skip-hide</frontend_class>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="specificerrmsg" translate="label comment" type="textarea" sortOrder="285" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Displayed Error Message</label>
+                </field>
+                <field id="sort_order" translate="label comment" type="text" sortOrder="290" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Sort Order</label>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

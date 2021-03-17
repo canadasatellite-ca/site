@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Quote\Model\QuoteRepository\SaveHandler">
+        <arguments>
+            <argument name="quoteResource" xsi:type="object">\Cart2Quote\Quotation\Model\ResourceModel\Quote</argument>
+        </arguments>
+    </type>
+    <preference for="Cart2Quote\Quotation\Api\QuoteRepositoryInterface" type="Cart2Quote\Quotation\Model\QuoteRepository"/>
+    <preference for="Cart2Quote\Quotation\Api\Data\QuoteCartInterface" type="Cart2Quote\Quotation\Model\Quote"/>
+    <preference for="Cart2Quote\Quotation\Api\Data\QuoteSearchResultsInterface" type="Magento\Framework\Api\SearchResults"/>
+</config>

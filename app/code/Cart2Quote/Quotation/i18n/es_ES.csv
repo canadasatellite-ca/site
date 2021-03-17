@@ -1,0 +1,582 @@
+" For documentation and support visit %1 or contact: %2 "," Para documentación y soporte visita %1 o contacto: %2 "
+" [deleted]"," [borrado]"
+"""%1"" coupon code is not valid.","""%1"" código de cupón no valido."
+"""%1"" coupon code was not applied. Do not apply discount is selected for item(s)","""%1"" el código del cupón no ha sido aplicado. No aplicar descuento está seleccionado para los siguientes productos:"
+"%1 quote(s) cannot be canceled.","%1 cotización(es) no se puede cancelar."
+"%1 was updated in your quote.","%1 fue actualizado en tu cotización."
+"About Your Quote","Acerca de tu Cotización"
+"Accept & Checkout","Aceptar y Pagar"
+"Accept Quotation","Aceptar Cotización"
+"Account Information","Información de la Cuenta"
+"Add Button on Category Page","Agregar botón en la Página de Categoria"
+"Add Button on Detail Page","Agregar Botón en Página de Detalles"
+"Add Product Comment","Añadir comentario del producto"
+"Add Products","Añadir Productos"
+"Add Qty Tier","Agregar Nivel de cantidad"
+"Add Section","Agregar Sección"
+"Add Selected Product(s) to Quote","Añadir Producto(s) seleccionado(s) a cotización"
+"Add tier","Añadir nivel"
+"Add to Cart","Agregar al Carrito"
+"Add to Compare","Añadir a Comparar"
+"Add to Quote","Añadir a Cotización"
+"Add to Wish List","Agregar a Lista de Deseos"
+"Adding to Quote...","Añadiendo a cotización…"
+"Additional CSS","CSS Adicional"
+"Address Information","Información de Dirección"
+"Adjustment Fee","Cuota de Ajuste"
+"Adjustment Refund","Ajuste de Reembolso"
+"Advanced Pricing","Precios Avanzados"
+"Allow Guest Request","Permitir solicitud de invitado"
+"Append Comments","Añadir comentarios"
+"Apply Coupon Code","Aplicar código de cupón"
+"Apply Subtotal Proposal","Aplicar propuesta de subtotal"
+"Are you sure you want to cancel this Quote?","¿Seguro que quieres cancelar esta cotización?"
+"Are you sure? This quote will be canceled and a new one will be created instead.","¿Estás seguro? Esta cotización se cancelará y se creará una nueva."
+"Attach document","Adjuntar Documento"
+"Attach pdf","Adjuntar pdf"
+"Auto User Login","Inicio de sesión de usuario automático"
+"Back to My Quote","Volver a mi cotizacion"
+"Best Wishes.","Los mejores deseos."
+"Billing Address Configuration","Configuración de la dirección de facturación"
+"Billing Address","Dirección de Envío"
+"Bug Report","Informe de error"
+"Cannot save comment:\n%1","No se puede guardar el comentario:\n%1"
+"Carrier Title","Título del transportista"
+"Cart2Quote - Installation Manual","Cart2Quote - Manual de instalación"
+"Cart2Quote - Quick Start Manual","Cart2Quote - Manual de inicio rápido"
+"Cart2Quote - User Manual","Cart2Quote - Manual del usuario"
+"Cart2Quote License:","Licencia de Cart2Quote:"
+"Cart2Quote Status:","Estado de Cart2Quote:"
+"Cart2Quote Version:","Versión de Cart2Quote:"
+"Cart2Quote for Magento 2 is Provided by %1","Cart2Quote para Magento 2 es proporcionada por %1"
+"Cart2Quote notice:","Cart2Quote aviso:"
+"Catalog price: %1","Precio de catálogo: %1"
+"Change Address","Cambiar dirección"
+"Change Customer","Cambiar cliente"
+"Change Request","Solicitud de cambio"
+"Change to default billing address","Cambiar a dirección de facturación predeterminada"
+"Change to default shipping address","Cambiar a dirección de envío predeterminada"
+"Check out faster","Ve a Proceso de Compra más rápido"
+"Clear Quote","Borrar cotización"
+"Click <a href=""%1"">here</a> to continue shopping.","Haga clic en <a href=""%1"">aquí</a> para seguir comprando."
+"Click to change shipping method","Haga clic para cambiar el método de envío"
+"Clicking the button below will open a new page where you can ","Al hacer clic en el botón de abajo se abrirá una nueva página donde puede "
+"Collapse Item","Contraer artículo"
+"Collapse/Expand All Items","Contraer / Expandir todos los elementos"
+"Comment added","Comentario añadido"
+"Remarks with quote: ","Comentar con Cotización: "
+"Compare Editions","Comparar Ediciones"
+"Configuration: ","Configuración: "
+"Continue Shopping","Seguir comprando"
+"Move to Quotation","Mover a Cotización"
+"Cost Price","Precio Costo"
+"Create A Ticket","Crear un ticket"
+"Create New Quote","Crear Nueva Cotización"
+"Create Order","Crear Orden"
+"Create Quote for %1 in %2","Crear Cotización para %1 en %2"
+"Create Quote for %1","Crear Cotización para %1"
+"Create Quote for New Customer in %1","Crear Cotización Para Nuevo Cliente en %1"
+"Create Quote for New Customer","Crear Cotización para Nuevo Cliente"
+"Create Ticket","Crear Ticket"
+"Create a support ticket","Crear un ticket de soporte"
+"Create an Account","Crea una cuenta"
+"Create an account to receive a shipping quote","Crear una cuenta para recibir una cotización de envío"
+"Creating an account has many benefits:","Crear una cuenta tiene muchos beneficios:"
+"Current Cart2Quote Edition","Edición actual de Cart2Quote"
+"Current Domain:","Dominio actual:"
+"Custom Price","Precio Personalizado"
+"Customer First Name","Primer Nombre del cliente"
+"Customer Group","Grupo de cliente"
+"Customer Groups","Grupos de clientes"
+"Customer Last Name","Apellido del cliente"
+"Customer Name","Nombre del cliente"
+"Customer SupportDesk Version:","Versión de Soporte al Cliente:"
+"Customer account already exists, please login to request a quote.","La cuenta del cliente ya existe, inicie sesión para solicitado una Cotización."
+"Customer no longer exists.","El cliente ya no existe."
+"Customize and Add to Cart","Personalizar y Agregar al Carrito"
+"Customize and Add to Quote","Personalizar y Agregar a la Cotización"
+"Default Expiration Time","Tiempo de Caducidad Predeterminado"
+"Default Reminder Time","Tiempo de Recordatorio Predeterminado"
+"Delete Tier","Eliminar nivel"
+"DeskEmail Version:","Versión de DeskEmail:"
+"Disable Customer Checkout On Quote","Deshabilitar el Proceso de Compra del Cliente en Cotización"
+"Disable Negative Profit","Deshabilitar el Beneficio Negativo"
+"Disable Product Comment Field","Deshabilitar Campo de Comentario de Producto"
+"Discount (%1)","Descuento (%1)"
+"Discount Percentage invalid","Porcentaje de Descuento inválido"
+"Display Mini Quote","Mostrar Mini Cotización"
+"Displayed Error Message","Mensaje de Error Mostrado"
+"Do you have a general remark with this Quote Request?","¿Tienes algún Comentario General con Esta Solicitud de Cotización?"
+"Document name","Nombre del documento"
+"Duplicate Item","Duplicar Artículo"
+"Dynamic add to cart/quote buttons","Botones Dinámicos para Agregar al Carrito/Cotizar"
+"Edit Order","Editar Orden"
+"Edit Quote #","Editar # Cotización"
+"Edit Quote","Editar Cotización"
+"Edit sections","Editar Secciones"
+"Email Address","Dirección de correo electrónico"
+"Email address is mandatory for a quote.","La dirección de correo electrónico es obligatoria para una cotización."
+"Email quote Confirmation","Mandar Confirmación de Cotización por correo electrónico"
+"Enable Submission Form","Habilitar formulario de envío"
+"Enable payment instructions","Habilitar instrucciones de pago"
+"Enable product short description","Habilitar la descripción corta del producto"
+"Enable stock check quotation backend","Habilitar Verificación de Inventario de Cotizacion Panel Admin"
+"Enable stock check quotation frontend","Habilitar Verificación de Inventario de Cotizacion Panel de Cliente"
+"Enter your comments at any time.","Ingrese sus comentarios en cualquier momento."
+"Enter your details","Introduce los detalles"
+"Entered value lower than cost price","Introudce el costo mas bajo que el costo de Precio"
+"Error while saving the customer","Error al guardar el cliente"
+"Exception occurred during quote load","Excepción ocurrida durante la carga de Cotización"
+"Excl. Tax","Excl. Impuesto"
+"Expiry Date","Fecha de caducidad"
+"Expiry Quote request","Caducidad de Solicitud de Cotización"
+"Export to:","Exportar a:"
+"Extra CSS for the miniquote icon","CSS extra para el icono de minicotizacion"
+"Extra Global CSS","CSS Global Extra"
+"Field Name","Nombre del campo"
+"First Name","Primer nombre"
+"For delivery questions.","Para preguntas de entrega."
+"Forgot Your Password?","¿Olvidaste tu contraseña?"
+"Form Builder","Constructor de Formatos"
+"Form Configuration","Configuración de formulario"
+"From Name","De (nombre)"
+"Frontend Quotation Visibility","Visibilidad de Cotización Panel de Cliente"
+"GP Margin","Margen GP"
+"General support data","Información general de soporte"
+"Get shipping methods and rates","Obtenga métodos de envío y tarifas"
+"Gift Message for the Entire Quote","Mensaje de regalo para la Cotización Completa"
+"Gift Message for this Quote","Mensaje de regalo para esta Cotización"
+"Gift Message","Mensaje de regalo"
+"Gift Options for ","Opciones de regalo para "
+"Grand Total (Base)","Gran Total (Base)"
+"Grand Total (Excl. Tax) ","Gran Total (sin imptos.) "
+"Grand Total (Excl.Tax)","Gran Total (sin imptos.)"
+"Grand Total (Incl. Tax)","Total general (con Imptos.)"
+"Grand Total (Incl.Tax)","Gran Total (con Imptos.)"
+"Grand Total to be Charged","Gran total a Cobrar"
+"Grand Total","Gran total"
+"Have you given any additional thought to the proposal? I’d be happy to do a quick review of it on the phone and answer any pending questions.","¿Has revisado la propuesta? Me encantaría hacer una revisión rápida por teléfono con usted y responder a cualquier pregunta pendiente."
+"Hello %admin_name,","Hola %admin_name,"
+"Hello %customer_name,","Hola %customer_name,"
+"Hide Dashboard Prices","Ocultar los precios del tablero"
+"I may be a few days early, but I figured it’d be worth checking-in before the quote expires.","Puede que sea muy pronto, pero pensé que valdría la pena dar seguimiento antes de que caduque la cotización."
+"If you have any questions about making a new Quote Request please contact us, you can email us at <a href=""mailto:%store_email"">%store_email</a>","Si tiene algúna pregunta sobre cómo realizar una nueva solicitud de cotización, contáctenos, puede enviarnos un correo electrónico a <a href=""mailto:%store_email"">%store_email</a>"
+"If you have questions about your quote request, you can email us at <a href=""mailto:%store_email"">%store_email</a>","Si tiene algúna pregunta sobre su solicitud de cotización, puede enviarnos un correo electrónico a <a href=""mailto:%store_email"">%store_email</a>"
+"In Process","En proceso"
+"In stock","En Inventario"
+"Incl. Tax","Incl. Impuestos"
+"Invalid quote class provided for the PDF. Expected class \Cart2Quote\Quotation\Model\Quote","Clase de cotización no válida proporcionada para el PDF. Clase esperada \Cart2Quote\Quotation\Model\Quote"
+"IonCube Version:","Versión de IonCube:"
+"is accepted","es aceptado"
+"is cancelled","está cancelado"
+"It seems that you have <b>%1</b> product(s) in your Quote list","Parece que tiene <b>%1</b> producto(s) en su lista de Cotizaciones"
+"Item %1 does not exist","El artículo %1 no existe"
+"Items Quoted","Artículos Cotizados"
+"Items Requested","Artículos Solicitados"
+"Last Name","Apellido"
+"Learn More","Aprende más"
+"Link to the New Quote","Enlace a la Nueva Cotización"
+"Link to the Previous Quote","Enlace a la Cotización Anterior"
+"Linked Orders","Pedidos Vinculados"
+"Load customer quote error","Error de Carga de Cotización de Cliente"
+"Lock Proposal","Propuesta de bloqueo"
+"Login to request a Quote","Inicie sesión para Solicitar una Cotización"
+"Magento Edition:","Edición Magento:"
+"Magento Version:","Versión Magento:"
+"Make Optional","Hacer opcional"
+"Manuals and documentation","Manuales y documentación"
+"Method Name","Nombre del método"
+"Method Title","Título del método"
+"My Quote","Mi Cotización"
+"My Quotes","Mis Cotizaciones"
+"My billing and shipping address are the same","Mi dirección de facturación y envío son las mismas"
+"Name: ","Nombre: "
+"Negative Profit","Ganancia negativa"
+"New Address","Nueva direccion"
+"New Quote","Nueva Cotización"
+"New Quote Request","Nueva Solicitud de Cotización"
+"Next page","Siguiente página"
+"No e-mail available for this status","No hay correo electrónico disponible para este estado"
+"No shipping information available","No hay información de envío disponible"
+"Not Assigned to Section","No asignado a la sección"
+"Not Assigned","No asignado"
+"Not Notified","No notificado"
+"Not2Order Version:","Versión Not2Order:"
+"Notes for this Quote","Notas para esta Cotización"
+"Notification Not Applicable","Notificación No Aplicable"
+"Notify Customer by Email","Notificar al cliente por correo electrónico"
+"On %quote_request_date, you have requested a quote from %store_name with an expiry date of %expiry_date.","En %quote_request_date, ha solicitado una cotización de %store_name con una fecha de caducidad de %expiry_date."
+"On Hold","En espera"
+"Only for selected customer groups","Solo para grupos de clientes seleccionados"
+"Or click here for more options","De clic aquí para más opciones"
+"Original ","Original "
+"Original Price","Precio original"
+"Original Subtotal (Excl. Tax)","Subtotal original (sin imptos.)"
+"Original Subtotal (Incl. Tax)","Subtotal original (con imptos.)"
+"Original Subtotal","Subtotal original"
+"opensource","Enterprise Developer Version"
+"Our Terms and Conditions are also attached as PDF.","Nuestros Términos y Condiciones también se adjuntan como PDF."
+"Our hours are <span class=""no-link"">%store_hours</span>.","Nuestras horas son <span class=""no-link"">%store_hours</span>."
+"Out of Stock","Agotado"
+"Out of stock","Agotado"
+"PDF Print-outs","Impresiones en PDF"
+"PHP Version:","Versión PHP:"
+"PHP version","Versión PHP"
+"Payment Method","Método de pago"
+"Payment Method:","Método de pago:"
+"Placed from IP","Colocado desde IP"
+"Placed on <span class=""no-link"">%created_at</span>","Colocado en <span class=""no-link"">%created_at</span>"
+"Please correct the parent block for this block.","Por favor corrija el bloqueo padre para este bloque."
+"Please enter a number 0 or greater in this field.","Por favor ingrese un número 0 o mayor en este campo."
+"Please enter a number greater than 0 in this field.","Por favor ingrese un número mayor que 0 en este campo."
+"Please fill out the form completely. In order to handle your ","Por favor, rellene el formulario completamente. Para manejar su "
+"Login to Request Quote","Por favor inicie sesión para agregar a la cotización."
+"Please select a customer","Por favor seleccione un cliente"
+"Please select a store","Por favor seleccione una tienda"
+"Please select items.","Por favor seleccione artículos."
+"Please select products","Por favor seleccione productos"
+"Please select","Por favor seleccione"
+"Preview Quote PDF","Vista previa de Cotización en PDF"
+"Previous page","Pagina anterior"
+"Price Proposal","Propuesta de Precio"
+"Proceed to checkout","Proseguir a pagar"
+"Product Name","Nombre del producto"
+"Product is Out Of Stock","Producto sin Inventario"
+"Products Quotable by Default","Productos Cotizables por defecto"
+"Products with * are optional","Los productos con * son opcionales"
+"Proposal Expired","Propuesta Vencida"
+"Proposal Valid Until:","Propuesta Válida hasta:"
+"Proposal email has been sent","El email de la propuesta ha sido enviado"
+"Proposal sent","Propuesta enviada"
+"Provide percentage of discount(for example: ""50"")","Proporcionar porcentaje de descuento (por ejemplo: ""50"")"
+"Purchase Order Number","Número de Orden de Compra"
+"Purchased From","Comprado de"
+"Qty %1: %2","Cantidad %1: %2"
+"Quotation # ","Cotización # "
+"Quotation Date: ","Fecha de Cotización: "
+"Quotation Shipping","Cotización de envío"
+"Quotation Valid Until: ","Cotización Válida Hasta: "
+"Quote ","Cotización "
+"Quote # %1 %2 | %3","Cotización # %1 %2 | %3"
+"Quote # %1","Cotización # %1"
+"Quote #","Cotización #"
+"Quote & Account Information","Cotización e información de la cuenta"
+"Quote Adjustment","Ajuste de cotización"
+"Quote Available","Cotización disponible"
+"Quote Comment","Comentario de Cotización"
+"Quote Remarks","Comentarios de Cotización"
+"Quote Currency:","Divisa de Cotización:"
+"Quote Date (%1)","Fecha de cotización (%1)"
+"Quote Emails","Emails de Cotización"
+"Quote History","Bitacora de Cotización"
+"Quote Information","Información de Cotización"
+"Quote Items","Cotizar artículos"
+"Quote PDF Footer Text","Texto de pie de página de Cotización PDF"
+"Quote Prefix","Prefijo de Cotización"
+"Quote Proposal Accepted Email Receiver","Email de Solicitud de Cotización Aceptada del receptor"
+"Quote Proposal Accepted Template","Plantilla de Propuesta de Cotizacion Aceptada"
+"Quote Proposal Accepted","Propuesta de cotización"
+"Quote Proposal Email Sender","Email de Solicitud de Cotización Aceptada del remitente"
+"Quote Proposal Expire Email Sender","Email de Caducidad de Propuesta de Cotización remitente"
+"Quote Proposal Expire","Propuesta de cotización Caducidad"
+"Quote Proposal Expiry Template","Plantilla de caducidad de Propuesta de Cotización"
+"Quote Proposal Template","Plantilla de Propuesta de Cotización"
+"Quote Proposal","Propuesta de Cotización"
+"Quote Reminder Email Sender","Email de Recordatorio de Cotización remitente"
+"Quote Reminder Template","Plantilla de Recordatorio de Cotización"
+"Quote Reminder","Recordatorio de Cotización"
+"Quote Request Date:","Fecha de solicitud de Cotización:"
+"Quote Request Email Sender","Email de Solicitud de Cotización remitente"
+"Quote Request Status","Estado de Solicitud de Cotización"
+"Quote Request Template","Plantilla de Solicitud de Cotización"
+"Quote Request","Solicitud de Cotización"
+"Quote request","Solicitud de cotización"
+"Quote Setup","Configuración de Cotización"
+"Quote Shipping","Cotización de envío"
+"Quote Status","Estado de Cotización"
+"Quote Total","Cotización Total"
+"Quote Totals","Cotización Totales"
+"Quote View","Vista de Cotización"
+"Quote adjustment","Ajuste de cotización"
+"Quote convert error: %1","Error de Conversión de Cotización: %1"
+"Quote for:","Cotización para:"
+"Quote item id is not received.","id del artículo de Cotización no se ha recibido."
+"Quote item is not loaded.","Artículo de cotización no ha sido cargado."
+"Quote saving error: %1","Error al guardar la Cotización: %1"
+"Quoted Price","Precio Cotizado"
+"Refresh Shipping Rates","Actualizar las tarifas de envío"
+"Registration Mode","Modo de registro"
+"Remarks with Request","Observaciones con solicitud"
+"Remarks with proposal","Observaciones con propuesta"
+"Reminder Date","Fecha de recordatorio"
+"Reminder Quote request","Recordatorio de Solicitud de Cotización"
+"Remove Coupon Code","Eliminar código de cupón"
+"Report A Bug","Reportar un error"
+"Report Bug","Reportar erro"
+"Report a bug","Reportar un error"
+"Request Point","Punto de solicitud"
+"Request a quote as a new customer","Solicite una Cotización como nuevo cliente"
+"Request a quote using your account","Solicite una Cotización utilizando su cuenta"
+"Row Total","Fila Total"
+"Save Address","Save Address"
+"See <a target=""_blank"" href=""https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/templates/template-email.html"">Transactional E-Mails</a>","Consulte <a target=""_blank"" href=""https://devdocs.magento.com/guides/v2.3/frontend-dev-guide/templates/template-email.html"">Emails Transaccionales</a>"
+"See order and shipping status","Ver estado del pedido y envío"
+"See price before order confirmation.","Ver precio antes de la confirmación del pedido."
+"Select Method","Seleccione el método"
+"Select tier","Seleccionar nivel"
+"Send Quote Email Copy Method","Enviar Email de Cotización Método Copia"
+"Send Quote Email Copy To","Enviar Email de Cotización Copiar a"
+"Send Quote Proposal Accepted Email Copy To","Enviar Email Propuesta de Cotización Aceptada Copiar a"
+"Send Quote Proposal Email Copy To","Enviar Email de Propuesta de Cotización Copiar a"
+"Send Quote Proposal Expiry Email Copy To","Enviar Email de Propuesta de Cotización Caducidad Copiar a"
+"Send Quote Reminder Email Copy To","Enviar Email de Recordatorio de Cotización Copiar a"
+"Ship to:","Envie a:"
+"Shipping & Handling (Excl.Tax)","Gastos de envío y manejo (sin Imptos.)"
+"Shipping & Handling (Incl.Tax)","Gastos de envío y manejo (con Imptos.)"
+"Shipping & Handling","Gastos de envío y manejo"
+"Shipping (Excl. Tax)","Gastos de envío (sin Imptos)"
+"Shipping (Incl. Tax)","Envío (con Imptos)"
+"Shipping Address Configuration","Configuración de la dirección de envío"
+"Shipping Address","Dirección de Envío"
+"Shipping Method","Método de envío"
+"Shipping Method:","Método de envío:"
+"Shipping Method: <span class="no-link">%shipping_method</span>","Método de envío: <span class="no-link">%shipping_method</span>"
+"Shipping Methods","Métodos de envío"
+"Show Message to Not Logged in Users","Mostrar mensaje a usuarios no registrados"
+"Show Quote Adjustment","Mostrar ajuste de Cotización"
+"Sign In","Registrarse"
+"Something went wrong while processing your quote. Please try again later.","Algo salió mal al procesar su Cotización. Por favor, inténtelo de nuevo más tarde."
+"Sorry, no quotes are available for this order at this time","Lo sentimos, no hay cotizaciones disponibles para este pedido en este momento."
+"Sorry, no quotes are available for this quote.","Lo sentimos, no hay Cotizaciones disponibles para esta cotización."
+"Sort Order","Ordenar"
+"Status can't be unassigned, because it is used by existing quote(s).","El estado no puede ser desasignado, ya que es usado por una(s) Cotizacion(es) existente(s)."
+"Stock Setup","Configuración de Inventario"
+"Submit Comment","Enviar comentario"
+"Submit Quote Request","Enviar Solicitud de Cotización"
+"Submit Proposal","Enviar Cotización"
+"Subtotal (Excl. Tax)","Subtotal (sin imptos)"
+"Subtotal (Excl.Tax)","Subtotal (sin imptos.)"
+"Subtotal (Incl. Tax)","Subtotal (con imptos.)"
+"Subtotal (Incl.Tax)","Subtotal (con imptos.)"
+"Support Ticket","Ticket de Soporte"
+"Thank you for accepting our offer. We will contact you shortly.","Gracias por aceptar nuestra propuesta. En breve nos pondremos en contacto con usted."
+"Thank you for your Quote Request from %store_name.","Gracias por su solicitud de cotización de %store_name."
+"Thank you for your quote request!","¡Gracias por su solicitud de cotización!"
+"The cart could not be copied to the quote.","El carrito no pudo ser copiado a la cotización."
+"The cart is successfully moved to the quote.","El carrito ha sido movigo con éxito a la cotización."
+"The coupon code has been accepted.","El código de cupón ha sido aceptado."
+"The customer is notified","El cliente es notificado"
+"The last status can't be unassigned from its current state.","El último estado no puede ser desasignado de su estado actual."
+"The quote confirmation email is not sent","El email de confirmación de cotización no está enviado"
+"The quote confirmation email was sent","El email de confirmación de cotización fue enviado"
+"The quote object is not specified.","El objeto de cotización no está especificado."
+"There are <a href=""%1"">%2 new quote requests</a> since your last login.","Hay <a href=""%1"">%2 nuevas solicitudes de cotización</a> desde su último ingreso."
+"There is <a href=""%1"">1 new quote request</a> since your last login.","Hay <a href=""%1"">1 nueva solicitud de cotización</a> desde su último ingreso."
+"This customer is not the owner of this Quote","Este cliente no es el dueño de esta cotización"
+"This e-mail is not enabled","Este correo electrónico no está habilitado"
+"This note is sent to you, because the customer pressed the accept button in the Customer dashboard. The customer still needs to complete the checkout process, before the proposal is fully converted to an order.","Se le envía esta nota porque el cliente presionó el botón de aceptar en el panel del Cliente. El cliente aún debe completar el proceso de pago, antes de que la propuesta se convierta completamente en un pedido."
+"This product does not have any configurable options","Este producto no tiene opciones configurables"
+"This quote no longer exists.","Esta Cotización ya no existe."
+"To Name","Para (nombre)"
+"To accept the proposal visit your customer dashboard today or contact us via e-mail or phone.","Para aceptar la propuesta, visite su panel de cliente hoy o contáctenos por correo electrónico o por teléfono."
+"To view all details, edit or accept this proposal visit My Quote in your dashboard by <a href=""%account_url"">logging into your account</a>.","Para ver todos los detalles, editar o aceptar esta propuesta, visite Mi Cotización en su tablero al <a href=""%account_url""> iniciar sesión en su cuenta</a>."
+"Total %1 product(s)","Total %1 producto(s)"
+"Total Shipping Charges","Total Costos de Envío"
+"Total of %1 record(s) were deleted","Se eliminaron un total de %1 registro(s)"
+"Track order history","Historial de Órdenes de Rastreo"
+"Unable to load quote item on remark block","No se ha podido cargar el elemento de cotización en el bloque de comentarios"
+"Update Items and Quantities","Actualizar artículos y cantidades"
+"Update Quote","Actualizar Cotización"
+"Use (default) passive theme rendering mode","Utilice el modo (predeterminado) de representación de tema pasivo"
+"Use Auto Confirm Proposal","Utilizar Confirmación de Propuesta Automática"
+"Use default","Usar predeterminado"
+"Validation is failed.","La validación ha fallado."
+"View Another Quote","Ver otra Cotización"
+"View Quote List","Ver lista de cotizaciones"
+"View Quote","Ver cotización"
+"Visible on Storefront","Visible en el escaparate"
+"Waiting for supplier","Esperando proveedor"
+"We can't add this item to your quote right now.","No podemos agregar este artículo a su cotización en este momento."
+"We can't find products matching the selection.","No podemos encontrar productos que coincidan con la selección."
+"We can't find the quote item.","No podemos encontrar el artículo de cotización."
+"We can't get the quote instance right now.","No podemos obtener la petición de cotización en este momento."
+"We can't remove the item.","No podemos eliminar el elemento."
+"We can't send the email for the quote right now.","No podemos enviar el correo electrónico para la cotización en este momento."
+"We can't update the item right now.","No podemos actualizar el artículo en este momento."
+"We can't update the quote.","No podemos actualizar la cotización."
+"We canceled %1 quote(s).","Cancelamos %1 Cotización(es)."
+"We cannot configure the product.","No podemos configurar el producto."
+"We cannot determine the field name.","No podemos determinar el nombre del campo."
+"We don't recognize the draw line data. Please define the ""lines"" array.","No reconocemos los datos de la línea de dibujo. Por favor, defina la matriz de ""líneas""."
+"We will email you a quote request confirmation with details.","Le enviaremos por correo electrónico la confirmación de Solicitud de Cotización con los detalles."
+"We'll send your quote confirmation here.","Le enviaremos la confirmación de su cotización aquí."
+"What's this?","¿Qué es esto?"
+"will expire today","expirará hoy"
+"Within the next 48 hours you can expect our proposal.","Dentro de las próximas 48 horas podrás esperar nuestra Cotización."
+"You added","You added"
+"You already have an account with us. Please sign in.","Ya tienes una cuenta con nosotros. Por favor, acceda con ella."
+"You can <a href=""%account_urlquote_id/%quote_id"">log in to your account</a> to review the proposal.","Puede <a href=""%account_urlquote_id/%quote_id""> iniciar sesión en su cuenta</a> para revisar la propuesta."
+"You can check the status of your cancelled Request by <a href=""%account_url"">logging into your account</a>.","Puede verificar el estado de su Solicitud cancelada <a href=""%account_url"">iniciando sesión en su cuenta</a>."
+"You can check the status of your request by <a href=""%account_url"">logging into your account</a>.","Puede verificar el estado de su solicitud <a href=""%account_url""> iniciando sesión en su cuenta </a>."
+"You can find the <a href=""%account_urlquote_id/%quote_id"">quotation here</a>. When’s a good time to talk?","Puede encontrar la Cotización <a href=""%account_urlquote_id/%quote_id"">aquí</a>. ¿Cuándo es un buen momento para hablar?"
+"You created the quote.","Usted creó la Cotización."
+"You did not email your customer. Please check your email settings.","Usted no envió un email a su cliente. Por favor, compruebe su configuración de correo electrónico."
+"You don't need to select a shipping method.","No es necesario seleccionar un método de envío."
+"You have <a href=""%1"">%2 unanswered quote</a> requests.","Tiene <a href=""%1"">%2 solicitudes de cotización sin respuesta</a>."
+"You have <a href=""%1"">1 unanswered quote</a> request.","Tiene <a href=""%1"">1 solicitud de cotización sin respuesta</a>."
+"You have item changes. Save items changes?","Tienes cambios de artículo. ¿Quiere Guardar cambios de artículos?"
+"You have no items in your quote.","No tiene artículos en su cotización."
+"You have no quote requests.","No tienes solicitudes de cotización."
+"You sent the quote email.","Usted envió el correo electrónico de cotización."
+"You updated the quote.","Has actualizado la cotización."
+"You will find our proposal in the attached PDF.","Encontrarás nuestra propuesta en el PDF adjunto."
+"Your Price Proposal #%increment_id placed on %quote_request_date, from %store_name will expiry today.","Su propuesta de precio #%increment_id colocada en %quote_request_date, desde %store_name expirará hoy."
+"Your Proposal #%increment_id <small>(placed on %created_at)</small> is accepted by the customer.","Su propuesta #%increment_id <small>(colocada en %created_at)</small> fue aceptada por el cliente."
+"Your Quote <span class=""no-link"">#%increment_id</span>","Su Cotización <span class=""no-link""> #%increment_id</span>"
+"Your Quote Request from %store_name with number #%increment_id has been cancelled.","Su solicitud de cotización de %store_name con el número #%increment_id ha sido cancelada."
+"Your Quote Request has been received and will be processed shortly.","Su solicitud de cotización ha sido recibida y se procesará en breve."
+"Your Quote Request is available. To order use the Accept and Checkout button.","Su solicitud de cotización está disponible. Para ordenar use el botón Aceptar y Pagar."
+"Your Quote Request is available.","Su solicitud de cotización está disponible."
+"Your quote request number is","Su número de solicitud de Cotización es"
+"Your quote request number is:","Su número de solicitud de Cotización es:"
+"Your related order: ","Su orden relacionada: "
+"[send expiry email]","[enviar correo electrónico de caducidad]"
+"[send reminder email]","[enviar recordatorio por correo electrónico]"
+"As Discount Percentage","como porcentaje"
+"does not exist","no existe"
+"does not implement %s","no se implementa %s"
+"or call us at <a href=""tel:%store_phone"">%store_phone</a>","o llámenos al <a href=""tel:%store_phone"">%store_phone</a>"
+"per page","por página"
+"properly we need as much information as you can provide.","necesitamos toda la información que usted pueda proporcionar."
+"records found","registros encontrados"
+"to your quote.","a su cotización."
+"valid until ","válido hasta "
+#,#
+%1%,%1%
+%expiry_date,%expiry_date
+Accepted,Aceptado
+Action,Acción
+Actions,Acciones
+Added,Agregado
+Adding...,Añadiendo...
+Advanced,Avanzado
+Apply,Aplicar
+Cancel,Cancelar
+Canceled,Cancelado
+Cart2Quote,Cart2Quote
+Change,Cambio
+Checkout,Revisar y Pagar
+Closed,Cerrado
+Comma-separated,Separado por comas
+Comment,Comentario
+Comment:,Comentario:
+Completed,Terminado
+Configure,Configurar
+Coupons,Cupones
+Customer,Cliente
+Customize,Personalizar
+Date,Fecha
+Delete,Borrar
+Discount,Descuento
+Duplicate,Duplicar
+Dynamic,Dinámica
+Email,Email
+Enabled,Habilitado
+FPT,FPT
+From:,Desde:
+Gender,Sexo
+General,General
+Global,Global
+Guest,Invitado
+ID,Identificación
+Information,Información
+Item,Artículo
+Items,Artículos
+Label,Etiqueta
+License,Licencia
+Loading...,Cargando...
+Login,Iniciar sesión
+Message:,Mensaje:
+Middlename,Segundo nombre
+N/A,N/A
+New,Nuevo
+Next,Siguiente
+No,No
+Notified,Notificado
+Number,Número
+Ok,Ok
+Open,Abrir
+Ordered,Ordenado
+Password,Contraseña
+Pending,Pendiente
+Prefix,Prefijo
+Price,Precio
+Product,Producto
+Products,Productos
+Qty,Cantidad
+Quantity,Cantidad
+Quotation,Cotización
+Quote,Cotización
+Quotes,Cotizaciones
+Remark,Observación
+Remarks,Observaciones
+Remove,Retirar
+Requested,Pedido
+Required,Necesario
+SKU,SKU
+Save,Guardar
+Sections,Seleccionar
+Select,Estado
+Status,Subtotal
+Subtotal,Subtotal
+Subtotal:,Subtotal:
+Suffix,Sufijo
+Support,Soporte
+Tax,Impuesto
+Tier,Nivel
+Title,Título
+To:,A:
+Update,Actualizar
+View,Ver
+Yes,Sí
+items,artículos
+label,etiqueta
+of,de
+order-header,encabezado de orden
+rate:,tarifa:
+selected,seleccionado
+title,título
+one_off,Uno fuera
+yearly,Suscripción Anual
+monthly,Suscripción mensual
+Enable Cart2Quote,Habilitar Cart2Quote
+Enter Order #,Ingrese orden #
+Check License,Comprobar licencia
+Please enter Order # and press Check License,Ingrese el número de pedido y presione Verificar licencia
+Your order number,Su número de orden
+License Status,Estado de la licencia
+License Type,Tipo de licencia
+Cart2Quote Edition,Edición Cart2Quote
+Purchase License,Licencia de compra
+Renew update subscription,Renovar suscripción de actualización
+Enter a valid Order # or %1,Ingrese un número de pedido válido o %1
+Purchase a valid license,Compra una licencia válida
+A trial license is active, no order # is necessary.,Una licencia de prueba está activa, no se necesita ningún número de pedido.
+Purchase a license to re-activate Cart2Quote. No re-install is necessary.,Compre una licencia para reactivar Cart2Quote. No es necesario reinstalarlo.
+A temporary license has been issued. Request is in process.,Se ha emitido una licencia temporal. La solicitud está en proceso.
+Your update subscription is valid. Request and install the latest version,Su suscripción de actualización es válida. Solicite e instale la última versión
+Profit from our discounts when extending your update subscription.,Aproveche nuestros descuentos al extender su suscripción de actualización.
+Reactivate Cart2Quote by purchasing a license.,Reactive Cart2Quote comprando una licencia.
+Trial license valid till %1,Licencia de prueba válida hasta %1
+Trial license expired on %1,La licencia de prueba expiró el %1
+Valid till %1,Válida hasta %1
+Expired on %1,Vencido el %1
+Cancelled,Licencia cancelada
+Active,Licencia activa
+Server is unreachable please try again later.,No se puede acceder al servidor, intente nuevamente más tarde.
+If the problem persists please contact us at support@cart2quote.com,Si el problema persiste, contáctenos en support@cart2quote.com
+No valid Order # entered,No se ingresó ninguna orden válida
+%1 (Installed),%1 (Installed)
+"Enter your product comment","Enter your product comment"
+"Enter Shipping Details","Enter Shipping Details"
+"Enter your shipping and billing details to create an account, receive custom shipping prices and manage your quote requests online.","Enter your shipping and billing details to create an account, receive custom shipping prices and manage your quote requests online."

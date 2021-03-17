@@ -1,0 +1,35 @@
+<?php
+/**
+ * Copyright (c) 2019. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php
+/**
+ * @var \Cart2Quote\Quotation\Block\Proposal\Reject\Success $block
+ */
+$quote = $block->getQuote();
+?>
+<div class="quote-rejected-success-page">
+    <h1>Success!</h1>
+    <form action="<?php echo $block->escapeHtml($block->getReturnToStoreUrl()) ?>" method="post" class="form form-quote">
+        <div class="block rejected_success">
+            <div class="box-content rejected_success">
+                <label for="textarea"><?php echo sprintf(
+                        __("Your proposal # %s has been successfully rejected."),
+                        $quote['increment_id']) ?></label>
+            </div>
+            <?php echo $block->getBlockHtml('formkey'); ?>
+            <div class="quote main actions clearfix">
+                <button <?php echo $block->escapeHtml(__('return')) ?>
+                        type="submit" name="reject_proposal"
+                        value="reject_proposal"
+                        title="<?php echo $block->escapeHtml(__('return')) ?>"
+                        class="action primary reject-proposal-button">
+                    <span><?php echo $block->escapeHtml(__('Return to Store')) ?></span>
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

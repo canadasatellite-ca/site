@@ -1,0 +1,90 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Email\Items\DefaultItems $block */
+
+/** @var \Cart2Quote\Quotation\Helper\ProductThumbnail $thumbnailHelper */
+$thumbnailHelper = $block->getProductThumbnailHelper();
+
+/** @var \Magento\Quote\Model\Quote\Item $item */
+$item = $block->getItem();
+$productUrl = $thumbnailHelper->getProductUrl($item);
+
+$product = $item->getProduct();
+$quote = $item->getQuote();
+?>
+<tr>
+    <td class="item-info<?php if ($block->getItemOptions()) : ?>
+     has-extra
+                        <?php endif; ?>">
+        <?php if ($thumbnailHelper->showProductThumbnailRequest()) : ?>
+            <a href="<?php echo $productUrl; ?>">
+            <img class="product-thumbnail" align="left"
+                 src="<?php echo $block->escapeHtml($thumbnailHelper->getProductThumbnail($product)); ?>" width="75"
+                 height="75" alt="<?php echo $block->escapeHtml($item->getName()); ?>"
+                 title="<?php echo $block->escapeHtml($item->getName()); ?>"/>
+            </a>
+        <?php endif; ?>
+        <strong class="product-name"><?php echo $block->escapeHtml($item->getName()) ?></strong>
+
+        <p class="sku"><?php echo $block->escapeHtml(__('SKU')); ?>: <a href="<?php echo $productUrl; ?>"><?php echo $block->escapeHtml($block->getSku($item)) ?></a></p>
+        <?php if ($block->getItemOptions()) : ?>
+            <dl class="item-options">
+                <?php foreach ($block->getItemOptions() as $option) : ?>
+                    <dt><strong><em><?php echo $block->escapeHtml($option['label']) ?></em></strong></dt>
+                    <dd>
+                        <?php echo nl2br($block->escapeHtml($option['value'], ['a', 'img'])) ?>
+                    </dd>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock) : ?>
+            <?php echo $addInfoBlock->setItem($item)->toHtml() ?>
+        <?php endif; ?>
+    </td>
+    <?php $colspan = $block->hidePrice() ? 2 : 1; ?>
+    <td colspan="<?php echo $colspan ?>" class="item-qty">
+        <?php echo $block->getQtyHtml(); ?>
+        <?php echo $block->getTierQtyHtml(); ?>
+    </td>
+    <?php if (!$block->hidePrice()) : ?>
+        <td class="item-price">
+            <?php echo $block->getPriceHtml(); ?>
+        </td>
+    <?php endif; ?>
+</tr>
+
+<?php if ($item->getDescription()) : ?>
+    <tr>
+        <td class="item-comment" colspan="3">
+            <div class="item-comment-container">
+                <span class="product-name"><?php echo $block->escapeHtml(__('Comment')); ?></span>
+                <?php echo $block->escapeHtml($item->getDescription()); ?>
+            </div>
+        </td>
+    </tr>
+<?php endif; ?>
+<?php
+$_giftMessageHelper = $block->getGiftMessageHelper();
+if ($item->getGiftMessageId() && $_giftMessage = $_giftMessageHelper->getGiftMessage($item->getGiftMessageId())) : ?>
+    <tr>
+        <td colspan="3" class="item-extra">
+            <table class="message-gift">
+                <tr>
+                    <td>
+                        <h3><?php echo $block->escapeHtml(__('Gift Message')) ?></h3>
+                        <strong><?php echo $block->escapeHtml(__('From:')); ?></strong> <?php echo $block->escapeHtml($_giftMessage->getSender()) ?>
+                        <br/><strong><?php echo $block->escapeHtml(__('To:')); ?></strong> <?php echo $block->escapeHtml($_giftMessage->getRecipient()) ?>
+                        <br/><strong><?php echo $block->escapeHtml(__('Message:')); ?></strong>
+                        <br/><?php echo $block->escapeHtml($_giftMessage->getMessage()) ?>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+<?php endif; ?>

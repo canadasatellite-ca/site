@@ -1,0 +1,19 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="quotation_item_price_renderers"/>
+    <body>
+        <referenceBlock name="quotation.quote.items.view.renderers">
+            <block class="Cart2Quote\Quotation\Block\Checkout\Cart\Item\Renderer" as="default" template="Cart2Quote_Quotation::quote/items/renderer/default.phtml"/>
+            <block class="Magento\Downloadable\Block\Checkout\Cart\Item\Renderer" as="downloadable" template="Cart2Quote_Quotation::quote/items/renderer/default.phtml"/>
+            <block class="Magento\GroupedProduct\Block\Order\Item\Renderer\Grouped" as="grouped" template="Cart2Quote_Quotation::quote/items/renderer/default.phtml"/>
+            <block class="Magento\ConfigurableProduct\Block\Cart\Item\Renderer\Configurable" as="configurable" template="Cart2Quote_Quotation::quote/items/renderer/default.phtml"/>
+            <block class="Magento\Bundle\Block\Sales\Order\Items\Renderer" as="bundle" template="Cart2Quote_Quotation::quote/items/renderer/bundle.phtml"/>
+        </referenceBlock>
+    </body>
+</page>

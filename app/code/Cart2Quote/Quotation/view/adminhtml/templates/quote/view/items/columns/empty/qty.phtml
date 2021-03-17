@@ -1,0 +1,13 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */
+?>
+
+<input name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][tier_item][%template%][%increment%][qty]"
+       class="input-text item-qty admin__control-text"
+       value="<?php echo $block->getItem()->getQty() * 1 ?>" maxlength="12" type="number"/>

@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="css/font-awesome.min.css"/>
+        <css src="css/custom.css"/>
+        <css src="css/custom2.css"/>
+        <css src="css/skincss.css"/>
+        <css src="css/custom-responsive.css"/>
+    </head>
+    <body>
+        <attribute name="itemtype" value=""/>
+        <attribute name="itemscope" value=""/>
+        <referenceBlock name="head.additional">
+            <block class="Magento\Framework\View\Element\Template" name="hotjar.head" as="hotjar.head" template="Magento_Theme::html/hotjar.phtml"/>
+        </referenceBlock>
+        <referenceBlock name="store.menu">
+                    <block class="Magento\Framework\View\Element\Template" name="custom_mobile" template="Magento_Theme::html/custom_mobile.phtml" before="catalog.topnav"/>
+        </referenceBlock>
+		<referenceBlock name="logo">
+            <arguments>
+                <argument name="logo_img_width" xsi:type="number">148</argument>
+                <argument name="logo_img_height" xsi:type="number">43</argument>
+            </arguments>
+        </referenceBlock>
+        <referenceBlock name="top.links">
+<!--            <block class="Magento\Framework\View\Element\Template" name="telephone" template="Magento_Theme::html/header/telephone.phtml"/>-->
+<!--            <block class="Magento\Framework\View\Element\Template" name="phone" template="Magento_Theme::html/header/header-phone.phtml"/>-->
+            <block class="MageSuper\Casat\Block\Customer\AuthorizationLink" name="my-account-link">
+                <arguments>
+                    <argument name="label" xsi:type="string" translate="true">My Account</argument>
+                    <argument name="class" xsi:type="string">account-link</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="header.panel">
+            <block class="Magento\Framework\View\Element\Html\Links" name="header.links">
+                <arguments>
+                    <argument name="css_class" xsi:type="string">header links</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+
+        <referenceContainer name="footer-container">
+            <block class="Magento\Theme\Block\Html\Footer" name="footer_block" template="html/footer/footer.phtml">
+				<block class="Magento\Store\Block\Switcher" name="footer.store_switcher" template="switch/stores.phtml"/>
+                <block class="Magento\Newsletter\Block\Subscribe" name="footer.newsletter" template="subscribe_footer.phtml"/>
+				<block class="Magento\Theme\Block\Html\Footer" name="footer.copyright" template="html/copyright.phtml"/>
+            </block>
+			 <referenceContainer name="footer" remove="1"/>
+        </referenceContainer>
+        <referenceBlock name="report.bugs" remove="true"/>
+        <move element="copyright" destination="before.body.end"/>
+        <referenceBlock name="copyright" remove="true"/>
+        <move element="my-account-link" destination="header-wrapper" after="minicart"/>
+        <move element="my-account-logout" destination="header-wrapper" after="my-account-link"/>
+        <move element="store_language" destination="header-wrapper" before="-"/>
+        <move element="store.settings.currency" destination="header-wrapper" after="store_language"/>
+        <!--<move element="logo" destination="header-wrapper" after="store.settings.currency"/>-->
+        <move element="telephone" destination="header-wrapper" after="top.search"/>
+        <move element="phone" destination="header-wrapper" after="top.search"/>
+        <move element="page.top" destination="page.wrapper" after="footer-container"/>
+        <move element="breadcrumbs" destination="page.wrapper" before="main.content"/>
+
+    </body>
+</page>

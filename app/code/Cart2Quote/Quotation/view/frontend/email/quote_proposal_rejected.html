@@ -1,0 +1,40 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<!--@subject {{var store.getFrontendName()}}: {{trans "Rejected Proposal"}} # {{var quote.increment_id}} @-->
+<!--@vars {
+"var quote.increment_id":"Quote Id"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Cart2Quote_Quotation::css/email-inline_extend.css"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Hello admin,"}}</p>
+            <p>{{trans "Your Proposal #%increment_id
+                <small>(placed on %created_at)</small> has been rejected by %customer_name." increment_id=$quote.increment_id created_at=$quote.getCreatedAtFormatted(1) customer_name=$quote.getCustomerName() |raw}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{depend quote.getRejectMessage()}}
+                <table class="message-info">
+                    <tr>
+                        <td>
+                            <h3>{{trans "Reason for rejection:"}}</h3>
+                            <p>
+                                {{var quote.getRejectMessage()|escape|nl2br}}
+                            </p>
+                        </td>
+                    </tr>
+                </table>
+            {{/depend}}
+            {{layout handle="quotation_email_proposal_items" quote=$quote area="frontend"}}
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

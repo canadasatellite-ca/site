@@ -1,0 +1,93 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+
+    <!-- Managing AR Review -->
+    <route url="/V1/awArReview/:reviewId" method="GET">
+        <service class="Aheadworks\AdvancedReviews\Api\ReviewRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+    <route url="/V1/awArReview/search" method="GET">
+        <service class="Aheadworks\AdvancedReviews\Api\ReviewRepositoryInterface" method="getList"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+
+    <route url="/V1/awArReview" method="POST">
+        <service class="Aheadworks\AdvancedReviews\Api\ReviewManagementInterface" method="createReview"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+    <route url="/V1/awArReview" method="PUT">
+        <service class="Aheadworks\AdvancedReviews\Api\ReviewManagementInterface" method="updateReview"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+    <route url="/V1/awArReview/delete" method="POST">
+        <service class="Aheadworks\AdvancedReviews\Api\ReviewManagementInterface" method="deleteReview"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+    <route url="/V1/awArReview/:reviewId" method="DELETE">
+        <service class="Aheadworks\AdvancedReviews\Api\ReviewManagementInterface" method="deleteReviewById"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+
+    <!-- Managing AR Review Statistics-->
+    <route url="/V1/awArReview/getStatistics" method="GET">
+        <service class="Aheadworks\AdvancedReviews\Api\StatisticsRepositoryInterface" method="getByProductId"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+
+    <!-- Managing AR Review Comment-->
+    <route url="/V1/awArReviewComment/:commentId" method="GET">
+        <service class="Aheadworks\AdvancedReviews\Api\CommentRepositoryInterface" method="getById"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+
+    <route url="/V1/awArReviewComment" method="POST">
+        <service class="Aheadworks\AdvancedReviews\Api\CommentManagementInterface" method="addCustomerComment"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+    <route url="/V1/awArReviewComment" method="PUT">
+        <service class="Aheadworks\AdvancedReviews\Api\CommentManagementInterface" method="updateComment"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+    <route url="/V1/awArReviewComment/delete" method="POST">
+        <service class="Aheadworks\AdvancedReviews\Api\CommentManagementInterface" method="deleteComment"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+
+    <!-- Managing AR Review Helpfulness -->
+    <route url="/V1/awArReviewHelpfulness/vote" method="POST">
+        <service class="Aheadworks\AdvancedReviews\Api\HelpfulnessManagementInterface" method="vote"/>
+        <resources>
+            <resource ref="Aheadworks_AdvancedReviews::reviews"/>
+        </resources>
+    </route>
+</routes>

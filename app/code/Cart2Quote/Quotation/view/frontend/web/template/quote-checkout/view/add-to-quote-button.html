@@ -1,0 +1,25 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<form class="form methods-shipping" id="co-add-to-quote-form"
+      data-bind="submit: validateQuote, visible: showRequestButton" novalidate="novalidate">
+    <ul class="checkout methods items checkout-methods-items">
+        <li class="item">
+            <button data-role="opc-add-to-quote" type="submit" class="action primary checkout">
+                <span><!-- ko i18n: 'Submit Quote Request'--><!-- /ko --></span>
+            </button>
+        </li>
+    </ul>
+</form>
+
+<ul class="checkout methods items checkout-methods-items" data-bind="visible: showLoginButton">
+    <li class="item">
+        <button class="action primary checkout login"
+                data-bind="afterRender: setLoginModalEvents"
+                data-mage-init='{"loginPopup":{}}'>
+            <span><!-- ko i18n: 'Login to request a Quote'--><!-- /ko --></span>
+        </button>
+    </li>
+</ul>

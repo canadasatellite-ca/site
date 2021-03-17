@@ -1,0 +1,17 @@
+<script type="text/x-magento-init">
+{
+    "*": {
+        "Magento_Ui/js/core/app": {
+            "components": {
+                "report-form-scope": {
+                    "component": "BroSolutions_IssueNotification/js/report/form",
+                    "message": "Report Checkout Issue"
+                }
+            }
+        }
+    }
+}
+</script>
+<div data-bind="scope: 'report-form-scope'" style="padding-bottom: 30px">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>

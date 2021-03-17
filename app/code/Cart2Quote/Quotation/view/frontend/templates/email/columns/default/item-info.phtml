@@ -1,0 +1,77 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Email\Items\Quote\Column $block */
+$item = $block->getItem();
+$product = $item->getProduct();
+
+/** @var \Cart2Quote\Quotation\Helper\ProductThumbnail $thumbnailHelper */
+$thumbnailHelper = $this->helper(\Cart2Quote\Quotation\Helper\ProductThumbnail::class);
+$customProductHelper = $this->helper(\Cart2Quote\Quotation\Helper\CustomProduct::class);
+$isCustomProduct = $customProductHelper->isCustomProduct($item);
+?>
+
+<?php if ($thumbnailHelper->showProductThumbnailProposal()) : ?>
+    <td class="item-info
+        <?php if ($block->getItemOptions()) : ?>
+            <?php echo 'has-extra'; ?>
+        <?php endif; ?>" colspan="1">
+        <a href="<?php echo $thumbnailHelper->getProductUrl($item); ?>">
+        <img class="product-thumbnail" align="left"
+             src="<?php echo $thumbnailHelper->getProductThumbnail($product); ?>" width="75"
+             height="75" alt="<?php echo $item->getName(); ?>"
+             title="<?php echo $item->getName(); ?>"/>
+        </a>
+    </td>
+    <td colspan="1">
+<?php else : ?>
+    <td class="item-info
+        <?php if ($block->getItemOptions()) : ?>
+            <?php echo 'has-extra'; ?>
+        <?php endif; ?>
+    " colspan="2">
+<?php endif; ?>
+    <strong class="product-name">
+        <?php $product = $block->productRepositoryInterface->getById(
+            $item->getProduct()->getId(),
+            false,
+            $block->getQuote()->getStoreId()
+        ); ?>
+        <?php if ($isCustomProduct) : ?>
+            <?php echo $block->escapeHtml($customProductHelper->getCustomProductName($item)); ?>
+        <?php else : ?>
+            <?php echo $block->escapeHtml($product->getName()); ?>
+        <?php endif; ?>
+        <?php if ($item->getCurrentTierItem()->getMakeOptional()) : ?>
+            <?php echo " *" ?>
+        <?php endif; ?>
+    </strong>
+    <?php if ($isCustomProduct) : ?>
+        <p class="sku"><?php echo __('SKU'); ?>
+            : <?php echo $block->escapeHtml($customProductHelper->getCustomProductSku($item)) ?></p>
+    <?php else : ?>
+        <p class="sku"><?php echo __('SKU'); ?>: <?php echo $block->escapeHtml($block->getSku($item)) ?></p>
+    <?php endif; ?>
+    <?php if ($block->getItemOptions()) : ?>
+        <dl class="item-options">
+            <?php foreach ($block->getItemOptions() as $option) : ?>
+                <dt><strong><em><?php echo $option['label'] ?></em></strong></dt>
+                <dd>
+                    <?php echo nl2br($option['value']) ?>
+                </dd>
+            <?php endforeach; ?>
+        </dl>
+    <?php endif; ?>
+    <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+    <?php if ($addInfoBlock) : ?>
+        <?php echo $addInfoBlock->setItem($item)->toHtml() ?>
+    <?php endif; ?>
+</td>
+<?php echo $block->getParentBlock()
+    ->getChildBlock('quote.email.columns.item-info')
+    ->getChildHtml('', $useCache = false);
+?>

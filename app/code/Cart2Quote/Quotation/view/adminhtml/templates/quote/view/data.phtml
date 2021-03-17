@@ -1,0 +1,81 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+?>
+<div class="page-create-quote">
+    <script>
+        require(["Cart2Quote_Quotation/quote/view/form"], function () {
+            quote.setCurrencySymbol('<?php echo $block->escapeHtml(
+                $block->getCurrencySymbol($block->getCurrentCurrencyCode())
+            ) ?>')
+        });
+    </script>
+    <div class="quote-details
+        <?php if ($block->getCustomerId()) : ?>
+            <?php echo ' quote-details-existing-customer'; ?>
+        <?php endif; ?>">
+
+        <div id="quote-additional_area" style="display: none" class="admin__page-section quote-additional-area">
+            <?php echo $block->getChildHtml('additional_area') ?>
+        </div>
+
+        <div id="quote-search" style="display: none" class="admin__page-section quote-search-items">
+            <?php echo $block->getChildHtml('search') ?>
+        </div>
+
+        <?php echo $block->getChildHtml('quote_sections'); ?>
+
+        <section id="quote-items" class="admin__page-section quote-items" data-mage-init='{"loader": {}}'>
+            <?php echo $block->getChildHtml('items') ?>
+        </section>
+
+        <section id="quote-proposal" class="admin__page-section quote-proposal">
+            <div class="admin__page-section-content">
+                <?php echo $block->getChildHtml('proposal') ?>
+            </div>
+        </section>
+
+        <?php echo $block->getChildHtml('quote_details') ?>
+        <?php echo $block->getChildHtml('quote_address') ?>
+
+        <div id="quote-errors" class="quote-errors"><?php echo $block->getChildHtml('errors') ?></div>
+
+        <section id="quote-form_account" class="admin__page-section quote-account-information">
+            <?php echo $block->getChildHtml('form_account') ?>
+        </section>
+
+        <div class="admin__page-section-title quote-totals-title">
+            <span class="title"><?php echo $block->escapeHtml(__('Quote Total')) ?></span>
+        </div>
+
+        <section id="quote-methods" class="admin__page-section quote-methods">
+            <div class="admin__page-section-content">
+                <div id="quote-shipping_method" class="admin__page-section-item quote-shipping-method">
+                    <?php echo $block->getChildHtml('shipping_method') ?>
+                </div>
+            </div>
+        </section>
+
+        <?php if ($block->getChildBlock('card_validation')) : ?>
+            <section id="quote-card_validation" class="admin__page-section quote-card-validation">
+                <?php echo $block->getChildHtml('card_validation') ?>
+            </section>
+        <?php endif; ?>
+
+        <?php echo $block->getChildHtml('gift_options') ?>
+
+        <section class="admin__page-section quote-summary">
+            <div class="admin__page-section-content">
+                <fieldset id="quote-totals" class="admin__fieldset quote-totals">
+                    <?php echo $block->getChildHtml('totals') ?>
+                </fieldset>
+            </div>
+        </section>
+    </div>
+
+</div>

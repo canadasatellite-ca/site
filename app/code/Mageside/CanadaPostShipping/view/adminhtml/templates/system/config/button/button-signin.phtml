@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+/** @var \Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\RegisterButton $block */
+?>
+
+<div class="actions actions-validate-vat">
+    <button class="action-validate-vat" type="button" id="button-<?= /* @escapeNotVerified */ $block->getId() ?>">
+        <span><?= /* @escapeNotVerified */ $block->escapeHtml($block->getButtonLabel()) ?></span>
+    </button>
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#button-<?php echo  $block->getId(); ?>": {
+            "Mageside_CanadaPostShipping/js/register": {
+                 "url": "<?= $block->getSigninUrl() ?>"
+            }
+        }
+    }
+</script>

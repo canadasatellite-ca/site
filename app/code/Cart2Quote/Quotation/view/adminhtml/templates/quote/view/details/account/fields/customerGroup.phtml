@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Details\Account\Details $block */
+?>
+
+<?php if ($groupName = $block->getCustomerGroupName()) : ?>
+    <tr>
+        <th><?php echo $block->escapeHtml(__('Customer Group')) ?></th>
+        <td><?php echo $block->escapeHtml($groupName) ?></td>
+    </tr>
+<?php endif; ?>

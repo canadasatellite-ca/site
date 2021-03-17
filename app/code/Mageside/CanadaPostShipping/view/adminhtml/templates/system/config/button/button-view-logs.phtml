@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+/** @var \Mageside\CanadaPostShipping\Block\Adminhtml\System\Config\Field\ViewLogsButton $block */
+?>
+
+<div class="actions actions-validate-vat">
+    <a class="action-default"
+       href="<?= $block->escapeUrl($block->getData('url')) ?>"
+       target="_blank"
+    >
+        <?= $block->escapeHtml($block->getButtonLabel()) ?>
+    </a>
+</div>

@@ -1,0 +1,56 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<div class="quote-date date-zone"><?php
+    echo sprintf(
+        '<span class="label">%s</span><date> %s</date>',
+        __('Quote Request Date:'),
+        $block->formatDate(
+            $block->getQuote()->getQuotationCreatedAt(),
+            \IntlDateFormatter::LONG
+        )
+    );
+    ?>
+</div>
+<?php if ($block->getIsFrontendCreatedByVisible()) : ?>
+<div class="quote-date date-zone">
+    <?php echo sprintf(
+        '<span class="label">%s</span><data> %s</data>',
+        __('Quote Created By'),
+        $block->getQuote()->getQuotationCreatedBy()
+    );
+    ?>
+</div>
+<?php endif ?>
+<div class="quote-expiry-date date zone"><?php echo
+    sprintf(
+        '<span class="label">%s </span><date>%s</date>',
+        __('Proposal Valid Until:'),
+        $block->formatDate(
+            $block->getQuote()->getExpiryDate(),
+            \IntlDateFormatter::LONG
+        )
+    );
+    ?>
+</div>
+<?php $note = $block->getQuote()->getCustomerNote(); ?>
+<?php $notify = $block->getQuote()->getCustomerNoteNotify(); ?>
+<?php if (isset($note) && $notify) : ?>
+    <div class="block block-order-details-view">
+        <strong class="box-title">
+            <span><?php echo $block->escapeHtml(__('Remarks with proposal')) ?></span>
+        </strong>
+
+        <div class="block-content">
+            <div class="box box-quote-remarks">
+                <div class="box-content">
+                    <?php echo nl2br($block->escapeHtml($note)); ?>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>

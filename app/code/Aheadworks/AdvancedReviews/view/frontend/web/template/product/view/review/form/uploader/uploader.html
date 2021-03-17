@@ -1,0 +1,32 @@
+<div class="aw-ar__file-uploader field" data-role="drop-zone" css="_loading: isLoading">
+    <div class="uploader-area">
+        <label attr="for: uid">
+            <span class="label-text" translate="'Click here or drag and drop to add files.'" />
+            <input type="file"
+                   afterRender="onElementRender"
+                   attr="id: uid, name: inputName, multiple: isMultipleFiles"
+                   disable="disabled" />
+        </label>
+    </div>
+    <label class="field-error" if="error" attr="for: uid" text="error"/>
+    <div if="isMultipleFiles" class="uploader-drop-zone" click="browseFile">
+        <div if="isMultipleFiles" class="uploader-drop-zone-inner">
+            <span class="uploader-placeholder-text" translate="'Click here or drag and drop to add files.'"/>
+        </div>
+    </div>
+    <div class="field-note" if="$data.notice" attr="id: noticeId">
+        <span html="notice"/>
+    </div>
+
+    <div>
+        <each args="data: value, as: '$file'" render="$parent.getPreviewTmpl($file)"/>
+        <div class="uploader-spinner admin__data-grid-outer-wrap">
+            <div data-role="spinner" class="admin__data-grid-loading-mask">
+                <div class="spinner">
+                    <span></span><span></span><span></span><span></span>
+                    <span></span><span></span><span></span><span></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

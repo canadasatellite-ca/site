@@ -1,0 +1,188 @@
+<?php
+/**
+ * @var $block CanadaSatellite\Theme\Block\Frontend\ReCaptcha
+ */
+$faqQuestions = $block->getFaqList();
+?>
+<div class="product-custometab-faq">
+    <?php if (!empty($faqQuestions)) {
+        ?>
+        <div class="main-faqs-page-index-view">
+            <h3 class="faqcat-title" style="color: #3399cc" title="Category Questions">Category Questions</h3>
+            <div class="panel-group question-list" id="accordion" >
+                <?php foreach ($faqQuestions as $faqQuestion) { ?>
+                    <div class="panel panel-default" style="margin-bottom: <?php echo $faqQuestion->getQuestionMarginBottom(); ?>">
+                        <?php $randomNumber = rand(999, 9999); ?>
+                        <div class="panel-heading faqcat-question collapsed"
+                             data-toggle="collapse"
+                             data-target="#collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>"
+                             data-parent="#accordion"
+                             data-animated="<?php echo $faqQuestion->getAnimationType(); ?>"
+                             data-color-active="<?php echo $faqQuestion->getTextColorActive(); ?>"
+                             data-bg-color-active="<?php echo $faqQuestion->getBackgrondActive(); ?>"
+                             data-color="<?php echo $faqQuestion->getTextColor(); ?>"
+                             data-bg-color="<?php echo $faqQuestion->getBackground(); ?>"
+                             style="background-color:<?php echo $faqQuestion->getBackground(); ?>;
+                             border-color: <?php echo $faqQuestion->getBorderColor(); ?>;
+                             border-width:<?php echo $faqQuestion->getBorderWidth(); ?>;
+                             border-radius: <?php echo $faqQuestion->getBorderRadius(); ?>;"
+                             >
+                            <h4 class="panel-title">
+                                <a class="accordion-toggle faq_questions_title" style="color:<?php echo $faqQuestion->getTextColor(); ?>;  font-size: <?php echo $faqQuestion->getfontSize(); ?>" href="javascript:void(0);">
+                                    <?php
+                                    $icon = ($faqQuestion->getIconClass()) ? $faqQuestion->getIconClass() : 'fa-plus-square-o';
+                                    $iconActive = ($faqQuestion->getIconActive()) ? $faqQuestion->getIconActive() : 'fa-minus-square-o';
+                                    ?>
+                                    <i data-icon="<?php echo $icon; ?>" data-icon-active=" <?php echo $iconActive; ?>" class="main_icon fa <?php echo $icon; ?>"></i> 
+                                    &nbsp;<?php echo $block->escapeHtml($faqQuestion->getQuestion()); ?>
+                                </a>
+                            </h4>
+                        </div>
+                        <div  style="animation-duration: <?php echo $faqQuestion->getAnimationSpeed(); ?>;  -webkit-animation-duration: <?php echo $faqQuestion->getAnimationSpeed(); ?>;" id="collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>" class="panel-collapse collapse animated">   
+                            <div class="panel-body">
+                                <?php echo $block->getAnswerContant($faqQuestion->getAnswer()); ?>...
+                                <a style="color: #fc6b1f" href="<?php echo $block->getUrl('faqs/question/view/id/' . $faqQuestion->getId() . ''); ?>">Read more</a>
+                            </div>
+                        </div>
+                    </div>
+
+                <?php } ?>
+            </div>
+        </div>
+        <?php
+    }
+
+    if ($block->isAllowCustomer() || $block->isAllowGuestCustomer()) {
+        ?>
+        <div class="actions-toolbar faq-form-actions" style="margin-bottom: 10px;">
+            <div class="primary actions-primary">
+                <button type="button" class="action write primary">
+                    <span><?php echo $block->escapeHtml(__('Ask a question')); ?></span>
+                </button>
+            </div>
+        </div>
+        <div class="FaqMainForm ">
+            <form enctype="multipart/form-data" data-mage-init='{"validation": {}}' 
+                  action="<?php echo $block->escapeHtml($block->getFormAction()); ?>" 
+                  class="faq-form" method="post" id="faq-form">
+                <fieldset class="fieldset">
+                    <legend class="legend review-legend">
+                        <span><?php echo $block->escapeHtml(__("Your Question:")); ?></span>
+                    </legend><br />
+                    <?php if ($block->isAllowGuestCustomer() && $block->isAllowCustomer() == false) { ?>
+                        <div class="field faq-field-name required">
+                            <label for="guest_name_field" class="label">
+                                <span><?php echo $block->escapeHtml(__('Name')); ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" name="guest_name" id="guest_name_field" 
+                                       class="input-text" data-validate="{required:true}"/>
+                            </div>
+                        </div>  
+                        <div class="field faq-field-emailaddress required">
+                            <label for="emailaddress_field" class="label">
+                                <span><?php echo $block->escapeHtml(__('Email')); ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" name="guest_emailaddress" id="emailaddress_field" 
+                                       class="input-text" data-validate="{required:true, 'validate-email':true}"/>
+                            </div>
+                        </div>
+                        <div class="field faq-field-phone">
+                            <label for="phone_field" class="label">
+                                <span><?php echo $block->escapeHtml(__('Phone')); ?></span>
+                            </label>
+                            <div class="control">
+                                <input type="text" name="phone" id="phone_field"
+                                       class="input-text" />
+                            </div>
+                        </div>
+                    <?php } ?> 
+                    <div class="field faq-field-question required">
+                        <label for="question_field" class="label">
+                            <span><?php echo $block->escapeHtml(__('Question')); ?></span>
+                        </label>
+                        <div class="control">
+                            <textarea name="question" id="question_field"
+                                      class="input-text" data-validate="{required:true}"></textarea>
+                        </div>
+                    </div>
+                    <?php if ($block->isAllowGuestCustomer() == true && $block->isAllowCustomer() == false) { ?>
+                        <?php echo $block->getChildHtml('faq.form.additional.info'); ?>
+                    <?php } ?> 
+                    <input type="hidden" name="producturl"
+                           value="<?php echo $block->escapeHtml($block->getCurrentCategory() ? $block->getCurrentCategory()->getUrl() : ''); ?>">
+                    <input type="hidden" name="productname"
+                           value="<?php echo $block->escapeHtml($block->getCurrentCategory() ? $block->getCurrentCategory()->getName() : ''); ?>">
+                    <input type="hidden" name="pcategoryid"
+                           value="<?php echo $block->escapeHtml($block->getCurrentCategory() ? $block->getCurrentCategory()->getId() : ''); ?>">
+                    <input type="hidden" name="recaptcha_response_v3" id="recaptchaResponseV3">
+                </fieldset>
+                <div class="actions-toolbar faq-form-actions">
+                    <div class="primary actions-primary">
+                        <button type="submit" class="action submit primary">
+                            <span><?php echo $block->escapeHtml(__('Submit Question')); ?></span>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    <?php } else { ?>
+        <form action="<?php echo $block->escapeHtml($block->getFormCheckAction()); ?>" method="post">
+            <input type="hidden" name="product_url" 
+                   value="<?php echo $block->escapeHtml($block->getCurrentCategory() ? $block->getCurrentCategory()->getUrl() : ''); ?>"/>
+            <div class="actions-toolbar faq-form-actions">
+                <div class="primary actions-primary">
+                    <button type="submit" class="action submit primary">
+                        <span><?php echo $block->escapeHtml(__('Login to write question')); ?></span>
+                    </button>
+                </div>
+            </div>
+        </form>
+    <?php } ?>
+</div>
+<?php // @codingStandardsIgnoreStart  ?> 
+<script>
+    require(['jquery', 'jquery.bootstrap', 'jquery/ui'], function ($) {
+        $(document).ready(function () {
+            $('.collapse').on('shown.bs.collapse', function (e) {
+                var animated =  $(this).parent().find(".faqcat-question").attr('data-animated');
+                var colorActive =  $(this).parent().find(".faqcat-question").attr('data-color-active');
+                var bgColorActive =  $(this).parent().find(".faqcat-question").attr('data-bg-color-active');
+                var dataIcon =  $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive =  $(this).parent().find(".main_icon").attr('data-icon-active');
+                
+                $(this).addClass(animated);
+                $(this).parent().find('.main_icon').removeClass(dataIcon).addClass(dataIconActive);
+                $(this).parent().find(".faqcat-question").css("background-color",  bgColorActive);
+                $(this).parent().find(".faq_questions_title").css("color",  colorActive);
+                
+            }).on('hidden.bs.collapse', function () {
+                var color =  $(this).parent().find(".faqcat-question").attr('data-color');
+                var bgColor =  $(this).parent().find(".faqcat-question").attr('data-bg-color');
+                var dataIcon =  $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive =  $(this).parent().find(".main_icon").attr('data-icon-active');
+                
+                $(this).parent().find('.main_icon').removeClass(dataIconActive).addClass(dataIcon);
+                $(this).parent().find(".faqcat-question").css("background-color",  bgColor);
+                $(this).parent().find(".faq_questions_title").css("color",  color);
+            });
+        });
+    });
+</script>
+<script type="text/javascript">
+    requirejs(['jquery'], function ($) {
+        recaptchaFaqCategoryScriptAdded = false;
+        jQuery('#question_field').focus(function () {
+            loadMainRecaptchaScript();
+            if (!recaptchaFaqCategoryScriptAdded) {
+                var recaptchaFormScript = document.createElement('script');
+                recaptchaFormScript.innerHTML = "var recaptchaInt = setInterval(function(){if (typeof(grecaptcha)=='undefined'){return;}clearInterval(recaptchaInt);grecaptcha.ready(function(){grecaptcha.execute('<?php echo $block->getPublicKey() ?>',{ action: 'contact' }).then(function (token) {var recaptchaResponse = document.getElementById('recaptchaResponseV3');recaptchaResponse.value = token});});},50);";
+                jQuery('#maincontent').after(recaptchaFormScript);
+                recaptchaFaqCategoryScriptAdded = true;
+            }
+        });
+    });
+</script>
+<?php
+// @codingStandardsIgnoreEnd ?>

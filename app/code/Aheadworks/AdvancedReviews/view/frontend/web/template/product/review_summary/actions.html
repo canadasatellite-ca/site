@@ -1,0 +1,12 @@
+<div class="review-summary-actions" afterRender="bindSummaryActions()">
+    <!-- ko if: statisticsData.reviewsCount -->
+        <a class="action view" data-bind="text: getReviewsActionLabel(), attr: { href: getReviewsUrl() }"></a>
+        <!-- ko ifnot: isShortView() -->
+            <a class="action view" data-bind="i18n: 'Add Your Review', attr: { href: getReviewFormUrl() }"></a>
+        <!-- /ko -->
+    <!-- /ko -->
+
+    <!-- ko if: isNeedToDisplayBeFirstAction() -->
+        <a class="action add" data-bind="i18n: 'Be the first to review this product', attr: { href: getReviewFormUrl() }"></a>
+    <!-- /ko -->
+</div>

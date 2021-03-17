@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Checkout\Cart\MoveToQuote $block */ ?>
+<?php if ($block->getIsQuotationEnabled() && !$block->getShowOrderReferences() && $block->isMoveToQuoteEnabled()) : ?>
+    <div class="cart main actions">
+        <button id="movetoquote"
+                type="submit"
+                name="move_to_quote_action"
+                value="move_to_quote"
+                title="<?php echo $block->escapeHtml(__('Request a Quote')); ?>"
+                class="action primary checkout movetoquote movetoquote-button"
+                data-mage-init='{"cartToQuoteActions": {"buttonSelector" : "#movetoquote"} }'>
+            <span><?php echo $block->escapeHtml(__('Move Items to Quote')); ?></span>
+        </button>
+    </div>
+<?php endif; ?>

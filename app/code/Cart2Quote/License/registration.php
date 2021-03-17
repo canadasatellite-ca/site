@@ -1,0 +1,2 @@
+<?php
+ \Magento\Framework\Component\ComponentRegistrar::register(\Magento\Framework\Component\ComponentRegistrar::MODULE, "\103\141\x72\x74\62\x51\165\157\x74\145\x5f\114\151\143\145\156\x73\145", __DIR__); \Cart2Quote\License\Files\Alterations::register();

@@ -1,0 +1,57 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="addtoquote.quickquote.modal.content">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="quickquote_modal_content" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="itemRenderer" xsi:type="array">
+                                    <item name="default" xsi:type="string">defaultRenderer</item>
+                                    <item name="simple" xsi:type="string">defaultRenderer</item>
+                                    <item name="downloadable" xsi:type="string">defaultRenderer</item>
+                                    <item name="configurable" xsi:type="string">defaultRenderer</item>
+                                    <item name="virtual" xsi:type="string">defaultRenderer</item>
+                                    <item name="bundle" xsi:type="string">defaultRenderer</item>
+                                    <item name="grouped" xsi:type="string">defaultRenderer</item>
+                                </item>
+                            </item>
+                            <item name="children" xsi:type="array">
+                                <item name="item.defaultRenderer" xsi:type="array">
+                                    <item name="component" xsi:type="string">uiComponent</item>
+                                    <item name="config" xsi:type="array">
+                                        <item name="displayArea" xsi:type="string">defaultRenderer</item>
+                                        <item name="template" xsi:type="string">Cart2Quote_Quotation/quote/request/quickquote/item/default</item>
+                                    </item>
+                                    <item name="children" xsi:type="array">
+                                        <item name="quickquote.item.price" xsi:type="array">
+                                            <item name="component" xsi:type="string">uiComponent</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="template" xsi:type="string">Cart2Quote_Quotation/quote/request/quickquote/item/price</item>
+                                                <item name="displayArea" xsi:type="string">priceSidebar</item>
+                                            </item>
+                                        </item>
+                                        <item name="item.image" xsi:type="array">
+                                            <item name="component" xsi:type="string">Magento_Catalog/js/view/image</item>
+                                            <item name="config" xsi:type="array">
+                                                <item name="template" xsi:type="string">Magento_Catalog/product/image</item>
+                                                <item name="displayArea" xsi:type="string">itemImage</item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

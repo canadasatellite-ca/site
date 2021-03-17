@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="checkout.root">
+            <arguments>
+                <argument name="jsLayout" xsi:type="array">
+                    <item name="components" xsi:type="array">
+                        <item name="checkout" xsi:type="array">
+                            <item name="children" xsi:type="array">
+                                <item name="steps" xsi:type="array">
+                                    <item name="children" xsi:type="array">
+                                        <item name="billing-step" xsi:type="array">
+                                            <item name="children" xsi:type="array">
+                                                <item name="payment" xsi:type="array">
+                                                    <item name="children" xsi:type="array">
+                                                        <item name="additional-payment-validators" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="google-recaptcha-validator" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">BroSolutions_CheckoutReCapcha/js/view/google-recaptcha</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                        <item name="afterMethods" xsi:type="array">
+                                                            <item name="children" xsi:type="array">
+                                                                <item name="msp_recaptcha_checkout_payment" xsi:type="array">
+                                                                    <item name="component" xsi:type="string">BroSolutions_CheckoutReCapcha/js/reCaptcha</item>
+                                                                    <item name="displayArea" xsi:type="string">payments</item>
+                                                                    <item name="configSource" xsi:type="string">checkoutConfig</item>
+                                                                    <item name="reCaptchaId" xsi:type="string">msp-recaptcha-checkout-payment-form</item>
+                                                                    <item name="zone" xsi:type="string">checkout</item>
+                                                                </item>
+                                                            </item>
+                                                        </item>
+                                                    </item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </argument>
+            </arguments>
+        </referenceBlock>
+    </body>
+</page>

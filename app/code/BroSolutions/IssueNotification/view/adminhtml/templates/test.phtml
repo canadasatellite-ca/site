@@ -1,0 +1,27 @@
+<?php /**
+ * @var $block \BroSolutions\IssueNotification\Block\Adminhtml\Checkout\Comment
+ */
+$customerEmail = $block->getCustomerEmail();
+$comment = $block->getCheckoutComment();
+?>
+
+<section class="admin__page-section order-addresses">
+    <div class="admin__page-section-content">
+        <div class="admin__page-section-item order-billing-address">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php /* @escapeNotVerified */
+                    echo __('Email') ?></span>
+            </div>
+            <a class="admin__page-section-item-content" href="mailto: <?= $customerEmail ?>"><?php /* @escapeNotVerified */
+                echo $customerEmail ?></a>
+        </div>
+        <div class="admin__page-section-item order-shipping-address">
+            <div class="admin__page-section-item-title">
+                <span class="title"><?php /* @escapeNotVerified */
+                    echo __('Report') ?></span>
+            </div>
+            <div class="admin__page-section-item-content"><?php /* @escapeNotVerified */
+                echo $comment ?></div>
+        </div>
+    </div>
+</section>

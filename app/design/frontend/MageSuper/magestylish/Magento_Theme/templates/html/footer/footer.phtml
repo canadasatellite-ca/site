@@ -1,0 +1,117 @@
+<?php
+$siteUrl = $this->getUrl();
+$siteName = $siteUrl;
+if (stripos($siteUrl, 'https://www') === 0) {
+    $siteName = mb_substr(str_replace('https://www.', '', $siteUrl), 0, -1);
+} elseif (stripos($siteUrl, 'https://') === 0) {
+    $siteName = mb_substr(str_replace('https://', '', $siteUrl), 0, -1);
+}
+if ($siteUrl == 'https://www.calgarysatellite.ca/') {
+    $siteName = 'canadasatellite.ca';
+}
+?>
+<div class="footer container footer-container-wrapper">
+    <div class="widget block block-static-block">
+        <div class="footer-inner">
+            <div class="footer-inner-left">
+                <div class="box">
+                    <h3 class="box-title">Get In Touch With Us!</h3>
+                    <div class="box-content hidden-xs-tab">
+                        <?php if ($siteName == 'americansatellite.us'): ?>
+                            <p>LAS VEGAS, NEVADA, USA</p>
+                            <p class="footer-call"><a href="tel:18555522623">1 (855) 775-7505</a></p>
+                            <p class="footer-email"><a href="mailto:sales@<?php echo $siteName?>">sales@<?php echo $siteName?></a></p>
+                        <?php elseif (stristr($siteName, '.ca') == '.ca'): ?>
+                            <p>CALGARY, ALBERTA, CANADA</p>
+                            <p class="footer-call"><a href="tel:18555522623">1 (403) 918-6300</a></p>
+                            <p class="footer-email"><a href="mailto:sales@<?php echo $siteName?>">sales@<?php echo $siteName?></a></p>
+                        <?php else : ?>
+                            <p class="footer-email"><a href="mailto:sales@<?php echo $siteName?>">sales@<?php echo $siteName?></a></p>
+                        <?php endif ?>
+                    </div>
+                    <div class="box-content visible-xs-tab">
+                        <ul class="contact-list">
+                            <li><a class="location-icon" href="<?php echo $siteUrl?>#/">location</a></li>
+                            <li><a class="call-icon" href="tel:18555522623">1 (403) 918-6300</a></li>
+                            <li><a class="email-icon"
+                                   href="mailto:sales@<?php echo $siteName?>">sales@<?php echo $siteName?></a></li>
+                        </ul>
+                    </div>
+                    <div class="clearboth">&nbsp;</div>
+                </div>
+            </div>
+            <div class="footer-inner-right">
+                <div class="box col-25">
+                    <h3 class="box-title">About</h3>
+                    <div class="box-content">
+                        <ul>
+                            <li><a href="<?php echo $siteUrl?>about-us/">About Us</a></li>
+                            <li><a href="<?php echo $siteUrl?>testimonials/">Testimonials</a></li>
+                            <li><a href="<?php echo $siteUrl?>privacy-policy/">Privacy Policy</a></li>
+                            <li><a href="<?php echo $siteUrl?>terms-conditions/">Terms &amp; Conditions</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box col-25">
+                    <h3 class="box-title">My Account</h3>
+                    <div class="box-content">
+                        <ul>
+                            <li><a href="<?php echo $siteUrl?>customer/account/login/">Login / Register</a>
+                            </li>
+                            <li><a href="<?php echo $siteUrl?>sales/guest/form/">Order Status</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box col-25">
+                    <h3 class="box-title">Need Help</h3>
+                    <div class="box-content">
+                        <ul>
+                            <li><a title="Contact Us" href="mailto:sales@<?php echo $siteName?>">Contact Us</a></li>
+                            <li><a href="<?php echo $siteUrl?>help/">Help / Faqs</a></li>
+                            <li><a href="<?php echo $siteUrl?>shipping/">Shipping </a>&amp;<a
+                                    href="<?php echo $siteUrl?>returns/"> Returns</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="box col-25 last">
+                    <h3 class="box-title">Site</h3>
+                    <div class="box-content">
+                        <ul>
+                            <li><a href="<?php echo $siteUrl?>sitemap/">Site Map</a></li>
+                            <li><a href="<?php echo $siteUrl?>sitemap-category/">Category Index</a></li>
+                            <li><a href="<?php echo $siteUrl?>sitemap-product/">Product Index</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clearboth">&nbsp;</div>
+            </div>
+            <div class="clearboth">&nbsp;</div>
+        </div>
+    </div>
+</div>
+<?php echo $this->getChildHtml('footer.newsletter'); ?>
+
+<div id="bottomfooter" class="bottom-footer-wrapper">
+    <div class="footer container">
+        <small class="copyright"><span class="f-left"><?php echo $block->getCopyright();?></span></small>
+        <div class="footer-custom-block">
+            <div class="widget block block-static-block"></div>
+        </div>
+    </div>
+</div>
+
+<!--<div class="footer-bottom">
+    <div class="footer-text">
+        <div class="footerFlags">
+            <img src='<?php /*echo $this->getViewFileUrl('images/logo_credit.png'); */?>' alt="logo footer"/>
+            <img src='<?php /*echo $this->getViewFileUrl('images/logo_app.png'); */?>' alt="logo footer"/>
+        </div>
+	<span class="celeb-info-details">
+		The celebrities named or featured on NewLook.com have not endorsed recommended or approved the items offered on site unless they are promoting their own brand
+	</span>
+        <div class="footer-country-map-cont">
+            <span class="copy_info_details"> © 2017 NewLook Limited. All rights reserved.</span>
+        </div>
+    </div>
+</div>-->

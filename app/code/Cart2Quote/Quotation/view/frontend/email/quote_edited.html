@@ -1,0 +1,35 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--@subject {{var store.frontend_name}}: {{trans "Edited Quote request"}} # {{var quote.increment_id}} @-->
+<!--@vars {
+"var quote.increment_id":"Quote Id"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Cart2Quote_Quotation::css/email-inline_extend.css"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Hello %customer_name," customer_name=$quote_data_customer_name}}</p>
+
+            <p>
+                {{trans "Your Quote Request from %store_name with number #%increment_id has been edited." store_name=$store.frontend_name increment_id=$quote.increment_id |raw}}
+                {{trans "You can check the status of altered Quote by <a href="%account_url">logging into your account</a>." account_url=$this.getUrl($store,'quotation/quote/history/',[_nosid:1]) |raw}}
+            </p>
+
+            <p>
+                {{trans "If you have any questions about the altered Quote, please contact us, you can email us at <a href="mailto:%store_email">%store_email</a>" store_email=$store_email |raw}}{{depend store_phone}}
+                {{trans "or call us at <a href="tel:%store_phone">%store_phone</a>" store_phone=$store_phone |raw}}{{/depend}}.
+                {{depend store_hours}}
+                {{trans "Our hours are <span class="no-link">%store_hours</span>." store_hours=$store_hours |raw}}
+                {{/depend}}
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

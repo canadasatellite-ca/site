@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <mageside_canada_post_shipping>
+            <general>
+                <module_name>Canada Post Shipping</module_name>
+                <module_page_link>https://mageside.com/canada-post-shipping.html</module_page_link>
+            </general>
+        </mageside_canada_post_shipping>
+        <carriers>
+            <canadapost>
+                <active>0</active>
+                <title>Canada Post</title>
+                <locale>EN</locale>
+                <username backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <password backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <username_development backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <password_development backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <customer_number backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <contract_id backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+                <sandbox_mode>0</sandbox_mode>
+
+                <google_maps_api_key backend_model="Magento\Config\Model\Config\Backend\Encrypted" />
+
+                <platform_id>0008526208</platform_id>
+                <registration_token_url><![CDATA[https://mageside.com/soap/default?wsdl&services=magesideCanadaPostRegistrationGetTokenV1]]></registration_token_url>
+                <registration_merchant_info_url><![CDATA[https://mageside.com/soap/default?wsdl&services=magesideCanadaPostRegistrationGetMerchantInfoV1]]></registration_merchant_info_url>
+                <registration_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/ot/soap/merchant/registration]]></registration_development_endpoint_url>
+                <registration_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/ot/soap/merchant/registration]]></registration_production_endpoint_url>
+                <registration_merchant_url><![CDATA[https://www.canadapost.ca/cpotools/apps/drc/merchant]]></registration_merchant_url>
+                <registration_development_merchant_url><![CDATA[https://www.canadapost.ca/cpotools/apps/drc/testMerchant]]></registration_development_merchant_url>
+
+                <rating_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/rating/v3]]></rating_development_endpoint_url>
+                <rating_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/rating/v3]]></rating_production_endpoint_url>
+                <shipment_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/shipment/v8]]></shipment_development_endpoint_url>
+                <shipment_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/shipment/v8]]></shipment_production_endpoint_url>
+                <ncshipment_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/ncshipment/v4]]></ncshipment_development_endpoint_url>
+                <ncshipment_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/ncshipment/v4]]></ncshipment_production_endpoint_url>
+                <track_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/vis/soap/track]]></track_development_endpoint_url>
+                <track_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/vis/soap/track]]></track_production_endpoint_url>
+                <artifact_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/artifact]]></artifact_development_endpoint_url>
+                <artifact_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/artifact]]></artifact_production_endpoint_url>
+                <transmit_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/manifest/v8]]></transmit_development_endpoint_url>
+                <transmit_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/manifest/v8]]></transmit_production_endpoint_url>
+                <manifest_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/manifest/v8]]></manifest_development_endpoint_url>
+                <manifest_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/manifest/v8]]></manifest_production_endpoint_url>
+                <postoffice_development_endpoint_url><![CDATA[https://ct.soa-gw.canadapost.ca/rs/soap/postoffice]]></postoffice_development_endpoint_url>
+                <postoffice_production_endpoint_url><![CDATA[https://soa-gw.canadapost.ca/rs/soap/postoffice]]></postoffice_production_endpoint_url>
+
+                <non_mailable_attribute>non_mailable_product</non_mailable_attribute>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+                <sallowspecific>0</sallowspecific>
+                <has_default_credit_card>0</has_default_credit_card>
+                <allowed_methods>DOM.RP,DOM.EP,DOM.XP,DOM.XP.CERT,DOM.PC,DOM.DT,DOM.LIB,USA.EP,USA.PW.ENV,USA.PW.PAK,USA.PW.PARCEL,USA.SP.AIR,USA.TP,USA.TP.LVM,USA.XP,INT.XP,INT.IP.AIR,INT.IP.SURF,INT.PW.ENV,INT.PW.PAK,INT.PW.PARCEL,INT.SP.AIR,INT.SP.SURF,INT.TP</allowed_methods>
+                <handling_fee>0</handling_fee>
+                <model>Mageside\CanadaPostShipping\Model\Carrier</model>
+                <max_package_weight>30</max_package_weight>
+                <non_delivery_handling>RASE</non_delivery_handling>
+                <reason_for_export>OTH</reason_for_export>
+                <other_reason_for_export>Gift</other_reason_for_export>
+                <handling_type>F</handling_type>
+                <handling_action>O</handling_action>
+                <quote_type>counter</quote_type>
+                <rates_price_type>1</rates_price_type>
+                <lead_days>0</lead_days>
+                <working_days>1,2,3,4,5</working_days>
+                <notification>on-delivery</notification>
+
+                <norates_price>0</norates_price>
+                <rates_min_price>0</rates_min_price>
+                <free_methods_threshold_price>1</free_methods_threshold_price>
+
+                <default_box_length>0</default_box_length>
+                <default_box_width>0</default_box_width>
+                <default_box_height>0</default_box_height>
+                <signature_threshold>999999</signature_threshold>
+                <coverage_threshold>999999</coverage_threshold>
+                <output_format>8.5x11</output_format>
+            </canadapost>
+        </carriers>
+    </default>
+</config>

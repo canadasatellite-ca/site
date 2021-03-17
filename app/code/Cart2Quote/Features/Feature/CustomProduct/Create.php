@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\CustomProduct; final class Create extends \Cart2Quote\License\Plugin\AbstractPlugin { private $context; public function __construct() { $this->context = \Magento\Framework\App\ObjectManager::getInstance()->get(\Magento\Backend\App\Action\Context::class); } public final function aroundExecute(\Cart2Quote\Quotation\Controller\Adminhtml\Product\Create $f8xHT, callable $pRclG) { if ($this->{"\151\163\x41\x6c\154\x6f\167\x65\144"}()) { goto YgWHW; } $f8xHT->getRequest()->setParams([]); YgWHW: return $pRclG(); } }

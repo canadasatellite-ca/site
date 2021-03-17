@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing\Filters\Checkbox $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="aw-ar__form-field-wrap">
+    <div class="aw-ar__form-field-control">
+        <div class="admin__field admin__field-option">
+            <input type="checkbox"
+                   id="<?= $block->escapeHtml($viewModel->getId()) ?>"
+                   class="admin__control-checkbox">
+            <label for="<?= $block->escapeHtml($viewModel->getId()) ?>" class="admin__field-label">
+                <?php echo $block->escapeHtml(__($viewModel->getLabel())) ?>
+            </label>
+        </div>
+    </div>
+</div>

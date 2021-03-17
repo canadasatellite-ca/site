@@ -1,0 +1,26 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--@subject {{var store.frontend_name}}: {{trans "Accepted Quote"}} # {{var quote.increment_id}} @-->
+<!--@vars {
+"var quote.increment_id":"Quote Id"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Cart2Quote_Quotation::css/email-inline_extend.css"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Hello %admin_name," admin_name=$reciever_name}}</p>
+
+            <p>{{trans "Your Proposal #%increment_id <small>(placed on %created_at)</small> is accepted by the customer." increment_id=$quote.increment_id created_at=$quote_data_created_at_formatted |raw}}</p>
+
+            <p>{{trans "This note is sent to you, because the customer pressed the accept button in the Customer dashboard. The customer still needs to complete the checkout process, before the proposal is fully converted to an order."}}</p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

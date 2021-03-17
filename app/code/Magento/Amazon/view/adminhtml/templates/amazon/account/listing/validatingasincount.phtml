@@ -1,0 +1,14 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php if ($count = $block->getListingCountInValidatingAsin()): ?>
+    <div class="validating-asin-count-info message message-info">
+        <?= $block->escapeHtml(__('There are ')) . $count . $block->escapeHtml(__(' listings being processed.'))?>
+    </div>
+<?php endif ?>

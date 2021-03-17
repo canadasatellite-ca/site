@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="head.additional">
+            <block name="config_public_key"
+                   class="CanadaSatellite\Theme\Block\Frontend\ReCaptcha"
+                   template="CanadaSatellite_Theme::get_public_key.phtml"
+                   before="-"/>
+        </referenceContainer>
+    </body>
+</page>

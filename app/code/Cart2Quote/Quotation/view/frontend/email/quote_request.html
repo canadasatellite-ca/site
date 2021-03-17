@@ -1,0 +1,75 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<!--@subject {{var store.frontend_name}}: {{trans "New Quote Request"}} # {{var quote.increment_id}} @-->
+<!--@vars {
+"var formattedBillingAddress|raw":"Billing Address",
+"var quote_data_email_customer_note":"Email Quote Note",
+"var quote.increment_id":"Quote Id",
+"layout handle=\"cart2quote_email_quote_items\" quote=$quote area=\"frontend\"":"Quote Items Grid",
+"var payment_html|raw":"Payment Details",
+"var formattedShippingAddress|raw":"Shipping Address",
+"var quote_data_shipping_description":"Shipping Description"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Cart2Quote_Quotation::css/email-inline_extend.css"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Hello %customer_name," customer_name=$quote_data_customer_name}}</p>
+            <p>
+                {{trans "Thank you for your Quote Request from %store_name." store_name=$store.frontend_name}}
+                {{trans "Within the next 48 hours you can expect our proposal."}}
+                {{if customer_has_account}}
+                {{trans "You can check the status of your request by <a href="%account_url">logging into your account</a>." account_url=$this.getUrl($store,'quotation/quote/history/',[_nosid:1]) |raw}}
+                {{/if}}
+            </p>
+            <p>
+                {{trans "If you have questions about your quote request, you can email us at <a href="mailto:%store_email">%store_email</a>" store_email=$store_email |raw}}
+                {{depend store_phone}}
+                {{trans "or call us at <a href="tel:%store_phone">%store_phone</a>." store_phone=$store_phone |raw}}
+                {{/depend}}.
+                {{depend store_hours}}
+                {{trans "Our hours are <span class="no-link">%store_hours</span>." store_hours=$store_hours |raw}}
+                {{/depend}}
+            </p>
+        </td>
+    </tr>
+    <tr class="email-summary">
+        <td>
+            <h1>{{trans "Your Quote <span class="no-link">#%increment_id</span>" increment_id=$quote.increment_id |raw}}</h1>
+            <p>{{trans "Placed on the <span class="no-link">%created_at</span>" created_at=$quote_data_created_at_formatted |raw}}</p>
+            {{if quote_data_shipping_method}}
+            {{depend quote.shipping_method}}
+            <p>{{trans "Shipping Method: <span class="no-link">%shipping_method</span>" shipping_method=$quote_data_shipping_method |raw}}</p>
+            {{/depend}}
+            {{/if}}
+        </td>
+    </tr>
+    <tr class="email-information">
+        <td>
+            {{if quote_data_customer_note}}
+            {{depend quote_data_email_customer_note}}
+            <table class="message-info">
+                <tr>
+                    <td>
+                        <h3>{{trans "Remarks with Request"}}</h3>
+                        <p>
+                            {{var quote_data_customer_note|escape|nl2br}}
+                        </p>
+                    </td>
+                </tr>
+            </table>
+            {{/depend}}
+            {{/if}}
+            {{layout handle="quotation_email_quote_items" quote=$quote area="frontend"}}
+        </td>
+    </tr>
+</table>
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,16 @@
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Activation Form</title>
+        <css src="Interactivated_ActivationForm::css/activate-form.css" />
+    </head>
+    <body>
+        <referenceContainer name="page.messages">
+            <block class="Magento\Framework\View\Element\Template" name="ajax.message.placeholder" template="Magento_Theme::html/messages.phtml"/>
+            <block class="Magento\Framework\View\Element\Messages" name="messages" as="messages" template="Magento_Theme::messages.phtml"/>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block name="form" class="Magento\Framework\View\Element\Template" template="Interactivated_ActivationForm::form.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

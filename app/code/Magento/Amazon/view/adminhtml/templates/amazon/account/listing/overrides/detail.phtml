@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php if ($listing = $block->getListing()): ?>
+    <?php $asin = $listing->getAsin() ?>
+    <?php $productId = $listing->getCatalogProductId() ?>
+    <?php $catalogSku = $listing->getCatalogSku() ?>
+    <?php $amazonSku = $listing->getSellerSku() ?>
+    <?php $name = $listing->getName() ?>
+    <?php $price = ($listing->getListPriceOverride()) ? $listing->getListPriceOverride() : $listing->getListPrice() ?>
+    <?php $price = $block->formatCurrency($price) ?>
+    <div class="popup-asin">
+            <p><?= $block->escapeHtml(__('ASIN:  ' . $block->escapeHtml($asin))) ?></p>
+            <br>
+    <?php if ($productId): ?>
+            <p><?= $block->escapeHtml(__('Catalog (Magento) SKU:  ')) ?><a href="<?= $block->escapeHtml($block->getUrl('catalog/product/edit', ['id' => $productId])) ?>"><?= $block->escapeHtml($catalogSku) ?></a></p>
+            <br>
+            <p><?= $block->escapeHtml(__('Amazon Seller SKU:  ' . $block->escapeHtml($amazonSku))) ?></p>
+    <?php endif ?>
+            <p><?= $block->escapeHtml(__('Amazon Name:  ' . $block->escapeHtml($name))) ?></p>
+            <br>
+            <p><?= $block->escapeHtml(__('Current Amazon List Price:  ' . $block->escapeHtml($price))) ?></p>
+    </div>
+    <?php endif ?>

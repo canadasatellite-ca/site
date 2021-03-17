@@ -1,0 +1,228 @@
+/*
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+.cart2quote-header-box {
+    padding-bottom: 30px;
+    border-bottom: 1px solid #cccccc;
+}
+
+.cart2quote-header-box img.logo {
+    width: 220px;
+    height: auto;
+    margin-bottom: 10px;
+}
+
+.cart2quote-header-box .message.information {
+    background-color: #e3fbd0;
+}
+
+.cart2quote-header-box .message {
+    margin: 15px 0 0 0;
+    display: table;
+    width: 67%;
+}
+
+#quotation_general_general button.secondary {
+    background-color: #82B51D;
+    border-color: #82B51D;
+}
+
+#quotation_general_general .value-container {
+    width: 60%;
+    float: left;
+}
+
+.value .value-container .note, .value .value-container .note button.button-license {
+    font-size: 1.4rem;
+}
+
+.value .value-container .note button.button-license {
+    display: block;
+    border: 0;
+    margin: 0;
+    padding: 0;
+    color: #007bdb;
+    background: none;
+    font-weight: 400;
+}
+
+.value .value-container .note button.button-license i {
+    transform: rotate(180deg);
+    -webkit-transform: rotate(180deg);
+    -ms-transform: rotate(180deg);
+    transform: rotate(180deg);
+    font-style: normal;
+    display: inline-block;
+    font-size: 12px;
+    margin-left: 5px;
+    webkit-transition: all .2s ease-in-out;
+    -moz-transition: all .2s ease-in-out;
+    -o-transition: all .2s ease-in-out;
+    transition: all .2s ease-in-out;
+}
+
+.value .value-container .note button.button-license:hover i {
+    margin-left: 8px;
+}
+
+.value .value-container .note button.button-license i:before {
+    -webkit-font-smoothing: antialiased;
+    font-family: 'Admin Icons';
+    content: '\e626';
+}
+
+#quotation_general_general #check_license, #quotation_general_general .button-container {
+    float: right;
+    width: 30%;
+}
+
+@media (max-width: 1290px) {
+    #quotation_general_general #check_license, #quotation_general_general .value-container, #quotation_general_general .button-container {
+        width: 100%;
+        float: none;
+        box-sizing: border-box;
+    }
+
+    #quotation_general_general#quotation_general_general_order_id, #quotation_general_general .value-container {
+        margin-bottom: 10px;
+    }
+
+    #quotation_general_general .mage-error {
+        float: left;
+        width: 100%;
+    }
+}
+
+#row_quotation_general_general_license_status .control-value {
+    font-weight: 600;
+}
+
+.license-status-red {
+    background-color: #ffdcd9;
+}
+
+.license-status-red .control-value,
+#quotation_general_general_support_data .license-status-red {
+    color: #d03b32;
+}
+
+.license-status-green {
+    background-color: #ecfade;
+}
+
+.license-status-green .control-value,
+#quotation_general_general_support_data .license-status-green {
+    color: #587321;
+}
+
+.license-status-orange {
+    background-color: #fff8d6;
+}
+
+.license-status-orange .control-value {
+    color: #474545;
+}
+
+#quotation_general_general_support_data .license-status-green,
+#quotation_general_general_support_data .license-status-red,
+#quotation_general_general_support_data .license-status-orange {
+    background: transparent;
+}
+
+#quotation_general_general_support_data .license-status-orange {
+    color: #e88721;
+}
+
+#row_quotation_general_general_cart2quote_edition td.value {
+    position: relative;
+}
+
+#row_quotation_general_general_cart2quote_edition td.value:before {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 8px;
+    height: 1px;
+    width: calc(100% - 4rem);
+    background: #cccccc;
+}
+
+#row_quotation_general_general_license_status label span {
+    display: block;
+    padding-top: 9px;
+}
+
+#row_quotation_general_general_license_status .value-container,
+#row_quotation_general_general_cart2quote_version .value-container {
+    width: 100%;
+    float: none;
+    margin-bottom: 13px;
+}
+
+#row_quotation_general_general_license_status .value-container > div {
+    padding: 10px 15px;
+}
+
+#row_quotation_general_general_license_status .value-container p {
+    margin: 0;
+}
+
+#quotation_general_general_support_data {
+    padding-top: 10px;
+}
+
+#row_quotation_general_general_order_id label span {
+    display: block;
+    padding-top: 9px;
+}
+
+#row_quotation_general_general_order_id label.mage-error {
+    border: none;
+    margin: 2px 0 0 0;
+    padding: 0;
+    background: transparent;
+    color: #e22626;
+    line-height: 1;
+}
+
+.version.update-available i {
+    font-style: normal;
+    position: relative;
+    margin-right: 6px;
+    top: 2px;
+}
+
+.version.update-available i:before {
+    color: #007bdb;
+    content: '\e61a';
+    font-size: 1.7rem;
+    font-family: 'Admin Icons';
+}
+
+.version.update-available div {
+    display: block;
+    font-weight: 600;
+    padding: 4px 0 5px 0;
+}
+
+.version.update-available div a {
+    color: inherit;
+    font-weight: 400;
+    text-decoration: underline;
+    display: inline-block;
+}
+
+.version.update-available div a:hover {
+    text-decoration: none;
+}
+
+.version.update-available div span.highlight {
+    color: #cccccc;
+}
+
+.version.update-available a {
+    display: block;
+    padding-top: 3px;
+}

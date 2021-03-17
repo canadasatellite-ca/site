@@ -1,0 +1,79 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Cart2Quote\Quotation\Controller\AbstractController\QuoteLoaderInterface" type="\Cart2Quote\Quotation\Controller\AbstractController\QuoteLoader"/>
+    <preference for="Cart2Quote\Quotation\Controller\AbstractController\QuoteViewAuthorizationInterface" type="\Cart2Quote\Quotation\Controller\AbstractController\QuoteViewAuthorization"/>
+    <type name="Magento\Framework\Url\SecurityInfo">
+        <arguments>
+            <argument name="secureUrlList" xsi:type="array">
+                <item name="quotation" xsi:type="string">/quotation/</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Customer\CustomerData\SectionPoolInterface">
+        <arguments>
+            <argument name="sectionSourceMap" xsi:type="array">
+                <item name="quote" xsi:type="string">Cart2Quote\Quotation\CustomerData\Quote</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Layout\ScheduledStructure">
+        <plugin name="c2q_add_miniquote_normal_mode" type="Cart2Quote\Quotation\Plugin\Magento\Framework\View\Layout\ScheduledStructure"/>
+    </type>
+    <type name="Magento\Customer\Model\Address">
+        <plugin name="c2q_disable_address_field_check" type="Cart2Quote\Quotation\Plugin\Magento\Customer\Model\Address"/>
+    </type>
+    <type name="Magento\Framework\Validator">
+        <plugin name="c2q_disable_address_field_check_for_resource_model" type="Cart2Quote\Quotation\Plugin\Magento\Framework\Validator"/>
+    </type>
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="quotation_go_to_checkout_config_provider" xsi:type="object">Cart2Quote\Quotation\Model\Quote\GoToCheckoutConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Cart2Quote\Quotation\CustomerData\Quote">
+        <plugin name="Cart2Quote\Quotation\Plugin\Quotation\CustomerData\QuotePlugin" type="Cart2Quote\Quotation\Plugin\Quotation\CustomerData\QuotePlugin"/>
+    </type>
+    <type name="\Magento\Checkout\Model\Cart">
+        <plugin name="Cart2Quote\Quotation\Plugin\Magento\Checkout\Model\CartPlugin" type="Cart2Quote\Quotation\Plugin\Magento\Checkout\Model\CartPlugin"/>
+    </type>
+    <preference for="Magento\Swatches\Block\Product\Renderer\Configurable" type="Cart2Quote\Quotation\Block\Product\Renderer\Configurable"/>
+    <preference for="Magento\Swatches\Block\Product\Renderer\Listing\Configurable" type="Cart2Quote\Quotation\Block\Product\Renderer\Listing\Configurable"/>
+    <type name="Magento\Customer\CustomerData\Customer">
+        <plugin name="additional_customer_section_data" type="Cart2Quote\Quotation\Plugin\CustomerData\Customer" />
+    </type>
+    <type name="Magento\Checkout\CustomerData\DefaultItem">
+        <plugin name="add_quickquote_product_thumbmail" type="Cart2Quote\Quotation\Plugin\CustomerData\DefaultItem" />
+    </type>
+    <type name="Magento\Framework\View\Element\Message\MessageConfigurationsPool">
+        <arguments>
+            <argument name="configurationsMap" xsi:type="array">
+                <item name="logoutFromConfirmationModeMessage" xsi:type="array">
+                    <item name="renderer" xsi:type="const">\Magento\Framework\View\Element\Message\Renderer\BlockRenderer::CODE</item>
+                    <item name="data" xsi:type="array">
+                        <item name="template" xsi:type="string">Cart2Quote_Quotation::messages/logoutFromConfirmationModeMessage.phtml</item>
+                    </item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Checkout\Block\Checkout\LayoutProcessor">
+        <plugin name="revert_amazon_payment_checkout_processor" type="Cart2Quote\Quotation\Plugin\CheckoutProcessor" sortOrder="1"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\AbstractItem">
+        <plugin name="c2q_currency_rate" type="Cart2Quote\Quotation\Plugin\Magento\Quote\Model\Quote\Item\AbstractItemPlugin"/>
+    </type>
+    <type name="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator">
+        <plugin name="stock_check" type="\Cart2Quote\Quotation\Plugin\Magento\CatalogInventory\Model\Quote\Item\QuantityValidatorPlugin"/>
+    </type>
+    <type name="Magento\Framework\View\Model\Layout\Merge">
+        <plugin name="c2q_selective_compatibility_merge" type="Cart2Quote\Quotation\Plugin\Magento\Framework\View\Model\Layout\Merge"/>
+    </type>
+</config>

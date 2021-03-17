@@ -1,0 +1,16 @@
+<!--@subject {{trans "Activation Request"}} @-->
+
+{{template config_path="design/email/header_template"}}
+ 
+<div class="main-wrapper">
+    <p><b>First Name: </b>{{var data.firstname|raw}}</p>
+    <p><b>Last Name: </b>{{var data.lastname|raw}}</p>
+    <p><b>Company Name: </b>{{var data.company|raw}}</p>
+    <p><b>Order Number: </b>{{var data.order_number|raw}}</p>
+    <p><b>SIM Number: </b>{{var data.sim_number|raw}}</p>
+    <p><b>Desired Activation Date: </b>{{var data.desired_activation_date|raw}}</p>
+    <p><b>E-mail: </b>{{var data.email|raw}}</p>
+    <p><b>Notes: </b>{{var data.notes|raw}}</p>
+</div>
+
+{{template config_path="design/email/footer_template"}}

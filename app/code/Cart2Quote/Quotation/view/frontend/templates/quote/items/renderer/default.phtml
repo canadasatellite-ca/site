@@ -1,0 +1,25 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+/** @var \Cart2Quote\Quotation\Block\Checkout\Cart\Item\Renderer $block */
+
+$item = $block->getItem();
+$product = $item->getProduct();
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper(\Magento\Msrp\Helper\Data::class);
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+
+?>
+<tr id="order-item-row-<?php echo $block->escapeHtml($item->getId()) ?>">
+    <?php echo $block->getParentBlock()->getChildBlock('quotation.defaultrenderer')
+        ->setItem($item)
+        ->setProduct($product)
+        ->setIsVisibleProduct($isVisibleProduct)
+        ->setCanApplyMsrp($canApplyMsrp)
+        ->getChildHtml('', $useCache = false) ?>
+</tr>

@@ -1,0 +1,33 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php if ($listing = $block->getListing()): ?>
+    <table width="100%" border="0" style="border-collapse:separate; border-spacing:10px; padding-bottom:40px">
+        <tbody>
+            <tr>
+                <td width="220px" align="right"><?= $block->escapeHtml(__('Current Seller SKU:')) ?></td>
+                <?php if ($listingId = $listing->getId()): ?>
+                    <?php $url =
+                        $block->getUrl('channel/amazon/account_listing_details_index', ['id' => $listingId]) ?>
+                    <td>
+                        <a href="<?= $block->escapeHtml($url) ?>" target="_blank">
+                            <?= $block->escapeHtml($listing->getSellerSku()) ?>
+                        </a>
+                    </td>
+                <?php else: ?>
+                    <td><?= $block->escapeHtml(__('N/A')) ?></td>
+                <?php endif ?>
+            </tr>
+            <tr>
+                <td align="right"><?= $block->escapeHtml(__('Amazon Listing Name:')) ?></td>
+                <td><?= $block->escapeHtml((($listing->getName()) ? $listing->getName() : 'N/A')) ?></td>
+            </tr>
+        </tbody>
+    </table>
+<?php endif ?>

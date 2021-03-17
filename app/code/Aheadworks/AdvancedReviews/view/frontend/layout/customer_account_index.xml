@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <!--Remove blocks of native reviews START-->
+        <referenceBlock name="customer_account_dashboard_info1" remove="true"/>
+        <!--Remove blocks of native reviews END-->
+
+        <referenceContainer name="content">
+            <block name="aw.reviews.customer.account.dashboard.info"
+                   as="aw_reviews_customer_account_dashboard_info"
+                   template="Aheadworks_AdvancedReviews::customer/account/dashboard/info.phtml"
+                   after="customer_account_dashboard_info"
+                   cacheable="false">
+                <arguments>
+                    <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\Customer\Account\Dashboard\Info</argument>
+                </arguments>
+            </block>
+            <block class="Aheadworks\AdvancedReviews\Block\Customer\Review\Listing"
+                   name="customer.aw.reviews.list.recent"
+                   template="Aheadworks_AdvancedReviews::customer/review/listing.phtml"
+                   after="customer_account_dashboard_address"
+                   cacheable="false">
+                <arguments>
+                    <argument name="uiComponent" xsi:type="string">aw_advanced_reviews_customer_recent_review_listing</argument>
+                    <argument name="additionalClasses" xsi:type="string">recent</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

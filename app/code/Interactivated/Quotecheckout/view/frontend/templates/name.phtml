@@ -1,0 +1,54 @@
+<div class="<?php echo $block->getContainerClassName()?>">
+	<?php if ($block->showPrefix()): ?>
+		<div class="field name-prefix">
+			<label for="<?php echo $block->getFieldId('prefix')?>"<?php if ($block->isPrefixRequired()) echo ' class="required"' ?>><?php if ($block->isPrefixRequired()) echo '<em>*</em>' ?><?php echo __('Prefix') ?></label>
+			<div class="input-box">
+				<?php if ($block->getPrefixOptions()===false): ?>
+					<input type="text" id="<?php echo $block->getFieldId('prefix')?>" name="<?php echo $block->getFieldName('prefix')?>" value="<?php echo $block->escapeHtml($block->getObject()->getPrefix()) ?>" title="<?php echo __('Prefix') ?>" class="input-text<?php if ($block->isPrefixRequired()):?> required-entry<?php endif; ?>" <?php echo $block->getFieldParams() ?> />
+				<?php else: ?>
+					<select id="<?php echo $block->getFieldId('prefix')?>" name="<?php echo $block->getFieldName('prefix')?>" title="<?php echo __('Prefix') ?>"<?php if ($block->isPrefixRequired()):?> class="required-entry"<?php endif; ?> <?php echo $block->getFieldParams() ?>>
+					<?php foreach ($block->getPrefixOptions() as $_option): ?>
+						<option value="<?php echo $_option?>"<?php if ($block->getObject()->getPrefix()==$_option):?> selected="selected"<?php endif; ?>><?php echo __($_option)?></option>
+					<?php endforeach ?>
+					</select>
+				<?php endif; ?>
+			</div>
+		</div>
+	<?php endif; ?>
+		<div class="field name-firstname">
+			<label for="<?php echo $block->getFieldId('firstname')?>" class="required"><em>*</em><?php echo __('First Name') ?></label>
+			<div class="input-box">
+				<input type="text" id="<?php echo $block->getFieldId('firstname')?>" name="<?php echo $block->getFieldName('firstname')?>" value="<?php echo $block->escapeHtml($block->getObject()->getFirstname()) ?>" title="<?php echo __('First Name') ?>" class="input-text required-entry" <?php echo $block->getFieldParams() ?> />
+			</div>
+		</div>
+	<?php if ($block->showMiddlename()): ?>
+		<div class="field name-middlename">
+			<label for="<?php echo $block->getFieldId('middlename')?>"><?php echo __('M.I.') ?></label>
+			<div class="input-box">
+				<input type="text" id="<?php echo $block->getFieldId('middlename')?>" name="<?php echo $block->getFieldName('middlename')?>" value="<?php echo $block->escapeHtml($block->getObject()->getMiddlename()) ?>" title="<?php echo __('M.I.') ?>" class="input-text" <?php echo $block->getFieldParams() ?> />
+			</div>
+		</div>
+	<?php endif; ?>
+		<div class="field name-lastname">
+			<label for="<?php echo $block->getFieldId('lastname')?>" class="required"><em>*</em><?php echo __('Last Name') ?></label>
+			<div class="input-box">
+				<input type="text" id="<?php echo $block->getFieldId('lastname')?>" name="<?php echo $block->getFieldName('lastname')?>" value="<?php echo $block->escapeHtml($block->getObject()->getLastname()) ?>" title="<?php echo __('Last Name') ?>" class="input-text required-entry" <?php echo $block->getFieldParams() ?> />
+			</div>
+		</div>
+	<?php if ($block->showSuffix()): ?>
+		<div class="field name-suffix">
+			<label for="<?php echo $block->getFieldId('suffix')?>"<?php if ($block->isSuffixRequired()) echo ' class="required"' ?>><?php if ($block->isSuffixRequired()) echo '<em>*</em>' ?><?php echo __('Suffix') ?></label>
+			<div class="input-box">
+			<?php if ($block->getSuffixOptions()===false): ?>
+				<input type="text" id="<?php echo $block->getFieldId('suffix')?>" name="<?php echo $block->getFieldName('suffix')?>" value="<?php echo $block->escapeHtml($block->getObject()->getSuffix()) ?>" title="<?php echo __('Suffix') ?>" class="input-text<?php if ($block->isSuffixRequired()):?> required-entry<?php endif; ?>" <?php echo $block->getFieldParams() ?> />
+			<?php else: ?>
+				<select id="<?php echo $block->getFieldId('suffix')?>" name="<?php echo $block->getFieldName('suffix')?>" title="<?php echo __('Suffix') ?>"<?php if ($block->isSuffixRequired()):?> class="required-entry"<?php endif; ?> <?php echo $block->getFieldParams() ?>>
+				<?php foreach ($block->getSuffixOptions() as $_option): ?>
+					<option value="<?php echo $_option?>"<?php if ($block->getObject()->getSuffix()==$_option):?> selected="selected"<?php endif; ?>><?php echo __($_option)?></option>
+				<?php endforeach ?>
+				</select>
+			<?php endif; ?>
+			</div>
+		</div>
+	<?php endif; ?>
+</div>

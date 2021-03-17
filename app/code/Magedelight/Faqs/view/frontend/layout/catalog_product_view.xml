@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+       <script src="Magedelight_Faqs::js/faq_items.js"/>
+       <css src="Magedelight_Faqs::css/bootstrap.css"/>
+    </head>
+    <body>
+        <referenceBlock name="product.info.details">
+            <block ifconfig ='md_faq/general/enabled_product' class="Magedelight\Faqs\Block\Faq\Faqlist" name="faq.tab" template="Magedelight_Faqs::faqfrom.phtml" group="detailed_info" >
+                <container name="faq.form.additional.info" label="Form Additional Info">
+                    <block class="Magento\Captcha\Block\Captcha" name="captcha" after="-">
+                        <action method="setFormId">
+                            <argument name="formId" xsi:type="string">faq_form</argument>
+                        </action>
+                        <action method="setImgWidth">
+                            <argument name="width" xsi:type="string">230</argument>
+                        </action>
+                        <action method="setImgHeight">
+                            <argument name="width" xsi:type="string">50</argument>
+                        </action>
+                    </block>
+                </container>
+                <arguments>
+                    <argument translate="true" name="title" xsi:type="string">Q&amp;A</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+        <referenceContainer name="faq.form.additional.info">
+            <block class="MSP\ReCaptcha\Block\Frontend\ReCaptcha" name="msp-recaptcha" after="-"
+                   template="MSP_ReCaptcha::msp_recaptcha.phtml">
+
+                <arguments>
+                    <argument name="jsLayout" xsi:type="array">
+                        <item name="components" xsi:type="array">
+                            <item name="msp-recaptcha" xsi:type="array">
+                                <item name="component" xsi:type="string">MSP_ReCaptcha/js/reCaptcha</item>
+                                <item name="zone" xsi:type="string">contact</item>
+                            </item>
+                        </item>
+                    </argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

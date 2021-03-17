@@ -1,0 +1,17 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" label="Email Quote Items List" design_abstraction="custom">
+    <update handle="quotation_email_quote_renderers"/>
+    <update handle="quotation_email_quote_item_price"/>
+    <body>
+        <block class="Cart2Quote\Quotation\Block\Quote\Email\Items" name="items" template="email/quote/items.phtml" cacheable="false">
+            <block class="Magento\Framework\View\Element\RendererList" name="quotation.email.quote.renderers" as="renderer.list"/>
+        </block>
+        <block class="Magento\Framework\View\Element\Template" name="additional.product.info" template="Magento_Theme::template.phtml"/>
+    </body>
+</page>

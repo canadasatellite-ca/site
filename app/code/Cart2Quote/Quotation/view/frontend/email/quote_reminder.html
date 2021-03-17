@@ -1,0 +1,50 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--@subject {{var store.frontend_name}}: {{trans "Quote Reminder"}} # {{var quote.increment_id}} @-->
+<!--@vars {
+"var quote.increment_id":"Quote Id"
+} @-->
+
+{{template config_path="design/email/header_template"}}
+{{inlinecss file="Cart2Quote_Quotation::css/email-inline_extend.css"}}
+
+<table>
+    <tr class="email-intro">
+        <td>
+            <p class="greeting">{{trans "Hello %customer_name," customer_name=$quote_data_customer_name}}</p>
+
+            <p>
+                {{trans "On %quote_request_date, you have requested a quote from %store_name with an expiry date of %expiry_date." quote_request_date=$quote_data_quotation_created_at store_name=$store.frontend_name expiry_date=$quote_data_expiry_date_formatted|raw}}
+                <br>
+                {{trans "I may be a few days early, but I figured it’d be worth checking-in before the quote expires."}}
+            </p>
+
+            <p>
+                {{trans "Have you given any additional thought to the proposal? I’d be happy to do a quick review of it on the phone and answer any pending questions."}}
+            </p>
+
+            <p>
+                {{trans "You can find the <a href="%account_urlquote_id/%quote_id">quotation here</a>. When’s a good time to talk?" account_url=$this.getUrl($store,'quotation/quote/view/quote_id/') quote_id=$quote_data_quote_id |raw}}
+            </p>
+
+            <p>
+                {{trans "Best Wishes."}}
+            </p>
+
+            <p>
+                {{trans "If you have questions about your quote request, you can email us at <a href="mailto:%store_email">%store_email</a>" store_email=$store_email |raw}}
+                {{depend store_phone}}
+                {{trans "or call us at <a href="tel:%store_phone">%store_phone</a>" store_phone=$store_phone |raw}}
+                {{/depend}}.
+                {{depend store_hours}}
+                {{trans "Our hours are <span class="no-link">%store_hours</span>." store_hours=$store_hours |raw}}
+                {{/depend}}
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,88 @@
+
+<!-- BLOCK activationForm -->
+<div class="col-xs-24 col-sm-18 col-md-14 col-lg-12">
+    <form id="activate" class="form" action="/activate/index/sendmail/" method="post">
+        <fieldset class="fieldset">
+            <div class="field email required">
+                <label class="label" for="email1"><span><?php echo __('E-mail address') ?></span></label>
+                <div class="control">
+                    <input name="email" id="email1" title="E-mail" value="" class="input-text" type="text" data-validate="{required:true, 'validate-email':true}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="field fname required">
+                <label class="label" for="fname"><span><?php echo __('First Name') ?></span></label>
+                <div class="control">
+                    <input name="fname" id="fname" title="First Name" value="" class="input-text" type="text" data-validate="{required:true}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="field lname required">
+                <label class="label" for="lname"><span><?php echo __('Last Name') ?></span></label>
+                <div class="control">
+                    <input name="lname" id="lname" title="Last Name" value="" class="input-text" type="text" data-validate="{required:true}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="field companyname "><label class="label" for="companyname"><span><?php echo __('Company Name') ?></span></label>
+                <div class="control">
+                    <input name="companyname" id="companyname" title="Company Name" value="" class="input-text" type="text">
+                </div>
+            </div>
+
+            <div class="field orderno required"><label class="label" for="orderno"><span><?php echo __('Order Number') ?></span></label>
+                <div class="control">
+                    <input name="orderno" id="orderno" title="Order Number" value="" class="input-text" type="text" data-validate="{required:true}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="field simno required"><label class="label" for="simno"><span><?php  echo __('SIM Number') ?></span></label>
+                <div class="control">
+                    <input name="simno" id="simno" title="SIM Number" value="" class="input-text" type="text" data-validate="{required:true}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="field desiredactivationdate"><label class="label" for="desiredactivationdate"><span><?php  echo __('Desired Activation Date') ?></span></label>
+                <div class="control">
+                    <input name="desiredactivationdate" id="desiredactivationdate" title="Desired Activation Date" value="" class="input-text" type="text" data-validate="{validate-date:true}" aria-required="true">
+                </div>
+            </div>
+
+            <div class="field notes"><label class="label" for="notes"><span><?php echo __('Notes') ?></span></label>
+                <div class="control">
+                    <textarea name="notes" id="notes" title="Notes" class="input-text" cols="5" rows="3"></textarea>
+                </div>
+            </div>
+        </fieldset>
+
+        <div class="actions-toolbar">
+            <div class="primary">
+                <input type="hidden" name="hideit" id="hideit" value="">
+                    <button type="submit" title="Submit" class="action submit primary"><span><?php echo __('Submit') ?></span></button>
+            </div>
+        </div>
+    </form>
+</div>
+<div class="clearfix"></div>
+<!-- /BLOCK activationForm -->
+
+<script type="text/javascript">
+    require([
+        'jquery',
+        'mage/mage',
+        'mage/calendar'
+    ], function($){
+
+        var dataForm = $('#activate');
+        dataForm.mage('validation', {});
+
+        $('#desiredactivationdate').calendar({
+            showsTime: false,
+            hideIfNoPrevNext: true,
+            buttonText: "<?php echo __('Select Date') ?>",
+            minDate: new Date(),
+            dateFormat: 'yy-mm-dd'
+        });
+
+    });
+</script>

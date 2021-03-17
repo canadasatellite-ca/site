@@ -1,0 +1,103 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Helper\ProductThumbnail $thumbnailHelper */
+/** @var \Cart2Quote\Quotation\Block\Quote\Email\Items\Bundle $block */
+?>
+<?php $parentItem = $block->getItem() ?>
+<?php $items = array_merge([$parentItem], $parentItem->getChildren()); ?>
+<?php $_count = count($items) ?>
+<?php $_index = 0 ?>
+<?php $thumbnailHelper = $block->getThumbnailHelper(); ?>
+
+<?php $_prevOptionId = '' ?>
+
+<?php foreach ($items as $item) : ?>
+    <?php if ($item->getOptions() || $parentItem->getDescription()) : ?>
+        <?php $_showlastRow = true ?>
+    <?php else : ?>
+        <?php $_showlastRow = false ?>
+    <?php endif; ?>
+
+    <?php if ($item->getParentItem()) : ?>
+        <tr class="options-label options-label-header">
+            <?php $attributes = json_decode(
+                $item->getOptionByCode('bundle_selection_attributes')->getValue(),
+                true
+            ); ?>
+            <td class="col label" colspan="3"><?php echo $block->escapeHtml($attributes['option_label']); ?></td>
+        </tr>
+    <?php endif; ?>
+    <?php
+    $class = '';
+    if ($item->getParentItem()) {
+        $class .= ' item-options-container';
+    } else {
+        $class .= ' item-parent';
+    }
+    ?>
+    <tr id="order-item-row-<?php echo $block->escapeHtml($item->getItemId()) ?> item-details"
+        class="<?php echo $block->escapeHtml($class); ?>"
+        <?php if ($item->getParentItem()) : ?>
+            data-th="<?php echo $block->escapeHtml($item->getName()) ?>"
+        <?php endif; ?>>
+        <?php if (!$item->getParentItem()) : ?>
+            <?php $productUrl = $thumbnailHelper->getProductUrl($item); ?>
+            <?php $product = $item->getProduct(); ?>
+            <td class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+                <?php if ($thumbnailHelper->showProductThumbnailRequest()) : ?>
+                    <a href="<?php echo $productUrl; ?>">
+                    <img class="product-thumbnail" align="left"
+                             src="<?php echo $block->escapeHtml($thumbnailHelper->getProductThumbnail($product)); ?>"
+                             width="75"
+                             height="75" alt="<?php echo $block->escapeHtml($item->getName()); ?>"
+                             title="<?php echo $block->escapeHtml($item->getName()); ?>"/>
+                    </a>
+                <?php endif; ?>
+                <strong class="product name product-item-name"><?php echo $block->escapeHtml($item->getName()) ?></strong>
+                <p class="sku"><?php echo $block->escapeHtml(__('SKU')); ?>: <a href="<?php echo $productUrl; ?>"><?php echo $block->escapeHtml($item->getSku()) ?></a></p>
+            </td>
+            <td colspan="2">
+                <table class="item-details">
+                    <tr>
+                        <td class="item-qty" data-th="<?php echo $block->escapeHtml(__('Quantity')); ?>">
+                            <?php if (!$item->getParentItem()) : ?>
+                                <?php echo $block->escapeHtml($item->getQty()); ?>
+                            <?php endif; ?>
+                        </td>
+                        <?php if (!$item->getParentItem()) : ?>
+                            <?php if (!$block->hidePrice()) : ?>
+                                <td class="item-price">
+                                    <?php echo $block->getPriceHtml(); ?>
+                                </td>
+                            <?php endif; ?>
+                        <?php endif; ?>
+                    </tr>
+                </table>
+            </td>
+        <?php else : ?>
+            <td class="col value value-padding" colspan="3"
+                data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+                <?php echo $block->escapeHtml($item->getQty() . ' x ' . $item->getName()) ?>
+                <?php if (!$block->hidePrice()) : ?>
+                    <span class="price">&nbsp;<?php echo $block->escapeHtml($block->getpricingHelper()->currency($item->getPrice() * $item->getQty(), true, false)) ?>
+                    </span>
+                <?php endif; ?>
+            </td>
+        <?php endif; ?>
+    </tr>
+    <?php if ($item->getDescription()) : ?>
+        <tr>
+            <td class="item-comment" colspan="3">
+                <div class="item-comment-container">
+                    <span class="product-name"><?php echo $block->escapeHtml(__('Comment')); ?></span>
+                    <?php echo $block->escapeHtml($item->getDescription()); ?>
+                </div>
+            </td>
+        </tr>
+    <?php endif; ?>
+<?php endforeach; ?>

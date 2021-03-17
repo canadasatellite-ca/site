@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Link\CustomRequestLink $block */
+?>
+<?php if ($block->formIsEnabled()) : ?>
+    <?php if ($url = $block->getCustomRequestUrl()) : ?>
+        <li>
+            <a class="custom-request-link" href="<?php echo $url; ?>"><?php echo $block->getCustomRequestLabel(); ?></a>
+        </li>
+    <?php endif; ?>
+<?php endif; ?>

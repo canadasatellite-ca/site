@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\Create\Totals\OriginalSubtotal $block
+ * @see \Cart2Quote\Quotation\Block\Adminhtml\Quote\Create\Totals\OriginalSubtotal
+ */
+?>
+<?php if ($block->displayBoth()):?>
+    <tr class="row-totals">
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-mark" colspan="<?= /* @escapeNotVerified */ $block->getColspan() ?>">
+            <?= /* @escapeNotVerified */ __('Original Subtotal (Excl. Tax)') ?>
+        </td>
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-amount">
+            <?= /* @escapeNotVerified */ $block->formatPrice($block->getTotal()->getValue()) ?>
+        </td>
+    </tr>
+    <tr class="row-totals">
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-mark" colspan="<?= /* @escapeNotVerified */ $block->getColspan() ?>">
+            <?= /* @escapeNotVerified */ __('Original Subtotal (Incl. Tax)') ?>
+        </td>
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-amount">
+            <?= /* @escapeNotVerified */ $block->formatPrice($block->getTotal()->getValueInclTax()) ?>
+        </td>
+    </tr>
+<?php elseif ($block->displayCartPricesInclTax()) : ?>
+    <tr class="row-totals">
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-mark" colspan="<?= /* @escapeNotVerified */ $block->getColspan() ?>">
+            <?= /* @escapeNotVerified */ $block->getTotal()->getTitle() ?>
+        </td>
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-amount">
+            <?= /* @escapeNotVerified */ $block->formatPrice($block->getTotal()->getValueInclTax()) ?>
+        </td>
+    </tr>
+<?php else : ?>
+    <tr class="row-totals">
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-mark" colspan="<?= /* @escapeNotVerified */ $block->getColspan() ?>">
+            <?= /* @escapeNotVerified */ $block->getTotal()->getTitle() ?>
+        </td>
+        <td style="<?= /* @escapeNotVerified */ $block->getStyle() ?>" class="admin__total-amount">
+            <?= /* @escapeNotVerified */ $block->formatPrice($block->getTotal()->getValue()) ?>
+        </td>
+    </tr>
+<?php endif;?>

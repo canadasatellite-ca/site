@@ -1,0 +1,17 @@
+<div class="review-helpful-report-wrapper">
+    <div class="helpful" data-bind="blockLoader: isLoading">
+        <span class="text-h" data-bind="i18n: 'Was this review helpful?'"></span>
+        <a class="icon-h like" tabindex="0" data-bind="click: onLikeClick, keyboard: {13: onLikeClick}" >
+            <svg xmlns="http://www.w3.org/2000/svg" height="13" width="13" data-bind="css: (isVoted() && isVotedLike()) ? votedClass : ''">
+                <path d="M3.298 5.83S3.241 4.384 6.459.426c.428-.527 1.708-.268 1.733.51.06 1.818-1.167 3.303.102 3.67.443.128 3.273.07 3.773.306.398.189 1.02.571.816 2.345-.256 2.224-.511 3.013-.714 3.467-.591 1.326-1.631 1.958-2.447 2.04-.816.081-4.813.244-5.098.203-.286-.04-1.244-.387-1.326-1.325-.082-.938-.088-5.194 0-5.812zM.902 5.32h.816a.748.748 0 0 1 .745.78q-.067 3.065 0 6.017a.734.734 0 0 1-.745.748H.902a.765.765 0 0 1-.765-.764V6.085a.765.765 0 0 1 .765-.765z"/>
+            </svg>
+            <span text="likesCount()" data-bind="css: likesGreater() === true ? greaterClass : ''"></span>
+        </a>
+        <a class="icon-h dislike" tabindex="0" data-bind="click: onDislikeClick, keyboard: {13: onDislikeClick}">
+            <svg xmlns="http://www.w3.org/2000/svg" height="13" width="13" data-bind="css: (isVoted() && !isVotedLike()) ? votedClass : ''">
+                <path d="M3.34 7.23s-.056 1.443 3.14 5.394c.425.526 1.697.267 1.721-.508.059-1.816-1.16-3.298.102-3.665.44-.127 3.251-.069 3.747-.305.395-.188 1.013-.57.81-2.34-.254-2.22-.507-3.007-.709-3.461-.587-1.323-1.62-1.954-2.43-2.036C8.91.228 4.94.065 4.657.106c-.283.04-1.235.386-1.317 1.323-.081.936-.087 5.184 0 5.801zM.96 7.74h.81a.745.745 0 0 0 .741-.78q-.067-3.058 0-6.004a.73.73 0 0 0-.74-.748H.96A.761.761 0 0 0 .2.971v6.004a.761.761 0 0 0 .76.764z"/>
+            </svg>
+            <span text="dislikesCount()" data-bind="css: likesGreater() === false ? greaterClass : ''"></span>
+        </a>
+    </div>
+</div>

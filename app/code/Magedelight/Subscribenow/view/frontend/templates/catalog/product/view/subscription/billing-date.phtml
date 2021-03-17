@@ -1,0 +1,47 @@
+<?php
+/**
+ * Magedelight
+ * Copyright (C) 2018 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2018 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+?>
+
+<?php if ($block->isCustomerDefined()) : ?>
+<div class="control date-picker">
+    <input type="text" id="md_subscription_start" readonly="readonly" name="subscription_start_date" class="input-text" value=""/>
+</div>
+<script type="text/javascript">
+    require(["jquery", "mage/calendar"],
+        function ($) {
+            $('#md_subscription_start').calendar({
+                showsTime: false,
+                changeMonth: false,
+                changeYear: false,
+                showOn: 'focus',
+                hideIfNoPrevNext: true,
+                showAnim: "",
+                buttonImageOnly: null,
+                buttonImage: null,
+                showButtonPanel: false,
+                showOtherMonths: false,
+                showWeek: false,
+                timeFormat: '',
+                showTime: false,
+                showHour: false,
+                showMinute: false,
+                buttonText: "<?php echo __('Select Date') ?>",
+                dateFormat: "yy-mm-dd",
+                minDate: new Date('<?php echo $block->getCurrentDate(); ?>')
+            });
+            $("#md_subscription_start").calendar().datepicker("setDate", new Date('<?php echo $block->getSubscriptionSelectedDate(); ?>'));
+        });
+</script>
+<?php else : ?>
+    <span><?php echo $block->getSubscriptionDate(); ?></span>
+    <input type="hidden" name="subscription_start_date" value="<?php echo $block->getSubscriptionDate() ?>" />
+<?php endif; ?>

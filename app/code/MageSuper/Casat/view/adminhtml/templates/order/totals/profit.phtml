@@ -1,0 +1,16 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_source  = $block->getSource() ?>
+<?php $block->setPriceDataObject($_source) ?>
+
+<tr  class="total-profit">
+    <td class="label"><?php /* @escapeNotVerified */ echo __('Profit') ?></td>
+    <td><?php /* @escapeNotVerified */ echo $block->displayPriceAttribute('profit') ?></td>
+</tr>

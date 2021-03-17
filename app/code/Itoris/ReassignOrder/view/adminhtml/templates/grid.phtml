@@ -1,0 +1,182 @@
+<?php
+/**
+ * ITORIS
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the ITORIS's Magento Extensions License Agreement
+ * which is available through the world-wide-web at this URL:
+ * http://www.itoris.com/magento-extensions-license.html
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to sales@itoris.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade the extensions to newer
+ * versions in the future. If you wish to customize the extension for your
+ * needs please refer to the license agreement or contact sales@itoris.com for more information.
+ *
+ * @category   ITORIS
+ * @package    ITORIS_M2_REASSIGN_ORDER
+ * @copyright  Copyright (c) 2016 ITORIS INC. (http://www.itoris.com)
+ * @license    http://www.itoris.com/magento-extensions-license.html  Commercial License
+ */
+?>
+<?php $helperBackend=$this->helper('Magento\Backend\Helper\Data'); ?>
+<?php $helperData= $this->helper('Itoris\ReassignOrder\Helper\Data') ?>
+<?php if($helperData->isEnabled()): ?>
+<script type="text/javascript">
+    var tabModal;
+    var confirmPopup;
+    var popupContent='';
+    var gridCheckBox={};
+    requirejs([
+        'jquery',
+        'jquery/ui',
+        'mage/translate',
+        'Magento_Ui/js/modal/modal',
+    ], function ($) {
+        var reas_but = $('itoris_reassign_order_button');
+        tabModal=$('#itoris_reassign_popup').modal({
+            type: 'popup',
+            buttons: [],
+        });
+        confirmPopup = $('#confirm_itoris_reassign_popup').modal({
+            type: 'popup',
+            title:'<?php echo __('Attention') ?>',
+            buttons: [{
+                text: '<?php echo __('Ok') ?>',
+                class: 'action-primary action-accept',
+                click: function() {
+                    this.closeModal();
+                }
+            }]
+        });
+       /*$('.admin__data-grid-outer-wrap').bind("DOMSubtreeModified",function(){
+           console.log($('.admin__data-grid-outer-wrap .data-grid'));
+         if($('.admin__data-grid-outer-wrap').is('.data-grid')){
+             console.log(11111111);
+         }
+       });*/
+        setTimeout(function(){
+            var list ='<li>'+
+                '<span class="itoris-assign-reassign action-menu-item" data-bind="text: $action().label">Assign to Customer</span>'+
+                '</li>';
+            $('.admin__data-grid-header-row .action-menu').append(list);
+
+            $('.itoris-assign-reassign').click(function(){
+                $('.data-grid .admin__control-checkbox').unbind('change');
+                $('.data-grid .admin__control-checkbox').change(function(){
+
+                });
+
+                if($('.data-grid tr td .admin__control-checkbox:checked').first().attr('checked')==undefined)
+                confirmPopup.modal('openModal');
+                else{
+                    window.showReassignPopupView();
+                }
+
+            });
+        },2000);
+
+        window.showReassignPopupView=function(){
+                $.ajax({
+                    url: '<?php echo $helperBackend->getUrl('itorisreassignorder/itorisreassignorder/loadCustomerGrid') ?>'+'form_key/'+window.FORM_KEY,
+                    type: "POST",
+                    showLoader: true,
+                    complete: function (data) {
+                        tabModal.html(data.responseText);
+                        tabModal.modal('openModal');
+                    }
+                });
+
+
+        };
+        window.showReassignPopupForm=function(name, email) {
+            <?php $order = $block->getCurentOrder();?>
+            <?php if(isset($order)): ?>
+            popupContent=tabModal.html();
+            var content = '<div id="itoris_reassignorder_form_popup">' +
+                '<div id="reassign_information">' +
+                '<p><?php echo __('You are about to reassign order %1', '#' . $order->getIncrementId()); ?> </p>' +
+                '<p><?php echo '#' . $order->getIncrementId() . ': ';echo addslashes($order->getCustomerName()) . ' (' . $order->getCustomerEmail() . ') -> ';?>' + name + ' ('+email+')</p>' +
+                '</div>' +
+                '<div id="itoris_reassignorder_form">' +
+                '<form action="<?php  echo $helperBackend->getUrl('itorisreassignorder/itorisreassignorder/changeOrder'); ?>" method="post">' +
+                '<p><label>Overwrite customer name <input type="checkbox"  value="1" name="settings[overwrite_customer_name]" style="margin-left:5px"></label></p>' +
+                '<p><label>Notify Customer <input type="checkbox"  checked value="1" name="settings[notify_customer]" style="margin-left:5px"></label></p>' +
+                '<input type="hidden" name="to_email" id="to">' +
+                '<input type="hidden" name="order_ids" id="order_id" value="<?php echo $order->getId(); ?>">' +
+                '<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>">' +
+                '</form>' +
+                '</div>' +
+                '<button type="submit" class ="action-primary itoris_assign_order" style="margin-right: 20px;">Assign</button>' +
+                '<button type="button" class="back-itoris-customer-reasign action-primary" onclick="Windows.close(Dialog.dialogId);" style="margin-top: 10px;"><span><span><span>Back</span></span></span></button>' +
+                '</div>';
+            tabModal.modal('closeModal');
+            tabModal.html(content);
+            $('.back-itoris-customer-reasign').unbind('click');
+            $('.itoris_assign_order').unbind('click');
+            $('.itoris_assign_order').click(function(){
+                $('#itoris_reassignorder_form form').submit();
+            })
+            $('.back-itoris-customer-reasign').click(function(){
+                tabModal.html(popupContent);
+            })
+            tabModal.modal('openModal');
+            $('#to').val(email);
+            <?php else: ?>
+            popupContent=tabModal.html();
+            var checkBox = $('.data-grid tr td .admin__control-checkbox:checked');
+            var ids = [];
+            var i=0;
+            checkBox.each(function(i,elem){
+                ids.push($(this).val());
+            });
+            $.ajax({
+                url: '<?php echo $helperBackend->getUrl('itorisreassignorder/itorisreassignorder/ajax') ?>',
+                type: "POST",
+                data: {ids : ids.join(), name : name,
+                    email : email},
+                showLoader: true,
+                complete: function (data) {
+                    var content ='<div id="itoris_reassignorder_form_popup">' +
+                        '<div id="reassign_information" style="padding-bottom:20px;">' +
+                        '</div>' +
+                        '<div id="itoris_reassignorder_form">' +
+                        '<form action="<?php  echo $helperBackend->getUrl('itorisreassignorder/itorisreassignorder/massReassign'); ?>" method="post">' +
+                        '<p><label>Overwrite customer name</label><input type="checkbox" value="1" name="settings[overwrite_customer_name]" style="margin-left:5px"></p>' +
+                        '<p><label>Notify Customer</label><input type="checkbox" checked value="1" name="settings[notify_customer]" style="margin-left:5px"></p>' +
+                        '<input type="hidden" name="to_email" id="to">' +
+                        '<input type="hidden" name="order_ids" id="order_id">' +
+                        '<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>">' +
+                        '</form>' +
+                        '<button type="submit" class ="action-primary itoris_assign_order" style="margin-right: 20px;">Assign</button>' +
+                        '<button type="button" class="back-itoris-customer-reasign action-primary" onclick="Windows.close(Dialog.dialogId);" style="margin-top: 10px;"><span><span><span>Back</span></span></span></button>' +
+                        '</div>';
+                    tabModal.html(content);
+                    tabModal.modal('openModal');
+                    $('#reassign_information').html(data.responseText);
+                    $('.itoris_assign_order').unbind('click');
+                    $('.back-itoris-customer-reasign').click(function(){
+                        tabModal.html(popupContent);
+                    })
+                    tabModal.modal('openModal');
+                    $('.itoris_assign_order').click(function(){
+                        $('#itoris_reassignorder_form form').submit();
+                    })
+                    $('#order_id').val(ids.join());
+                    $('#to').val(email);
+                }
+            });
+            <?php endif; ?>
+        }
+    });
+
+
+
+</script>
+<div id="itoris_reassign_popup" style="padding-bottom: 20px;"></div>
+<div id="confirm_itoris_reassign_popup"><div><?php echo __('You haven\'t selected any items') ?>!</div></div>
+<?php endif; ?>

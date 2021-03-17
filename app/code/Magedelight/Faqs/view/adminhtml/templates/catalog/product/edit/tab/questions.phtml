@@ -1,0 +1,49 @@
+<div class="<?php echo /* @noEscape */ $block->escapeHtml($block->getData('config/dataScope')); ?>"
+     data-role="step-wizard-dialog"
+     data-bind="scope: '<?php echo /* @noEscape */ $block->escapeHtml($block->getForm()); ?>.
+        <?php echo  $block->escapeHtml($block->getModal()); ?>'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<div class="<?php echo /* @noEscape */ $block->escapeHtml($block->getData('config/dataScope')); ?>"
+     id="product-variations-matrix"
+     data-role="product-variations-matrix">
+    <div data-bind="scope: 'configurableVariations'"></div>
+</div>
+<?php // @codingStandardsIgnoreStart ?>
+<script type="text/x-magento-init">
+    {
+        "*": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?php echo /* @noEscape */ $block->getData('config/form') ?>.<?php echo /* @noEscape */ $block->getModal() ?>": {
+                        "component": "Magedelight_Faqs/js/components/modal-faqs",
+                        "options": {"type": "slide", "title": "<?php echo $block->escapeHtml(__('Question Products')); ?>"},
+                        "formName": "<?php echo /* @noEscape */ $block->getForm() ?>",
+                        "isTemplate": false,
+                        "stepWizard": "<?php echo /* @noEscape */ $block->getData('config/nameStepWizard') ?>",
+                        "children": {
+                            "wizard": {
+                                "url": "<?php echo /* @noEscape */ $block->getUrl($block->getData('config/urlWizard'), ['id' => $block->getProduct()->getId()]) ?>",
+                                "component": "Magento_Ui/js/form/components/html"
+                            }
+                        }
+                    }
+
+                }
+            }
+        }
+    }
+</script>
+
+<script>
+    require(['jquery', 'mage/apply/main'], function ($, main) {
+        main.apply();
+
+          $('.<?php echo /* @noEscape */ $block->getData('config/dataScope') ?>[data-role=step-wizard-dialog]').applyBindings();
+        $('.<?php echo /* @noEscape */ $block->getData('config/dataScope') ?>[data-role=product-variations-matrix]').applyBindings();
+
+    })
+</script>
+
+<?php // @codingStandardsIgnoreEnd ?>

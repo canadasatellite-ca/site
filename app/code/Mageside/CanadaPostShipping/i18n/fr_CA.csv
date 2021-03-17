@@ -1,0 +1,150 @@
+Manage Manifests,Direction des Manifestes
+Can't find manifest.,Impossible de trouver un manifeste.
+Something went wrong while printing manifest.,S'est produite une erreur lors de l'impression manifeste.
+View Manifest,Voir Manifeste
+Processed manifest ids: ,Manifeste des ids traitée
+Manifest id: %1. Error Msg: %2,Manifeste id: %1. Erreur Msg: %2
+The shipping module is not available.,Le module d'expédition n'est pas disponible.
+This shipping method is not available. Please specify the zip code.,Cette méthode d'expédition n'est pas disponible. Veuillez spécifier le code postal.
+Est. Delivery %1,Date prévue %1
+"Unable to create new shipping label, because Canada Post's shipment already created (id: %1).","Impossible de créer une nouvelle étiquette d'expédition, car l'envoi de Postes Canada déjà créé (id:% 1)."
+Something went wrong while getting manifest group id.,S'est produite une erreur lors à obtenir l'identité du groupe manifeste.
+Something went wrong while creating shipment.,S'est produite une erreur lors de la création de l'expédition.
+Regular Parcel,Colis régulier
+Expedited Parcel,Colis accéléré
+Xpresspost,Xpresspost
+Xpresspost Certified,Xpresspost Certifié
+Priority,Priorité
+Delivered Tonight,Livré ce soir
+Library Materials,Matériel de bibliothèque
+Expedited Parcel USA,Colis accéléré USA
+Priority Worldwide Envelope USA,Priorité de mondiale enveloppe USA
+Priority Worldwide pak USA,Priorité de mondiale pak USA
+Priority Worldwide Parcel USA,Priorité de mondiale colis USA
+Small Packet USA Air,Le petit paquet USA air
+"Tracked Packet – USA","Paquet de suivi – USA"
+"Tracked Packet – USA (LVM)","Paquet de suivi – USA (LVM)"
+Xpresspost USA,Xpresspost USA
+Xpresspost International,Xpresspost International
+International Parcel Air,International Colis Air
+International Parcel Surface,International Colis Surface
+"Priority Worldwide Envelope Int’l","Priorité de mondiale enveloppe Int’l"
+"Priority Worldwide pak Int’l","Priorité de mondiale pak Int’l"
+"Priority Worldwide parcel Int’l","Priorité de mondiale colis Int’l"
+Small Packet International Air,Le petit paquet International Air
+Small Packet International Surface,Le petit paquet International Surface
+Tracked Packet – International,Paquet de suivi â€“ International
+Documents and Parcels,Documents et Colis
+status,statut
+Empty response,Vide Réponse
+"Invalid response from carrier","Erroné Réponse d'un Сourrier"
+For some reason we can't retrieve tracking info right now.,"Pour une raison quelconque, nous ne pouvons pas récupérer les informations de suivi en ce moment."
+None,Aucun
+English,Anglais
+French,Français
+"Return at Sender’s Expense","Retourner à L'expéditeur Dépense"
+"Return to Sender","Retourner à l'expéditeur"
+Abandon,Abandonner
+Upon shipment of the parcel,Sur l'expédition du colis
+On exceptions,Sur les exceptions
+Upon delivery of the parcel,À la livraison du colis
+4x6 thermal,4x6 thermique
+8.5x11 paper,8.5x11 papier
+Commercial,Commercial
+Counter,Compteur
+Document,Document
+Commercial sample,Commercial Échantillon
+Repair or warranty,Réparation ou garantie
+Sale of goods,Vente de 	produits
+Other,Autre
+COD,COD
+Proof of Age Required - 18,Preuve d'âge requise - 18
+Proof of Age Required - 19,Preuve d'âge requise - 19
+Card for pickup,Carte pour pick-up
+Do not safe drop,Ne pas sécurité de laisser tomber
+Leave at door - do not card,Laisse à la porte - ne carte
+Choose Canada Post Manifest,Choisir Manifeste de Postes Canada
+Create New Canada Post Manifest,Créer un Nouveau Manifeste de Postes Canada
+ by,par
+Your feedback for ,Vos commentaires pour
+is highly appreciated.,est très apprécié.
+Found an issue? Need help? Got custom request? Please ,Trouvé un problème? Besoin d'aide pour? Avoir reçu client demande? S'il vous plaît
+Contact us,Contactez nous
+You can check more extensions designed by our team in our ,Vous pouvez vérifier plus d'extensions créé par notre équipe dans notre
+Store,Magasin
+Field ,Le champ
+ is required., est requis.
+Sales,Soldes
+Operations,Opérations
+Manifests,Manifestes
+Canada Post Manifests,Manifestes des Postes Canada
+Canada Post,Postes Canada
+Enabled for Checkout,Activé pour la Caisse
+Title,Titre
+Locale,Localement
+Indicates your language preference for receiving error messages.,Indique votre préférence de langue pour recevoir des messages d'erreur.
+Sandbox Mode,Mode bac à sable
+Customer Number,Numéro de Client
+Contract ID,ID de Contact
+"If you are a Canada Post commercial customer with a parcel agreement, please fill your contract id.","Si vous êtes un client commercial de Postes Canada avec un accord de colis, veuillez remplir votre identifiant de contrat."
+API Username,Nom d'utilisateur API
+API Password,Mot de passe de l'API
+API Username (Development),Nom d'utilisateur API (Développement)
+API Password (Development),Mot de passe de l'API (Développement)
+Max Package Weight,Poids maximum du paquet
+In kilogram. 0 - unlimited weight.,En kilogramme. 0 - poids illimité.
+Quote Type,Type de Devis
+Commercial - will return the discounted price for the commercial customer or Solutions for Small Business member. Counter - will return the regular price paid by consumers.,Commercial - retournera le prix réduit pour le Client Commercial ou le membre Solutions pour Petit Commerce. Counter - retournera le prix régulier payé par les consommateurs.
+Lead Days,Délais
+Expected mailing date after days.,Attendu mailing date après jours.
+Show Estimated Delivery Date,Afficher la date de livraison estimée
+Default Box Length,Longueur de la boîte par défaut
+Value in centimeters. Used for rating calculation. 0 - to ignore this setting.,Valeur en centimètres. Utilisé pour le calcul de la note. 0 - pour ignorer ce paramètre.
+Default Box Width,Largeur de la boîte par défaut
+Default Box Height,Hauteur de la boîte par défaut
+Options For Shipment,Options d'expédition
+Signature Threshold,Seuil de Signature
+"The minimum order price at which the Canada Post ""Signature"" option is added to the rate quote. Set to ""0"" for Signature required on all shipments. Set to a value higher than any expected order price to disable, eg: ""99999"".","Le prix de commande minimum auquel l'option ""Signature"" de Postes Canada est ajoutée au tarif. Réglez sur ""0"" pour la signature requise sur tous les envois. Définissez une valeur supérieure à tout prix de commande attendu pour désactiver, par exemple: ""99999""."
+Coverage Threshold,Seuil de Couverture
+"The minimum price at which postal insurance coverage should be added to the rate quote. ""0"" for all shipments, some value higher than any expected order price to disable, eg: ""99999"".","Le prix minimum auquel la couverture d'assurance postale devrait être ajoutée au tarif. ""0"" pour toutes les expéditions, une valeur supérieure à tout prix de commande attendu à désactiver, par exemple: ""99999""."
+Notification,Notification
+Contains client preferences with respect to email notification for tracking events e.g. delivery.,"Contient les préférences du client en ce qui concerne la notification par email pour les événements de suivi, par exemple livraison."
+Print Output Format,Format de sortie d'impression
+Non-delivery handling,Non-livraison Manutention
+Reason For Export,Raison pour l'export
+Other Reason,Autre Raison
+Maximum 44 characters,44 caractères maximum
+Calculate Handling Fee,Calculer le prix de manutention
+Handling Applied,Manutention Appliquée
+Handling Fee,Prix de Manutention
+Allowed Methods,Méthodes permettées
+Free Method,Méthode Libre
+Free Shipping Amount Threshold,Livraison Gratuite de Total Seuil
+Enable Free Shipping Threshold,Activer de Livraison Gratuite Seuil
+Displayed Error Message,Affiché Message d'erreur
+Ship to Applicable Countries,Expédition dans des pays applicables
+Ship to Specific Countries,Expédition dans des pays spécifiques
+Debug,Débugger
+Show Method if Not Applicable,Afficher la Méthode si elle n'est pas Applicable
+Sort Order,Ordre de tri
+Transmit Shipments,Transmettre les Envois
+ID,ID
+Group ID,Groupe ID
+Canada Post Manifest ID,Manifestes de Postes Canada ID
+Status,Statut
+Created At,Créé à
+Updated At,Mis à jour à
+View,Vue
+Back,Reculer
+Order ID,Ordre ID
+Shipment ID,Expédition ID
+Customer,Client
+Canada Post Shipment ID,Canada Post Shipment ID
+Ordered At,Ordrée à
+Token id is not valid.,Token id n'est pas valide.
+Please select an office.,S'il vous plaît, sélectionnez un bureau.
+My Location,Ma position.
+View details and directions,Voir les détails et les directions
+Delivery to nearest post office.,Livraison au bureau de poste le plus proche.
+Change post office,Changer le bureau de poste
+Something went wrong while loading Google Maps.,Une erreur s'est produite lors du chargement de Google Maps.

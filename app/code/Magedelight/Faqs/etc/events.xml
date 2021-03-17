@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    
+    <event name="controller_action_predispatch_faqs_faq_addquetion">
+        <observer name="captcha_faq_form" instance="Magedelight\Faqs\Observer\CheckProductQaFormObserver" />
+    </event> 
+    <event name="layout_render_before">
+        <observer name="magedelight_check_util" instance="Magedelight\Faqs\Observer\Util" />
+    </event>
+
+    <event name="controller_action_predispatch_review_product_post">
+        <observer name="custom_faq_category_save_after" instance="Magedelight\Faqs\Observer\Frontend\FaqNewQuestion" />
+    </event>
+</config>

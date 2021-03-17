@@ -1,0 +1,8 @@
+<?php if($block->getSource() instanceof \Magento\Sales\Model\Order): ?>
+    <?php if ((float)$block->getSource()->getGiftwrapAmountRefunded() > 0): ?>
+        <tr>
+            <td class="label"><strong><?php echo __('Gift Wrap Refunded') ?></strong></td>
+            <td><strong><?php echo $block->displayPriceAttribute('giftwrap_amount_refunded', true); ?></strong></td>
+        </tr>
+    <?php endif; ?>
+<?php endif; ?>

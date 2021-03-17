@@ -1,0 +1,178 @@
+@import '../_variables.less';
+
+#checkoutSteps {
+    li {
+        border: 1px solid @grey;
+        -webkit-border-radius: 5px;
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+        padding: 10px 15px;
+        width: ~'calc(47% - 15px)';
+        position: relative;
+
+        @media only screen and (max-width: 767px) {
+            width: 95%;
+        }
+
+        .step-title {
+            border-bottom: 0;
+            background-color: @color-blue2;
+            margin: -11px -16px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            color: @white-color;
+            padding: 0 0 0 48px;
+            border-radius: 5px 5px 0 0;
+
+            .title-number {
+                    margin: 4px 0 0 -40px;
+                    font-weight: normal;
+                    border-color: @white-color;
+                    color: @white-color;
+                    box-shadow: none;
+                    background: transparent;
+            }
+        }
+
+        &.checkout-shipping-address {
+            @media only screen and (max-width: 767px) {
+                margin-bottom: 20px;
+            }
+        }
+
+        &.checkout-shipping-method {
+            margin-bottom: 20px;
+        }
+
+        &.checkout-payment-method {
+            .step-title {
+                position: absolute;
+                top: 9px;
+                width: ~'calc(100% - 45px)';
+                z-index: 1;
+            }
+
+            .credit-card-types li {
+                width: auto;
+            }
+        }
+
+        .step-content {
+            width: 100%;
+        }
+
+        .form-login, .form-shipping-address {
+            max-width: 100%;
+        }
+
+    }
+}
+
+#iosc-summary {
+    border: 1px solid @grey;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
+    border-radius: 5px;
+    padding: 10px 15px;
+    width: ~'calc(100% - 32px)' !important;
+
+    .title.step-title {
+        border-bottom: 0;
+        background-color: @color-blue2;
+        margin: -11px -16px;
+        height: 40px;
+        line-height: 40px;
+        font-size: 16px;
+        color: @white-color;
+        padding: 0 0 0 48px;
+        border-radius: 5px 5px 0 0;
+        width: ~'calc(100% - 16px)';
+        display: block;
+
+        .title-number {
+            margin: 4px 0 0 -40px;
+            font-weight: normal;
+            border-color: @white-color;
+            color: @white-color;
+            box-shadow: none;
+            background: transparent;
+        }
+    }
+
+    .opc-block-summary {
+        margin-top: 22px;
+    }
+
+    .action.primary {
+        background: @color-blue2 !important;
+        border: 1px solid @color-blue2 !important;
+    }
+}
+
+.am-checkout {
+    .authentication-wrapper button.action-auth-toggle {
+        background: @color-blue2 !important;
+    }
+
+    .amcheckout-main-container {
+
+        @media (min-width: 1024px) {
+            flex-wrap: wrap;
+
+            .amcheckout-column {
+                width: 46% !important;
+                border: 1px solid @grey;
+                border-radius: 5px;
+                padding: 10px 15px;
+
+                &:last-child {
+                    width: 100% !important;
+                    margin-top: 20px;
+                }
+            }
+
+        }
+
+        .amcheckout-title {
+            background: @color-blue2 !important;
+            padding: 0 12px;
+            height: 40px;
+            line-height: 40px;
+            font-size: 16px;
+            border-radius: 5px 5px 0 0;
+            margin: -11px -16px;
+            color: #fff !important;
+
+            .step-title {
+                text-indent: 13px !important;
+                line-height: 50px !important;
+            }
+        }
+
+        .amcheckout-summary-container, .payment-method {
+            background-color: transparent !important;
+        }
+
+        .amcheckout-step-container.-summary {
+            border: 0 !important;
+        }
+
+        .minicart-items-wrapper {
+            max-height: 100% !important;
+        }
+
+        .primary.checkout.amasty {
+            padding: 13px 35px !important;
+            color: @white-color !important;
+            width: 92% !important;
+            border-radius: 6px !important;
+            background: @color-blue2 !important;
+
+            @media (max-width: 1024px) {
+                width: 100% !important;
+            }
+        }
+
+    }
+}

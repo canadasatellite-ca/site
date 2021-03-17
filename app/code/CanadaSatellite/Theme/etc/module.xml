@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="CanadaSatellite_Theme" setup_version="1.0.6">
+    	<sequence>
+            <module name="Magento_Config" />
+            <module name="Magento_Catalog" />
+            <module name="Magento_Bundle" />
+            <module name="MageKey_XsdMerger" />
+            <module name="MageWorx_Downloads" />
+            <module name="Magedelight_Firstdata" />
+            <module name="CanadaSatellite_DynamicsIntegration" />
+            <module name="Interactivated_ActivationForm" />
+            <module name="Vsourz_HtmlSitemap" />
+        </sequence>
+    </module>
+</config>

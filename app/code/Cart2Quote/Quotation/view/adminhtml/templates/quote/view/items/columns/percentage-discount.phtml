@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */
+?>
+<?php if ($block->getIsSelectedTier()) : ?>
+    <input name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][percentage_discount]"
+           placeholder="<?php echo $block->escapeHtml($block->getAppliedValue()) ?>" type="hidden"
+    />
+<?php endif; ?>
+<input name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][tier_item][<?php echo $block->escapeHtml($block->getTierItem()->getId()) ?>][percentage_discount]"
+       class="input-text admin__control-text quote-percentage-discount-box"
+       placeholder="<?php echo $block->escapeHtml($block->getAppliedValue()) ?>" maxlength="6" type="number" style="width:80px"
+/>

@@ -1,0 +1,34 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Request\QuickQuote\Modal $block */
+?>
+
+<div id="quick-quote-modal-content" class="quick-quote-modal-content content" data-bind="scope: 'quickquote_modal_content'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "#quick-quote-modal-content": {
+            "Magento_Ui/js/core/app":<?php echo $block->getJsLayout() ?>
+        }
+    }
+</script>
+<script>
+    window.checkoutConfig = <?php echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+    // Create aliases for customer.js model from customer module
+    window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+    window.customerData = window.checkoutConfig.customerData;
+    require([
+        'mage/url',
+        'Magento_Ui/js/block-loader'
+    ], function(url, blockLoader) {
+        blockLoader("<?php echo $block->escapeHtml($block->getViewFileUrl('images/loader-1.gif')) ?>");
+        return url.setBaseUrl('<?php echo $block->escapeHtml($block->getBaseUrl()) ?>');
+    })
+</script>

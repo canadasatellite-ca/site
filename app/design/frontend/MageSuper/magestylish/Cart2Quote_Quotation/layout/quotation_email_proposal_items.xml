@@ -1,0 +1,27 @@
+<?xml version="1.0"?><!--
+/**
+ * Cart2Quote
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../../../../lib/internal/Magento/Framework/View/Layout/etc/page_configuration.xsd" label="Email Quote Items List" design_abstraction="custom">
+    <body>
+        <referenceBlock name="items">
+            <block class="Cart2Quote\Quotation\Block\Quote\Totals" name="quote_totals" template="email/proposal/items/quote/totals.phtml">
+                <arguments>
+                    <argument name="label_properties" xsi:type="string">colspan="4"</argument>
+                    <argument name="label_properties_with_comment" xsi:type="string">colspan="4"</argument>
+                </arguments>
+                <block class="Cart2Quote\Quotation\Block\Quote\Tax" name="tax" template="quote/tax.phtml">
+                    <arguments>
+                        <argument name="label_properties" xsi:type="string">colspan="4"</argument>
+                        <argument name="label_properties_with_comment" xsi:type="string">colspan="4"</argument>
+                    </arguments>
+                </block>
+            </block>
+            <block class="CanadaSatellite\Theme\Block\Catalog\Product\Attachments"
+                   name="catalog.product.top.list.mageworx.downloads.attachments"
+                   template="CanadaSatellite_Theme::attachment_container_quote.phtml"
+            />
+        </referenceBlock>
+    </body>
+</page>

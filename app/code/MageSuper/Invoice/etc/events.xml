@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+
+    <event name="sales_order_invoice_save_before">
+        <observer name="change_order_invoice_increment" instance="MageSuper\Invoice\Observer\ChangeInvoiceIncrement"/>
+    </event>
+    <event name="sales_order_shipment_save_before">
+        <observer name="change_order_shipment" instance="MageSuper\Invoice\Observer\ChangeShipmentIncrement"/>
+    </event>
+</config>

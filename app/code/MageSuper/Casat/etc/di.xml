@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!-- Plugins -->
+    <type name="Magento\Catalog\Block\Product\View\Options\Type\Select">
+        <plugin name="aroundSelectValuesHtml" type="MageSuper\Casat\Plugin\Product\View\Options\Type\BeforeSelectValuesHtml" sortOrder="1" disabled="false"/>
+    </type>
+    <preference for="Magento\SalesSequence\Model\Sequence" type="MageSuper\Casat\Plugin\SalesSequence\Model\Sequence" />
+
+    <type name="Magento\Theme\Block\Html\Topmenu">
+        <plugin name="blog-topmenu" type="Mageplaza\Blog\Plugin\Topmenu" disabled="true"/>
+        <!--<plugin name="CustomCatalogTopmenu" type="MageSuper\Casat\Plugin\Block\Topmenu" sortOrder="99"/>-->
+    </type>
+
+    <preference for="Magento\Catalog\Model\ResourceModel\Product\Option" type="MageSuper\Casat\Plugin\Catalog\Model\ResourceModel\Product\Option" />
+    <preference for="Magento\Catalog\Model\ResourceModel\Product\Collection" type="MageSuper\Casat\Plugin\Catalog\Model\ResourceModel\Product\Collection" />
+    <preference for="Magento\Catalog\Model\Product\Option" type="MageSuper\Casat\Plugin\Catalog\Model\Product\Option" />
+    <!--Fix in saving Customizable Options-->
+    <!--<preference for="Magento\Catalog\Model\Product\Option\Value" type="MageSuper\Casat\Plugin\Catalog\Model\Product\Option\Value" />-->
+    <preference for="Magento\Catalog\Model\ResourceModel\Product\Option\Collection" type="MageSuper\Casat\Plugin\Catalog\Model\ResourceModel\Product\Option\Collection" />
+    <preference for="Magento\Catalog\Model\ResourceModel\Product\Option\Value\Collection" type="MageSuper\Casat\Plugin\Catalog\Model\ResourceModel\Product\Option\Value\Collection" />
+    <preference for="Magento\Catalog\Model\Indexer\Category\Product\Action\Full" type="MageSuper\Casat\Plugin\Catalog\Model\Indexer\Category\Product\Action\Full" />
+    <preference for="Magento\Bundle\Pricing\Adjustment\BundleCalculatorInterface" type="MageSuper\Casat\Pricing\Adjustment\Calculator" />
+    <preference for="Magento\Bundle\Pricing\Price\DiscountCalculator" type="MageSuper\Casat\Pricing\Price\DiscountCalculator" />
+    <preference for="Magento\Catalog\Model\ResourceModel\Product" type="MageSuper\Casat\Model\ResourceModel\Product" />
+
+
+    <type name="Magento\Sales\Block\Adminhtml\Items\AbstractItems">
+        <plugin name="addProfitMarginItems" type="MageSuper\Casat\Plugin\Sales\Model\Order\Item" sortOrder="3"/>
+    </type>
+    <type name="Magento\Cms\Model\Wysiwyg\Config">
+        <plugin name="add_wysiwyg_data" type="MageSuper\Casat\Plugin\WysiwygConfig" sortOrder="30" />
+    </type>
+    <type name="Magento\Cms\Model\Wysiwyg\Images\Storage">
+        <arguments>
+            <argument name="extensions" xsi:type="array">
+                <item name="allowed" xsi:type="array">
+                    <item name="pdf" xsi:type="number">1</item>
+                    <item name="zip" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\FulltextFilter">
+        <plugin name="sales_order_fulltext_search_changes" type="MageSuper\Casat\Plugin\Framework\View\Element\UiComponent\DataProvider\FulltextFilter"/>
+    </type>
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="company" xsi:type="object">BillingCompanyAggregator</item>
+                <item name="margin" xsi:type="string">sales_order.margin</item>
+                <item name="profit" xsi:type="string">sales_order.profit</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="BillingCompanyAggregator" type="Magento\Framework\DB\Sql\ConcatExpression">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="company" xsi:type="array">
+                    <item name="tableAlias" xsi:type="string">sales_billing_address</item>
+                    <item name="columnName" xsi:type="string">company</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Magento\Bundle\Pricing\Price\Pool" type="Magento\Framework\Pricing\Price\Pool">
+        <arguments>
+            <argument name="prices" xsi:type="array">
+                <item name="special_price" xsi:type="string">MageSuper\Casat\Pricing\Price\SpecialPrice</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Magento\Bundle\Model\Product\Price">
+        <plugin name="casat-bundle-calculate-price" type="MageSuper\Casat\Plugin\Bundle\Model\Product\Price"/>
+    </type>
+    <type name="Magento\Directory\Model\Currency">
+        <plugin name="casat-currency-import" type="MageSuper\Casat\Plugin\Directory\Model\Currency"/>
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+        <plugin name="MageSuper_CasatSalesOrderItemafterGetColumns" type="MageSuper\Casat\Plugin\Sales\Block\Adminhtml\Order\View\Items\DefaultRenderer" />
+    </type>
+    <type name="Magento\Bundle\Model\Product\Type">
+        <plugin name="casat-fix-mw-checkout-bundle" type="MageSuper\Casat\Plugin\Bundle\Model\Product\Type" sortOrder="3"/>
+    </type>
+    <type name="Magento\Bundle\Model\Product\Type">
+        <plugin name="casat-fix-mw-checkout-bundle" type="MageSuper\Casat\Plugin\Bundle\Model\Product\Type" sortOrder="3"/>
+    </type>
+    <preference for="Magento\Customer\Model\AccountManagement" type="MageSuper\Casat\Plugin\Customer\Model\AccountManagement" />
+    <preference for="Magento\Framework\HTTP\Client\Curl" type="MageSuper\Casat\Plugin\Framework\HTTP\Client\Curl" />
+    <preference for="Magento\CatalogInventory\Model\Quote\Item\QuantityValidator\Initializer\StockItem" type="MageSuper\Casat\Model\CatalogInventory\QuantityValidator\StockItem" />
+
+    <type name="Magento\Sales\Block\Adminhtml\Order\View\Items\Renderer\DefaultRenderer">
+        <plugin name="MageSuper_CasatSalesOrderItemafterGetColumns" type="MageSuper\Casat\Plugin\Sales\Block\Adminhtml\Order\View\Items\DefaultRenderer" />
+    </type>
+    <type name="Magento\Shipping\Model\Shipping">
+        <plugin name="casat-shipping-add-package-fee" type="MageSuper\Casat\Plugin\Shipping\Model\Shipping"/>
+    </type>
+    <preference for="Magento\Catalog\Controller\Adminhtml\Product\Save" type="MageSuper\Casat\Controller\Adminhtml\Product\Save" />
+
+
+    <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
+        <arguments>
+            <argument name="collections" xsi:type="array">
+                <item name="sales_order_grid_data_source" xsi:type="string">MageSuper\Casat\Model\ResourceModel\Order\Grid\Collection</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Controller\Adminhtml\Order\AddComment">
+        <plugin disabled="false" name="MageSuper_Casat_Plugin_Sales_Model_Order_Comment" sortOrder="10" type="MageSuper\Casat\Plugin\Sales\Model\Order\Comment"/>
+    </type>
+
+
+</config>

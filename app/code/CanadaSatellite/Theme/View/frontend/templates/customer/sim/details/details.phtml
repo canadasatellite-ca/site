@@ -1,0 +1,139 @@
+<?php
+/** @var CanadaSatellite\Theme\Block\Customer\Sim\View $block */
+?>
+
+<?php $sim = $block->getSimData(); ?>
+<div class="table-wrapper">
+    <table class="data table">
+        <thead>
+                <tr>
+                    <th class="a-left view"></th>
+                    <th class="a-center view"></th>
+                    <th class="a-right view"><?php echo __('Action') ?></th>
+                </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="a-left view"><?php echo __("Network Status") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getNetworkStatus())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Sub Status") ?></td>
+                <td class="a-center view">
+                    <?php
+                        if (!$sim->isHijacked()) {
+                            echo $block->escapeHtml($sim->getSubStatus());
+                        } else {
+                            echo $block->escapeHtml('N/A');
+                        }
+                    ?>
+                </td>
+                <td class="a-right view">
+                    <span class="nobr">
+                        <?php if (!$sim->isHijacked()): ?>
+                            <?php if (!$sim->isAutoRecharged()): ?>
+                                <a href="<?php echo $block->getAutoRechargeUrl($sim) ?>" style="text-decoration: none;">
+                                    <button class="button action primary" type="submit"> <span><span><?php echo __("Auto recharge") ?></span></span></button>
+                                </a>
+                            <?php else: ?>
+                                <a href="<?php echo $block->getNoRechargeUrl($sim) ?>" style="text-decoration: none;">
+                                    <button class="button action primary" type="submit"> <span><span><?php echo __("No recharge") ?></span></span></button>
+                                </a>
+                            <?php endif; ?>
+                            <span class="separator">&nbsp;|&nbsp;</span>
+                            <a href="<?php echo $block->getCardsUrl() ?>" style="text-decoration: none;">
+                                 <button class="button action primary" type="submit"> <span><span><?php echo __("Manage cards") ?></span></span></button>
+                            </a>
+                        <?php endif; ?>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("SIM #") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getSimNumber())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Sat #") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getSatelliteNumber())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Data #") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getDataNumber())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Network") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getNetwork())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Service") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getService())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Type") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getType())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Plan") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getPlan())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Current Minutes") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getCurrentMinutes())?></td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Activation Date") ?></td>
+                <td class="a-center view">
+                    <?php 
+                        $activationDate = $sim->getActivationDate();
+                        if (!empty($activationDate)) {
+                            echo $block->escapeHtml(date("Y-m-d", $activationDate)); // FIXME $block->dateFormat($activationDate)
+                        }
+                    ?>   
+                </td>
+                <td class="a-right view"></td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Expiry Date") ?></td>
+                <td class="a-center view">
+                    <?php 
+                        $expiryDate = $sim->getExpiryDate();
+                        if (!empty($expiryDate)) {
+                            echo $block->escapeHtml(date("Y-m-d", $expiryDate)); // FIXME $block->dateFormat($expiryDate)
+                        }
+                    ?>   
+                </td>
+                 <td class="a-right view">
+                </td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Nickname") ?></td>
+                <td class="a-center view">
+                    <?php echo '<input type="text" name="nickname" form="updateNickname" value="' . $block->escapeHtml($sim->getNickname()) . '" />' ?>
+                </td>
+                <td class="a-right view">
+                    <span class="nobr">
+                        <button class="button action primary" type="submit" form="updateNickname">
+                            <span><span><?php echo __("Update Nickname") ?></span></span>
+                        </button>
+                    </span>
+                </td>
+            </tr>
+            <tr>
+                <td class="a-left view"><?php echo __("Quick Note") ?></td>
+                <td class="a-center view"><?php echo $block->escapeHtml($sim->getQuickNote())?></td>
+                <td class="a-right view"></td>
+            </tr>
+        </tbody>
+    </table>
+    <form method="post" id="updateNickname" action="<?php echo $block->updateNickname($sim) ?>"></form>
+    <p class="back-link"><a href="<?php echo $block->getBackUrl() ?>"><small>&laquo; </small><?php echo __('Back') ?></a></p>
+</div>

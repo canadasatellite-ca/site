@@ -1,0 +1,118 @@
+<?php
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     Desk
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+
+
+/** @var Cart2Quote\Desk\Block\Product\Tab\Form $block */
+?>
+
+<div class="block-content ticket-form-content">
+    <form action="<?php echo $block->getAction() ?>"
+          class="ticket-form review-form"
+          method="post"
+          id="ticket-form"
+          data-role="product-ticket-form"
+          data-bind="scope: 'ticket-form'"
+          data-mage-init='{"desk.form.ticket":{}, "validation":{}}'>
+        <?php echo $block->getBlockHtml('formkey'); ?>
+        <?php echo $block->getChildHtml('form_fields_before') ?>
+        <fieldset class="fieldset ticket-fieldset review-fieldset" data-hasrequired="<?php __("* Required Fields"); ?>">
+            <legend class="legend review-legend ticket-legend">
+                <span><?php echo __("Ask a question about:"); ?></span>
+                <strong><?php echo $block->escapeHtml($block->getProductInfo()->getName()) ?></strong>
+            </legend>
+            <br/>
+            <?php
+            if (!$this->isLoggedIn()): ?>
+                <div class="field ticket-field-firstname required ticket-non-registered-users">
+                    <label for="firstname_field" class="label"><span><?php echo __("First name") ?></span></label>
+
+                    <div class="control">
+                        <input type="text"
+                               name="customer[firstname]"
+                               id="firstname_field"
+                               class="input-text"
+                               data-validate="{required:true}"
+                               data-bind="value: customer().firstname"/>
+                    </div>
+                </div>
+                <div class="field ticket-field-lastname required ticket-non-registered-users">
+                    <label for="lastname_field" class="label"><span><?php echo __("Last name") ?></span></label>
+
+                    <div class="control">
+                        <input type="text"
+                               name="customer[lastname]"
+                               id="lastname_field"
+                               class="input-text"
+                               data-validate="{required:true}"
+                               data-bind="value: customer().lastname"/>
+                    </div>
+                </div>
+                <div class="field ticket-field-email required ticket-non-registered-users">
+                    <label for="summary_field" class="label"><span><?php echo __("Email") ?></span></label>
+
+                    <div class="control">
+                        <input type="text"
+                               name="customer[email]"
+                               id="email_field"
+                               class="input-text validate-email"
+                               data-validate="{required:true}"
+                               data-bind="value: ticket().title"/>
+                    </div>
+                </div>
+            <?php
+            endif; ?>
+            <div class="field ticket-field-message required">
+                <label for="review_field" class="label"><span><?php echo __("Message") ?></span></label>
+
+                <div class="control">
+                    <textarea name="message[message]"
+                              id="ticket-message-field"
+                              cols="5"
+                              rows="3"
+                              data-validate="{required:true}"
+                              data-bind="value: ticket().detail"></textarea>
+                </div>
+            </div>
+        </fieldset>
+        <div class="actions-toolbar ticket-form-actions">
+            <div class="primary actions-primary">
+                <button type="submit"
+                        id="send-ticket-button"
+                        class="action submit primary">
+                    <span><?php echo __("Ask Question") ?></span></button>
+            </div>
+        </div>
+    </form>
+</div>
+<script type="text/x-magento-init">
+{
+    "[data-role=product-ticket-form]": {
+        "Magento_Ui/js/core/app": <?php /* @escapeNotVerified */
+    echo $block->getJsLayout(); ?>
+    }
+}
+</script>

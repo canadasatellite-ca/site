@@ -1,0 +1,41 @@
+<!-- ko if: isEditable -->
+    <div class="aw-advanced-reviews-admin-control-label aw-ar-rating">
+
+        <div class="ratings-controls-container">
+            <!-- ko foreach: { data: options, afterRender: updateRating.bind($data) } -->
+                <input
+                    class="aw-advanced-reviews-rating no-display"
+                    type="radio"
+                    data-bind="
+                        attr: {
+                            checked: value == $parent.value(),
+                            id: 'rating_' + value,
+                            value: value }
+                    "/>
+                <label
+                    class="aw-advanced-reviews-rating-label"
+                    tabindex="0"
+                    keyboard="13: $parent.onClick.bind($parent, $data)"
+                    data-bind="
+                        attr: {
+                            for: 'rating_' + value,
+                            title: title ? title : (value + '%')},
+                        event: {
+                            click: $parent.onClick.bind($parent),
+                            mouseenter: $parent.onMouseEnter.bind($parent),
+                            mouseleave: $parent.onMouseLeave.bind($parent),
+                            focusin: $parent.onMouseEnter.bind($parent),
+                            focusout: $parent.onMouseLeave.bind($parent) },
+                        css: {
+                            _checked: value == $parent.value() }
+                    "><span class="label-text" text="title"></span></label>
+            <!-- /ko -->
+            <span class="rating-tooltip"></span>
+        </div>
+    </div>
+<!-- /ko -->
+
+<!-- ko if: !isEditable -->
+    <!-- ko template: {name: viewTmpl, data: {value: value()}} -->
+    <!-- /ko -->
+<!-- /ko -->

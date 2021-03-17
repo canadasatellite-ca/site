@@ -1,0 +1,41 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var $block \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\QuoteStatus */
+?>
+<div class="admin__field field-comment ">
+    <th><label for="quote-status" class="admin__field-label"><span><?php echo $block->escapeHtml(__('Quote Status')) ?></span></label></th>
+    <td>
+        <div class="admin__field-control">
+            <span id="quote_status">
+                <select class=" select admin__control-select" id="quote_status" name="quote[status]">
+                    <?php foreach ($block->getAllStatussesAsArray() as $status) : ?>
+                        <?php
+                        $flag = '';
+                        if ($block->getStatusLabel() == $status['label']) {
+                            $flag = 'selected';
+                        }
+                        ?>
+                        <option <?php echo $block->escapeHtml($flag); ?> value="<?php echo $block->escapeHtml($status['value']); ?>">
+                            <?php echo $block->escapeHtml($status['label']); ?>
+                        </option>
+                    <?php endforeach; ?>
+                </select>
+            </span>
+        </div>
+    </td>
+</div>
+<script type="text/x-magento-init">
+    {
+    "*": {
+            "Cart2Quote_Quotation/js/quote/view/status": {
+                "status_id": "<?php echo $block->getStatus() ?>",
+                "data": <?php echo $block->getStatusesGridConfig(); ?>
+            }
+        }
+    }
+</script>

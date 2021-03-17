@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature; final class MultiStore extends \Cart2Quote\License\Feature\AbstractFeature { protected $plugins = array(); protected $configs = array(); protected final function allowedStates() { return $this->{"\x64\145\146\x61\165\154\x74\x41\x6c\x6c\157\x77\145\144\x53\164\141\x74\145\x73"}; } protected final function allowedEdition() { return $this->{"\x62\165\x73\151\156\145\x73\x73"}; } }

@@ -1,0 +1,73 @@
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<!--@subject Faq Form@-->
+<!--@vars {
+"var data.question":"Sender Email",
+"var data.answer":"Sender Name"
+} @-->
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+    <head>
+        <title>email</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        
+    </head>
+    <body>
+        {{inlinecss file="css/email-inline.css"}}
+
+        <!-- Begin wrapper table -->
+        <table class="wrapper" width="100%">
+            <tr>
+                <td class="wrapper-inner" align="center">
+                    <table class="main" >
+                        <tr>
+                            <td class="header">
+                                <a class="logo" href="{{store url=""}}">
+                                    <img
+                                        {{if logo_width}}
+                                        width="{{var logo_width}}"
+                                        {{else}}
+                                        width="180"
+                                        {{/if}}
+
+                                        {{if logo_height}}
+                                        height="{{var logo_height}}"
+                                        {{else}}
+                                        height="52"
+                                        {{/if}}
+
+                                        src="{{var logo_url}}"
+                                        alt="{{var logo_alt}}"
+                                        border="0"
+                                        />
+                            </a>
+                        </td>
+                        <td></td>
+                    </tr>
+                    <tr class="main-content">
+                        <td width="50px">Question:</td>
+                        <td >{{trans " %question" question=$data.question|raw}} </br></td>
+                    </tr>
+                    <tr class="main-content">
+                        <td width="50px">Answer:</td>
+                        <td>{{trans " %answer" answer=$data.answer|raw}}</td>
+                    </tr>
+                    <tr>
+                        <td class="footer">
+                            <p class="closing">{{trans "Thank you, %store_name" store_name=$store.getFrontendName()}}!</p>
+                        </td>
+                        <td></td>
+                    </tr>
+                </table>
+            </td>
+        </tr>
+    </table>
+    <!-- End wrapper table -->
+</body>

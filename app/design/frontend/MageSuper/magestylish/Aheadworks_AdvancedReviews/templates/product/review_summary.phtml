@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\AdvancedReviews\Block\Product\ReviewSummaryRenderer */
+$componentName = $block->getComponentName();
+$snippetSchema = $block->getSnippetSchema();
+?>
+
+<div data-role="aw-ar-product-summary-container" data-bind="scope: '<?php /* @noEscape */ echo $componentName ?>'">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+</div>
+
+<script type="text/x-magento-init">
+    {
+        "[data-role=aw-ar-product-summary-container]": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?php /* @noEscape */ echo $componentName ?>": {
+                        "component": "Aheadworks_AdvancedReviews/js/product/review-summary",
+                        "config": <?php /* @noEscape */ echo $block->getComponentConfigData() ?>
+                    }
+                }
+            }
+        }
+    }
+</script>

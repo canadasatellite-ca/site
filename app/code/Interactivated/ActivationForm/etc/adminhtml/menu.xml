@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Interactivated_ActivationForm::content_elements" title="Activation Form" module="Interactivated_ActivationForm" sortOrder="12" parent="Magento_Backend::content" resource="Interactivated_ActivationForm::content_elements"/>
+        <add id="Interactivated_ActivationForm::requests" title="Requests" module="Interactivated_ActivationForm" sortOrder="10" parent="Interactivated_ActivationForm::content_elements" action="activationform/requests" resource="Interactivated_ActivationForm::requests" />
+    </menu>
+</config>

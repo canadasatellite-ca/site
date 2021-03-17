@@ -1,0 +1,49 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Quote\Success $block*/ ?>
+<div class="quotation-success" id="quotation_quote_success_page" data-mage-init='{"miniQuoteReload": {}}'>
+    <h1><?php echo __("Thank you for your quote request!") ?></h1>
+    <?php if ($block->getQuoteId()) : ?>
+        <?php if ($block->getCanViewQuote()) : ?>
+            <p><?php
+                echo sprintf(
+                    '%s <a href="%s" class="quote-number"><strong>%s</strong></a>',
+                    __('Your quote request number is:'),
+                    $block->escapeHtml($block->getViewQuoteUrl()),
+                    $block->escapeHtml($block->getQuoteId())
+                );
+                ?></p>
+
+        <?php else : ?>
+            <?php $realQuoteId = $block->escapeHtml($block->getQuoteId()); ?>
+            <p><?php
+                echo sprintf(
+                    "%s: <span>%s</span>.",
+                    __('Your quote request number is'),
+                    $realQuoteId
+                );
+                ?></p>
+        <?php endif; ?>
+        <?php if ($block->getStatus() != \Cart2Quote\Quotation\Model\Quote\Status::STATUS_PHONE_ONLY) : ?>
+            <p><?php echo $block->escapeHtml(__('We will email you a quote request confirmation with details.')) ?></p>
+        <?php else : ?>
+            <p><?php echo $block->escapeHtml(__('We will give you a call as soon as possible.')) ?></p>
+        <?php endif; ?>
+    <?php endif; ?>
+    <?php echo $block->getAdditionalInfoHtml() ?>
+    <div class="actions-toolbar" id="quotation_quote_success_continue_shopping">
+        <div class="primary">
+            <a class="action primary continue"
+               title="<?php echo $block->escapeHtml(__('Continue Shopping')) ?>"
+               href="<?php echo $block->escapeHtml($block->getUrl()) ?>">
+                <span><?php echo $block->escapeHtml(__('Continue Shopping')) ?></span>
+            </a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,941 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">amazon_account_pricing_rules_create_form.amazon_account_pricing_rules_create_form_data_source</item>
+            <item name="deps" xsi:type="string">amazon_account_pricing_rules_create_form.amazon_account_pricing_rules_create_form_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">amazon_account_pricing_rules_create_form</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">amazon_account_pricing_rules_create_form</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Price Rule Settings</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <dataSource name="amazon_account_pricing_rules_create_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Amazon\Ui\DataProvider\Form\Amazon\Account\Pricing\Rules\Create\DataProvider</argument>
+            <argument name="name" xsi:type="string">amazon_account_pricing_rules_create_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="channel/amazon/account_pricing_rules_save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="rule_settings">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">General Settings</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+            </item>
+        </argument>
+        <container name="rule_settings_help_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="rule_actions_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Pricing\Rules\Create\View\Help\Rules</argument>
+            </htmlContent>
+        </container>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="merchant_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">merchant_id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Rule Name</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataScope" xsi:type="string">name</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_active">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataScope" xsi:type="string">is_active</item>
+                </item>
+                <item name="options" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="value" xsi:type="number">1</item>
+                        <item name="label" xsi:type="string" translate="true">Active</item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="value" xsi:type="number">0</item>
+                        <item name="label" xsi:type="string" translate="true">Inactive</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="from_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">From</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-date" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                    </item>
+                    <item name="dataScope" xsi:type="string">from_date</item>
+                </item>
+            </argument>
+        </field>
+        <field name="to_date">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">To</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="options" xsi:type="array">
+                        <item name="dateFormat" xsi:type="string">yyyy-MM-dd</item>
+                        <item name="timeFormat" xsi:type="string">HH:mm:ss</item>
+                    </item>
+                    <item name="dataScope" xsi:type="string">to_date</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-date" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="sort_order">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Priority</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="default" xsi:type="string">99</item>
+                    <item name="dataScope" xsi:type="string">sort_order</item>
+                </item>
+            </argument>
+        </field>
+        <field name="stop_rules_processing">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Discard Subsequent Rules</item>
+                    <item name="fieldGroup" xsi:type="string">bool</item>
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="dataScope" xsi:type="string">stop_rules_processing</item>
+                    <item name="sortOrder" xsi:type="number">900</item>
+                </item>
+                <item name="options" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="value" xsi:type="number">1</item>
+                        <item name="label" xsi:type="string" translate="true">Yes</item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="value" xsi:type="number">0</item>
+                        <item name="label" xsi:type="string" translate="true">No</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="rule_conditions_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Price Rule Conditions</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="rule_conditions_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">25</item>
+                </item>
+            </argument>
+            <htmlContent name="rule_conditions_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Pricing\Rules\Create\View\Help\Conditions</argument>
+            </htmlContent>
+        </container>
+        <container name="rule_conditions_tab_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">28</item>
+                </item>
+            </argument>
+            <htmlContent name="rule_conditions_tab">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Pricing\Rules\Create\View\Tab\Conditions</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+    <fieldset name="rule_actions">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Price Rule Actions</item>
+                <item name="sortOrder" xsi:type="number">30</item>
+            </item>
+        </argument>
+        <container name="rule_actions_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+            <htmlContent name="rule_actions_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Pricing\Rules\Create\View\Help\Actions</argument>
+            </htmlContent>
+        </container>
+        <fieldset name="price_rule_type" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="collapsible" xsi:type="boolean">true</item>
+                    <item name="opened" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="label" xsi:type="string" translate="true">Select Rule Type</item>
+                </item>
+            </argument>
+            <field name="auto">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Rule Type</item>
+                        <item name="fieldGroup" xsi:type="string">bool</item>
+                        <item name="component" xsi:type="string">Magento_Amazon/js/form/element/auto</item>
+                        <item name="dataType" xsi:type="string">number</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="default" xsi:type="string">0</item>
+                        <item name="dataScope" xsi:type="string">auto</item>
+                        <item name="sortOrder" xsi:type="number">60</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="number">0</item>
+                            <item name="label" xsi:type="string" translate="true">Standard price rule</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="value" xsi:type="number">1</item>
+                            <item name="label" xsi:type="string" translate="true">Intelligent repricing rule</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="auto_source">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Competitor Price Source</item>
+                        <item name="component" xsi:type="string">Magento_Amazon/js/form/element/auto-source</item>
+                        <item name="dataType" xsi:type="string">number</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="default" xsi:type="string">0</item>
+                        <item name="dataScope" xsi:type="string">auto_source</item>
+                        <item name="sortOrder" xsi:type="number">70</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="number">0</item>
+                            <item name="label" xsi:type="string" translate="true">Use "Buy Box" Price</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="value" xsi:type="number">1</item>
+                            <item name="label" xsi:type="string" translate="true">Use Lowest Competitor Price</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="auto_minimum_feedback">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Minimum Positive Feedback</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="default" xsi:type="string">0</item>
+                        <item name="dataScope" xsi:type="string">auto_minimum_feedback</item>
+                        <item name="sortOrder" xsi:type="number">80</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="number">0</item>
+                            <item name="label" xsi:type="string" translate="true">All Competitor's Prices</item>
+                        </item>
+                        <item name="80" xsi:type="array">
+                            <item name="value" xsi:type="number">80</item>
+                            <item name="label" xsi:type="string" translate="true">Minimum 80% positive feedback</item>
+                        </item>
+                        <item name="90" xsi:type="array">
+                            <item name="value" xsi:type="number">90</item>
+                            <item name="label" xsi:type="string" translate="true">Minimum 90% positive feedback</item>
+                        </item>
+                        <item name="94" xsi:type="array">
+                            <item name="value" xsi:type="number">94</item>
+                            <item name="label" xsi:type="string" translate="true">Minimum 95% positive feedback</item>
+                        </item>
+                        <item name="97" xsi:type="array">
+                            <item name="value" xsi:type="number">97</item>
+                            <item name="label" xsi:type="string" translate="true">Minimum 98% positive feedback</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="auto_feedback_count">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">90</item>
+                        <item name="label" xsi:type="string" translate="true">Minimum Feedback Count</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">auto_feedback_count</item>
+                        <item name="default" xsi:type="string">0</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                            <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>
+        <fieldset name="condition_outer_fieldset" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="collapsible" xsi:type="boolean">true</item>
+                    <item name="opened" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="label" xsi:type="string" translate="true">Competitor Conditional Variances</item>
+                </item>
+            </argument>
+            <fieldset name="condition_inner_fieldset" >
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="collapsible" xsi:type="boolean">false</item>
+                        <item name="sortOrder" xsi:type="number">205</item>
+                        <item name="label" xsi:type="string" translate="true"></item>
+                        <item name="labelVisible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="auto_condition">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Conditional Variance</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="component" xsi:type="string">Magento_Amazon/js/form/element/auto-condition</item>
+                            <item name="default" xsi:type="string">0</item>
+                            <item name="dataScope" xsi:type="string">auto_condition</item>
+                            <item name="sortOrder" xsi:type="number">95</item>
+                        </item>
+                        <item name="options" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">Use all competitor's product conditions</item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Use only matching competitor's product condition</item>
+                            </item>
+                            <item name="2" xsi:type="array">
+                                <item name="value" xsi:type="number">2</item>
+                                <item name="label" xsi:type="string" translate="true">Apply variance (if competitor's condition differs)</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="new_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">125</item>
+                            <item name="label" xsi:type="string" translate="true">New Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">new_variance</item>
+                            <item name="disabled" xsi:type="boolean">true</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            </item>
+                            <item name="notice" xsi:type="string" translate="true">All amounts entered below will be calculated as a percentage relative to new condition (see help for more info).</item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="refurbished_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">130</item>
+                            <item name="label" xsi:type="string" translate="true">Refurbished Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">refurbished_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-number-range" xsi:type="string">0.01-100.00</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="usedlikenew_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">140</item>
+                            <item name="label" xsi:type="string" translate="true">Used; Like New Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">usedlikenew_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-number-range" xsi:type="string">0.01-100.00</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="usedverygood_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">150</item>
+                            <item name="label" xsi:type="string" translate="true">Used; Very Good Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">usedverygood_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-number-range" xsi:type="string">0.01-100.00</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="usedgood_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">160</item>
+                            <item name="label" xsi:type="string" translate="true">Used; Good Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">usedgood_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-number-range" xsi:type="string">0.01-100.00</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="usedacceptable_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">170</item>
+                            <item name="label" xsi:type="string" translate="true">Used; Acceptable Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">usedacceptable_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-number-range" xsi:type="string">0.01-100.00</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="collectiblelikenew_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">180</item>
+                            <item name="label" xsi:type="string" translate="true">Collectible; Like New Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">collectiblelikenew_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="collectibleverygood_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">190</item>
+                            <item name="label" xsi:type="string" translate="true">Collectible; Very Good Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">collectibleverygood_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="collectiblegood_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">200</item>
+                            <item name="label" xsi:type="string" translate="true">Collectible; Good Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">collectiblegood_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="collectibleacceptable_variance">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="sortOrder" xsi:type="number">210</item>
+                            <item name="label" xsi:type="string" translate="true">Collectible; Acceptable Condition Variance %</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="dataScope" xsi:type="string">collectibleacceptable_variance</item>
+                            <item name="default" xsi:type="string">100</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+            </fieldset>
+        </fieldset>
+        <fieldset name="price_rule_action" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="collapsible" xsi:type="boolean">true</item>
+                    <item name="opened" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">200</item>
+                    <item name="label" xsi:type="string" translate="true">Price Adjustment</item>
+                </item>
+            </argument>
+            <fieldset name="price_action_one_fieldset" >
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="collapsible" xsi:type="boolean">false</item>
+                        <item name="sortOrder" xsi:type="number">205</item>
+                        <item name="label" xsi:type="string" translate="true"></item>
+                        <item name="labelVisible" xsi:type="boolean">false</item>
+                    </item>
+                </argument>
+                <field name="price_movement_one">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Price Action</item>
+                            <item name="dataType" xsi:type="string">number</item>
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="default" xsi:type="string">2</item>
+                            <item name="dataScope" xsi:type="string">price_movement_one</item>
+                            <item name="sortOrder" xsi:type="number">205</item>
+                        </item>
+                        <item name="options" xsi:type="array">
+                            <item name="2" xsi:type="array">
+                                <item name="value" xsi:type="number">2</item>
+                                <item name="label" xsi:type="string" translate="true">Decrease By</item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Increase By</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="simple_action_one">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Apply</item>
+                            <item name="dataType" xsi:type="string">number</item>
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="dataScope" xsi:type="string">simple_action_one</item>
+                            <item name="sortOrder" xsi:type="number">210</item>
+                            <item name="switcherConfig" xsi:type="array">
+                                <item name="enabled" xsi:type="boolean">true</item>
+                                <item name="rules" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="value" xsi:type="string">by_percent</item>
+                                        <item name="actions" xsi:type="array">
+                                            <item name="0" xsi:type="array">
+                                                <item name="target" xsi:type="string">amazon_account_pricing_rules_create_form.amazon_account_pricing_rules_create_form.rule_actions.price_rule_action.price_action_one_fieldset.discount_amount_one</item>
+                                                <item name="callback" xsi:type="string">setValidation</item>
+                                                <item name="params" xsi:type="array">
+                                                    <item name="0" xsi:type="string">validate-number-range</item>
+                                                    <item name="1" xsi:type="string">0.01-99.99</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="1" xsi:type="array">
+                                        <item name="value" xsi:type="string">by_fixed</item>
+                                        <item name="actions" xsi:type="array">
+                                            <item name="0" xsi:type="array">
+                                                <item name="target" xsi:type="string">amazon_account_pricing_rules_create_form.amazon_account_pricing_rules_create_form.rule_actions.price_rule_action.price_action_one_fieldset.discount_amount_one</item>
+                                                <item name="callback" xsi:type="string">setValidation</item>
+                                                <item name="params" xsi:type="array">
+                                                    <item name="0" xsi:type="string">validate-number-range</item>
+                                                    <item name="1" xsi:type="string">false</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="options" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">by_percent</item>
+                                <item name="label" xsi:type="string" translate="true">Apply as percentage</item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">by_fixed</item>
+                                <item name="label" xsi:type="string" translate="true">Apply as fixed amount</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="discount_amount_one">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Adjustment Amount</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">discount_amount_one</item>
+                            <item name="sortOrder" xsi:type="number">220</item>
+                            <item name="default" xsi:type="string">1</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="required-entry" xsi:type="boolean">true</item>
+                                <item name="validate-number" xsi:type="string">true</item>
+                            </item>
+                            <item name="notice" xsi:type="string" translate="true">Example:  for 10%, simply enter 10.</item>
+                        </item>
+                    </argument>
+                </field>
+            </fieldset>
+            <fieldset name="price_action_two_fieldset" >
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="collapsible" xsi:type="boolean">false</item>
+                        <item name="sortOrder" xsi:type="number">225</item>
+                        <item name="label" xsi:type="string" translate="true"></item>
+                    </item>
+                </argument>
+                <field name="price_movement_two">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Price Action</item>
+                            <item name="dataType" xsi:type="string">number</item>
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="component" xsi:type="string">Magento_Amazon/js/form/element/price-movement-two</item>
+                            <item name="default" xsi:type="string">2</item>
+                            <item name="dataScope" xsi:type="string">price_movement_two</item>
+                            <item name="sortOrder" xsi:type="number">230</item>
+                        </item>
+                        <item name="options" xsi:type="array">
+                            <item name="2" xsi:type="array">
+                                <item name="value" xsi:type="number">2</item>
+                                <item name="label" xsi:type="string" translate="true">Decrease By</item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="label" xsi:type="string" translate="true">Increase By</item>
+                            </item>
+                            <item name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">0</item>
+                                <item name="label" xsi:type="string" translate="true">Match Competitor Price</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="simple_action_two">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Apply</item>
+                            <item name="dataType" xsi:type="string">number</item>
+                            <item name="formElement" xsi:type="string">select</item>
+                            <item name="dataScope" xsi:type="string">simple_action_two</item>
+                            <item name="sortOrder" xsi:type="number">240</item>
+                            <item name="switcherConfig" xsi:type="array">
+                                <item name="enabled" xsi:type="boolean">true</item>
+                                <item name="rules" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="value" xsi:type="string">by_percent</item>
+                                        <item name="actions" xsi:type="array">
+                                            <item name="0" xsi:type="array">
+                                                <item name="target" xsi:type="string">amazon_account_pricing_rules_create_form.amazon_account_pricing_rules_create_form.rule_actions.price_rule_action.price_action_two_fieldset.discount_amount_two</item>
+                                                <item name="callback" xsi:type="string">setValidation</item>
+                                                <item name="params" xsi:type="array">
+                                                    <item name="0" xsi:type="string">validate-number-range</item>
+                                                    <item name="1" xsi:type="string">0.01-99.99</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                    <item name="1" xsi:type="array">
+                                        <item name="value" xsi:type="string">by_fixed</item>
+                                        <item name="actions" xsi:type="array">
+                                            <item name="0" xsi:type="array">
+                                                <item name="target" xsi:type="string">amazon_account_pricing_rules_create_form.amazon_account_pricing_rules_create_form.rule_actions.price_rule_action.price_action_two_fieldset.discount_amount_two</item>
+                                                <item name="callback" xsi:type="string">setValidation</item>
+                                                <item name="params" xsi:type="array">
+                                                    <item name="0" xsi:type="string">validate-number-range</item>
+                                                    <item name="1" xsi:type="string">false</item>
+                                                </item>
+                                            </item>
+                                        </item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                        <item name="options" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="value" xsi:type="string">by_percent</item>
+                                <item name="label" xsi:type="string" translate="true">Apply as percentage</item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="string">by_fixed</item>
+                                <item name="label" xsi:type="string" translate="true">Apply as fixed amount</item>
+                            </item>
+                        </item>
+                    </argument>
+                </field>
+                <field name="discount_amount_two">
+                    <argument name="data" xsi:type="array">
+                        <item name="config" xsi:type="array">
+                            <item name="label" xsi:type="string" translate="true">Adjustment Amount</item>
+                            <item name="dataType" xsi:type="string">text</item>
+                            <item name="formElement" xsi:type="string">input</item>
+                            <item name="dataScope" xsi:type="string">discount_amount_two</item>
+                            <item name="sortOrder" xsi:type="number">250</item>
+                            <item name="default" xsi:type="string">1</item>
+                            <item name="validation" xsi:type="array">
+                                <item name="required-entry" xsi:type="boolean">true</item>
+                                <item name="validate-number" xsi:type="string">true</item>
+                            </item>
+                            <item name="notice" xsi:type="string" translate="true">Example:  for 10%, simply enter 10.</item>
+                        </item>
+                    </argument>
+                </field>
+            </fieldset>
+        </fieldset>
+        <fieldset name="floor_fieldset" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="collapsible" xsi:type="boolean">true</item>
+                    <item name="opened" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">260</item>
+                    <item name="label" xsi:type="string" translate="true">Floor Price</item>
+                </item>
+            </argument>
+            <field name="floor">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\PriceSource</item>
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">270</item>
+                        <item name="label" xsi:type="string" translate="true">Floor Price Source</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="component" xsi:type="string">Magento_Amazon/js/form/element/floor</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">floor</item>
+                        <item name="default" xsi:type="string">price</item>
+                        <item name="notice" xsi:type="string" translate="true">IMPORTANT - if the selected attribute does not have a value for a given product, the floor price will be set by default to your catalog price.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="floor_price_movement">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Floor Price Action</item>
+                        <item name="dataType" xsi:type="string">number</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="default" xsi:type="string">2</item>
+                        <item name="dataScope" xsi:type="string">floor_price_movement</item>
+                        <item name="component" xsi:type="string">Magento_Amazon/js/form/element/floor-price-movement</item>
+                        <item name="sortOrder" xsi:type="number">280</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="2" xsi:type="array">
+                            <item name="value" xsi:type="number">2</item>
+                            <item name="label" xsi:type="string" translate="true">Decrease By</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="value" xsi:type="number">1</item>
+                            <item name="label" xsi:type="string" translate="true">Increase By</item>
+                        </item>
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="number">0</item>
+                            <item name="label" xsi:type="string" translate="true">Match</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="floor_simple_action">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Apply</item>
+                        <item name="dataType" xsi:type="string">number</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="dataScope" xsi:type="string">floor_simple_action</item>
+                        <item name="sortOrder" xsi:type="number">290</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="string">by_percent</item>
+                            <item name="label" xsi:type="string" translate="true">Apply as percentage</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="floor_discount_amount">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Floor Adjustment Amount</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataScope" xsi:type="string">floor_discount_amount</item>
+                        <item name="sortOrder" xsi:type="number">300</item>
+                        <item name="default" xsi:type="string">1</item>
+                        <item name="validation" xsi:type="array">
+                            <item xsi:type="string" name="validate-number-range">0.001-99.999</item>
+                            <item name="validate-number" xsi:type="string">true</item>
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                        <item name="notice" xsi:type="string" translate="true">For a 10% increase or decrease - simply enter 10. Example: If your Floor Price Source is Price (10) and you adjust to increase by 10% - the calculated Floor Price will be 11.</item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>
+        <fieldset name="ceiling_fieldset" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="collapsible" xsi:type="boolean">true</item>
+                    <item name="opened" xsi:type="boolean">true</item>
+                    <item name="sortOrder" xsi:type="number">300</item>
+                    <item name="label" xsi:type="string" translate="true">Optional Ceiling Price</item>
+                </item>
+            </argument>
+            <field name="ceiling">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\PriceSource</item>
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">305</item>
+                        <item name="label" xsi:type="string" translate="true">Ceiling Price Source</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="component" xsi:type="string">Magento_Amazon/js/form/element/ceiling</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">ceiling</item>
+                        <item name="default" xsi:type="string">price</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="ceiling_price_movement">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Ceiling Price Action</item>
+                        <item name="dataType" xsi:type="string">number</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="component" xsi:type="string">Magento_Amazon/js/form/element/ceiling-price-movement</item>
+                        <item name="default" xsi:type="string">1</item>
+                        <item name="dataScope" xsi:type="string">ceiling_price_movement</item>
+                        <item name="sortOrder" xsi:type="number">310</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="2" xsi:type="array">
+                            <item name="value" xsi:type="number">2</item>
+                            <item name="label" xsi:type="string" translate="true">Decrease By</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="value" xsi:type="number">1</item>
+                            <item name="label" xsi:type="string" translate="true">Increase By</item>
+                        </item>
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="number">0</item>
+                            <item name="label" xsi:type="string" translate="true">Match</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="ceiling_simple_action">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Apply</item>
+                        <item name="dataType" xsi:type="string">number</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="dataScope" xsi:type="string">ceiling_simple_action</item>
+                        <item name="sortOrder" xsi:type="number">320</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="value" xsi:type="string">by_percent</item>
+                            <item name="label" xsi:type="string" translate="true">Apply as percentage</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="ceiling_discount_amount">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="label" xsi:type="string" translate="true">Ceiling Adjustment Amount</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataScope" xsi:type="string">ceiling_discount_amount</item>
+                        <item name="default" xsi:type="string">10</item>
+                        <item name="sortOrder" xsi:type="number">330</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            <item name="validate-number" xsi:type="string">true</item>
+                            <item name="required-entry" xsi:type="boolean">true</item>
+                        </item>
+                        <item name="notice" xsi:type="string" translate="true">For a 10% increase or decrease - simply enter 10. Example: If your Ceiling Price Source is Price (100) and you adjust to increase by 10% - the calculated Ceiling Price will be 110.</item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>
+    </fieldset>
+</form>

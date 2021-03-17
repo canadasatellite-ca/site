@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright (c) 2019. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php
+/**
+ * @var \Cart2Quote\Quotation\Block\Proposal\Reject\View $block
+ */
+$quote = $block->getQuote();
+?>
+<form action="<?php echo $block->escapeHtml($block->getRejectUrl()) ?>" method="post" class="form form-quote">
+    <div class="block reason_for_rejection">
+        <div class="box-content reason_for_rejection">
+            <label for="reason"><?php echo sprintf(
+                    __("Reason for Rejecting Proposal # %s"),
+                    $quote['increment_id']) ?></label>
+            <textarea type="text" name="reason" id="rejectQuoteTextArea" rows="10"></textarea>
+        </div>
+        <?php echo $block->getBlockHtml('formkey'); ?>
+        <div class="quote main actions clearfix">
+            <button type="button"
+                    class="return_to_quotation_view_btn"
+                    onclick="javascript:history.back()">
+                <?php echo $block->escapeHtml(__("Back")) ?>
+            </button>
+            <button <?php echo $block->escapeHtml(__('Confirm Rejection')) ?>
+                    type="submit" name="reject_proposal"
+                    value="reject_proposal"
+                    title="<?php echo $block->escapeHtml(__('Confirm Rejection')) ?>"
+                    class="action primary reject-proposal-button">
+                <span><?php echo $block->escapeHtml(__('Confirm Rejection')) ?></span>
+            </button>
+        </div>
+    </div>
+</form>

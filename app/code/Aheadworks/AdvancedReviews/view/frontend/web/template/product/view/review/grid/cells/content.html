@@ -1,0 +1,7 @@
+<div class="clear-float"></div>
+<div class="data-grid-cell-content-wrapper">
+    <!-- ko if: $col.isReviewHasAdditionalDescription($row()) -->
+        <strong class="cell-title" data-bind="text: label"></strong>
+    <!-- /ko -->
+    <div class="data-grid-cell-content review-data" text="$col.getLabel($row())"/>
+</div>

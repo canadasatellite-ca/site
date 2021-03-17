@@ -1,0 +1,53 @@
+<?php
+/**
+ * @project: CartImport
+ * @author : LitExtension
+ * @url    : http://litextension.com
+ * @email  : litextension@gmail.com
+ */
+?>
+<?php $notice = $block->getNotice(); ?>
+<script type="text/javascript">
+    require([
+        'jquery',
+        'validation',
+        'LitExtension_CartImport/js/jquery.form.min',
+        'LitExtension_CartImport/js/jq.lecaip'
+    ],function($){
+        $(document).ready(function(){
+            $.LeCaIp({
+                url: '<?php echo $block->getUrl('leci/index/import',array('_secure'=>true)); ?>',
+                formKey : '<?php echo $block->getFormKey(); ?>',
+                fnResume: '<?php echo $notice['fn_resume']; ?>',
+                timeDelay: '<?php echo $notice['setting']['delay'] * 1000?>',
+                autoRetry: '<?php echo $notice['setting']['retry'] * 1000?>'
+            });
+        });
+    });
+</script>
+<div id="lecaip-wrap">
+    <div id="w" class="clearfix">
+        <div id="lecaip-menu">
+            <div id="menu-setup" class="step-menu open"><strong> 1. <?php echo __("Source Cart Setup"); ?></strong></div>
+            <div id="menu-config"  class="step-menu"><strong> 2. <?php echo __("Configuration"); ?></strong></div>
+            <div id="menu-confirm"  class="step-menu"><strong> 3. <?php echo __("Migration"); ?></strong></div>
+        </div>
+        <div id="lecaip-content">
+            <?php if($notice['is_running']){ ?>
+                <div id="lecaip-resume" class="content-block">
+                    <?php echo $block->getChildBlock('leci.resume')->setNotice($notice)->toHtml();?>
+                </div>
+            <?php } ?>
+            <div id="lecaip-setup" class="content-block">
+                <?php echo $block->getChildBlock('leci.setup')->setNotice($notice)->toHtml();?>
+            </div>
+            <div id="lecaip-csv" class="content-block"></div>
+            <div id="lecaip-config" class="content-block"></div>
+            <div id="lecaip-confirm" class="content-block"></div>
+            <div id="lecaip-import" class="content-block"></div>
+        </div>
+        <div id="lecaip-footer" style="clear: both;">
+            <p><?php echo __('Cart Importer by LitExtension ver ') . $block->getVersion(); ?></p>
+        </div>
+    </div>
+</div>

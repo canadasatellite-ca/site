@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\FooterRenderer $block */ ?>
+<tr>
+    <?php $i = 0;
+    $columns = $block->getColumns();
+    $lastItemNumber = count($columns) ?>
+    <td></td>
+    <?php foreach ($columns as $columnName => $columnClass) : ?>
+        <?php $i++; ?>
+        <td class="<?php echo $block->escapeHtml($columnClass) ?><?php echo($i === $lastItemNumber ? ' last' : '') ?>">
+            <?php echo $block->getColumnFooterHtml($columnName) ?>
+        </td>
+    <?php endforeach; ?>
+</tr>

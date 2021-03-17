@@ -1,0 +1,181 @@
+<?php $activeFaqCategories = $block->getFaqCategories(); 
+
+ ?>
+<?php if(count($activeFaqCategories) > 0) { ?>
+<div class="main-faqs-page-index-view">
+<div class="faq_search">
+    <div class="faq_search_control">
+        <form  id="md_faq_search" data-mage-init='{"validation": {}}' 
+               action="<?php echo $block->escapeHtml($block->getFaqSearchUrl()); ?>" method="get">
+            <input type="text" class="input-text" 
+                   data-validate="{required:true}" 
+                   id="faq_text_search" name="sqr" 
+                   placeholder="<?php echo $block->escapeHtml(__('Search here...')); ?>"
+                   />
+        </form>
+    </div>
+</div>
+</div>
+<?php  } ?>
+<?php
+$firstCategory = 1;
+foreach ($activeFaqCategories as $LoadCategoryModel) {
+$faqQuestions = $block->getQuestionsByCategoryId($LoadCategoryModel->getCategoryId());
+?>
+
+<div class="category-block-tabs" <?php if($firstCategory == 1) { ?> style="display:block;" <?php } else {?> style="display:none;"<?php } ?> id="md_faq_tabs_<?php echo $LoadCategoryModel->getCategoryId(); ?>" >
+    <div class="faqs-cat-header">
+        <h3 class="faqs-cat-title" style="color: <?php echo $LoadCategoryModel->getBackground(); ?>">
+            <i class="fa <?php echo $LoadCategoryModel->getIcon(); ?>" style="color: <?php echo $LoadCategoryModel->getBackground(); ?>"></i>
+            <?php echo $LoadCategoryModel->getTitle(); ?>
+        </h3>
+        <div class="faqs-cat-image">
+            <img src="<?php echo $LoadCategoryModel->getImageUrl(); ?>" alt="Magento SEO Questions">
+        </div>
+        <div class="faqs-cat-desc">
+            <?php echo $LoadCategoryModel->getDescription(); ?>
+        </div>
+    </div>
+    <div class="main-faqs-page-index-view">
+        <div class="panel-group question-list " id="accordion-<?php echo $LoadCategoryModel->getCategoryId(); ?>" >
+            <?php foreach ($faqQuestions as $faqQuestion) { ?>
+                <div class="panel panel-default">
+                    <?php $randomNumber = rand(999, 9999); ?>
+                    <div class="panel-heading faqcat-question"
+                         data-toggle="collapse"
+                         data-target="#collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>"
+                         data-parent="#accordion-<?php echo $LoadCategoryModel->getCategoryId(); ?>"
+                         data-animated="<?php echo $LoadCategoryModel->getAnimationType(); ?>"
+                         data-color-active="<?php echo $LoadCategoryModel->getTextColorActive(); ?>"
+                         data-bg-color-active="<?php echo $LoadCategoryModel->getBackgrondActive(); ?>"
+                         data-color="<?php echo $LoadCategoryModel->getTextColor(); ?>"
+                         data-bg-color="<?php echo $LoadCategoryModel->getBackground(); ?>"
+                         style="background-color:<?php echo $LoadCategoryModel->getBackground(); ?>; border-color: <?php echo $LoadCategoryModel->getBorderWidth(); ?>; border-width:<?php echo $LoadCategoryModel->getBorderColor(); ?>;border-radius: <?php echo $LoadCategoryModel->getBorderRadius(); ?>; "
+                         >
+                        <h4 class="panel-title">
+                            <a class="accordion-toggle faq_questions_title" style="color:<?php echo $LoadCategoryModel->getTextColor(); ?>" href="javascript:void(0);">
+                                <?php
+                                $icon = ($LoadCategoryModel->getIconClass()) ? $LoadCategoryModel->getIconClass() : 'fa-plus-square-o';
+                                $iconActive = ($LoadCategoryModel->getIconActive()) ? $LoadCategoryModel->getIconActive() : 'fa-minus-square-o';
+                                ?>
+                                <i data-icon="<?php echo $icon; ?>" data-icon-active="<?php echo $iconActive; ?>" class="main_icon fa <?php echo $icon; ?>"></i> 
+                                <?php echo $block->escapeHtml($faqQuestion->getQuestion()); ?>
+                            </a>
+                        </h4>
+                    </div>
+                    <div id="collapse-<?php /* @noEscape */ echo $faqQuestion->getId() . $randomNumber; ?>" class="panel-collapse collapse animated">   
+                        <div class="panel-body">
+                            <?php /* @noEscape */ echo $block->getAnswerContant($faqQuestion->getAnswer()); ?> ...
+                            <a style="color: #fc6b1f" href="<?php echo $block->getUrl('faqs/question/view/id/' . $faqQuestion->getId() . ''); ?>">Read more</a>
+                        </div>
+                    </div>
+                </div>
+
+            <?php } ?>
+        </div>
+    </div>
+</div>
+<?php  $firstCategory++; } ?>
+<script>
+   require(['jquery', 'jquery.bootstrap','jquery/ui'], function ($) {
+         $.widget("custom.faqcomplete", $.ui.autocomplete, {
+            _create: function () {
+                this._super();
+                this.widget().menu("option", "items", "> :not(.ui-autocomplete-category)");
+            },
+            _renderMenu: function (ul, items) {
+                var that = this,
+                        currentCategory = "";
+                $.each(items, function (index, item) {
+                    var li;
+                    if (item.category != currentCategory) {
+                        ul.append("<li class='ui-autocomplete-category'>" + item.category + "</li>");
+                        currentCategory = item.category;
+                    }
+                    li = that._renderItemData(ul, item);
+
+                    if (item.category) {
+                        li.attr("aria-label", item.category + " : " + item.label);
+
+                    }
+                });
+            },
+            search: function (value, event) {
+                value = value != null ? value : this._value();
+
+                // always save the actual value, not the one passed as an argument
+                this.term = this._value();
+
+                if (value.length == 0) {
+                    message = '';
+                    this.liveRegion.text(message);
+                    return this.close(event);
+                }
+
+                if (this._trigger("search", event) === false) {
+                    return;
+                }
+
+                return this._search(value);
+            }
+
+        });
+        $(function () {
+            var data = <?php echo $block->getJsonData(); ?>;
+            if(data != 'null'){
+                data = <?php echo $block->getJsonData(); ?>;
+                $("#faq_text_search").faqcomplete({
+                delay: 0,
+                source: data,
+                select: function (event, ui) {
+                    var uiItems = ui.item;
+                    var categoryId = uiItems.category_id;
+                    $('#faq_text_search').val(uiItems.value);
+                    $( "#md_faq_search" ).submit();
+                }
+            });
+            }else{
+                $("#faq_text_search").faqcomplete({
+                delay: 0,
+                source: data,
+                select: function (event, ui) {
+                    var uiItems = ui.item;
+                    var categoryId = uiItems.category_id;
+                    $('#faq_text_search').val(uiItems.value);
+                    $( "#md_faq_search" ).submit();
+                }
+            });
+            } 
+        });
+        $(document).ready(function () {
+            $(".faq-category-list a").click(function () { 
+                var categoryDivId = $(this).attr('rel');
+                $('li.ui-state-active').removeClass("ui-state-active");
+                $(this).parent().addClass('ui-state-active');
+                $('.category-block-tabs').hide();
+                $('#md_faq_tabs_' + categoryDivId).show("fast");
+            });
+            $('.collapse').on('shown.bs.collapse', function (e) {
+                var animated = $(this).parent().find(".faqcat-question").attr('data-animated');
+                var colorActive = $(this).parent().find(".faqcat-question").attr('data-color-active');
+                var bgColorActive = $(this).parent().find(".faqcat-question").attr('data-bg-color-active');
+                var dataIcon = $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive = $(this).parent().find(".main_icon").attr('data-icon-active');
+                
+                $(this).addClass(animated);
+                $(this).parent().find('.main_icon').removeClass(dataIcon).addClass(dataIconActive);
+                $(this).parent().find(".faqcat-question").css("background-color", bgColorActive);
+                $(this).parent().find(".faq_questions_title").css("color", colorActive);
+                
+            }).on('hidden.bs.collapse', function () {
+                var color = $(this).parent().find(".faqcat-question").attr('data-color');
+                var bgColor = $(this).parent().find(".faqcat-question").attr('data-bg-color');
+                var dataIcon = $(this).parent().find(".main_icon").attr('data-icon');
+                var dataIconActive = $(this).parent().find(".main_icon").attr('data-icon-active');
+                $(this).parent().find('.main_icon').removeClass(dataIconActive).addClass(dataIcon);
+                $(this).parent().find(".faqcat-question").css("background-color", bgColor);
+                $(this).parent().find(".faq_questions_title").css("color", color);
+            });
+        });
+    });
+</script>

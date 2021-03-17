@@ -1,0 +1,4 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="faq_email_new_question_template" label="Faq New Question" file="faq_new.html" type="html" module="MageSuper_Casat" area="frontend"/>
+</config>

@@ -1,0 +1,18 @@
+<div class="brief-summary">
+    <div class="aggregated-rating-absolute">
+        <span text="aggregatedRatingAbsoluteValue"/>
+    </div>
+    <div>
+        <div class="aggregated-rating-view">
+            <!-- ko template: {name: ratingViewTmpl, data: {value: aggregatedRatingPercentValue, title: aggregatedRatingTitle }} -->
+            <!-- /ko -->
+        </div>
+        <div class="reviews-count">
+            <span text="reviewsCount"/> <span data-bind="i18n: 'Reviews'"></span>
+        </div>
+    </div>
+</div>
+<div class="recommend-customers" if="isDisplayedRecommendCustomers">
+    <span class="percent" text="customerRecommendedPercent + '%'"/>
+    <span class="recommend-text" data-bind="html: $t('of customers<br/> recommend this product')"/>
+</div>

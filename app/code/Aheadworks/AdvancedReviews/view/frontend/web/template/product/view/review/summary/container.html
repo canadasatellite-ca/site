@@ -1,0 +1,18 @@
+<div if="isNeedToRenderSummaryBlock()"
+     class="aw-ar-review-summary">
+    <div class="column-summary">
+        <each args="getRegion('1-column')" render="getTemplate()"/>
+    </div>
+    <div class="column-summary">
+        <each args="getRegion('2-column')" render="getTemplate()"/>
+    </div>
+    <div class="column-summary">
+        <each args="getRegion('3-column')" render="getTemplate()"/>
+    </div>
+</div>
+<div class="clear-float"></div>
+
+<div if="isNeedToRenderNoReviewsMessage()"
+     class="aw-ar-review-summary no-reviews">
+    <span class="no-reviews-message" html="getNoReviewsMessage()"/>
+</div>

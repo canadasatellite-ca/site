@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<?php $_source  = $block->getSource() ?>
+<?php $block->setPriceDataObject($_source);
+$margin = $_source->getData('margin');
+?>
+
+<tr class="total-margin">
+    <td class="label"><?php /* @escapeNotVerified */ echo __('Margin') ?></td>
+    <td><?php /* @escapeNotVerified */ echo round($margin,2) ?>%</td>
+</tr>

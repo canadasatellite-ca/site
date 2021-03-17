@@ -1,0 +1,141 @@
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     Desk
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+
+/* Left sidebar */
+#ticket_edit_left_form { margin: 5% 5% 5% 5%; }
+#ticket_edit_left_form .control{ float: right; width: 100%; padding: 0 10px 0 10px; }
+#ticket_edit_left_form .control select{ width: 100%; height: 35px; }
+#ticket_edit_left_form .control input{ width: 100%; height: 35px; }
+#ticket_edit_left_form > .admin__field{ margin-bottom: 15px; margin-left:0 !important; }
+#ticket_edit_left_form > .admin__field > .admin__field-label{ width: 80%; text-align: left; margin-left: 10px;}
+
+#message-thread .clearfix:after {visibility:hidden;display:block;font-size:0;content:" ";clear:both;height:0;}
+#message-thread {box-sizing:border-box;padding:0;margin:0;font-size:100%;font-family:'Open Sans', sans-serif;font-weight:400;color:#403630;}
+#message-thread form {margin:0;}
+#message-thread .create-message-container {width:100%;margin:0 0 40px 0;background:#fcfcfc;border-top:1px solid #e3e2e2;border-bottom:1px solid #e3e2e2;}
+#message-thread .message-container {width:95%;margin:0 auto;}
+
+/* Create message header */
+#message-thread .create-message-container header {background:#ffffff;display:table;box-sizing:border-box;width:100%;border-bottom:1px solid #e3e2e2;padding:5px 0;}
+#message-thread .create-message-container header .conversation-title {display:table-cell;vertical-align:middle;}
+#message-thread .create-message-container header .conversation-title span {font-weight:600;font-size:120%;display:inline-block;position:relative;cursor:pointer;padding-right:30px;width:100%;}
+#message-thread .create-message-container header .conversation-title span:before {transform:rotate3d(0,0,1,45deg);-webkit-transform:rotate3d(0,0,1,45deg);right:6px;}
+#message-thread .create-message-container header .conversation-title span:after {transform:rotate3d(0,0,1,-45deg);-webkit-transform:rotate3d(0,0,1,-45deg);}
+#message-thread .create-message-container header .conversation-title {border:1px solid transparent;}
+#message-thread .create-message-container header .conversation-title:hover input,
+#message-thread .create-message-container header .conversation-title input:focus,
+#message-thread .create-message-container header .conversation-title input:active {border:1px solid #007bdb;background:#ffffff;-webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);-moz-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);}
+#message-thread .create-message-container header .conversation-title.focus {border:1px solid #007bdb;outline:none;-webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);-moz-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);}
+#message-thread .create-message-container header .conversation-title input {border:none;outline:none;background:#ffffff;height:30px;font-size:100%;font-weight:200;width:100%;resize:none;padding:20px 20px 20px 12px;}
+#message-thread .create-message-container header .conversation-title input:focus {outline:none;}
+
+#message-thread .create-message-container header.active .conversation-title span:before {transform:rotate3d(0,0,1,45deg);-webkit-transform:rotate3d(0,0,1,45deg);right:0;}
+#message-thread .create-message-container header.active .conversation-title span:after {transform:rotate3d(0,0,1,-45deg);-webkit-transform:rotate3d(0,0,1,-45deg);right:6px;}
+#message-thread .create-message-container header .conversation-title .conversation-sub-title {display:none;font-size:80%;font-weight:300;}
+#message-thread .create-message-container header .conversation-title .conversation-sub-title:before, #message-thread .create-message-container header .conversation-title .conversation-sub-title:after {content:none;}
+#message-thread .create-message-container header.active .conversation-title .conversation-sub-title {display:block;}
+
+.ticket-box-fixed{position: fixed; top: 90px; padding: 0 29px 0 0;}
+
+/* Status */
+.desk-ticket-edit .page-title-wrapper h1{display:inline-block;}
+.desk-ticket-edit .ticket-status {display:table-cell;text-align:right;vertical-align:middle;font-size:16px;margin-top:5px;margin-right:20px;float:left;}
+.desk-ticket-edit .ticket-status span {display:inline-block;border-radius:100px;font-size:80%;color:#ffffff;padding:5px 20px;cursor:default;}
+.desk-ticket-edit .ticket-status.new span {background:#f5ca00;}
+.desk-ticket-edit .ticket-status.new span:after {content:'New';}
+.desk-ticket-edit .ticket-status.open span {background:#e82a2a;}
+.desk-ticket-edit .ticket-status.open span:after {content:'Open';}
+.desk-ticket-edit .ticket-status.pending span {background:#47aede;}
+.desk-ticket-edit .ticket-status.pending span:after {content:'Pending';}
+.desk-ticket-edit .ticket-status.on-hold span {background:#000000;}
+.desk-ticket-edit .ticket-status.on-hold span:after {content:'On-hold';}
+.desk-ticket-edit .ticket-status.solved span {background:#828282;}
+.desk-ticket-edit .ticket-status.solved span:after {content:'Solved';}
+
+/* Create message form */
+#message-thread .create-message-container .create-message {padding:25px 0;text-align:center;}
+#message-thread .create-message-container .create-message .set-conversation-type {text-align:left;margin-bottom:15px;}
+#message-thread .create-message-container .create-message .set-conversation-type ul {list-style:none;margin:0;padding:0;}
+#message-thread .create-message-container .create-message .set-conversation-type ul li {position:relative;cursor:pointer;display:inline-block;border-radius:3px;border:1px solid #e3e2e2;background:#ffffff;font-size:80%;padding:4px 10px;margin-right:5px;}
+#message-thread .create-message-container .create-message .set-conversation-type ul li.public-reply.active {cursor:default;background:#403630;color:#fff;border-color:#403630;}
+#message-thread .create-message-container .create-message .set-conversation-type ul li.public-reply.active:after {width:0;content:'';position:absolute;display:block;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #403630;margin-bottom:-5px;bottom:0;left:43%;}
+#message-thread .create-message-container .create-message .set-conversation-type ul li.internal-note.active {cursor:default;background:#f9ecab;border-color:#decd7f;}
+#message-thread .create-message-container .create-message .set-conversation-type ul li.internal-note.active:before {width:0;z-index:5;content:'';position:absolute;display:block;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #f9ecab;margin-bottom:-4px;bottom:0;left:43%;}
+#message-thread .create-message-container .create-message .set-conversation-type ul li.internal-note.active:after {width:0;z-index:4;content:'';position:absolute;display:block;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid #decd7f;margin-bottom:-5px;bottom:0;left:43%;}
+
+
+#message-thread .create-message-container .create-message form {display:inline-block;width:95%;}
+#message-thread .create-message-container .create-message form .attach-file-wrapper {float:right;width:99%;height:25px;margin-right:1px;position:relative;font-weight:200;font-size:80%;margin-top:-26px;}
+#message-thread .create-message-container .create-message form .attach-file-container {position:relative;margin-right:13px;}
+#message-thread .create-message-container .create-message form .attach-file-container:before {}
+#message-thread .create-message-container .create-message form .attach-file {position:absolute;right:0;}
+#message-thread .create-message-container .create-message form input[type="file"] {z-index:999;line-height:0;position:absolute;opacity:0;filter:alpha(opacity = 0);-ms-filter:"alpha(opacity=0)";cursor:pointer;margin:0;padding:0;top:0;right:0;}
+#message-thread .create-message-container .create-message .textarea-container {border:1px solid #e3e2e2;background:#ffffff;padding:15px 20px 35px 20px;-webkit-box-shadow:inset 0 1px 2px #eeeeee;box-shadow:inset 0 1px 2px #eeeeee;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note {background:#f9ecab;-webkit-box-shadow:inset 0 1px 2px #e6da9d;box-shadow:inset 0 1px 2px #e6da9d;border-color:#decd7f;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note.focus {border-color:#decd7f;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note textarea {background:#f9ecab !important;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note textarea::-webkit-input-placeholder {color:#767366;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note textarea:-moz-placeholder {color:#767366;opacity:1;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note textarea::-moz-placeholder {color:#767366;opacity:1;}
+#message-thread .create-message-container .create-message .textarea-container.internal-note textarea:-ms-input-placeholder {color:#767366;}
+#message-thread .create-message-container .create-message .textarea-container.focus {border:1px solid #007bdb;outline:none;-webkit-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);-moz-box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);box-shadow:0 2px 4px 0 rgba(0, 0, 0, 0.10);}
+#message-thread .create-message-container .create-message textarea {border:none;outline:none;background:#ffffff;height:100px;font-size:100%;font-weight:200;width:100%;resize:none;}
+#message-thread .create-message-container .create-message textarea:focus {outline:none;}
+
+/* Regular messages */
+#message-thread .message-container .single-message.customer-message {background:#ffffff;}
+#message-thread .message-container .single-message.admin-message {background:#f8f8f8;}
+#message-thread .message-container .single-message {margin-bottom:20px;color:#403630;border:1px solid #e3e2e2;position:relative;}
+#message-thread .message-container .single-message:before {content:none;}
+#message-thread .message-container .single-message header {margin:10px 10px 0 10px;padding:0 15px 8px 15px;border-bottom:1px solid #e3e2e2;font-weight:600;}
+#message-thread .message-container .single-message header span {display:inline;font-size:80%;color:#cac6c3;font-weight:300;padding:0 0 0 10px;}
+#message-thread .message-container .single-message .content {padding:10px 25px;}
+#message-thread .message-container .single-message .attached-file-content {margin:0 10px;border-top:1px dotted #e3e2e2;padding:10px 15px;}
+#message-thread .message-container .single-message .attached-file-content ul {list-style:none;margin:0;padding:0;display:table;}
+#message-thread .message-container .single-message .attached-file-content ul li {display:table-cell;}
+#message-thread .message-container .single-message .attached-file-content ul li .content {border-radius:3px;border:1px solid #e3e2e2;padding:0;position:relative;width:120px;height:70px;margin-right:10px;cursor:pointer;}
+#message-thread .message-container .single-message .attached-file-content ul li .content footer {position:absolute;bottom:0;left:0;background:#f8f8f8;width:100%;font-size:80%;}
+#message-thread .message-container .single-message:nth-child(odd) .attached-file-content ul li .content footer {background:#efefef;}
+#message-thread .message-container .single-message .attached-file-content ul li .content footer span {padding:2px 10px;display:inline-block;width:80%;max-width:80%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+
+/* New incomming message */
+#message-thread .message-container .single-message.new-message {background:#e9f8c2;border:1px solid #d3e1af;}
+#message-thread .message-container .single-message.new-message:before {content:'';position:absolute;display:block;left:0;top:0;height:100%;width:3px;background:#d3e1af;}
+#message-thread .message-container .single-message.new-message header {border-bottom:1px solid #d3e1af;}
+#message-thread .message-container .single-message.new-message header span {color:#b1b89d;}
+#message-thread .message-container .single-message.new-message .attached-file-content {border-color:#d3e1af;}
+#message-thread .message-container .single-message.new-message .attached-file-content ul li .content {border-color:#d3e1af;}
+#message-thread .message-container .single-message.new-message .attached-file-content ul li .content footer {background:#d3e1af;}
+
+/* Internal note message */
+#message-thread .message-container .single-message.internal-note {background:#f9ecab;border:1px solid #decd7f; !important;}
+#message-thread .message-container .single-message.internal-note:before {content:'';position:absolute;display:block;left:0;top:0;height:100%;width:3px;background:#decd7f;}
+#message-thread .message-container .single-message.internal-note header {border-bottom:1px solid #decd7f;}
+#message-thread .message-container .single-message.internal-note header span {color:#767366;}
+#message-thread .message-container .single-message.internal-note .attached-file-content {border-color:#decd7f;}
+#message-thread .message-container .single-message.internal-note .attached-file-content ul li .content {border-color:#decd7f;}
+#message-thread .message-container .single-message.internal-note .attached-file-content ul li .content footer {background:#decd7f;}
+

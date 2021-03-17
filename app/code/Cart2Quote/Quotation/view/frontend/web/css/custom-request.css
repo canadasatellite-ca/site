@@ -1,0 +1,356 @@
+/*
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+body.product-custom-request-form h1 {
+    background: #f9f9f9;
+    border-bottom: 1px solid #e3e3e3;
+}
+
+@media (min-width: 768px) {
+    body.product-custom-request-form h1 {
+        text-align: center;
+        font-size: 40px;
+        margin: -60px -60px 40px -60px;
+        padding: 30px;
+    }
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form h1 {
+        margin: -30px -30px auto -30px;
+        padding: 20px;
+    }
+}
+
+body.product-custom-request-form .gallery-placeholder,
+body.product-custom-request-form .product-reviews-summary,
+body.product-custom-request-form .product-info-price,
+body.product-custom-request-form .product-options-bottom .field.qty,
+body.product-custom-request-form .product-social-links,
+body.product-custom-request-form .product.media,
+body.product-custom-request-form .product.info.detailed {
+    display: none;
+}
+
+body.product-custom-request-form .product-info-main {
+    display: table;
+}
+
+body.product-custom-request-form .product-info-main .page-title-wrapper.product {
+    display: table-header-group;
+}
+
+body.product-custom-request-form .product-info-main .product.attribute.overview {
+    display: table-row-group;
+}
+
+body.product-custom-request-form .product-info-main .product-add-form {
+    display: table-footer-group;
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field:after {
+    visibility: hidden;
+    display: block;
+    font-size: 0;
+    content: " ";
+    clear: both;
+    height: 0;
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field label.label,
+body.product-custom-request-form .product-add-form .product-options-wrapper .field legend.legend {
+    width: 30%;
+    padding: 11px 0 0 0;
+    cursor: pointer;
+    font-weight: 400;
+    float: left;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-add-form .product-options-wrapper .field label.label,
+    body.product-custom-request-form .product-add-form .product-options-wrapper .field legend.legend {
+        width: 100%;
+        float: none;
+        margin-bottom: 0;
+    }
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field .control {
+    float: left;
+    width: 70%;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-add-form .product-options-wrapper .field .control {
+        float: none;
+        width: 100%;
+    }
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field legend.legend + div {
+    clear: none;
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field:first-of-type {
+    margin-top: 40px;
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field:last-child {
+    margin-bottom: 40px;
+}
+
+body.product-custom-request-form .page-main {
+    background: #fff;
+    width: 100%;
+    box-sizing: border-box;
+    position: relative;
+    padding: 0 0 100px 0;
+    margin: 0;
+    float: none;
+    max-width: inherit;
+}
+
+body.product-custom-request-form .page-main:before {
+    content: '';
+    width: 100%;
+    height: 400px;
+    left: 0;
+    top: 0;
+    background: inherit;
+    background-size: 100%;
+    background-position: 0px -167px;
+    position: absolute;
+}
+
+@media (min-width: 1900px) {
+    body.product-custom-request-form:not(.hide-sidebar) .page-main:before {
+        background-size: 118%;
+    }
+}
+
+@media (max-width: 1900px) {
+    body.product-custom-request-form .page-main:before {
+        background-size: 1900px auto;
+        background-position: -17px -167px;
+    }
+}
+
+@media (max-width: 1500px) {
+    body.product-custom-request-form .page-main:before {
+        background-position: -350px -167px;
+    }
+}
+
+body.product-custom-request-form .columns {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+@media (max-width: 991px) {
+    body.product-custom-request-form .columns {
+        width: 100%;
+        max-width: inherit;
+    }
+}
+
+body.product-custom-request-form .product-info-main {
+    width: 70%;
+    float: none;
+    margin: 0 auto;
+    position: relative;
+    background: #fff;
+    box-sizing: border-box;
+    z-index: 15;
+    padding: 60px 60px 0 60px;
+    margin-top: 60px;
+    border: 3px solid #e6e6e6;
+}
+
+@media (max-width: 991px) {
+    body.product-custom-request-form .product-info-main {
+        width: 100%;
+        float: none;
+        margin: 60px auto 0 auto;
+    }
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-info-main {
+        padding: 30px 30px 0 30px;
+    }
+}
+
+body.product-custom-request-form .demo-instructions {
+    border-radius: 3px;
+    font-size: 13px;
+    padding: 7px 15px;
+    margin: 15px 0 0 0;
+    background: #fff6de;
+    border: 1px solid #eee1c1;
+    color: #4d4c48;
+}
+
+body.product-custom-request-form .product-add-form textarea, body.product-custom-request-form
+.product-add-form input, body.product-custom-request-form .product-add-form select {
+    height: 41px;
+    width: 100%;
+    max-width: 100%;
+    border: 0;
+    box-shadow: none;
+    border-bottom: 1px solid #c0c0c0;
+    font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #636363;
+    border-radius: 0;
+    resize: auto;
+}
+
+body.product-custom-request-form .product-add-form input[type="radio"],
+body.product-custom-request-form .product-add-form input[type="checkbox"] {
+    float: left;
+    width: auto;
+}
+
+body.product-custom-request-form .product-add-form input[type="radio"]:focus,
+body.product-custom-request-form .product-add-form input[type="checkbox"]:focus {
+    box-shadow: none;
+}
+
+body.product-custom-request-form .product-add-form textarea:focus, body.product-custom-request-form
+.product-add-form input:focus, body.product-custom-request-form .product-add-form select:focus {
+    border: 0;
+    border-bottom: 1px solid #3399cc;
+    -webkit-box-shadow: 0 2px 0 0 #d7e7ef;
+    -moz-box-shadow: 0 2px 0 0 #d7e7ef;
+    box-shadow: 0 2px 0 0 #d7e7ef;
+}
+
+body.product-custom-request-form .product-add-form select.multiselect {
+    height: auto;
+    padding: 10px 0;
+}
+
+body.product-custom-request-form .product-add-form .field.file {
+    position: relative;
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field.choice {
+    margin: 0;
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field.choice label {
+    padding: 8px 0 0 5px;
+    width: auto;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-add-form .product-options-wrapper .field.choice label {
+        display: block;
+    }
+}
+
+body.product-custom-request-form .product-add-form .product-options-wrapper .field.choice input {
+    height: 32px;
+}
+
+body.product-custom-request-form .product-add-form .field.file input {
+    border-bottom: 0;
+    padding-top: 7px;
+    margin-left: 0;
+    line-height: 0;
+}
+
+body.product-custom-request-form .product-add-form .field.file input[type=file],
+body.product-custom-request-form .product-add-form .field.file input[type=file]::-webkit-file-upload-button {
+    cursor: pointer;
+}
+
+body.product-custom-request-form .product-add-form .field.file input:focus {
+    box-shadow: none;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-add-form .field.file .label {
+        position: relative;
+        padding-bottom: 50px !important;
+    }
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .field.file .control {
+        padding-left: 0;
+        margin-top: -40px;
+    }
+}
+
+body.product-custom-request-form .product-add-form .field.file input.input-text {
+    pointer-events: none;
+    padding: 0;
+    margin: 0;
+    height: 20px;
+    top: -43px;
+    left: 121px;
+    position: relative;
+    width: 100%;
+    background: transparent;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .field.date select {
+        width: 32% !important;
+    }
+}
+
+body.product-custom-request-form .product-options-bottom .actions #product-addtocart-button {
+    display: none;
+}
+
+body.product-custom-request-form .product-options-bottom .actions #product-addtoquote-button,
+body.product-custom-request-form .product-options-bottom .actions #product-printquote-button
+{
+    background: #1979c3;
+    color: #fff;
+    box-shadow: none;
+    margin-left: 32%;
+    margin-bottom: 15px;
+    width: 30%;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-options-bottom .actions #product-addtoquote-button,
+    body.product-custom-request-form .product-options-bottom .actions #product-printquote-button {
+        margin-left: 0;
+        width: 100%;
+    }
+}
+
+body.product-custom-request-form .product-options-bottom .actions #product-addtoquote-button:hover,
+body.product-custom-request-form .product-options-bottom .actions #product-printquote-button:hover {
+    background: #006bb4;
+}
+
+body.product-custom-request-form .page-footer {
+    border-top: 1px solid #e3e3e3;
+}
+
+body.product-custom-request-form .product-options-bottom {
+    background: #f9f9f9;
+    border-top: 1px solid #e3e3e3;
+    margin: 0 -60px;
+    padding: 30px 60px;
+}
+
+@media (max-width: 767px) {
+    body.product-custom-request-form .product-options-bottom {
+        margin: 0 -30px;
+        padding: 30px;
+    }
+}
+
+body.product-custom-request-form .product-options-bottom .box-tocart, body.product-custom-request-form .product-options-bottom fieldset {
+    margin: 0;
+}

@@ -1,0 +1,8 @@
+<div class="version update-available" data-bind="blockLoader: isLoading, visible: isVisible()">
+    <div>
+        <i></i><span data-bind="text: updateAvailableText()"></span><span class="highlight">|</span>
+        <a data-bind="attr: { href: releaseNotesUrl() }, i18n: 'More info...'" target="_blank"></a>
+    </div>
+    <span data-bind="text: updateSubscriptionStatusText()"></span>
+    <a data-bind="attr: { href: updateSubscriptionStatusLinkUrl() }, text: updateSubscriptionStatusLinkText()" target="_blank"></a>
+</div>

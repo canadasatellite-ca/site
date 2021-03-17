@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<body>
+        <referenceBlock name="order_tab_info">
+            <action method="setTemplate" ifconfig="onestepcheckout/general/enabled">
+                <argument name="template" xsi:type="string">MW_Onestepcheckout::sales/order/view/tab/info.phtml</argument>
+            </action>
+
+            <block class="MW\Onestepcheckout\Block\Adminhtml\Sales\Order\View\Tab\Info\CustomerMessages" name="customer_messages" template="MW_Onestepcheckout::sales/order/view/tab/info/customermessages.phtml" />
+
+            <block class="MW\Onestepcheckout\Block\Adminhtml\Sales\Order\View\Tab\Info\DeliveryDate" name="deliverydate" template="MW_Onestepcheckout::sales/order/view/tab/info/deliverydate.phtml" />
+        </referenceBlock>
+
+		<referenceBlock name="order_totals">
+			<block class="Magento\Sales\Block\Adminhtml\Order\Totals\Item" name="giftwrap" template="MW_Onestepcheckout::sales/order/view/giftwrap.phtml" />
+            <block class="Magento\Sales\Block\Adminhtml\Order\Totals\Item" name="giftwrap.refund" template="MW_Onestepcheckout::sales/order/view/giftwrap_refund.phtml">
+            	<action method="setDisplayArea">
+            		<argument name="area" xsi:type="string">footer</argument>
+            	</action>
+                <action method="setBeforeCondition">
+                	<argument name="condition" xsi:type="string">refunded</argument>
+                </action>
+            </block>
+		</referenceBlock>
+	</body>
+</page>

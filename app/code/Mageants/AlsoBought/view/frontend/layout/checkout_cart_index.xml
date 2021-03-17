@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="Mageants_AlsoBought::css/owl.carousel.min.css" />
+		<css src="Mageants_AlsoBought::css/owl.theme.default.min.css" />
+	</head>
+    <body>
+        <referenceBlock name="content.aside">
+            <block class="Mageants\AlsoBought\Block\Catalog\Cart\Collection" name="cart.also.bought" template="Mageants_AlsoBought::cart/view/alsobought.phtml"  after="-" ifconfig="alsobought_section/alsobought_cart/alsobought_cart_display"/>
+        </referenceBlock>
+    </body>
+</page>

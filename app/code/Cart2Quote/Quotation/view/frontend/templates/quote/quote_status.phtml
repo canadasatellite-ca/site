@@ -1,0 +1,12 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Quote\Info $block */ ?>
+
+<span class="order-status"><?php echo $block->escapeHtml($block->getQuote()->getStatusLabel()) ?></span>
+<?php echo $block->getChildHtml() ?>

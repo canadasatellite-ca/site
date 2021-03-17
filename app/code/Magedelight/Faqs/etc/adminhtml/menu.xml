@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+       <!--add id="Magedelight_Faqs::faqs_head" title="Faqs" module="Magedelight_Faqs" sortOrder="100" resource="Magedelight_Faqs::faqs_head" />
+       <add id="Magedelight_Faqs::faqs" title="Faqs Managment" module="Magedelight_Faqs" sortOrder="10" parent="Magedelight_Faqs::faqs_head"  resource="Magedelight_Faqs::faqs" /-->
+       <add id="Magedelight_Faqs::content_elements" title="FAQ" module="Magedelight_Faqs" sortOrder="12" parent="Magento_Backend::content" resource="Magedelight_Faqs::content_elements"/>
+   
+       <add id="Magedelight_Faqs::category" title="Categories" module="Magedelight_Faqs" sortOrder="10" parent="Magedelight_Faqs::content_elements" action="faqs/category" resource="Magedelight_Faqs::category" />
+       <add id="Magedelight_Faqs::faq" title="Questions" module="Magedelight_Faqs" sortOrder="20" parent="Magedelight_Faqs::content_elements" action="faqs/faq" resource="Magedelight_Faqs::faq" />
+    </menu>
+</config>

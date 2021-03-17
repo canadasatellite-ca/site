@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\AutoCustomerLogin; final class Customer extends \Cart2Quote\License\Plugin\AbstractPlugin { public final function afterIsAutoLogin(\Cart2Quote\Quotation\Controller\Quote\Checkout\Customer $toV9Q, $sjhgb) { if ($this->{"\x69\163\101\154\x6c\157\x77\x65\x64"}()) { goto IFeXG; } return false; IFeXG: return $sjhgb; } }

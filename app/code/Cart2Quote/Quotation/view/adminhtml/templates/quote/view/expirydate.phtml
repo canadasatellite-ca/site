@@ -1,0 +1,60 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+?>
+<?php
+$quote = $block->getQuote();
+$isActiveExpiryDate = $block->isActiveExpiryDate();
+?>
+<div class="admin__field field-comment ">
+    <th><label for="quote-expiry-date" class="admin__field-label">
+            <span><?php echo $block->escapeHtml(__('Expiry Date')) ?></span>
+        </label>
+    </th>
+    <td>
+        <div class="admin__field-control">
+            <span id="expiry_date_wrap" class="datebox-datepicker">
+                <input type="text" id="expiry_date" class="input-text admin__control-text no-changes _has-datepicker"
+                       name="quote[expiry_date]"
+                       value="<?php echo $block->escapeHtml($quote->getExpiryDate()); ?>"
+                    <?php echo $block->escapeHtml($isActiveExpiryDate); ?>/>
+                <button type="button" style="display:none;"
+                        class="ui-datepicker-trigger expiry-trigger v-middle" <?php echo $block->escapeHtml($isActiveExpiryDate); ?>>
+                    <span>Expiry Date</span>
+                </button>
+            </span>
+            <div class="admin__actions-switch" data-role="switcher">
+                <input id="quote-expiry-switch"
+                       name="quote[expiry_enabled]"
+                       type="checkbox"
+                       class="admin__actions-switch-checkbox"
+                       value="1"
+                    <?php if ($quote->getExpiryEnabled()) : ?>
+                        checked
+                    <?php endif; ?>
+                />
+                <label class="admin__actions-switch-label"
+                       for="quote-expiry-switch">
+                    <span class="admin__actions-switch-text"
+                          data-text-on="Yes" data-text-off="No"></span>
+                </label>
+                <div class="switcher-caption"><?php echo $block->escapeHtml(__('[send expiry email]')) ?></div>
+            </div>
+        </div>
+    </td>
+</div>
+<script type="text/javascript">
+    require(["jquery", "jquery/ui"], function ($) {
+        $(document).ready(function () {
+            $("#expiry_date").datepicker({dateFormat: "yy-mm-dd"});
+            $(".expiry-trigger").removeAttr("style");
+            $(".expiry-trigger").click(function () {
+                $("#expiry_date").focus();
+            });
+        });
+    });
+</script>

@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\QuoteDates; final class QuoteReminderSender extends \Cart2Quote\License\Plugin\AbstractPlugin { public function aroundSend(\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteReminderSender $tQzjD, callable $H7f1y, \Cart2Quote\Quotation\Model\Quote $mYGmw, $Dp0sm = false) { if ($this->{"\x69\163\x41\x6c\x6c\157\x77\x65\x64"}()) { goto pQhbh; } return false; pQhbh: return $H7f1y($mYGmw, $Dp0sm); } }

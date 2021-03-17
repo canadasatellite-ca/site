@@ -1,0 +1,7 @@
+<div if="isNeedToRenderPager()"
+     class="review-nav-wrap">
+    <button class="action-previous" type="button" attr="title: $t('Previous Page')" click="prev" disable="isFirst()"/>
+    <input class="control-text" type="number" data-ui-id="current-page-input" attr="id: ++ko.uid" ko-value="_current"/>
+    <label class="control-support-text" attr="for: ko.uid" text="'of ' + pages"/>
+    <button class="action-next" type="button" attr="title: $t('Next Page')" click="next" disable="isLast()"/>
+</div>

@@ -1,0 +1,24 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\InternalComment $block */
+?>
+
+<div class="admin__page-section-item quote-comment">
+    <br/>
+    <div class="admin__field field-comment ">
+        <label for="quote-comment" class="admin__field-label"><span><?php echo $block->escapeHtml(__('Internal Comment')) ?></span></label>
+
+        <div class="admin__field-control">
+        <textarea id="quote-comment" name="quote[comment][internal_comment]"
+                  class="admin__control-textarea"><?php echo $block->escapeHtml($block->getInternalComment()) ?></textarea>
+        </div>
+    </div>
+    <input type="hidden"
+           id="increment_id"
+           name="increment_id"
+           value="<?php echo $block->escapeHtml($block->getQuote()->getIncrementId()); ?>"/>
+</div>

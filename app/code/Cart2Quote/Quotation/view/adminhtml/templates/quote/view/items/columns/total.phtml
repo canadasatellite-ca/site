@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\PriceRenderer $block */
+$item = $block->getItem();
+
+?>
+<?php if ($block->displayPriceExclTax() || $block->displayBothPrices()) : ?>
+    <?php ?>
+    <?php if ($block->displayBothPrices()) : ?>
+        <span class="label"><?php echo $block->escapeHtml(__('Excl. Tax')) ?>:</span>
+    <?php endif; ?>
+    <?php echo $block->displayPrices(
+        $block->getBaseTotalAmountExclTax($item),
+        $block->getTotalAmountExclTax($item)
+    ); ?>
+<?php endif; ?>
+
+
+<?php if ($block->displayPriceInclTax() || $block->displayBothPrices()) : ?>
+    <?php if ($block->displayBothPrices($block->getStore())) : ?>
+        <br/><span class="label"><?php echo $block->escapeHtml(__('Incl. Tax')) ?>:</span>
+    <?php endif; ?>
+    <?php echo $block->displayPrices(
+        $block->getBaseTotalAmount($item),
+        $block->getTotalAmount($item)
+    ); ?>
+<?php endif; ?>

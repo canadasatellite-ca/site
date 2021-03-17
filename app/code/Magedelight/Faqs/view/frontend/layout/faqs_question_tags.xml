@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magedelight_Faqs::css/bootstrap.css"/>
+    </head>
+    <body>
+        <referenceBlock name="catalog.compare.sidebar" remove="true"/>
+        <referenceBlock name="wishlist_sidebar" remove="true"/>
+        <referenceContainer name="content">
+            <block class="Magedelight\Faqs\Block\Question\Tags" name="md.faq.question.tags" template="question/tags.phtml" cacheable="false"/>
+        </referenceContainer>
+        <referenceContainer name="sidebar.additional">
+            <block class="Magedelight\Faqs\Block\Faq\Questions" name="md.faq.category.sidebar" template="sidebar/sidebar.phtml" cacheable="false" before="-"/>
+        </referenceContainer>
+    </body>
+</page>

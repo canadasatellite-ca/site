@@ -1,0 +1,80 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**  @var \Cart2Quote\Quotation\Block\Quote $block */
+?>
+<?php $form = $block->getForm(); ?>
+<?php $mergedCells = ($block->getTaxHelper()->displayCartBothPrices() ? 2 : 1); ?>
+<?php $clearQuoteUrl = $block->getUrl('quotation/quote/clearQuote'); ?>
+
+<form action="#" method="post" id="form-validate"
+      data-mage-init='{"validation":{}}' class="form form-cart">
+    <?php echo $block->getBlockHtml('formkey'); ?>
+    <?php echo $block->escapeHtml($block->getCustomerNote()) ?>
+
+    <div class="cart table-wrapper<?php echo $mergedCells == 2 ? ' detailed' : ''; ?>">
+        <table id="shopping-cart-table" class="cart items data table">
+            <caption role="heading"
+                     aria-level="2"
+                     class="table-caption"><?php echo $block->escapeHtml(__('Quote Items')) ?></caption>
+            <thead>
+            <tr>
+                <th class="col item" scope="col"><span><?php echo $block->escapeHtml(__('Item')) ?></span></th>
+                <th class="col price" scope="col"><span><?php echo $block->escapeHtml(__('Price')) ?></span></th>
+                <th class="col qty" scope="col"><span><?php echo $block->escapeHtml(__('Qty')) ?></span></th>
+            </tr>
+            </thead>
+
+            <?php foreach ($block->getItems() as $item) : ?>
+                <?php echo $block->getItemHtml($item) ?>
+            <?php endforeach ?>
+
+            <div class="cart main actions">
+                <td colspan="4">
+                    <div id="quotation_clear_quote">
+                        <button type="button" name="update_quote_action"
+                                value="empty_quote"
+                                title="<?php echo $block->escapeHtml(__('Clear Quote')); ?>"
+                                class="action clear action-quaternary"
+                                id="empty_quote_button"
+                                onMouseDown="
+                                    event.preventDefault();
+                                    jQuery.ajax({
+                                        url: '<?php echo $block->escapeHtml($clearQuoteUrl); ?>',
+                                        type: 'POST',
+                                        showLoader: true,
+                                        success: function () {
+                                            window.location.reload();
+                                        }
+                                    });
+                                "
+                                style="margin: 10px 5px 0 0;">
+                            <span><?php echo $block->escapeHtml(__('Clear Quote')); ?></span>
+                        </button>
+                    </div>
+                    <?php if ($block->getIsQuotationEnabled() && !$block->getShowOrderReferences() && $block->isMoveToCartEnabled()) : ?>
+                        <div id="quotation_move_quote_items_to_cart">
+                            <button id="movetocart"
+                                    type="button"
+                                    name="move_to_cart_action"
+                                    value="move_to_cart"
+                                    title="<?php echo $block->escapeHtml(__('Move to Cart')); ?>"
+                                    class="action clear action-quaternary"
+                                    data-mage-init='{"quoteToCartActions": {"buttonSelector" : "#movetocart"} }'
+                                    style="margin: 10px 5px 0 0;">
+                                <span><?php echo $block->escapeHtml(__('Move Quote Items to Shopping Cart')); ?></span>
+                            </button>
+                        </div>
+                    <?php endif; ?>
+                </td>
+            </div>
+        </table>
+    </div>
+</form>
+<?php echo $block->getChildHtml('quotation.quote.order.actions') ?>
+<?php echo $block->getChildHtml('quotation.quote.table.after'); ?>
+<?php echo $form; ?>

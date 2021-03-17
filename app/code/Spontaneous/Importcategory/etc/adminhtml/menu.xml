@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Spontaneous_Importcategory extension
+ *                     NOTICE OF LICENSE
+ * 
+ *                     This source file is subject to the MIT License
+ *                     that is bundled with this package in the file LICENSE.txt.
+ *                     It is also available through the world-wide-web at this URL:
+ *                     http://opensource.org/licenses/mit-license.php
+ * 
+ *                     @category  Spontaneous
+ *                     @package   Spontaneous_Importcategory
+ *                     @copyright Copyright (c) 2016
+ *                     @license   http://opensource.org/licenses/mit-license.php MIT License
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="../../../../Magento/Backend/etc/menu.xsd">
+    <menu>
+        <add id="Spontaneous_Importcategory::importcategory" title="Spontaneous" module="Spontaneous_Importcategory" sortOrder="26" resource="Spontaneous_Importcategory::importcategory"/>
+        <add id="Spontaneous_Importcategory::importexportcategory" title="Import Categories" module="Spontaneous_Importcategory" sortOrder="10" action="spontaneous_importcategory/importcategory/new" resource="Spontaneous_Importcategory::importexportcategory" parent="Spontaneous_Importcategory::importcategory"/>
+        <add id="Spontaneous_Importcategory::exportcategory" title="Export Categories" module="Spontaneous_Importcategory" sortOrder="12" action="spontaneous_importcategory/exportcategory/new" resource="Spontaneous_Importcategory::importexportcategory" parent="Spontaneous_Importcategory::importcategory"/>
+    </menu>
+</config>

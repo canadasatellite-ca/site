@@ -1,0 +1,166 @@
+<?php
+    $dataHelper = $this->helper('Interactivated\Quotecheckout\Helper\Data');
+?>
+<?php $isLoggedIn = ($this->getCustomerSession()->isLoggedIn()) ? 1 : 0; ?>
+<hidden value="Welcome to One Step Checkout Pro"></hidden>
+<hidden value="Please enter your details below to complete your purchase."></hidden>
+<?php $tempSession = $dataHelper->checkSession(); ?>
+<input type="hidden" value="<?php echo $tempSession ?>" id="check_session"/>
+<p class="mw-osc-page-content"><?php echo __($dataHelper->getStoreConfig('onestepcheckout/general/page_content'))?></p>
+<div id="message-box">
+    <?php if ($this->getSessionManager()->getErrorpayment() != "") : ?>
+        <div class="message-error error message">
+            <div><?php echo $this->getSessionManager()->getErrorpayment();?></div>
+        </div>
+    <?php endif;?>
+    <?php echo $block->getLayout()->getMessagesBlock()->getGroupedHtml() ?>
+</div>
+
+<?php if (!$isLoggedIn) : ?>
+    <?php if ($dataHelper->getStoreConfig('onestepcheckout/general/enable_quicklogin')) : ?>
+        <a id="loginbox" href="#inline1" title=""><?php echo __('Already registered? Click here to login.');?></a>
+    <?php endif?>
+<?php endif?>
+
+<div class="mw-osc-threecolumns mw-osc-checkoutcontainer mw-osc-skin-generic">
+    <form id="onestep_form" action="<?php echo $block->getUrl('onestepcheckout/index/updateordermethod')?>" method="POST">
+        <input type="hidden" name="form_key" id="mw_osc_formkey" value="<?php echo $block->getFormKey() ?>"/>
+        <div class="mw-osc-column mw-osc-column-left">
+            <div class="mw-osc-block">
+                <div class="mw-osc-block-title">
+                    <p class="onestepcheckout-numbers onestepcheckout-numbers-1">
+                        <?php echo __('Billing address');?>
+                    </p>
+                </div>
+
+                <div class="mw-osc-block-content">
+                    <div>
+                        <?php echo $block->getChildHtml('billing');?>
+                    </div>
+                </div>
+
+                <?php  if(!$dataHelper->onlyProductDownloadable()) : ?>
+                    <?php if ($dataHelper->getStoreConfig('onestepcheckout/general/allowshippingotheraddress')) : ?>
+                        <div style="display:none;" id="shipping_show">
+                            <div class="mw-osc-block-title">
+                                <p class="onestepcheckout-numbers onestepcheckout-numbers-2">
+                                    <?php echo __('Shipping address');?>
+                                </p>
+                            </div>
+
+                            <div class="mw-osc-block-content">
+                                <div>
+                                    <?php echo $block->getChildHtml('shipping');?>
+                                </div>
+                            </div>
+                        </div>
+                    <?php endif;?>
+                <?php endif;?>
+            </div>
+        </div>
+        <!-- end .mw-osc-column-left -->
+
+        <div class="mw-osc-column-2">
+            <div id="mw-osc-column-container">
+                <?php if (!$dataHelper->onlyProductDownloadable()) : ?>
+                    <div class="mw-osc-column mw-osc-column-middle-casat">
+                        <div class="mw-osc-block">
+                            <div class="mw-osc-block-title">
+                                <p class="onestepcheckout-numbers onestepcheckout-numbers-2" id="mw-osc-p2">
+                                    <?php echo __('Shipping method');?>
+                                </p>
+                            </div>
+
+                            <?php echo $block->getChildHtml('shipping_method');?>
+                        </div>
+                    </div>
+                <?php endif; ?>
+
+                <?php /*
+                <div class="mw-osc-column mw-osc-column-right">
+                    <div class="mw-osc-block" id="opc-payment" class="section allow">
+                        <div class="mw-osc-block-title">
+                            <?php
+                                if($dataHelper->onlyProductDownloadable()) {
+                                    $attributes = "class='onestepcheckout-numbers onestepcheckout-numbers-2' id='mw-osc-p2'";
+                                } else {
+                                    if($dataHelper->getStoreConfig("onestepcheckout/deliverydate/allow_options")) {
+                                        $attributes = "class='onestepcheckout-numbers onestepcheckout-numbers-4' id='mw-osc-p4'";
+                                    } else {
+                                        $attributes = "class='onestepcheckout-numbers onestepcheckout-numbers-3' id='mw-osc-p3'";
+                                    }
+                                }
+                            ?>
+                            <p <?php echo $attributes; ?>>
+                                <?php echo __('Payment method'); ?>
+                            </p>
+                        </div>
+
+                        <div class="mw-osc-block-content">
+                            <div id="checkout-step-payment" class="step a-item">
+                                <?php echo $block->getChildHtml('payment'); ?>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                */?>
+
+                <div class="clear_both">&nbsp;</div>
+            </div>
+        </div>
+
+       
+        <!-- end.mw-osc-column-2 -->
+
+        <div class="review">
+            <div class="mw-osc-block">
+                <div class="mw-osc-block-title">
+                    <p class="onestepcheckout-numbers onestepcheckout-numbers-6">
+                        <?php echo __('Review your quote'); ?>
+                    </p>
+                </div>
+                <?php echo $block->getChildHtml('review'); ?>
+            </div>
+        </div>
+        <!-- end.review -->
+
+        <div class="clear_both">&nbsp;</div>
+    </form>
+
+    <div style="display: none;">
+        <div id="inline1" style="height:240px;">
+            <?php echo $block->getChildHtml('login'); ?>
+        </div>
+
+        <div id="inline3" style="height:210px;overflow:auto;">
+            <?php echo $block->getChildHtml('forgotpassword'); ?>
+        </div>
+
+        <?php
+            $boxWidth = $dataHelper->getStoreConfig('onestepcheckout/termcondition/boxwidth');
+            $boxHeight = $dataHelper->getStoreConfig('onestepcheckout/termcondition/boxheight');
+        ?>
+        <div id="inline2" style="width:<?php echo $boxWidth ?>;height:<?php echo $boxHeight ?>;overflow:auto;">
+            <div class="mw-osc-title-login">
+                <h1><?php echo __('Terms and Conditions');?> </h1>
+            </div>
+
+            <div class="mw-osc-ct-term" style="height: <?php echo ($boxHeight - 90) ?>px">
+                <?php
+                    $condition = (int) $dataHelper->getStoreConfig('onestepcheckout/termcondition/select_term_conditions');
+                    if ($condition != 0) {
+                        echo $block->getTermByCondition($condition);
+                    } else {
+                        echo __($dataHelper->getStoreConfig('onestepcheckout/termcondition/content_options'));
+                    }
+                ?>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="clear_both">&nbsp;</div>
+
+<div style="left: 0px; min-height: 710px; display: none; top:0px;" id="loading-mask">
+    <p id="loading_mask_loader" class="loader"><img alt="Loading..." src="<?php echo $block->getViewFileUrl('Interactivated_Quotecheckout::images/ajax-loader-tr.gif'); ?>"></p>
+</div>

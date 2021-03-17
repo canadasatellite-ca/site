@@ -1,0 +1,39 @@
+<?php if ($block->getTotals()) : ?>
+	<tfoot>
+		<?php
+			$_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
+			$numcol = 3;
+			if ($_dataHelper->showImageProduct()) {
+				$numcol = $numcol + 1;
+			}
+			if ($_dataHelper->getStoreConfig("onestepcheckout/general/allowremoveproduct")) {
+				$numcol = $numcol + 1;
+			}
+		?>
+
+		<?php if ($_dataHelper->getStoreConfig("onestepcheckout/general/updateqtyproduct")) : ?>
+		<tr class='first'>
+			<td class="a-right" colspan="<?php echo $numcol + 1 ?>">
+				<button class="button btn-update-cart" title="<?php echo __('Update Shopping Cart') ?>" type="button">
+					<span><span><?php echo __('Update Cart') ?></span></span>
+				</button>
+			</td>
+		</tr>
+		<?php endif; ?>
+
+		<?php $_colspan = $this->helper('Magento\Tax\Helper\Data')->displayCartBothPrices() ? 5 : $numcol; ?>
+	    <?php echo $block->renderTotals(null, $_colspan); ?>
+	    <?php echo $block->renderTotals('footer', $_colspan); ?>
+
+		<?php if ($block->needDisplayBaseGrandtotal()):?>
+		<tr>
+			<td class="a-right" colspan="<?php echo $_colspan; ?>">
+				<small><?php echo __('Your credit card will be charged for') ?></small>
+			</td>
+			<td class="a-right">
+				<small><?php echo $block->displayBaseGrandtotal() ?></small>
+			</td>
+		</tr>
+		<?php endif; ?>
+	</tfoot>
+<?php endif; ?>

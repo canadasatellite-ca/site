@@ -1,0 +1,33 @@
+.order-previous:before {
+    content: '\e629';
+	
+}
+.order-next:before {
+    content: '\e62a';
+	  
+}
+.order-previous.order-next-previous-buttons
+{
+left:75%;
+}
+.order-next.order-next-previous-buttons
+{
+left:80%;
+}
+.order-next-previous-buttons:before
+{
+	  font-weight: 700;
+ -webkit-font-smoothing: antialiased;
+    font-family: 'Admin Icons';
+    line-height: 1;
+    font-style: normal;
+    font-weight: normal;
+    speak: none;
+
+}
+.order-next-previous-buttons {
+	    width: 4.4rem;
+    margin-left: 1.5rem;
+    text-indent: .1em;
+
+}

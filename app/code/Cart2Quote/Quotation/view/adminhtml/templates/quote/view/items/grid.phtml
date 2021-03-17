@@ -1,0 +1,39 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+/**
+ * @var $block \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Grid
+ */
+?>
+
+<?php if (empty($block->getItems())) : ?>
+    <div id="quote-items_grid">
+        <div class="admin__table-wrapper">
+            <table class="data-table admin__table-primary quote-tables">
+                <thead>
+                <tr class="headings">
+                    <th class="col-product-name" colspan="2"><span><?php echo __('Product') ?></span></th>
+                    <th class="col-cost-price"><span><?php echo __('Cost Price') ?></span></th>
+                    <th class="col-original-price"><span><?php echo __('Original Price') ?></span></th>
+                    <th class="col-quoted-price"><span><?php echo __('Quoted Price') ?></span></th>
+                    <th class="col-proposal-qty"><span><?php echo __('Qty') ?></span></th>
+                    <th class="col-discount-price"><span><?php echo __('Discount Price') ?></span></th>
+                    <th class="col-discount-row-total"><span><?php echo __('Row Total') ?></span></th>
+                    <?php if ($block->isActiveAction()) : ?>
+                        <th class="col-action"><span><?php echo __('Action') ?></span></th>
+                    <?php endif; ?>
+                </tr>
+                </thead>
+                <tbody>
+                <tr class="even">
+                    <td class="empty-text" colspan="8"><?php echo __('No quote items') ?></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+<?php else : ?>
+        <?php $this->getChildHtml('items_grid_items') ?>
+<?php endif; ?>

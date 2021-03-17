@@ -1,0 +1,29 @@
+<div class="cart">
+    <div id="discount-coupon-form">
+        <div class="discount">
+            <div class="discount-form">
+				<h2 style="margin-top:8px"><?php echo __('Discount Codes') ?></h2>
+				<input type="hidden" name="remove" id="remove-coupone" value="0" />
+
+				<div class="input-box">
+					<input class="input-text" id="coupon_code" name="coupon_code" value="<?php echo $block->escapeHtml($block->getCouponCode()) ?>" />
+					<div id="mw-coupon-message" class="validation-advice"></div>
+				</div>
+
+				<div class="buttons-set">
+					<button type="button" title="<?php echo __('Apply Coupon') ?>"  id="button-btn-coupon-id" class="button btn-coupon" value="<?php echo __('Apply Coupon') ?>">
+						<span id="id-coupon-color-parent">
+							<span id="id-coupon-color"><?php echo __('Apply Coupon') ?></span>
+						</span>
+					</button>
+
+					<?php if (strlen($block->getCouponCode())) : ?>
+						&nbsp; <button type="button" title="<?php echo __('Cancel Coupon') ?>" class="button btn-coupon-cancel" value="<?php echo __('Cancel Coupon') ?>"><span><span><?php echo __('Cancel Coupon') ?></span></span></button>
+					<?php endif; ?>
+				</div>
+				<div style="clear:both;"></div>
+			</div>
+		</div>
+	</div>
+</div>
+<div style="clear:both;"></div>

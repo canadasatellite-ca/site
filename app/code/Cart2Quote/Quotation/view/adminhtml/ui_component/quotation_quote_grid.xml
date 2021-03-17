@@ -1,0 +1,305 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">quotation_quote_grid.quotation_quote_grid_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <buttons>
+            <button name="add">
+                <url path="quotation/quote_create/start" />
+                <class>primary</class>
+                <label translate="true">Create New Quote</label>
+<!-- Not supported on buttons in M2.2 <aclResource>Cart2Quote_Quotation::create</aclResource> 2.3.1 feature -->
+            </button>
+            <button name="config">
+                <url path="adminhtml/system_config/edit/section/cart2quote_quotation" />
+                <class>action-secondary</class>
+                <label translate="true">Configure Quotation Management</label>
+<!-- Not supported on buttons in M2.2 <aclResource>Cart2Quote_Quotation::quotes_settings</aclResource> 2.3.1 feature -->
+            </button>
+        </buttons>
+        <spinner>quotation_quote_columns</spinner>
+        <deps>
+            <dep>quotation_quote_grid.quotation_quote_grid_data_source</dep>
+        </deps>
+    </settings>
+    <dataSource name="quotation_quote_grid_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <updateUrl path="mui/index/render" />
+        </settings>
+        <aclResource>Cart2Quote_Quotation::quotes</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="quotation_quote_grid_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>main_table.quote_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks" />
+        <columnsControls name="columns_controls" />
+        <exportButton name="export_button" />
+        <filterSearch name="fulltext" />
+        <filters name="listing_filters">
+            <filterSelect name="store_id" provider="${ $.parentName }">
+                <settings>
+                    <options class="Magento\Store\Ui\Component\Listing\Column\Store\Options" />
+                    <caption translate="true">All Store Views</caption>
+                    <label translate="true">Request Point</label>
+                    <dataScope>store_id</dataScope>
+                    <imports>
+                        <link name="visible">ns = ${ $.ns }, componentType = column, index = ${ $.index }:visible</link>
+                    </imports>
+                </settings>
+            </filterSelect>
+        </filters>
+        <massaction name="listing_massaction" component="Magento_Ui/js/grid/tree-massactions">
+            <action name="delete">
+                <settings>
+                    <url path="quotation/quote/massDelete" />
+                    <type>delete</type>
+                    <label translate="true">Delete</label>
+                </settings>
+            </action>
+            <action name="cancel">
+                <settings>
+                    <url path="quotation/quote/massCancel" />
+                    <type>cancel</type>
+                    <label translate="true">Cancel</label>
+                </settings>
+            </action>
+            <action name="duplicate">
+                <settings>
+                    <url path="quotation/quote/massDuplicate" />
+                    <type>duplicate</type>
+                    <label translate="true">Duplicate</label>
+                </settings>
+            </action>
+            <action name="duplicate_assign_customer">
+                <settings>
+                    <url path="quotation/quote/massDuplicateSelectCustomer" />
+                    <type>duplicate_assign_customer</type>
+                    <label translate="true">Duplicate (assign customer)</label>
+                </settings>
+            </action>
+        </massaction>
+        <paging name="listing_paging" />
+    </listingToolbar>
+    <columns name="quotation_quote_columns">
+        <settings>
+            <childDefaults>
+                <param name="fieldAction" xsi:type="array">
+                    <item name="provider" xsi:type="string">quotation_quote_grid.quotation_quote_grid.quotation_quote_columns.actions</item>
+                    <item name="target" xsi:type="string">applyAction</item>
+                    <item name="params" xsi:type="array">
+                        <item name="0" xsi:type="string">view</item>
+                        <item name="1" xsi:type="string">${ $.$data.rowIndex }</item>
+                    </item>
+                </param>
+            </childDefaults>
+        </settings>
+        <selectionsColumn name="ids" sortOrder="0">
+            <settings>
+                <indexField>quote_id</indexField>
+            </settings>
+        </selectionsColumn>
+        <column name="increment_id" sortOrder="10">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Quote</label>
+            </settings>
+        </column>
+        <column name="store_id" class="Magento\Store\Ui\Component\Listing\Column\Store" sortOrder="20">
+            <settings>
+                <label translate="true">Request Point</label>
+                <bodyTmpl>ui/grid/cells/html</bodyTmpl>
+                <sortable>false</sortable>
+            </settings>
+        </column>
+        <column name="quotation_created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date" sortOrder="30">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Requested</label>
+                <sorting>desc</sorting>
+            </settings>
+        </column>
+        <column name="customer_firstname" sortOrder="40">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer First Name</label>
+            </settings>
+        </column>
+        <column name="customer_lastname" sortOrder="50">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer Last Name</label>
+            </settings>
+        </column>
+        <column name="customer_email">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Customer Email</label>
+                <visible>true</visible>
+            </settings>
+        </column>
+        <column name="customer_note">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Quote Comment</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="grand_total" class="Magento\Sales\Ui\Component\Listing\Column\Price" sortOrder="60">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">Grand Total (Base)</label>
+            </settings>
+        </column>
+        <column name="status" component="Magento_Ui/js/grid/columns/select" sortOrder="70">
+            <settings>
+                <filter>select</filter>
+                <options class="Cart2Quote\Quotation\Model\ResourceModel\Quote\Grid\StatusesArray" />
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        <column name="billing_firstname" sortOrder="80">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing Firstname</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_lastname" sortOrder="90">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing Lastname</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_company" sortOrder="100">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing company</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_street" sortOrder="110">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing street</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_region" sortOrder="120">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing region</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_postcode" sortOrder="130">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing postcode</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_country_id" sortOrder="140">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing country</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="billing_telephone" sortOrder="150">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Billing telephone</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_firstname" sortOrder="160">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping Firstname</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_lastname" sortOrder="170">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping Lastname</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_company" sortOrder="180">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping company</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_street" sortOrder="190">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping street</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_region" sortOrder="200">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping region</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_postcode" sortOrder="210">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping postcode</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_country_id" sortOrder="220">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping country</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <column name="shipping_telephone" sortOrder="230">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Shipping telephone</label>
+                <visible>false</visible>
+            </settings>
+        </column>
+        <actionsColumn name="actions" class="Magento\Sales\Ui\Component\Listing\Column\ViewAction" sortOrder="240">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="viewUrlPath" xsi:type="string">quotation/quote/view</item>
+                    <item name="urlEntityParamName" xsi:type="string">quote_id</item>
+                </item>
+            </argument>
+            <settings>
+                <indexField>quote_id</indexField>
+            </settings>
+        </actionsColumn>
+        <column name="created_by" sortOrder="90">
+            <settings>
+                <label translate="true">Created By</label>
+            </settings>
+        </column>
+    </columns>
+</listing>

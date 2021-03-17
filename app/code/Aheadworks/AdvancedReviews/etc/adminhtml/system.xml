@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="aheadworks" translate="label" sortOrder="300">
+            <label>Aheadworks Extensions</label>
+        </tab>
+        <section id="aw_advanced_reviews" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Advanced Reviews</label>
+            <tab>aheadworks</tab>
+            <resource>Aheadworks_AdvancedReviews::config_aw_advanced_reviews</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General</label>
+                <field id="display_mode_of_email_field_for_guest" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Guests must specify their email to submit review</label>
+                    <frontend_model>Aheadworks\AdvancedReviews\Block\Adminhtml\System\Config\DisplayModeOfEmailFieldForGuest</frontend_model>
+                    <source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+                </field>
+                <field id="are_pros_and_cons_enabled" translate="label,comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="0">
+                    <label>Enable Pros &amp; Cons</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>Adds two extra fields: "Advantages" and "Disadvantages"</comment>
+                </field>
+                <field id="are_agreements_enabled" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Terms and Conditions</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="agreements_display_mode" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Who must accept Terms and Conditions</label>
+                    <source_model>Aheadworks\AdvancedReviews\Model\Source\Review\Agreements\DisplayMode</source_model>
+                    <depends>
+                        <field id="are_agreements_enabled">1</field>
+                    </depends>
+                </field>
+                <field id="admin_comment_caption" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Admin Comment Caption</label>
+                </field>
+                <field id="auto_approve_reviews" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Approve Reviews</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="auto_approve_comments" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Approve Comments</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="enable_captcha" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1">
+                    <label>Enable Captcha</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="all_reviews_page_request_path" translate="label,comment" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Request Path To Page With All Reviews</label>
+                    <backend_model>Aheadworks\AdvancedReviews\Model\Config\Backend\AllReviewsPage\RequestPath</backend_model>
+                    <comment>For example, "reviews" makes the page accessible at domain.com/reviews/</comment>
+                </field>
+                <field id="all_reviews_page_meta_description" translate="label" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Meta Description For All Reviews Page</label>
+                </field>
+            </group>
+            <group id="file_attachments" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>File Attachments</label>
+                <field id="allow_attach_files" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow Customer to Attach Files</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="max_upload_file_size" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max Upload File Size (Mb)</label>
+                    <validate>validate-digits validate-not-negative-number</validate>
+                </field>
+                <field id="allow_file_extensions" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow File Extensions</label>
+                </field>
+            </group>
+            <group id="email" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Email Notification Settings</label>
+                <field id="sender" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sender</label>
+                    <comment>This will be used by default as "From" in outgoing emails</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="enable_reminder" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1">
+                    <label>Enable Review Reminder Notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="reminder_after_days" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Review Reminder Notifications After Day(s)</label>
+                    <depends>
+                        <field id="enable_reminder">1</field>
+                    </depends>
+                </field>
+                <field id="reminder_template" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template For Customer Review Reminder</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                    <depends>
+                        <field id="enable_reminder">1</field>
+                    </depends>
+                </field>
+                <field id="admin_email" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Address For Admin Notifications</label>
+                    <validate>validate-email</validate>
+                    <comment><![CDATA[Leave empty to disable admin notifications]]></comment>
+                </field>
+                <field id="admin_template" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template For Admin Notifications</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="email_address_for_abuse_reports" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Address to Send Abuse Reports</label>
+                    <validate>validate-email</validate>
+                    <comment><![CDATA[Leave empty to disable admin notifications]]></comment>
+                </field>
+                <field id="template_for_abuse_report" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template For Abuse Report</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+                <field id="email_address_for_critical_review_alert" translate="label" type="text" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Address For Critical Review Alert</label>
+                    <validate>validate-email</validate>
+                    <comment><![CDATA[Leave empty to disable admin notifications]]></comment>
+                </field>
+                <field id="template_for_critical_review_alert" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Email Template Of Critical Review Alert</label>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,13 @@
+<?xml version="1.0"?><!--
+~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+~ See COPYING.txt for license details.
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Cart2Quote_Quotation::css/custom-request.css"/>
+    </head>
+    <body>
+        <referenceBlock name="addtocart.shortcut.buttons.additional" remove="true"/>
+    </body>
+</page>

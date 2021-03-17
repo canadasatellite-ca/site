@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © 2016 Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">faqs_category_form.faqs_category_form_data_source</item>
+            <item name="deps" xsi:type="string">faqs_category_form.faqs_category_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Category Information</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">faqs_category_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Magedelight\Faqs\Block\Adminhtml\Category\Edit\BackButton</item>
+            <item name="delete" xsi:type="string">Magedelight\Faqs\Block\Adminhtml\Category\Edit\DeleteButton</item>
+            <item name="reset" xsi:type="string">Magedelight\Faqs\Block\Adminhtml\Category\Edit\ResetButton</item>
+            <item name="save" xsi:type="string">Magedelight\Faqs\Block\Adminhtml\Category\Edit\SaveButton</item>
+            <item name="save_and_continue" xsi:type="string">Magedelight\Faqs\Block\Adminhtml\Category\Edit\SaveAndContinueButton</item>
+        </item>
+    </argument>
+    <dataSource name="faqs_category_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magedelight\Faqs\Model\Source\Category\DataProvider</argument>
+            <argument name="name" xsi:type="string">faqs_category_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">category_id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="faqs/category/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="general">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string"/>
+            </item>
+        </argument>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Enable Category</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="dataScope" xsi:type="string">status</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="number">1</item>
+                        <item name="false" xsi:type="number">2</item>
+                    </item>
+                    <item name="default" xsi:type="number">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Title</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="sortOrder" xsi:type="number">15</item>
+                    <item name="dataScope" xsi:type="string">title</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="url_key">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">URL Key</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="sortOrder" xsi:type="number">17</item>
+                    <item name="dataScope" xsi:type="string">url_key</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-identifier" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="tooltip" xsi:type="array">
+                        <item name="description" xsi:type="string">This is an unique value to identify the category</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Description</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="sortOrder" xsi:type="number">18</item>
+                    <item name="dataScope" xsi:type="string">description</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="page_layout">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Catalog\Model\Category\Attribute\Source\Layout</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">21</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Layout</item>
+                </item>
+            </argument>
+        </field>
+        <!--field name="list_mode">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magedelight\Faqs\Model\Source\Category\ListMode</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">21</item>
+                    <item name="component" xsi:type="string">Magedelight_Faqs/js/form/element/optionsListMode</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">List Mode</item>
+                </item>
+            </argument>
+        </field>
+        <field name="grid_column">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magedelight\Faqs\Model\Source\Category\GridColumn</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">22</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="label" xsi:type="string" translate="true">Grid Columns</item>
+                </item>
+            </argument>
+        </field-->
+        <field name="image">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="label" xsi:type="string" translate="true">Image</item>
+                    <item name="visible" xsi:type="boolean">true</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="previewTmpl" xsi:type="string">Magento_Catalog/image-preview</item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">25</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="url" path="faqs/category_image/upload"/>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="customer_group_ids">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magedelight\Faqs\Model\Source\CustomerGroupsOptionsProvider</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Customer Groups</item>
+                    <item name="componentType" xsi:type="string">field</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="component" xsi:type="string">Magento_Catalog/js/components/new-category</item>
+                    <item name="elementTmpl" xsi:type="string">ui/grid/filters/elements/ui-select</item>
+                    <item name="dataScope" xsi:type="string">customer_group_ids</item>
+                    <item name="filterOptions" xsi:type="boolean">true</item>
+                    <item name="showCheckbox" xsi:type="boolean">true</item>
+                    <item name="disableLabel" xsi:type="boolean">true</item>
+                    <item name="multiple" xsi:type="boolean">true</item>
+                    <item name="levelsVisibility" xsi:type="number">1</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="listens" xsi:type="array">
+                        <item name="${ $.namespace }.${ $.namespace }:responseData" xsi:type="string">setParsed</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="position">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string">Position</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-zero-or-greater" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="dataScope" xsi:type="string">position</item>
+                </item>
+            </argument>
+        </field>
+        <field name="stores">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Cms\Ui\Component\Listing\Column\Cms\Options</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="label" xsi:type="string" translate="true">Store View</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="source" xsi:type="string">faqs</item>
+                    <item name="dataScope" xsi:type="string">stores</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="assign_question">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Questions in Category</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">80</item>
+            </item>
+        </argument>
+        <container name="assign_question_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">160</item>
+                </item>
+            </argument>
+            <htmlContent name="html_content">
+                <argument name="block" xsi:type="object">Magedelight\Faqs\Block\Adminhtml\Category\Edit\Tab\AssignQuestion</argument>
+            </htmlContent>
+        </container>
+    </fieldset>
+    <fieldset name="search_engine_optimization">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Search Engine Optimization</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">60</item>
+            </item>
+        </argument>
+        <field name="page_title">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" xsi:type="string" translate="true">Page Title</item>
+                </item>
+            </argument>
+        </field>
+        <field name="meta_keywords">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Meta Keywords</item>
+                </item>
+            </argument>
+        </field>
+        <field name="meta_description">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">150</item>
+                    <item name="dataType" xsi:type="string">string</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Meta Description</item>
+                </item>
+            </argument>
+        </field> 
+    </fieldset>
+    <fieldset name="design_section">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Design</item>
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="sortOrder" xsi:type="number">50</item>
+            </item>
+        </argument>
+        <fieldset name="design_general">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">General Options</item>
+                    <item name="collapsible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+            <field name="question_margin_bottom">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">130</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Question Margin Bottom (px)</item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>
+        <fieldset name="title_option">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Title Options</item>
+                    <item name="collapsible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+            <field name="font_size">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">140</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Font Size(px)</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="text_color">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">145</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="component" xsi:type="string">Magedelight_Faqs/js/form/element/color-select</item>
+                        <item name="elementTmpl" xsi:type="string">Magedelight_Faqs/form/element/color-select</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Text Color</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="text_color_active">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">146</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="component" xsi:type="string">Magedelight_Faqs/js/form/element/color-select</item>
+                        <item name="elementTmpl" xsi:type="string">Magedelight_Faqs/form/element/color-select</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Text Color (Active)</item>
+                    </item>
+                </argument>
+            </field> 
+            <field name="background">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">147</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="component" xsi:type="string">Magedelight_Faqs/js/form/element/color-select</item>
+                        <item name="elementTmpl" xsi:type="string">Magedelight_Faqs/form/element/color-select</item>
+                        <item name="label" xsi:type="string" translate="true">Background</item>
+                    </item>
+                </argument>
+            </field> 
+            <field name="backgrond_active">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">150</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="component" xsi:type="string">Magedelight_Faqs/js/form/element/color-select</item>
+                        <item name="elementTmpl" xsi:type="string">Magedelight_Faqs/form/element/color-select</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Background (Active)</item>
+                    </item>
+                </argument>
+            </field> 
+            <field name="icon">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">151</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="notice" xsi:type="string">"For ex: fa-plus-square-o. Find more class at here http://fontawesome.io/icons/" </item>
+                        <item name="label" xsi:type="string" translate="true">Icon</item>
+                        <item name="tooltip" xsi:type="array">
+                        <item name="link" xsi:type="string">http://fontawesome.io/icons/</item>
+                        <item name="description" xsi:type="string">For ex: fa-plus-square-o. Find more class at here.</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>
+        <fieldset name="question_border_option">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Question Title Border Options</item>
+                    <item name="collapsible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+            <field name="border_width">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">150</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Border Width(px)</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="border_color">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">150</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="component" xsi:type="string">Magedelight_Faqs/js/form/element/color-select</item>
+                        <item name="elementTmpl" xsi:type="string">Magedelight_Faqs/form/element/color-select</item>
+                        <item name="label" xsi:type="string" translate="true">Border Color</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="border_radius">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">150</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Border Radius</item>
+                        <item name="notice" xsi:type="string">"For ex: 5px 5px 5px 5px</item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>
+        <fieldset name="question_icon_option">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Question Icon Options</item>
+                    <item name="collapsible" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+            <field name="icon_class">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">144</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Icon Class</item>
+                        <item name="tooltip" xsi:type="array">
+                            <item name="link" xsi:type="string">http://fontawesome.io/icons/</item>
+                            <item name="description" xsi:type="string">For ex: fa-plus-square-o. Find more class at here.</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="icon_active">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">145</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Icon Class on Active</item>
+                        <item name="tooltip" xsi:type="array">
+                            <item name="link" xsi:type="string">http://fontawesome.io/icons/</item>
+                            <item name="description" xsi:type="string">For ex: fa-plus-square-o. Find more class at here.</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="animation_type">
+                <argument name="data" xsi:type="array">
+                    <item name="options" xsi:type="object">Magedelight\Faqs\Model\Source\Faq\AnimationType</item>
+                    <item name="config" xsi:type="array">
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="visible" xsi:type="boolean">true</item>
+                        <item name="label" xsi:type="string" translate="true">Animation Type</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="source" xsi:type="string">faqs</item>
+                        <item name="sortOrder" xsi:type="number">146</item>
+                        <item name="dataScope" xsi:type="string">animation_type</item>
+                        <item name="tooltip" xsi:type="array">
+                        <item name="link" xsi:type="string">https://daneden.github.io/animate.css/</item>
+                        <item name="description" xsi:type="string">Check out all the animations here </item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="animation_speed">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">147</item>
+                        <item name="dataType" xsi:type="string">string</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="label" xsi:type="string" translate="true">Animation Speed(s)</item>
+                        <item name="tooltip" xsi:type="array">
+                            <item name="description" xsi:type="string">Please enter value in second ex 0.5</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </fieldset>          
+    </fieldset>
+</form>

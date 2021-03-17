@@ -1,0 +1,74 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Item\Renderer\Column $block */
+$thumbnailHelper = $this->helper(\Cart2Quote\Quotation\Helper\ProductThumbnail::class);
+$product = $block->getProduct();
+$productUrl = $product->getProductUrl();
+$productName = $product->getName();
+$item = $block->getItem();
+
+$productHelper = $this->helper(\Magento\Catalog\Helper\Product\Configuration::class);
+?>
+<?php $colspan = 3; ?>
+<?php if ($block->isShowCustomerDashboardImages()) : ?>
+    <?php $colspan = 2; ?>
+    <td colspan="1">
+        <a href="<?php echo $productUrl; ?>">
+        <img class="product-thumbnail" align="left"
+             src="<?php echo $thumbnailHelper->getProductThumbnail($product)?>" width="75"
+             height="75" alt="<?php echo $productName ?>"
+             title="<?php echo $productName ?>"/>
+    </td>
+<?php endif; ?>
+<td class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>" colspan="<?php echo $colspan; ?>">
+    <strong class="product name product-item-name">
+        <p>
+            <?php echo __(
+            '<a href="%1"> %2</a>',
+            $productUrl,
+            $productName
+            ); ?>
+        </p>
+    </strong>
+    <?php $options = $productHelper->getOptions($block->getItem()) ?>
+    <?php if (!empty($options)) : ?>
+        <dl class="item-options">
+            <?php foreach ($options as $option) : ?>
+                <dt><?php echo $block->escapeHtml($option['label']) ?></dt>
+                <?php if (!$block->getPrintStatus()) : ?>
+                    <?php $formatedOptionValue = $block->getFormatedOptionValue($option) ?>
+                    <dd>
+                        <?php if (isset($formatedOptionValue['full_view'])) : ?>
+                            <?php echo $formatedOptionValue['full_view'] ?>
+                        <?php else : ?>
+                            <?php echo $formatedOptionValue['value'] ?>
+                        <?php endif; ?>
+                    </dd>
+                <?php else : ?>
+                    <dd>
+                        <?php
+                        if ((isset($option['print_value']))) {
+                            $optionValue = $option['print_value'];
+                        } else {
+                            $optionValue = $option['value'];
+                        } ?>
+                        <?php echo nl2br($block->escapeHtml($optionValue)) ?>
+                    </dd>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </dl>
+    <?php endif; ?>
+    <?php $addtInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+    <?php if ($addtInfoBlock) : ?>
+        <?php echo $addtInfoBlock->setItem($item)->toHtml(); ?>
+    <?php endif; ?>
+    <?php if ($item->getDescription()) : ?>
+        <p><strong><?php echo $block->escapeHtml(__('Comment:')); ?></strong><br />
+            <?php echo $block->escapeHtml($item->getDescription()) ?></p>
+    <?php endif; ?>
+</td>

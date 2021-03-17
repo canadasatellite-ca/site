@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <aw_advanced_reviews>
+            <general>
+                <!-- \Magento\Config\Model\Config\Source\Nooptreq::VALUE_OPTIONAL -->
+                <display_mode_of_email_field_for_guest>opt</display_mode_of_email_field_for_guest>
+                <are_pros_and_cons_enabled>0</are_pros_and_cons_enabled>
+                <are_agreements_enabled>0</are_agreements_enabled>
+                <!-- \Aheadworks\AdvancedReviews\Model\Source\Review\Agreements\DisplayMode::GUESTS_ONLY -->
+                <agreements_display_mode>1</agreements_display_mode>
+                <admin_comment_caption>Admin</admin_comment_caption>
+                <auto_approve_reviews>0</auto_approve_reviews>
+                <auto_approve_comments>0</auto_approve_comments>
+                <enable_captcha>0</enable_captcha>
+                <all_reviews_page_meta_description>Read product reviews by real customers</all_reviews_page_meta_description>
+            </general>
+            <file_attachments>
+                <allow_attach_files>1</allow_attach_files>
+                <max_upload_file_size>2</max_upload_file_size>
+                <allow_file_extensions>jpg,jpeg</allow_file_extensions>
+            </file_attachments>
+            <email>
+                <sender>general</sender>
+                <enable_reminder>1</enable_reminder>
+                <reminder_after_days>7</reminder_after_days>
+                <reminder_template>aw_advanced_reviews_email_reminder_template</reminder_template>
+                <admin_template>aw_advanced_reviews_email_admin_template</admin_template>
+                <template_for_abuse_report>aw_advanced_reviews_email_template_for_abuse_report</template_for_abuse_report>
+            </email>
+        </aw_advanced_reviews>
+    </default>
+</config>

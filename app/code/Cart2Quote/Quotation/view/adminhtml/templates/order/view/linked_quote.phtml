@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Order\View\LinkedQuote $block */
+?>
+<?php $order = $block->getOrder(); ?>
+<?php if (isset($order)) : ?>
+    <?php if ($block->getQuoteNumber($order->getQuoteId())) : ?>
+        <?php /* Account Information */ ?>
+        <th><?php echo $block->escapeHtml(__('Price Proposal')) ?></th>
+        <td><a href="<?php echo $block->escapeHtml($block->getQuoteViewUrl($order->getQuoteId())); ?>">
+                <?php echo $block->escapeHtml(__('Quotation')) ?>
+                <?php echo $block->escapeHtml('#' . $block->getQuoteNumber($order->getQuoteId())); ?>
+            </a>
+        </td>
+    <?php endif; ?>
+<?php endif; ?>

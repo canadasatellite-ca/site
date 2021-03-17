@@ -1,0 +1,38 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <virtualType name="MageSuper\ReCaptcha\Model\Provider\Failure\RedirectUrl\FaqNewQuestion"
+                 type="MSP\ReCaptcha\Model\Provider\Failure\RedirectUrl\SimpleUrlProvider">
+        <arguments>
+            <argument name="urlPath" xsi:type="string">referer</argument>
+            <argument name="urlParams" xsi:type="array">
+                <item name="_secure" xsi:type="boolean">true</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="MageSuper\ReCaptcha\Model\Provider\Failure\FaqNewQuestion"
+                 type="MSP\ReCaptcha\Model\Provider\Failure\ObserverRedirectFailure">
+        <arguments>
+            <argument name="redirectUrlProvider"
+                      xsi:type="object">MageSuper\ReCaptcha\Model\Provider\Failure\RedirectUrl\FaqNewQuestion</argument>
+        </arguments>
+    </virtualType>
+    <type name="MageSuper\Faq\Model\Provider\IsCheckRequired\Frontend\FaqForm">
+        <arguments>
+            <argument name="enableConfigFlag"
+                      xsi:type="string">msp_securitysuite_recaptcha/frontend/enabled_faq</argument>
+            <argument name="area" xsi:type="string">frontend</argument>
+        </arguments>
+    </type>
+    <virtualType name="MageSuper\Faq\Observer\Frontend\FaqNewQuestion"
+                 type="MSP\ReCaptcha\Observer\ReCaptchaObserver">
+        <arguments>
+            <argument name="isCheckRequired"
+                      xsi:type="object">MageSuper\Faq\Model\Provider\IsCheckRequired\Frontend\FaqForm</argument>
+            <argument name="failureProvider"
+                      xsi:type="object">MageSuper\ReCaptcha\Model\Provider\Failure\FaqNewQuestion</argument>
+        </arguments>
+    </virtualType>
+</config>

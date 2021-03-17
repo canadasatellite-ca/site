@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Aheadworks_AdvancedReviews::home" title="Advanced Reviews by Aheadworks" module="Aheadworks_AdvancedReviews" sortOrder="100" parent="Magento_Backend::marketing" resource="Aheadworks_AdvancedReviews::home"/>
+        <add id="Aheadworks_AdvancedReviews::reviews" title="Reviews" translate="title" module="Aheadworks_AdvancedReviews" sortOrder="10" parent="Aheadworks_AdvancedReviews::home" action="aw_advanced_reviews/review/index/" resource="Aheadworks_AdvancedReviews::reviews"/>
+        <add id="Aheadworks_AdvancedReviews::mail_log" title="Mail Log" translate="title" module="Aheadworks_AdvancedReviews" sortOrder="20" parent="Aheadworks_AdvancedReviews::home" action="aw_advanced_reviews/queue/index/" resource="Aheadworks_AdvancedReviews::mail_log"/>
+        <remove id="Magento_Review::catalog_reviews_ratings_reviews_all"/>
+    </menu>
+</config>

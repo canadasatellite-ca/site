@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ /**
+  ~  Copyright © 2016 Magestore. All rights reserved.
+  ~  See COPYING.txt for license details.
+  ~  */
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="controller_action_postdispatch_onestepcheckout_index_saveCustomCheckoutData">
+        <observer name="MageSupersaveNewCustomerPassword"
+                  instance="MageSuper\Casat\Observer\NewCustomerPassword"/>
+    </event>
+    <event name="controller_action_predispatch_onestepcheckout_index_updateordermethod">
+        <observer name="MageSuperFixFirstdataCCNumberName"
+                  instance="MageSuper\Casat\Observer\FixFirstdataCCNumberName"/>
+    </event>
+    <event name="customer_address_save_after">
+        <observer instance="MageSuper\Casat\Observer\CustomerAddressSaveAfter" name="magesuper_customproductcategoryurl_observer_catalog_productsaveafter_customer_address_save_after"/>
+    </event>
+    <event name="catalog_block_product_list_collection">
+        <observer name="review" disabled="true"/>
+    </event>
+    <event name="faqs_save_after">
+        <observer instance="MageSuper\Casat\Observer\SendMailAfterFaqSubmit" name="magesuper_casat_observer_sendmailafterfaqsubmit"/>
+    </event>
+    <event name="sales_quote_address_save_before">
+        <observer instance="MageSuper\Casat\Observer\QuoteAddressSaveBefore" name="magesuper_casat_observer_quoteaddresssavebefore"/>
+    </event>
+</config>

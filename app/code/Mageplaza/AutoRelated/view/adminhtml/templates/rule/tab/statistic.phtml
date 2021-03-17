@@ -1,0 +1,96 @@
+<?php
+/**
+ * Mageplaza
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the mageplaza.com license that is
+ * available through the world-wide-web at this URL:
+ * https://www.mageplaza.com/LICENSE.txt
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade this extension to newer
+ * version in the future.
+ *
+ * @category    Mageplaza
+ * @package     Mageplaza_AutoRelated
+ * @copyright   Copyright (c) 2017-2018 Mageplaza (https://www.mageplaza.com/)
+ * @license     https://www.mageplaza.com/LICENSE.txt
+ */
+?>
+<?php
+if (!$block->isHidden()):
+    $totalImpression = (int)$block->getTotalImpression();
+    $totalClick = (int)$block->getTotalClick();
+    $childInfo = $block->getChildInfo();
+    ?>
+    <div class="entry-edit" id="statistic-general-lable">
+        <fieldset class="fieldset admin__fieldset ">
+            <legend class="admin__legend legend">
+                <span><?php echo __('Statistic'); ?></span>
+            </legend>
+        </fieldset>
+    </div>
+    <div>
+        <label>
+            <h1><?php echo __('Total'); ?></h1>
+        </label>
+        <br/>
+        <div class="autorelated-statistic">
+            <div class="autorelated-statistic-block autorelated-statistic-ctr">
+                <span><?php echo $block->getCtr($totalImpression, $totalClick); ?></span>
+                <strong><?php echo __('CTR'); ?></strong>
+            </div>
+            <div class="autorelated-statistic-block autorelated-statistic-click">
+                <span><?php echo $totalClick; ?></span>
+                <strong><?php echo __('Click'); ?></strong>
+            </div>
+            <div class="autorelated-statistic-block autorelated-statistic-imp">
+                <span><?php echo $totalImpression; ?></span>
+                <strong><?php echo __('Impression'); ?></strong>
+            </div>
+        </div>
+        <?php if (!empty($childInfo)) : ?>
+            <br/>
+            <label>
+                <h1><?php echo __('Parent'); ?></h1>
+            </label>
+            <br/>
+            <div class="autorelated-statistic">
+                <div class="autorelated-statistic-block autorelated-statistic-ctr">
+                    <span><?php echo $block->getCtr($block->getCurrentImpression(), $block->getCurrentClick()); ?></span>
+                    <strong><?php echo __('CTR'); ?></strong>
+                </div>
+                <div class="autorelated-statistic-block autorelated-statistic-click">
+                    <span><?php echo $block->getCurrentClick(); ?></span>
+                    <strong><?php echo __('Click'); ?></strong>
+                </div>
+                <div class="autorelated-statistic-block autorelated-statistic-imp">
+                    <span><?php echo $block->getCurrentImpression(); ?></span>
+                    <strong><?php echo __('Impression'); ?></strong>
+                </div>
+            </div>
+            <br/>
+            <label>
+                <h1><?php echo __('Child'); ?></h1>
+            </label>
+            <br/>
+            <div class="autorelated-statistic">
+                <div class="autorelated-statistic-block autorelated-statistic-ctr">
+                    <span><?php echo $block->getCtr($childInfo['impression'], $childInfo['click']); ?></span>
+                    <strong><?php echo __('CTR'); ?></strong>
+                </div>
+                <div class="autorelated-statistic-block autorelated-statistic-click">
+                    <span><?php echo $childInfo['click']; ?></span>
+                    <strong><?php echo __('Click'); ?></strong>
+                </div>
+                <div class="autorelated-statistic-block autorelated-statistic-imp">
+                    <span><?php echo $childInfo['impression']; ?></span>
+                    <strong><?php echo __('Impression'); ?></strong>
+                </div>
+            </div>
+        <?php endif; ?>
+        <br>
+    </div>
+<?php endif; ?>

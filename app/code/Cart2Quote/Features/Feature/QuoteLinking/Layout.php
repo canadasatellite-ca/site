@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\QuoteLinking; final class Layout extends \Cart2Quote\License\Plugin\AbstractPlugin { public final function aroundSetBlock(\Magento\Framework\View\Layout $okoRI, callable $OoZ_x, $yCt1w, $DYXUi) { if (!($DYXUi instanceof \Cart2Quote\Quotation\Block\Adminhtml\Order\View\LinkedQuote && !$this->{"\151\163\101\154\154\x6f\167\145\144"}())) { goto vpHna; } return null; vpHna: return $OoZ_x($yCt1w, $DYXUi); } }

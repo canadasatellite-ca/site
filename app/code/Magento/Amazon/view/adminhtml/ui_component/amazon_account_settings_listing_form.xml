@@ -1,0 +1,1381 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">amazon_account_settings_listing_form.amazon_account_settings_listing_form_data_source</item>
+            <item name="deps" xsi:type="string">amazon_account_settings_listing_form.amazon_account_settings_listing_form_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">amazon_account_settings_listing_form</item>
+        <item name="label" xsi:type="string" translate="true">Listing Settings</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">amazon_account_settings_listing_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+    </argument>
+    <dataSource name="amazon_account_settings_listing_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Amazon\Ui\DataProvider\Form\Amazon\Account\Settings\Listings\DataProvider</argument>
+            <argument name="name" xsi:type="string">amazon_account_settings_listing_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">merchant_id</argument>
+            <argument name="requestFieldName" xsi:type="string">merchant_id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="channel/amazon/account_settings_listings_save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <fieldset name="listing_settings">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Product Listing Actions</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+            </item>
+        </argument>
+        <container name="listing_settings_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_settings_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Listing</argument>
+            </htmlContent>
+        </container>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="dataScope" xsi:type="string">id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="merchant_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">hidden</item>
+                    <item name="dataScope" xsi:type="string">merchant_id</item>
+                </item>
+            </argument>
+        </field>
+        <field name="auto_list">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\ListingActionSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Automatic List Action</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/listing-action</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">auto_list</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="handling_time">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Default Handling Time</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">handling_time</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="default" xsi:type="string">2</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item xsi:type="string" name="validate-digits-range">1-30</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="thirdparty">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Third Party Listings</item>
+                <item name="sortOrder" xsi:type="number">20</item>
+            </item>
+        </argument>
+        <container name="listing_thirdparty_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_thirdparty_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Thirdparty</argument>
+            </htmlContent>
+        </container>
+        <field name="thirdparty_is_active">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\ThirdpartyIsActive</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Import Third Party Listings</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/thirdparty-is-active</item>
+                    <item name="dataScope" xsi:type="string">thirdparty_is_active</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="thirdparty_sku_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\Attributes</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Attribute That Contains Amazon Seller SKU</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">thirdparty_sku_field</item>
+                    <item name="default" xsi:type="string">sku</item>
+                </item>
+            </argument>
+        </field>
+        <field name="thirdparty_asin_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\Attributes</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">25</item>
+                    <item name="label" xsi:type="string" translate="true">Attribute That Contains Amazon ASIN</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">thirdparty_asin_field</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="pricing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Listing Price</item>
+                <item name="sortOrder" xsi:type="number">30</item>
+            </item>
+        </argument>
+        <container name="listing_pricing_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_pricing_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Pricing</argument>
+            </htmlContent>
+        </container>
+        <field name="price_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\PriceTypeField</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Magento Price Source</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">price_field</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="default" xsi:type="string">price</item>
+                </item>
+            </argument>
+        </field>
+        <field name="map_price_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\PriceTypeField</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Minimum Advertised Price (MAP)</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">map_price_field</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="strike_price_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\PriceTypeField</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Strike Through Price (MSRP)</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">strike_price_field</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="vat_is_active">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\YesNo</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="label" xsi:type="string" translate="true">Apply Value Added Tax (VAT)</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/vat-is-active</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">vat_is_active</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="vat_percentage">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="label" xsi:type="string" translate="true">VAT Percentage</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">vat_percentage</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="manage_ptc">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\ProductTaxCode</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" xsi:type="string" translate="true">Amazon Product Tax Code (PTC)</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/product-tax-code</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">manage_ptc</item>
+                    <item name="default" xsi:type="string">0</item>
+                </item>
+            </argument>
+        </field>
+        <field name="default_ptc">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="label" xsi:type="string" translate="true">Default PTC</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">default_ptc</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="max_text_length" xsi:type="string">250</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="business_pricing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">(B2B) Business Price</item>
+                <item name="sortOrder" xsi:type="number">35</item>
+            </item>
+        </argument>
+        <container name="business_pricing_help_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="business_pricing_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Business</argument>
+            </htmlContent>
+        </container>
+        <field name="business_is_active">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\Business</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Enable Business Pricing</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/business-is-active</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">business_is_active</item>
+                    <item name="default" xsi:type="string"></item>
+                    <item name="notice" xsi:type="string" translate="true">Enabling will make listings active in the Amazon business market to include optional tiered pricing.</item>
+                </item>
+            </argument>
+        </field>
+        <field name="tier_is_active">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\Business</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Enable Tiered Pricing</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/tier-is-active</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">tier_is_active</item>
+                    <item name="default" xsi:type="string"></item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="notice" xsi:type="string" translate="true">Enabling allows the creation of tiered pricing based on quantity purchased.</item>
+                </item>
+            </argument>
+        </field>
+        <container name="tier_group_one">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped-date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+            <field name="lower_bound_one">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">30</item>
+                        <item name="label" xsi:type="string" translate="true">Pricing Level One (qty/discount)</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">lower_bound_one</item>
+                        <item name="placeholder" xsi:type="string">at least qty</item>
+                        <item name="validation" xsi:type="array">
+                          <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="qty_price_one">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">40</item>
+                        <item name="label" xsi:type="string" translate="true">% Off</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">qty_price_one</item>
+                        <item name="placeholder" xsi:type="string">% off list price</item>
+                        <item name="validation" xsi:type="array">
+                            <item xsi:type="string" name="validate-number-range">1-99</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="tier_group_two">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped-date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+            <field name="lower_bound_two">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">50</item>
+                        <item name="label" xsi:type="string" translate="true">Pricing Level Two (qty / discount)</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">lower_bound_two</item>
+                        <item name="placeholder" xsi:type="string">at least qty</item>
+                        <item name="validation" xsi:type="array">
+                           <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                           <item name="validate-qty-price-two" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="qty_price_two">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">60</item>
+                        <item name="label" xsi:type="string" translate="true">Percent Discount</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">qty_price_two</item>
+                        <item name="placeholder" xsi:type="string">% off list price</item>
+                        <item name="validation" xsi:type="array">
+                            <item xsi:type="string" name="validate-number-range">1-99</item>
+                            <item name="validate-lower-bound-two" xsi:type="boolean">true</item>
+                            <item name="validate-lower-bound-two-has-qty" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="tier_group_three">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped-date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+            <field name="lower_bound_three">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">70</item>
+                        <item name="label" xsi:type="string" translate="true">Pricing Level Three (qty / discount)</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">lower_bound_three</item>
+                        <item name="placeholder" xsi:type="string">at least qty</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            <item name="validate-qty-price-three" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="qty_price_three">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">80</item>
+                        <item name="label" xsi:type="string" translate="true">Percent Discount</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">qty_price_three</item>
+                        <item name="placeholder" xsi:type="string">% off list price</item>
+                        <item name="validation" xsi:type="array">
+                            <item xsi:type="string" name="validate-number-range">1-99</item>
+                            <item name="validate-lower-bound-three" xsi:type="boolean">true</item>
+                            <item name="validate-lower-bound-three-has-qty" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="tier_group_four">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped-date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+            <field name="lower_bound_four">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">90</item>
+                        <item name="label" xsi:type="string" translate="true">Pricing Level Four (qty / discount)</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">lower_bound_four</item>
+                        <item name="placeholder" xsi:type="string">at least qty</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            <item name="validate-qty-price-four" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="qty_price_four">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">100</item>
+                        <item name="label" xsi:type="string" translate="true">Percent Discount</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">qty_price_four</item>
+                        <item name="placeholder" xsi:type="string">% off list price</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="validate-lower-bound-four" xsi:type="boolean">true</item>
+                            <item name="validate-lower-bound-four-has-qty" xsi:type="boolean">true</item>
+                            <item xsi:type="string" name="validate-number-range">1-99</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="tier_group_five">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="additionalClasses" xsi:type="string">admin__control-grouped-date</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="label" xsi:type="string" translate="true"></item>
+                    <item name="required" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                    <item name="breakLine" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+            <field name="lower_bound_five">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">110</item>
+                        <item name="label" xsi:type="string" translate="true">Pricing Level Five (qty / discount)</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">lower_bound_five</item>
+                        <item name="placeholder" xsi:type="string">at least qty</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                            <item name="validate-qty-price-five" xsi:type="boolean">true</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+            <field name="qty_price_five">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">120</item>
+
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="additionalClasses" xsi:type="string">admin__field-small</item>
+                        <item name="dataScope" xsi:type="string">qty_price_five</item>
+                        <item name="placeholder" xsi:type="string">% off list price</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="validate-lower-bound-five" xsi:type="boolean">true</item>
+                            <item name="validate-lower-bound-five-has-qty" xsi:type="boolean">true</item>
+                            <item xsi:type="string" name="validate-number-range">1-99</item>
+                        </item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+    <fieldset name="listing_quantity">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Stock / Quantity</item>
+                <item name="sortOrder" xsi:type="number">40</item>
+            </item>
+        </argument>
+        <container name="listing_quantity_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_quantity_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Quantity</argument>
+            </htmlContent>
+        </container>
+        <field name="min_qty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Out-of-Stock Threshold</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">min_qty</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item xsi:type="string" name="validate-digits-range">0-1000000</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="max_qty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Maximum Listed Quantity</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">max_qty</item>
+                    <item name="required" xsi:type="boolean">true</item>
+                    <item name="default" xsi:type="string">10000</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item xsi:type="string" name="validate-digits-range">1-1000000</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="custom_qty">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">"Do Not Manage Stock" Quantity</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">custom_qty</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item xsi:type="string" name="validate-digits-range">1-1000000</item>
+                    </item>
+                    <item name="default" xsi:type="string">100</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="fulfilled_by">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Fulfilled By</item>
+                <item name="sortOrder" xsi:type="number">50</item>
+            </item>
+        </argument>
+        <container name="fulfilled_by_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="fulfilled_by_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Fulfill</argument>
+            </htmlContent>
+        </container>
+        <field name="fulfilled_by">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\ListingFulfilledBySource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Product Fulfilled By</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">fulfilled_by</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/listing-fulfillment-by</item>
+                    <item name="default" xsi:type="string">1</item>
+                </item>
+            </argument>
+        </field>
+        <field name="fulfilled_by_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\AttributeSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="label" xsi:type="string" translate="true">Fulfilled By Attribute</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">fulfilled_by_field</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/listing-fulfillment-attribute</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="fulfilled_by_seller_select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="label" xsi:type="string" translate="true">Fulfilled By Merchant</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">fulfilled_by_seller_select</item>
+                </item>
+            </argument>
+        </field>
+        <field name="fulfilled_by_amazon_select">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" xsi:type="string" translate="true">Fulfilled By Amazon</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">fulfilled_by_amazon_select</item>
+                </item>
+            </argument>
+        </field>
+        <field name="fulfilled_by_seller_text">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="label" xsi:type="string" translate="true">Fulfilled By Merchant</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">fulfilled_by_seller</item>
+                    <item name="placeholder" xsi:type="string" translate="true">Enter value that represents Fulfilled By Merchant</item>
+                </item>
+            </argument>
+        </field>
+        <field name="fulfilled_by_amazon_text">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" xsi:type="string" translate="true">Fulfilled By Amazon</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">fulfilled_by_amazon</item>
+                    <item name="placeholder" xsi:type="string" translate="true">Enter value that represents Fulfilled By Amazon</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="search_settings">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Catalog Search</item>
+                <item name="sortOrder" xsi:type="number">60</item>
+            </item>
+        </argument>
+        <container name="listing_search_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_search_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Search</argument>
+            </htmlContent>
+        </container>
+        <field name="asin_mapping_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\MappingSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">ASIN</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">asin_mapping_field</item>
+                    <item name="default" xsi:type="string">not selected</item>
+                </item>
+            </argument>
+        </field>
+        <field name="ean_mapping_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\MappingSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">EAN</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">ean_mapping_field</item>
+                    <item name="default" xsi:type="string">not selected</item>
+                </item>
+            </argument>
+        </field>
+        <field name="gcid_mapping_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\MappingSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">GCID</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">gcid_mapping_field</item>
+                    <item name="default" xsi:type="string">not selected</item>
+                </item>
+            </argument>
+        </field>
+        <field name="isbn_mapping_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\MappingSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">40</item>
+                    <item name="label" xsi:type="string" translate="true">ISBN</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">isbn_mapping_field</item>
+                    <item name="default" xsi:type="string">not selected</item>
+                </item>
+            </argument>
+        </field>
+        <field name="upc_mapping_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\MappingSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                    <item name="label" xsi:type="string" translate="true">UPC</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">upc_mapping_field</item>
+                    <item name="default" xsi:type="string">not selected</item>
+                </item>
+            </argument>
+        </field>
+        <field name="general_mapping_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\MappingSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="label" xsi:type="string" translate="true">General Search</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">general_mapping_field</item>
+                    <item name="default" xsi:type="string">name</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="list_condition_fieldset">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">false</item>
+                <item name="label" xsi:type="string" translate="true">Product Listing Condition</item>
+                <item name="sortOrder" xsi:type="number">70</item>
+            </item>
+        </argument>
+        <container name="list_condition_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">1</item>
+                </item>
+            </argument>
+            <htmlContent name="list_condition_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Listings\View\Help\Condition</argument>
+            </htmlContent>
+        </container>
+        <field name="list_condition">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\ListConditionSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">10</item>
+                    <item name="label" xsi:type="string" translate="true">Listing Product Condition</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/listing-condition</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">list_condition</item>
+                    <item name="default" xsi:type="string">11</item>
+                </item>
+            </argument>
+        </field>
+        <field name="seller_notes">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="label" xsi:type="string" translate="true">Seller Condition Notes</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">seller_notes</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="max_text_length" xsi:type="string">1000</item>
+                    </item>
+                    <item name="placeholder" xsi:type="string">Optional text to describe your condition (1,000 characters maximum).</item>
+                </item>
+            </argument>
+        </field>
+        <field name="list_condition_field">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Settings\Listing\AttributeSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Condition Attribute</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/listing-condition-attribute</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">list_condition_field</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <container name="attribute_new_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">35</item>
+                </item>
+            </argument>
+            <field name="list_condition_new_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">40</item>
+                        <item name="label" xsi:type="string" translate="true">New Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_new_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_new_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">40</item>
+                        <item name="label" xsi:type="string" translate="true">New Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_new</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents new condition.</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="attribute_refurbished_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">45</item>
+                </item>
+            </argument>
+            <field name="list_condition_refurbished_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">50</item>
+                        <item name="label" xsi:type="string" translate="true">Refurbished Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_refurbished_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_refurbished_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">50</item>
+                        <item name="label" xsi:type="string" translate="true">Refurbished Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_refurbished</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents refurbished condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_refurbished">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">60</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_refurbished</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe refurbished condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="attribute_likenew_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">65</item>
+                </item>
+            </argument>
+            <field name="list_condition_likenew_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">70</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Like New Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_likenew_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_likenew_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">70</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Like New Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_likenew</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents used; like new condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_likenew">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">80</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_likenew</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe used; like new condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="attribute_verygood_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">85</item>
+                </item>
+            </argument>
+            <field name="list_condition_verygood_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">90</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Very Good Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_verygood_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_verygood_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">90</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Very Good Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_verygood</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents used; very good condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_verygood">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">100</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_verygood</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe used; very good condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="attribute_good_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">105</item>
+                </item>
+            </argument>
+            <field name="list_condition_good_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">110</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Good Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_good_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_good_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">110</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Good Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_good</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents used; good condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_good">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">120</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_good</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe your used; good condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="attribute_acceptable_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">125</item>
+                </item>
+            </argument>
+            <field name="list_condition_acceptable_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">130</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Acceptable Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_acceptable_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_acceptable_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">130</item>
+                        <item name="label" xsi:type="string" translate="true">Used; Acceptable Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_acceptable</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents used; acceptable condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_acceptable">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">140</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_acceptable</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe used; acceptable condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="collectible_likenew_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">145</item>
+                </item>
+            </argument>
+            <field name="list_condition_collectible_likenew_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">150</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Like New Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_likenew_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_collectible_likenew_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">150</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Like New Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_likenew</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents collectible; like new condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_collectible_likenew">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">160</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_collectible_likenew</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe collectible; like new condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="collectible_verygood_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">165</item>
+                </item>
+            </argument>
+            <field name="list_condition_collectible_verygood_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">170</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Very Good Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_verygood_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_collectible_verygood_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">170</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Very Good Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_verygood</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents collectible; very good condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_collectible_verygood">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">180</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_collectible_verygood</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe collectible; very good condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="collectible_good_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">185</item>
+                </item>
+            </argument>
+            <field name="list_condition_collectible_good_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">190</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Good Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_good_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_collectible_good_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">190</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Good Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_good</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents collectible; good condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_collectible_good">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">200</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_collectible_good</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string">Optional text to describe collectible; good condition (1,000 characters maximum).</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+        <container name="collectible_acceptable_group">
+            <argument name="data" xsi:type="array">
+                <item name="type" xsi:type="string">group</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/components/group</item>
+                    <item name="sortOrder" xsi:type="number">205</item>
+                </item>
+            </argument>
+            <field name="list_condition_collectible_acceptable_select">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">210</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Acceptable Condition</item>
+                        <item name="formElement" xsi:type="string">select</item>
+                        <item name="caption" xsi:type="string" translate="true">-- Select Option --</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_acceptable_select</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="list_condition_collectible_acceptable_text">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">210</item>
+                        <item name="label" xsi:type="string" translate="true">Collectible; Acceptable Condition</item>
+                        <item name="formElement" xsi:type="string">input</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">list_condition_collectible_acceptable</item>
+                        <item name="placeholder" xsi:type="string">Attribute value that represents collectible; acceptable condition.</item>
+                    </item>
+                </argument>
+            </field>
+            <field name="seller_notes_collectible_acceptable">
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="sortOrder" xsi:type="number">220</item>
+                        <item name="formElement" xsi:type="string">textarea</item>
+                        <item name="dataType" xsi:type="string">text</item>
+                        <item name="dataScope" xsi:type="string">seller_notes_collectible_acceptable</item>
+                        <item name="validation" xsi:type="array">
+                            <item name="max_text_length" xsi:type="string">1000</item>
+                        </item>
+                        <item name="placeholder" xsi:type="string" translate="true">Optional text to describe collectible; acceptable condition.</item>
+                    </item>
+                </argument>
+            </field>
+        </container>
+    </fieldset>
+</form>

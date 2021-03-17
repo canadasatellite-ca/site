@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <css src="Magento_Amazon::css/source/module.css"/>
+        <css src="Magento_Amazon::css/source/spectrum.css"/>
+    </head>
+    <body>
+        <container name="analytics" after="content">
+            <block class="Magento\Amazon\Block\Adminhtml\Analytics" name="adobe_analytics" template="Magento_Amazon::analytics.phtml"/>
+        </container>
+        <referenceContainer name="admin.scope.col.wrap" htmlClass="admin__old" />
+        <referenceContainer name="page.main.actions">
+            <block class="Magento\Amazon\Block\Adminhtml\Amazon\Account\ActionButtons" name="setup" template="Magento_Amazon::amazon/account/buttons.phtml">
+                <arguments>
+                    <argument name="current" xsi:type="string">order_settings</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="content">
+            <block class="Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Orders\View" name="settings_listings_view_form"/>
+            <block class="Magento\Amazon\Block\Adminhtml\Amazon\Account\Settings\Orders\View\GeneralInfo"/>
+            <uiComponent name="amazon_account_settings_order_form"/>
+        </referenceContainer>
+    </body>
+</page>

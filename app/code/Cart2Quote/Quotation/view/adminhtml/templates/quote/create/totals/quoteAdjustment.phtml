@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+
+<tr class="<?= /* @escapeNotVerified */ $block->getTotal()->getCode() ?> row-totals">
+    <td style="<?= /* @escapeNotVerified */ $block->getTotal()->getStyle() ?>" class="admin__total-mark" colspan="<?= /* @escapeNotVerified */ $block->getColspan() ?>">
+        <?php if ($block->getRenderingArea() == $block->getTotal()->getArea()): ?><strong><?php endif; ?>
+            <?= $block->escapeHtml($block->getTotal()->getTitle()) ?>
+            <?php if ($block->getRenderingArea() == $block->getTotal()->getArea()): ?></strong><?php endif; ?>
+    </td>
+    <?php if ($block->displayCartPricesInclTax() && $block->getTotal()->getValueInclTax() < 0):?>
+        <td style="<?= /* @escapeNotVerified */ $block->getTotal()->getStyle() ?>" class="admin__total-amount">
+            <?php if ($block->getRenderingArea() == $block->getTotal()->getArea()): ?><strong><?php endif; ?>
+                <?= /* @escapeNotVerified */ $block->formatPrice($block->getTotal()->getValueInclTax()) ?>
+                <?php if ($block->getRenderingArea() == $block->getTotal()->getArea()): ?></strong><?php endif; ?>
+        </td>
+    <?php else : ?>
+    <td style="<?= /* @escapeNotVerified */ $block->getTotal()->getStyle() ?>" class="admin__total-amount">
+        <?php if ($block->getRenderingArea() == $block->getTotal()->getArea()): ?><strong><?php endif; ?>
+            <?= /* @escapeNotVerified */ $block->formatPrice($block->getTotal()->getValue()) ?>
+            <?php if ($block->getRenderingArea() == $block->getTotal()->getArea()): ?></strong><?php endif; ?>
+    </td>
+    <?php endif;?>
+</tr>
+

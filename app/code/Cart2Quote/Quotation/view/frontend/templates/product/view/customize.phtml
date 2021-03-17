@@ -1,0 +1,27 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Product\View $block */
+$product = $block->getProduct();
+?>
+<?php if (($product->isSaleable() || $block->showButton()) && $block->hasOptions()) : ?>
+    <div class="bundle-actions">
+        <button id="bundle-slide"
+                class="action primary customize"
+                type="button">
+
+            <?php if ($product->isSaleable() && !$block->showButton()) : ?>
+                <span><?php echo $block->escapeHtml(__('Customize and Add to Cart')); ?></span>
+            <?php elseif (!$product->isSaleable() && $block->showButton()) : ?>
+                <span><?php echo $block->escapeHtml(__('Customize and Add to Quote')); ?></span>
+            <?php else : ?>
+                <span><?php echo $block->escapeHtml(__('Customize')); ?></span>
+            <?php endif; ?>
+
+        </button>
+    </div>
+<?php endif; ?>

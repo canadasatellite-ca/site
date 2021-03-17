@@ -1,0 +1,44 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\System\Config\Form\Field\Information $block
+ */
+?>
+<div class="cart2quote-header-box">
+    <img class="logo" src="<?php echo $this->getViewFileUrl('Cart2Quote_Quotation::images/logo.png'); ?>" alt="Cart2Quote"/>
+    <p>
+        <b>
+            <?php echo __(
+                'Cart2Quote for Magento 2 is Provided by %1',
+                $block->getLink($block->getCart2QuoteUrl(), __('Cart2Quote | B2B Magento extensions'))
+            ); ?>
+        </b>
+    </p>
+    <?= $block->getLayout()->createBlock(
+            \Cart2Quote\Quotation\Block\Adminhtml\System\Config\Form\Field\UpdateAvailable::class,
+            'license_update_available_notification',
+            [
+                'data' => [
+                    'jsLayout' => [
+                        'components' => [
+                            'license_update_available_notification' => [
+                                'component' => 'Cart2Quote_Quotation/js/system/config/license/update/notification'
+                            ]
+                        ]
+                    ]
+                ]
+            ]
+        )->toHtml(); ?>
+    <div class="message information">
+        <?php echo __(
+            'For documentation and support visit %1 or contact: %2 ',
+            $block->getLink($block->getCart2QuoteSupportPageUrl(), __('the Cart2Quote support page')),
+            $block->getLink('mailto:support@cart2quote.com', 'support@cart2quote.com')
+        ); ?>
+    </div>
+</div>

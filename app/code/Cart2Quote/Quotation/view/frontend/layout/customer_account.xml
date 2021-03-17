@@ -1,0 +1,20 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="Cart2Quote\Quotation\Block\Current" name="customer-account-navigation-quotation-quotes-link">
+                <arguments>
+                    <argument name="path" xsi:type="string">quotation/quote/history</argument>
+                    <argument name="label" xsi:type="string">My Quotes</argument>
+                    <argument name="sortOrder" xsi:type="number">220</argument>
+                </arguments>
+            </block>
+        </referenceBlock>
+    </body>
+</page>

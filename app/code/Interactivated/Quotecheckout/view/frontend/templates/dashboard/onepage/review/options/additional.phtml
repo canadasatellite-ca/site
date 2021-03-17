@@ -1,0 +1,5 @@
+<?php if (!$block->getQuote()->isVirtual()): ?>
+	<div class="mw-osc-ct-giftmessage">
+		<?php echo $this->helper('Magento\GiftMessage\Helper\Message')->getInline('onepage_checkout', $block->getQuote(), $block->getDontDisplayContainer()) ?>
+	</div>
+<?php endif; ?>

@@ -1,0 +1,92 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .aw-ar {
+    &__review-list {
+      .add-comment {
+        cursor: pointer;
+        font: @aw-ar-link-add-comment__font-size 600;
+      }
+
+      .comment {
+        margin: 20px 0 0 0;
+
+        &-wrapper {
+          padding: 0 15px;
+          position: relative;
+          border-left: 1px solid @aw-ar-comment__background-color;
+
+          .nickname {
+            font-weight: 600;
+            padding-right: 80px;
+            font-size: @aw-ar-comment__font-size;
+          }
+
+          &.admin-comment {
+            padding: 15px;
+            background-color: #f6f6f6;
+            margin-left: 30px;
+            border: none;
+            border-radius: 3px;
+
+            .comment-date {
+              top: 15px;
+            }
+          }
+        }
+
+        &-date {
+          position: absolute;
+          right: 15px;
+          top: 3px;
+          font-size: @aw-ar-created_at__font-size;
+        }
+
+        &-content {
+          margin-top: 10px;
+          white-space: pre-line;
+          font-size: @aw-ar-comment__font-size;
+        }
+      }
+
+      .comments {
+        .report-abuse {
+          float: none;
+          margin-top: 10px;
+        }
+
+        &-block {
+          .actions-toolbar {
+            margin-top: 20px;
+          }
+
+          .form-container {
+            margin-top: 20px;
+
+            .aw-ar-wrapper-fieldset {
+              margin-top: 15px;
+              padding: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

@@ -1,0 +1,17 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="cart2quote_email_quote_request_template" label="Quote Request" file="quote_request.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_canceled_template" label="Quote Canceled" file="quote_canceled.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_edited_template" label="Quote Edited" file="quote_edited.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_proposal_template" label="Quote Proposal" file="quote_proposal.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_proposal_accepted_template" label="Quote Proposal Accepted" file="quote_proposal_accepted.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_proposal_rejected_template" label="Quote Proposal Rejected" file="quote_proposal_rejected.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_proposal_expire_template" label="Quote Proposal Expire" file="quote_proposal_expire.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+    <template id="cart2quote_email_quote_reminder_template" label="Quote Reminder" file="quote_reminder.html" type="html" module="Cart2Quote_Quotation" area="frontend"/>
+</config>

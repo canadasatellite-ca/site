@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="aw.reviews.page" remove="true"/>
+        <referenceBlock name="content">
+            <container name="aw.reviews.static.page"
+                       as="aw_reviews_static_page"
+                       htmlTag="div"
+                       htmlClass="aw-ar-main">
+                <block class="Aheadworks\AdvancedReviews\Block\Base\Identity"
+                       name="aw.reviews.static.page.cache.identity.container"
+                       as="aw_reviews_static_page_cache_identity_container"
+                       template="Magento_Theme::html/container.phtml">
+                    <arguments>
+                        <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Container</argument>
+                    </arguments>
+                    <container name="aw.reviews.static.page.summary"
+                               as="aw_reviews_static_page_summary"
+                               htmlTag="div"
+                               htmlClass="aw-ar-review-summary">
+                        <block name="aw.reviews.static.page.summary.brief"
+                               as="aw_reviews_static_page_summary_brief"
+                               template="Aheadworks_AdvancedReviews::static/reviews/summary/brief.phtml">
+                            <arguments>
+                                <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Summary\Brief</argument>
+                            </arguments>
+                        </block>
+                        <block name="aw.reviews.static.page.summary.detailed"
+                               as="aw_reviews_static_page_summary_detailed"
+                               template="Aheadworks_AdvancedReviews::static/reviews/summary/detailed.phtml">
+                            <arguments>
+                                <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Summary\Detailed</argument>
+                            </arguments>
+                        </block>
+                    </container>
+                    <container name="aw.reviews.static.page.listing.wrapper"
+                               as="aw_reviews_static_page_listing_wrapper"
+                               htmlTag="div"
+                               htmlClass="aw-ar__review-list awArReviewContainer_awArReviewList">
+                        <container name="aw.reviews.static.page.listing.filters"
+                                   as="aw_reviews_static_page_listing_filters"
+                                   htmlTag="div"
+                                   htmlClass="aw-ar__data-grid-filters-wrap">
+                            <block name="aw.reviews.static.page.listing.filters.only.attachments"
+                                   as="aw_reviews_static_page_listing_filters_only_attachments"
+                                   template="Aheadworks_AdvancedReviews::static/reviews/listing/filters/checkbox.phtml">
+                                <arguments>
+                                    <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing\Filters\OnlyAttachments</argument>
+                                </arguments>
+                            </block>
+                            <block name="aw.reviews.static.page.listing.filters.is.verified.buyer"
+                                   as="aw_reviews_static_page_listing_filters_is_verified_buyer"
+                                   template="Aheadworks_AdvancedReviews::static/reviews/listing/filters/checkbox.phtml">
+                                <arguments>
+                                    <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing\Filters\IsVerifiedBuyer</argument>
+                                </arguments>
+                            </block>
+                            <block name="aw.reviews.static.page.listing.filters.rating"
+                                   as="aw_reviews_static_page_listing_filters_rating"
+                                   template="Aheadworks_AdvancedReviews::static/reviews/listing/filters/select.phtml">
+                                <arguments>
+                                    <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing\Filters\Rating</argument>
+                                </arguments>
+                            </block>
+                        </container>
+                        <block name="aw.reviews.static.page.listing"
+                               as="aw_reviews_static_page_listing"
+                               template="Aheadworks_AdvancedReviews::static/reviews/listing.phtml">
+                            <arguments>
+                                <argument name="view_model" xsi:type="object">Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing</argument>
+                            </arguments>
+                        </block>
+                        <block class="Aheadworks\AdvancedReviews\Block\StaticRenderer\Reviews\Listing\Pager"
+                               name="aw.reviews.static.page.listing.pager"
+                               as="aw_reviews_static_page_listing_pager"
+                               template="Aheadworks_AdvancedReviews::pager/wrapper.phtml">
+                            <block class="Magento\Theme\Block\Html\Pager" name="pager"/>
+                        </block>
+                    </container>
+                </block>
+            </container>
+        </referenceBlock>
+    </body>
+</page>

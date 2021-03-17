@@ -1,0 +1,118 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Info $block */
+?>
+
+<div class="admin__page-section-item quote-information">
+    <?php /* Quote Information */ ?>
+    <?php if ($block->getQuote()->getProposalEmailSent()) : ?>
+        <?php $email = __('The quote confirmation email was sent'); ?>
+    <?php else : ?>
+        <?php $email = __('The quote confirmation email is not sent'); ?>
+    <?php endif; ?>
+
+    <div class="admin__page-section-item-title">
+        <span class="title">
+            <?php if ($block->getNoUseQuoteLink()) : ?>
+                <?php echo $block->escapeHtml(sprintf('%s # %s', __('Quote'), $block->getQuote()->getIncrementId())) ?> (
+                <span><?php echo $block->escapeHtml($email) ?></span>)
+            <?php else : ?>
+                <a href="<?php echo $block->escapeHtml($block->getViewUrl($block->getQuote()->getId())) ?>">
+                    <?php echo $block->escapeHtml(sprintf('%s # %s', __('Quote'), $block->getQuote()->getIncrementId())) ?>
+                </a>
+                <span>(<?php echo $block->escapeHtml($email) ?>)</span>
+            <?php endif; ?>
+        </span>
+    </div>
+    <div class="admin__page-section-item-content">
+        <table class="admin__table-secondary quote-information-table">
+            <tr>
+                <?php echo $block->getBlockHtml('quote_date'); ?>
+            </tr>
+            <tr>
+                <?php echo $block->getBlockHtml('quote_status') ?>
+            </tr>
+            <tr>
+                <?php echo $block->getBlockHtml('expiry_date') ?>
+            </tr>
+            <tr>
+                <?php echo $block->getBlockHtml('reminder_date') ?>
+            </tr>
+            <?php if ($block->isSingleStoreMode() == false) : ?>
+                <tr>
+                    <th><?php echo $block->escapeHtml(__('Purchased From')) ?></th>
+                    <td><?php echo $block->getQuoteStoreName() ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($block->getQuote()->getRelationChildId()) : ?>
+                <tr>
+                    <th><?php echo $block->escapeHtml(__('Link to the New Quote')) ?></th>
+                    <td>
+                        <a href="<?php echo $block->escapeHtml($block->getViewUrl($block->getQuote()->getRelationChildId())) ?>">
+                            <?php echo $block->escapeHtml($block->getQuote()->getRelationChildRealId()) ?>
+                        </a>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($block->getQuote()->getRelationParentId()) : ?>
+                <tr>
+                    <th><?php echo $block->escapeHtml(__('Link to the Previous Quote')) ?></th>
+                    <td>
+                        <a href="<?php echo $block->escapeHtml($block->getViewUrl($block->getQuote()->getRelationParentId())) ?>">
+                            <?php echo $block->escapeHtml($block->getQuote()->getRelationParentRealId()) ?>
+                        </a>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($block->getQuote()->getRemoteIp() && $block->shouldDisplayCustomerIp()) : ?>
+                <tr>
+                    <th><?php echo $block->escapeHtml(__('Placed from IP')) ?></th>
+                    <td>
+                        <?php echo $block->escapeHtml($block->getQuote()->getRemoteIp()); ?>
+                        <?php if ($block->getQuote()->getXForwardedFor()) : ?>
+                            <?php $xForwarderFor = ' ('
+                                . $block->escapeHtml($block->getQuote()->getXForwardedFor())
+                                . ')'; ?>
+                        <?php else : ?>
+                            <?php $xForwarderFor = ''; ?>
+                        <?php endif; ?>
+                        <?php echo $block->escapeHtml($xForwarderFor); ?>
+                    </td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($block->getQuote()->getGlobalCurrencyCode() != $block->getQuote()->getBaseCurrencyCode()) : ?>
+                <tr>
+                    <th>
+                        <?php echo $block->escapeHtml(sprintf(
+                            '%s / %s %s',
+                            $block->getQuote()->getGlobalCurrencyCode(),
+                            $block->getQuote()->getBaseCurrencyCode(),
+                            __('rate:')
+                        )) ?>
+                    </th>
+                    <td><?php echo $block->escapeHtml($block->getQuote()->getBaseToGlobalRate()) ?></td>
+                </tr>
+            <?php endif; ?>
+            <?php if ($block->getQuote()->getBaseCurrencyCode() != $block->getQuote()->getQuoteCurrencyCode()) : ?>
+                <tr>
+                    <th>
+                        <?php echo $block->escapeHtml(sprintf(
+                            '%s / %s %s',
+                            $block->getQuote()->getQuoteCurrencyCode(),
+                            $block->getQuote()->getBaseCurrencyCode(),
+                            __('rate:')
+                        )) ?>
+                    </th>
+                    <th><?php echo $block->escapeHtml($block->getQuote()->getBaseToQuoteRate()) ?></th>
+                </tr>
+            <?php endif; ?>
+            <?php echo $block->getChildHtml('quote_details_quote_select_rate'); ?>
+            <?php echo $block->getChildHtml('quote_details_quote_file'); ?>
+        </table>
+    </div>
+</div>

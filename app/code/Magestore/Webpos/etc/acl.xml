@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<!--
+  ~ * Copyright © 2016 Magestore. All rights reserved.
+  ~ * See COPYING.txt for license details.
+  ~
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Backend::stores">
+                    <resource id="Magento_Backend::stores_settings">
+                        <resource id="Magento_Config::config">
+                            <resource id="Magestore_Webpos::config_webpos" title="Webpos" sortOrder="50"/>
+                        </resource>
+                    </resource>
+                </resource>
+                <resource id="Magento_Sales::sales">
+                    <resource id="Magestore_Webpos::webpos" title="Webpos">
+                        <resource id="Magestore_Webpos::reports" title="Sale Reports" sortOrder="1"/>
+                        <resource id="Magestore_Webpos::permissions" title="Webpos Permission" sortOrder="2">
+                            <resource id="Magestore_Webpos::roles" title="POS Roles" sortOrder="1"/>
+                            <resource id="Magestore_Webpos::staffs" title="POS Staffs" sortOrder="2"/>
+                        </resource>
+                        <resource id="Magestore_Webpos::locations" title="User Location" sortOrder="3"/>
+                        <resource id="Magestore_Webpos::cash_draw" title="Cash Drawer" sortOrder="4"/>
+                        <resource id="Magestore_Webpos::checkout" title="Webpos Checkout" sortOrder="5"/>
+                        <resource id="Magestore_Webpos::settings" title="Settings" sortOrder="6"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

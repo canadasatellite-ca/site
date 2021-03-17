@@ -1,0 +1,414 @@
+"""
+ Proxy passed parent value to child resolvers
+"""
+directive @proxy on FIELD_DEFINITION
+
+schema {
+    query: Query
+    mutation: Mutation
+}
+
+type Query {
+    """
+     Heartbeat query which always return boolean to keep session alive
+    """
+    heartbeat: Boolean!
+    magentoSettings: MagentoSettings!
+    """
+     Fetch list of store with ability to filter by an array of UUIDs
+    """
+    stores(uuids: [String!]): [Store!]!
+    """
+     Fetch single store by UUID
+    """
+    store(uuid: String!): Store
+    websites: [MagentoWebsite!]!
+    attributes(first: Int, after: String, filters: [FilterInput!]): Attributes!
+    marketplaces(countryCodes: [CountryCode!]): [Marketplace!]!
+    """
+     Resolves Magento URL
+    """
+    magentoUrl(
+        """
+         String used as a route: my-module/my-controller
+        """
+        route: String!
+        """
+         String with JSON object with parameters that would be added as a part of url: my-controller/id/12/
+        """
+        params: String
+        """
+         String with JSON object with query parameters: ?param=value&param2=value
+        """
+        query: String
+        """
+         String with a url fragment that would be added to the URL: /#url-fragment
+        """
+        urlFragment: String
+    ): String!
+
+    """
+     Resolves store page URL in admin panel
+    """
+    storePageUrl(type: StorePageUrlType!, uuid: String!, urlFragment: String): String!
+    """
+     Provides limited list of Magento attributes for search mapping
+    """
+    magentoAttributes: [MagentoAttribute!]!
+
+    servicesConnector: ServicesConnector
+}
+
+type ServicesConnector {
+    """
+     Verifies Magento API gateway key and ability to communicate with the service
+    """
+    isApiKeyValid: Boolean
+    """
+     URL to key configuration page in Magento admin
+    """
+    keyConfigUrl: String
+    """
+     URL to key management page in API Portal
+    """
+    apiPortalUrl: String
+}
+
+type MagentoWebsite {
+    id: Int
+    name: String
+    code: String
+}
+
+type MagentoAttribute {
+    name: String
+    code: String
+}
+
+type Attributes {
+    edges: [AttributesEdge!]
+    totalCount: Int!
+    pageInfo: PageInfo
+}
+
+type AttributesEdge {
+    node: Attribute
+    cursor: String!
+}
+
+type Orders {
+    edges: [OrdersEdge!]
+    totalCount: Int
+    pageInfo: PageInfo
+}
+
+type OrdersEdge {
+    node: StoreOrder
+    cursor: String!
+}
+
+type PageInfo {
+    endCursor: String
+    hasNextPage: Boolean!
+}
+
+enum Operator {
+    """
+     Join condition for FilterInput with AND or OR operator
+    """
+    AND
+    OR
+}
+
+input FilterInput {
+    """
+     Field name
+    """
+    field: String!
+    """
+     Equals to value
+    """
+    eq: String
+    """
+     Not equals to value
+    """
+    neq: String
+    """
+     Greater than value
+    """
+    gt: Float
+    """
+     Greater than or equal to value
+    """
+    gteq: Float
+    """
+     Less than value
+    """
+    lt: Float
+    """
+     Less than or equal to value
+    """
+    lteq: Float
+    """
+     One of
+    """
+    in: [String]
+    """
+     Not one of
+    """
+    nin: [String]
+    """
+     Value begins with (LIKE 'value%')
+    """
+    beginsWith: String
+    """
+     Value ends with (LIKE '%value')
+    """
+    endsWith: String
+    """
+     LIKE search
+    """
+    like: String
+    """
+     Before date (DateTime compatible format). Matches to LT condition
+    """
+    beforeDate: String
+    """
+     After date (DateTime compatible format). Matches to GT condition
+    """
+    afterDate: String
+    """
+     Value is/not null
+    """
+    isnull: Boolean
+    """
+     Join condition with AND or OR operator
+    """
+    operator: Operator = or
+}
+
+type Attribute {
+    id: Int!
+    marketplace: Marketplace!
+    amazonAttributeName: String!
+    productCatalogAttributeCode: String
+    overwriteMagentoValues: Boolean!
+    isActive: Boolean!
+    actionUrl: String!
+}
+
+scalar MagentoSettingsValue
+
+enum CountryCode {
+    US
+}
+
+type MagentoSettings {
+    """
+     Magento Admin session lifetime in seconds
+    """
+    adminSessionLifetime: MagentoSettingsValue
+}
+
+type Store {
+    id: String!
+    uuid: String!
+    name: String!
+    email: String!
+    status: StoreStatus!
+    authenticationStatus: String!
+    marketplace: Marketplace!
+    created: String!
+    updated: String!
+    url: String!
+    magentoWebsite: MagentoWebsite
+    irpUrl: String
+    listings: StoreListingCounts!
+    reports: StoreReport! @proxy
+    orders(first: Int = 10, after: String, filters: [FilterInput!], sortBy: SortBy): Orders!
+}
+
+input SortBy {
+    field: String!
+    order: SortOrder = ASC
+}
+
+enum SortOrder {
+    ASC
+    DESC
+}
+
+enum StoreStatus {
+    active
+    inactive
+    authentication_pending
+    incomplete
+}
+
+type StoreListingCounts {
+    active: Int!
+    inactive: Int!
+    incomplete: Int!
+    inProgress: Int!
+}
+
+type StoreReport {
+    """
+     Total revenue by days
+    """
+    revenue(days: Int!, filterEmpty: Boolean): [StoreRevenueReport]!
+    """
+     Revenue for all orders of the store
+    """
+    lifetime: Float!
+}
+
+type StoreRevenueReport {
+    date: String
+    revenue: Float
+}
+
+type StoreOrder {
+    purchaseDate: String!
+    orderId: String!
+    status: String!
+    buyerName: String
+    total: Float!
+    magentoOrderId: String
+    magentoOrderNumber: String
+    magentoOrderUrl: String
+    orderDetailsUrl: String
+    fulfillmentChannel: String
+    id: String
+    notes: String
+    latestShipDate: String
+    buyerEmail: String
+    currency: String
+    reserved: Boolean
+    isPremium: Boolean
+    isPrime: Boolean
+    shipServiceLevel: String
+    shipService: String
+    shippedByAmazon: Boolean
+    isBusiness: Boolean
+    itemsShipped: Int
+    itemsUnshipped: Int
+    shipAddressOne: String
+    shipAddressTwo: String
+    shipAddressThree: String
+    shipCity: String
+    shipRegion: String
+    shipPostalCode: String
+    shipCountry: String
+    shipPhone: String
+    orderItems: [StoreOrderItem!]
+    orderTracking: [StoreOrderTracking!]
+}
+
+type StoreOrderTracking {
+    id: String!
+    merchantId: String!
+    orderId: String!
+    orderItemId: String!
+    carrierType: String
+    carrierName: String
+    shippingMethod: String
+    trackingNumber: String
+    quantity: Int
+}
+
+type StoreOrderItem {
+    id: String!
+    merchantId: String!
+    orderId: String!
+    orderItemId: String!
+    qtyOrdered: Int
+    qtyShipped: Int
+    title: String
+    sku: String
+    asin: String
+    condition: String
+    subcondition: String
+    itemPrice: Float!
+    itemTax: Float!
+    shippingPrice: Float!
+    promotionalDiscount: Float!
+}
+
+type Marketplace {
+    countryCode: CountryCode!
+    currency: String!
+    name: String!
+    region: String!
+}
+
+enum StorePageUrlType {
+    listingRules
+    listings
+    listingsActive
+    listingsInactive
+    listingsInProgress
+    settingsListings
+    settingsOrders
+    pricingRules
+    report
+    logs
+}
+
+type Mutation {
+    createStore(store: CreateStoreInput!, searchMapping: SearchMappingInput!): Store!
+    updateStore(uuid: String!, store: UpdateStoreInput!): Store!
+    deleteStore(uuid: String!): Boolean
+    activateStore(uuid: String!): Store!
+    deactivateStore(uuid: String!): Store!
+    verifyAuthentication(uuid: String!): Store
+    reimportAttributes(ids: [Int!]): Boolean
+    """
+     updateOrder returns a store because it was easier to update the frontend cache this way
+    """
+    updateOrder(uuid: String!, orderId: String!, order: UpdateOrderInput!): Store
+    cancelOrder(uuid: String!, orderId: String!, reason: String!): Store
+}
+
+"""
+ Order Data accepted to update an existing order
+"""
+input UpdateOrderInput {
+    addressOne: String
+    addressTwo: String
+    addressThree: String
+    city: String
+    region: String
+    postalCode: String
+    country: String
+}
+
+"""
+ Store Data required to create a new store
+"""
+input CreateStoreInput {
+    name: String!
+    email: String!
+    websiteCode: String!
+    countryCode: CountryCode!
+}
+
+"""
+ Store Data accepted to update an existing store
+"""
+input UpdateStoreInput {
+    name: String
+    email: String
+}
+
+enum AmazonIdType {
+    asin
+}
+
+"""
+ Catalog Search mapping data
+"""
+input SearchMappingInput {
+    amazonIdType: AmazonIdType!
+    magentoAttributeCode: String!
+}

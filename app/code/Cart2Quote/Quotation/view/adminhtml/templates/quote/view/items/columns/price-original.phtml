@@ -1,0 +1,48 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer $block */
+$item = $block->getItem();
+$product = $item->getProduct();
+$tierItem = $item->getTierItem();
+?>
+<?php $block->setPriceDataObject($item->getTierItem()); ?>
+<?php if ($block->displayPriceExclTax() || $block->displayBothPrices()) : ?>
+    <?php  ?>
+    <?php if ($block->displayBothPrices()) : ?>
+        <span class="label"><?php echo $block->escapeHtml(__('Excl. Tax')) ?>:</span>
+    <?php endif; ?>
+    <?php echo $block->displayPriceAttribute('original_price'); ?>
+<?php endif; ?>
+
+<?php if ($block->displayPriceInclTax() || $block->displayBothPrices()) : ?>
+    <?php if ($block->displayBothPrices($block->getStore())) : ?>
+        <br /><span class="label"><?php echo $block->escapeHtml(__('Incl. Tax')) ?>:</span>
+    <?php endif; ?>
+    <?php echo $block->displayPrices(
+        $block->getBaseOriginalPriceInclTax($tierItem),
+        $block->getOriginalPriceInclTax($tierItem)
+    ); ?>
+<?php endif; ?>
+<?php if ($block->getIsSelectedTier() && $product->hasTierPrice() && !empty($product->getTierPrice())) :?>
+    <a id="quote-view-advanced-pricing-hover" class="quote-view-advanced-pricing-hover">advanced pricing</a>
+        <div id="quote-view-advanced-pricing" class="quote-view-advanced-pricing" hidden>
+            <?php echo $block->escapeHtml(__('Advanced Pricing')); ?>
+            <ul>
+                <li><?php echo __('Catalog price: %1', $block->formatPrice($product->getPrice())); ?></li>
+                <?php foreach ($product->getTierPrice() as $advancedPrice) :?>
+                    <li>
+                        <?php echo __(
+                            "Qty %1: %2",
+                            (int)$advancedPrice['price_qty'],
+                            $block->formatPrice($advancedPrice['price'])
+                        ); ?>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+<?php endif;?>

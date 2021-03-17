@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\CustomRemark; class Quote extends \Cart2Quote\License\Plugin\AbstractPlugin { public function aroundSetData(\Magento\Quote\Model\Quote $OsXH2, callable $GYtXc, $c4rL2, $KBnJA = null) { if (!($OsXH2->getIsQuotationQuote() && $c4rL2 === \Cart2Quote\Quotation\Model\Quote::KEY_CUSTOMER_NOTE && !$this->{"\x69\x73\101\x6c\x6c\157\167\145\144"}())) { goto bIziV; } $GYtXc($c4rL2, null); bIziV: return $GYtXc($c4rL2, $KBnJA); } }

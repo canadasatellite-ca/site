@@ -1,0 +1,57 @@
+<?php
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/**
+ * Product additional attributes template
+ *
+ * @var $block \Magento\Catalog\Block\Product\View\Attributes
+ */
+?>
+<?php
+    $_helper = $this->helper('Magento\Catalog\Helper\Output');
+    $_product = $block->getProduct()
+?>
+<?php if ($_additional = $block->getAdditionalData()): ?>
+
+    <?php
+    $attributes = $_product->getAttributes();
+    foreach ($_additional as $key => $_data) {
+        $position = 999;
+        foreach ($attributes as $attr) {
+            if ($attr->getAttributeCode() == $_data['code']) {
+                $position = $attr->getData('specifications_position');
+                break;
+            }
+        }
+        $_data['position'] = $position;
+        $_additional[$key] = $_data;
+    }
+    usort($_additional, function ($a, $b) {
+        if ($a['position'] == $b['position']) {
+            return 0;
+        }
+        return ($a['position'] < $b['position']) ? -1 : 1;
+    });
+
+
+    ?>
+    <div class="additional-attributes-wrapper table-wrapper">
+        <table class="data table additional-attributes" id="product-attribute-specs-table">
+            <caption class="table-caption"><?php /* @escapeNotVerified */ echo __('More Information') ?></caption>
+            <tbody>
+            <?php foreach ($_additional as $_data): ?>
+                <?php if($_data['value']=='N/A') continue;?>
+                <tr>
+                    <th class="col label" scope="row"><?php echo $block->escapeHtml(__($_data['label'])) ?></th>
+                    <td class="col data" data-th="<?php echo $block->escapeHtml(__($_data['label'])) ?>"><?php /* @escapeNotVerified */ echo $_helper->productAttribute($_product, $_data['value'], $_data['code']) ?></td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+<?php endif;?>

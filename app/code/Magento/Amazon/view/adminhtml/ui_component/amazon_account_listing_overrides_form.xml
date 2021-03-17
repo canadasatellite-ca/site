@@ -1,0 +1,282 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">amazon_account_listing_overrides_form.amazon_account_listing_overrides_form_data_source</item>
+            <item name="deps" xsi:type="string">amazon_account_listing_overrides_form.amazon_account_listing_overrides_form_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">amazon_account_listing_overrides_form</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">amazon_account_listing_overrides_form</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Amazon Seller Account Listing Overrides</item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="childrenFromMeta" xsi:type="boolean">true</item>
+    </argument>
+    <dataSource name="amazon_account_listing_overrides_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Magento\Amazon\Ui\DataProvider\Form\Amazon\Account\Listing\Overrides\DataProvider</argument>
+            <argument name="name" xsi:type="string">amazon_account_listing_overrides_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="channel/amazon/account_listing_overrides_save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+   <fieldset name="detail">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Listing Details</item>
+                <item name="sortOrder" xsi:type="number">1</item>
+            </item>
+        </argument>
+        <container name="listing_overrides_detail_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">5</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_overrides_detail_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Overrides\View\Help\Detail</argument>
+            </htmlContent>
+        </container>
+       <field name="tab">
+           <argument name="data" xsi:type="array">
+               <item name="config" xsi:type="array">
+                   <item name="dataType" xsi:type="string">text</item>
+                   <item name="formElement" xsi:type="string">hidden</item>
+                   <item name="dataScope" xsi:type="string">tab</item>
+               </item>
+           </argument>
+       </field>
+    </fieldset>
+    <fieldset name="pricing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Price Override</item>
+                <item name="sortOrder" xsi:type="number">10</item>
+            </item>
+        </argument>
+        <container name="listing_overrides_pricing_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">15</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_overrides_pricing_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Overrides\View\Help\Pricing</argument>
+            </htmlContent>
+        </container>
+        <field name="list_price_override_action">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Overrides\Price</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">20</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Action To Be Taken</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Magento_Amazon/form/element/radio-set</item>
+                    <item name="value" xsi:type="string">0</item>
+                    <item name="formElement" xsi:type="string">radioset</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="list_price_override">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">30</item>
+                    <item name="label" xsi:type="string" translate="true">Price Override</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">list_price_override</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-not-negative-number" xsi:type="boolean">true</item>
+                        <item name="validate-number" xsi:type="string">true</item>
+                    </item>
+                    <item name="placeholder" xsi:type="string">Enter the price override.</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="handling">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Handling Time Override</item>
+                <item name="validation" xsi:type="array">
+                    <item name="validate-number" xsi:type="string">true</item>
+                </item>
+                <item name="sortOrder" xsi:type="number">40</item>
+            </item>
+        </argument>
+        <container name="listing_overrides_handling_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_overrides_handling_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Overrides\View\Help\Handling</argument>
+            </htmlContent>
+        </container>
+        <field name="handling_override_action">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Overrides\Handling</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">60</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Action To Be Taken</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Magento_Amazon/form/element/radio-set</item>
+                    <item name="value" xsi:type="string">0</item>
+                    <item name="formElement" xsi:type="string">radioset</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="handling_override">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">70</item>
+                    <item name="label" xsi:type="string" translate="true">Handling Time Override</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">handling_override</item>
+                    <item name="validation" xsi:type="array">
+                        <item xsi:type="string" name="validate-number-range">1-30</item>
+                        <item name="validate-number" xsi:type="string">true</item>
+                    </item>
+                    <item name="placeholder" xsi:type="string" translate="true">Enter handling time override (in days).</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="condition">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Condition Override</item>
+                <item name="sortOrder" xsi:type="number">70</item>
+            </item>
+        </argument>
+        <container name="listing_overrides_condition_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_overrides_condition_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Overrides\View\Help\Condition</argument>
+            </htmlContent>
+        </container>
+        <field name="condition_override_action">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Overrides\Condition</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">90</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Action To Be Taken</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Magento_Amazon/form/element/radio-set</item>
+                    <item name="value" xsi:type="string">0</item>
+                    <item name="formElement" xsi:type="string">radioset</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="condition_override">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Overrides\ConditionSource</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">100</item>
+                    <item name="label" xsi:type="string" translate="true">Condition Override</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="caption" xsi:type="string" translate="true">-- Please Select --</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">condition_override</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="condition_notes">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="collapsible" xsi:type="boolean">true</item>
+                <item name="opened" xsi:type="boolean">true</item>
+                <item name="label" xsi:type="string" translate="true">Seller Notes Override</item>
+                <item name="sortOrder" xsi:type="number">110</item>
+            </item>
+        </argument>
+        <container name="listing_overrides_condition_notes_help_container" >
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">120</item>
+                </item>
+            </argument>
+            <htmlContent name="listing_overrides_condition_help">
+                <argument name="block" xsi:type="object">Magento\Amazon\Block\Adminhtml\Amazon\Account\Listing\Overrides\View\Help\Notes</argument>
+            </htmlContent>
+        </container>
+        <field name="condition_notes_override_action">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Magento\Amazon\Ui\Component\Form\Amazon\Account\Listing\Overrides\ConditionNotes</item>
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">130</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="label" xsi:type="string" translate="true">Action To Be Taken</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="template" xsi:type="string">Magento_Amazon/form/element/radio-set</item>
+                    <item name="component" xsi:type="string">Magento_Amazon/js/form/element/condition-notes-override-action</item>
+                    <item name="value" xsi:type="string">0</item>
+                    <item name="formElement" xsi:type="string">radioset</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="condition_notes_override">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="sortOrder" xsi:type="number">140</item>
+                    <item name="label" xsi:type="string" translate="true">Seller Notes Override</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="dataScope" xsi:type="string">condition_notes_override</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="max_text_length" xsi:type="string">1000</item>
+                    </item>
+                    <item name="placeholder" xsi:type="string">Enter seller notes override.</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

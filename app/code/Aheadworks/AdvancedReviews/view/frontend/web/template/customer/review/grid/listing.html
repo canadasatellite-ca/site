@@ -1,0 +1,19 @@
+<div class="block " css="additionalClasses">
+    <div if="hasData()"
+         class="block-content table-wrapper">
+        <table class="data-grid table" data-role="grid">
+            <thead>
+                <tr each="data: getVisible(), as: '$col'" render="getHeader()"/>
+            </thead>
+            <tbody>
+                <tr class="data-row" repeat="foreach: rows, item: '$row'" css="'_odd-row': $index % 2">
+                    <td outerfasteach="data: getVisible(), as: '$col'"
+                        css="getFieldClass($row())" attr="{'data-th': label}" click="getFieldHandler($row())" template="getBody()"/>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div ifnot="hasData()" class="message info empty">
+        <span data-bind="i18n: 'You have submitted no reviews.'"></span>
+    </div>
+</div>

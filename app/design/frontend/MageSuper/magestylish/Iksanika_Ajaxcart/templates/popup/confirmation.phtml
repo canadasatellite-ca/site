@@ -1,0 +1,36 @@
+<?php 
+/**
+ * Copyright © 2015 Iksanika. All rights reserved.
+ * See IKS-LICENSE.txt for license details.
+ */
+?>
+<?php
+if(false):
+    $messageBody = '';
+    $messages = $block->_messageManager->getMessagesSuccess(true);
+    if($messages)
+    {
+        foreach($messages as $message)
+        {
+            $messageBody .= $message.'<br/>';
+        }
+    }
+    $cartSummary = $block->getCartSummary();
+?>
+
+<div class="ajaxcart-popup-body">
+    <div class="ajaxcart-message" id="ajaxcart-message"><?php echo $messageBody;?></div>
+
+    <div class="ajaxcart-popup-product-gallery">
+        <?php echo $block->getProductImage(); ?>
+    </div>
+    <?php /*
+    <div class="ajaxcart-popup-cart-summary"><?php echo __('There is %1 %2 in your cart.', $cartSummary, (($cartSummary == 1) ? 'item' : 'items') ); ?></div>
+    <div class="ajaxcart-popup-cart-subtotal"><?php echo __('Cart Subtotal: %1',  $block->getCartSubtotal()); ?></div>
+    */ ?>
+    <div class="ajaxcart-popup-cart-subtotal"><?php echo __('Cart Subtotal: '); ?></div>
+    <div class="ajaxcart-popup-cart-subtotal-cost"><?php echo $block->getCartSubtotal(); ?></div>
+    <div class="ajaxcart-popup-cart-summary"><?php echo __('with <b>%1</b> %2', $cartSummary, (($cartSummary == 1) ? 'item' : 'items') ); ?></div>
+    <div class="ajaxcart-popup-cart-view-page"><a href="<?php echo $block->getCartUrl();?>"><?php echo __('View and edit cart'); ?></a></div>
+</div>
+<?php endif;

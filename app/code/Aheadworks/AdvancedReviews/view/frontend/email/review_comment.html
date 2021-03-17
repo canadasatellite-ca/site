@@ -1,0 +1,19 @@
+<!--@subject {{trans 'Someone has added a comment on your review'}} @-->
+<!--@vars {
+"var customer_name":"Customer Name",
+"var comment":"Comment data",
+"var unsubscribe_url":"Unsubscribe Url"
+} @-->
+{{template config_path="design/email/header_template"}}
+
+<p class="notification-content">
+    {{trans 'Dear, %customer_name.' customer_name=$customer_name}}<br>
+    {{trans 'Someone has commented your review:' }}<br>
+    <p class="comment-content">
+        <i>{{var comment.content}}</i>
+    </p>
+
+    <p><a href="{{var unsubscribe_url}}">{{trans 'Unsubscribe from notifications'}}</a></p>
+</p>
+
+{{template config_path="design/email/footer_template"}}

@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="MageSuper_Invoice" setup_version="0.0.2" active="true">
+        <sequence>
+            <module name="Magento_Checkout"/>
+            <module name="Magestore_OneStepCheckout"/>
+            <module name="MageWorx_OptionTemplates"/>
+            <module name="Pektsekye_OptionDependent"/>
+            <module name="Magento_Sales"/>
+        </sequence>
+    </module>
+</config>

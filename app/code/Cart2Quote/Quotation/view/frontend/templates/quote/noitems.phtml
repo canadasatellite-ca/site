@@ -1,0 +1,18 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**  @var \Cart2Quote\Quotation\Block\Quote $block */
+?>
+<div class="quote-empty">
+    <?php echo $block->getChildHtml('quotation_quote_empty_widget'); ?>
+    <p><?php echo $block->escapeHtml(__('You have no items in your quote.')) ?></p>
+    <p><?php echo __(
+        'Click <a href="%1">here</a> to continue shopping.',
+        $block->escapeUrl($block->getContinueShoppingUrl())
+    ); ?></p>
+    <?php echo $block->getChildHtml('quotation.quote.table.after'); ?>
+</div>

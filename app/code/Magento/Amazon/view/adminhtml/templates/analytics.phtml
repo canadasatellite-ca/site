@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+?>
+
+<?php if ($block->injectAdobeOmega()): ?>
+    <script type="text/javascript">
+        require(['Magento_Amazon/js/analytics/adobe-omega']);
+    </script>
+<?php endif; ?>
+

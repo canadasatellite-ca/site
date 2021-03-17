@@ -1,0 +1,10 @@
+<label class="aw-advanced-reviews__data-grid-radio-cell-inner data-grid-checkbox-cell-inner">
+    <input class="admin__control-radio" type="radio" data-action="select-row"
+        data-bind="
+            staticChecked: $col._selected,
+            checkedValue: $row()[$col.indexField],
+            attr: {
+                id: index + 'check' + $row()[$col.indexField]
+            }">
+    <label attr="for: index + 'check' + $row()[$col.indexField]"/>
+</label>

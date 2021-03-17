@@ -1,0 +1,22 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Reject Proposal</title>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title">
+            <action method="setPageTitle">
+                <argument translate="true" name="title" xsi:type="string">What is your reason for rejecting this proposal?</argument>
+            </action>
+        </referenceBlock>
+        <referenceContainer name="content">
+            <block class="Cart2Quote\Quotation\Block\Proposal\Reject\View" name="reject_proposal_layout"
+                   template="Cart2Quote_Quotation::proposal/reject/view.phtml"/>
+        </referenceContainer>
+    </body>
+</page>

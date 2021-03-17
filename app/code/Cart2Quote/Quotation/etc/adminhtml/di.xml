@@ -1,0 +1,65 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="\Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Thumbnail" type="\Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer">
+        <arguments>
+            <argument name="ThumbnailColumn" xsi:type="object">\Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\DefaultRenderer</argument>
+        </arguments>
+    </virtualType>
+    <type name="Cart2Quote\Quotation\Block\Adminhtml\System\Config\Form\Field\License">
+        <arguments>
+            <argument name="licenseData" xsi:type="object">\Cart2Quote\Quotation\Helper\Data\License</argument>
+        </arguments>
+    </type>
+    <type name="Magento\Framework\Notification\MessageList">
+        <arguments>
+            <argument name="messages" xsi:type="array">
+                <item name="AdminQuoteMessages" xsi:type="string">Cart2Quote\Quotation\Model\Admin\Quote\Messages</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Catalog\Model\Product">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Catalog\Model\ProductPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Catalog\Model\ProductPlugin" />
+    </type>
+    <type name="Magento\Sales\Block\Adminhtml\Order\Create\Data">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Quote\Block\Quote\Create\DataPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Quote\Block\Quote\Create\DataPlugin" />
+    </type>
+    <type name="Magento\Config\Model\Config">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Config\Model\ConfigPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Config\Model\ConfigPlugin" sortOrder="1" />
+    </type>
+    <preference type="\Cart2Quote\Quotation\Block\Adminhtml\Sales\Order\Create\Quote" for="Magento\Sales\Block\Adminhtml\Order\Create" />
+    <type name="Cart2Quote\Quotation\Model\Quote">
+        <plugin name="Cart2Quote\Quotation\Plugin\Quote\CustomProductPrice" type="Cart2Quote\Quotation\Plugin\Quote\CustomProductPrice" />
+    </type>
+    <type name="Magento\Reports\Model\ResourceModel\Refresh\Collection">
+        <plugin name="cart2Quote_quotation_report" type="Cart2Quote\Quotation\Plugin\Magento\Reports\Model\ResourceModel\Refresh\Collection" sortOrder="1" />
+    </type>
+    <type name="Magento\Reports\Controller\Adminhtml\Report\Statistics">
+        <arguments>
+            <argument name="reportTypes" xsi:type="array">
+                <item name="quotation" xsi:type="string">Cart2Quote\Quotation\Model\ResourceModel\Report\QuoteReport</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Backend\Block\Dashboard\Diagrams">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Backend\Block\Dashboard\DiagramsPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Backend\Block\Dashboard\DiagramsPlugin" />
+    </type>
+    <type name="Magento\Backend\Controller\Adminhtml\Dashboard\AjaxBlock">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Backend\Controller\Adminhtml\Dashboard\AjaxBlockPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Backend\Controller\Adminhtml\Dashboard\AjaxBlockPlugin" />
+    </type>
+    <type name="Magento\Reports\Model\ResourceModel\Customer\Collection">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Reports\Model\ResourceModel\Customer\CollectionPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Reports\Model\ResourceModel\Customer\CollectionPlugin" />
+    </type>
+    <type name="Magento\Backend\Block\Dashboard\Tab\Customers\Newest">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Backend\Block\Dashboard\Tab\Customers\NewestPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Backend\Block\Dashboard\Tab\Customers\NewestPlugin" />
+    </type>
+    <type name="Magento\Reports\Model\ResourceModel\Order\Collection">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Reports\Model\ResourceModel\Order\CollectionPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Reports\Model\ResourceModel\Order\CollectionPlugin" />
+    </type>
+    <type name="Magento\Backend\Block\Dashboard\Tab\Customers\Most">
+        <plugin name="\Cart2Quote\Quotation\Plugin\Magento\Backend\Block\Dashboard\Tab\Customers\MostPlugin" type="\Cart2Quote\Quotation\Plugin\Magento\Backend\Block\Dashboard\Tab\Customers\MostPlugin" />
+    </type>
+</config>

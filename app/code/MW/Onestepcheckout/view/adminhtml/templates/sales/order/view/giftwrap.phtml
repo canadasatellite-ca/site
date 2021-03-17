@@ -1,0 +1,9 @@
+<?php $block->setPriceDataObject($block->getSource()) ?>
+<?php if ((float) $block->getSource()->getGiftwrapAmount()): ?>
+    <tr>
+        <td class="label"><?php echo __('Gift Wrap') ?></td>
+        <td>
+            <?php echo $block->displayPrices($block->getSource()->getBaseGiftwrapAmount(), $block->getSource()->getGiftwrapAmount()); ?>
+        </td>
+    </tr>
+<?php endif; ?>

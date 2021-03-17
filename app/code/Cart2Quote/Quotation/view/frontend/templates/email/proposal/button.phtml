@@ -1,0 +1,37 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+
+/** @var Cart2Quote\Quotation\Block\Quote\Email\Button $block */
+?>
+<table class="button checkout-button-container" width="100%" border="0" cellspacing="0" cellpadding="0" align="right">
+    <tr>
+        <td class="checkout-button-container-row">
+            <table class="inner-wrapper" width="" align="right" border="0" cellspacing="0" cellpadding="0">
+                <tr>
+                    <td class="checkout-button-container-row-background">
+                        <a target="_blank" class="button"
+                           href="<?php echo $block->escapeHtml($block->getUrlForCheckoutButton()); ?>">
+                            <span><?php echo $block->escapeHtml($block->getFrontendButtonLabel()); ?></span>
+                        </a>
+                    </td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+<?php if (!$block->customerIsGuest()) : ?>
+    <table align="right" border="0" cellspacing="0" cellpadding="0" class="custom-dashboard-button">
+        <tr class="custom-dashboard-button-row">
+            <td align="right" class="custom-dashboard-button-column">
+                <a target="_blank" class="button" href="<?php echo $block->escapeHtml($block->getMoreOptionsUrl()); ?>">
+                    <span><?php echo $block->escapeHtml(__('Or click here for more options')); ?></span>
+                </a>
+            </td>
+        </tr>
+    </table>
+<?php endif; ?>

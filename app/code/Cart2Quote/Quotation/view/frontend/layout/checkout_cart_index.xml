@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <update handle="checkout_cart_item_renderers"/>
+    <body>
+        <referenceBlock name="checkout.cart.methods">
+            <block class="Cart2Quote\Quotation\Block\Checkout\Cart\MoveToQuote" name="cart2quote.movetoquote" as="movetoquote" template="Cart2Quote_Quotation::checkout/cart/movetoquote.phtml"/>
+            <block class="Cart2Quote\Quotation\Block\Checkout\Cart\DirectQuote" name="cart2quote.directquote" as="directquote" template="Cart2Quote_Quotation::checkout/cart/directquote.phtml"/>
+        </referenceBlock>
+        <referenceContainer name="checkout.cart.noitems">
+            <block class="Cart2Quote\Quotation\Block\Checkout\QuoteNotice" name="checkout.success.quote.notice" after="checkout.cart.empty" template="Cart2Quote_Quotation::checkout/quoteNotice.phtml" cacheable="false"/>
+        </referenceContainer>
+        <referenceBlock name="checkout.cart.coupon" class="Cart2Quote\Quotation\Block\Checkout\Cart\Coupon" template="Cart2Quote_Quotation::checkout/cart/coupon.phtml"/>
+    </body>
+</page>

@@ -1,0 +1,55 @@
+<?php
+/** @var \BroSolutions\VideoSlider\Block\Widget\VideoSlider $block */
+if($block->getData('video_urls')): ?>
+    <div class="main-slider" id="main-slider">
+        <?php $videoUrls = explode(',', $block->getData('video_urls'));
+        foreach ($videoUrls as $videoUrl): ?>
+        <div>
+            <div class="video-wrapper">
+                <iframe src="<?= $videoUrl; ?>">
+                </iframe>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
+<style>
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%; /* 16:9 */
+        padding-top: 25px;
+        height: 0;
+    }
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+</style>
+    <script type="text/javascript">
+        require([
+            'jquery',
+            'slick'
+        ], function ($) {
+            $(document).ready(function () {
+
+                $('#main-slider').slick({
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    autoplay: <?= $block->getData('autoplay') ? 'true' : 'false'; ?>,
+                    autoplaySpeed: 5000,
+                    dots: <?= $block->getData('dots') ? 'true' : 'false'; ?>,
+                    infinite: <?= $block->getData('infinite') ? 'true' : 'false'; ?>,
+                    adaptiveHeight: <?= $block->getData('adaptiveHeight') ? 'true' : 'false'; ?>,
+                    arrows: <?= $block->getData('arrows') ? 'true' : 'false'; ?>
+                });
+
+                $('#main-slider').on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+                    $('.slick-current iframe').attr('src', $('.slick-current iframe').attr('src'));
+                });
+            });
+        });
+    </script>
+<?php endif; ?>

@@ -1,0 +1,94 @@
+<?php
+/**
+ *
+ * CART2QUOTE CONFIDENTIAL
+ * __________________
+ *
+ *  [2009] - [2016] Cart2Quote B.V.
+ *  All Rights Reserved.
+ *
+ * NOTICE OF LICENSE
+ *
+ * All information contained herein is, and remains
+ * the property of Cart2Quote B.V. and its suppliers,
+ * if any.  The intellectual and technical concepts contained
+ * herein are proprietary to Cart2Quote B.V.
+ * and its suppliers and may be covered by European and Foreign Patents,
+ * patents in process, and are protected by trade secret or copyright law.
+ * Dissemination of this information or reproduction of this material
+ * is strictly forbidden unless prior written permission is obtained
+ * from Cart2Quote B.V.
+ *
+ * @category    Cart2Quote
+ * @package     Desk
+ * @copyright   Copyright (c) 2016 Cart2Quote B.V. (https://www.cart2quote.com)
+ * @license     https://www.cart2quote.com/ordering-licenses(https://www.cart2quote.com)
+ */
+
+/** @var Cart2Quote\Desk\Block\Customer\Ticket\ListTicket $block */
+?>
+
+<?php if ($block->getTickets() && count($block->getTickets())) : ?>
+    <div class="table-wrapper tickets">
+        <table class="data table table-tickets" id="my-tickets-table">
+            <caption class="table-caption"><?php echo $block->escapeHtml(__("Tickets")) ?></caption>
+            <thead>
+                <tr>
+                    <th scope="col" class="col date"><?php echo $block->escapeHtml(__("Requested")) ?></th>
+                    <th scope="col" class="col description"><?php echo $block->escapeHtml(__("ID")) ?></th>
+                    <th scope="col" class="col description"><?php echo $block->escapeHtml(__("Subject")) ?></th>
+                    <th scope="col" class="col date"><?php echo $block->escapeHtml(__("Updated")) ?></th>
+                    <th scope="col" class="col description"><?php echo $block->escapeHtml(__("Status")) ?></th>
+                    <th scope="col" class="col actions">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php
+    foreach ($block->getTickets() as $ticket) : ?>
+                <tr>
+                    <td data-th="<?php echo $block->escapeHtml(__("Created")) ?>" class="col date">
+                        <?php echo $block->escapeHtml($block->dateFormat($ticket->getCreatedAt())); ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("ID")) ?>" class="col description">
+                        <?php echo $block->escapeHtml($ticket->getTicketId()); ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Subject")) ?>" class="col description">
+                        <?php echo $ticket->getSubjectHtml() ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Updated")) ?>" class="col date">
+                        <?php echo $block->escapeHtml($block->dateFormat($ticket->getUpdatedAt())); ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Status")) ?>" class="col description">
+                        <?php echo $ticket->getStatusHtml() ?>
+                    </td>
+                    <td data-th="<?php echo $block->escapeHtml(__("Actions")) ?>" class="col actions">
+                        <a href="<?php echo $block->getTicketLink() ?>id/<?php echo $ticket->getTicketId() ?>"
+                           class="action more">
+                            <span><?php echo $block->escapeHtml(__("See Details")) ?></span>
+                        </a>
+                    </td>
+                </tr>
+                <?php
+    endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php
+    if ($block->getToolbarHtml()): ?>
+        <div class="toolbar products-tickets-toolbar bottom">
+            <?php echo $block->getToolbarHtml() ?>
+        </div>
+    <?php
+    endif; ?>
+    <?php
+else: ?>
+    <div class="message info empty"><span><?php echo $block->escapeHtml(__("You have submitted no tickets.")) ?></span></div>
+    <?php
+endif; ?>
+<div class="actions-toolbar">
+    <div class="secondary">
+        <a class="action back" href="<?php echo $block->escapeUrl($block->getBackUrl()) ?>">
+            <span><?php echo $block->escapeHtml(__("Back")) ?></span>
+        </a>
+    </div>
+</div>

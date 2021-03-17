@@ -1,0 +1,35 @@
+<div style="display: block;
+    padding: 20px;
+    border: 1px solid #cbccc6;
+    border-radius: 5px;">
+    <span class="issue-report" style="font-size: 1.8rem; font-weight: 300; margin: 0;" data-bind="text: getTitle()"></span>
+    <div>
+        <form class="issue-report-form" id="issue-report-form">
+            <div class="field" style="padding-top: 10px">
+                <label class="label" for="report_email">
+                    <span>Email</span>
+                </label>
+                <div class="control">
+                    <input class="input-text" type="text" name="report_email" id="report_email" data-validate='{
+	"required":true,
+	"email":true
+}'>
+                </div>
+            </div>
+            <div class="field" style="padding-top: 10px">
+                <label class="label" for="report_comment">
+                    <span>Comment</span>
+                </label>
+                <div class="control">
+                    <textarea class="input-text" type="text" name="report_comment" id="report_comment"
+                              required="true"></textarea>
+                </div>
+            </div>
+            <div class="field" style="padding-top: 10px">
+                <div class="control">
+                    <div class="action primary" id="checkout-report-send" data-bind="click: sendReport">Send</div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>

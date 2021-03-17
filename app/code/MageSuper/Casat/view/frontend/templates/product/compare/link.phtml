@@ -1,0 +1,23 @@
+<div class="permanent-link-content">
+    <div class="item link compare" data-bind="scope: 'compareProducts'" data-role="compare-products-link">
+        <div class="permanent-link-head" data-bind="css: {'no-display': !compareProducts().count}">Permanent Link:</div>
+        <a class="action compare" title="<?= /* @escapeNotVerified */ __('Copy Link') ?>"
+           data-bind="attr: {'href': compareProducts().listUrl}, css: {'no-display': !compareProducts().count}"
+        >
+            <div data-bind="text: compareProducts().listUrl" class="permanent-link-text"></div>
+        </a>
+    </div>
+</div>
+
+<script type="text/javascript">
+    require([
+        'Magento_Customer/js/customer-data',
+    ], function (customerData) {
+        'use strict';
+
+        customerData.invalidate(['compare-products']);
+    });
+</script>
+<script type="text/x-magento-init">
+{"[data-role=compare-products-link]": {"Magento_Ui/js/core/app": <?= /* @escapeNotVerified */ $block->getJsLayout() ?>}}
+</script>

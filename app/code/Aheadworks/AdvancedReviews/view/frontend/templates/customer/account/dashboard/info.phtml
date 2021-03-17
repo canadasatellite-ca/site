@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\AdvancedReviews\ViewModel\Customer\Account\Dashboard\Info $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="block">
+    <div class="box">
+        <strong class="box-title">
+            <span><?= $block->escapeHtml(__('Review notifications')) ?></span>
+        </strong>
+        <div class="box-content">
+            <p>
+                <?php if ($viewModel->getIsSubscriberReceiveNotifications($viewModel->getCurrentSubscriber())): ?>
+                    <?= $block->escapeHtml(__('You will receive notifications')) ?>
+                <?php else: ?>
+                    <?= $block->escapeHtml(__('You will not receive notifications')) ?>
+                <?php endif; ?>
+            </p>
+        </div>
+        <div class="box-actions">
+            <a class="action edit" href="<?= $block->escapeUrl($viewModel->getEditNotificationsUrl()) ?>"><span><?= $block->escapeHtml(__('Edit')) ?></span></a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,115 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<div class="quoted-product">
+    <p class="quoted-product-header">
+        <!-- ko i18n: 'Added to your Quote' --><!-- /ko -->
+    </p>
+    <div class="products-overflow">
+        <div data-bind="foreach: { data: quote().items, as: 'item' }">
+            <!-- ko if: $index() == 0 -->
+            <each args="$parent.getRegion($parent.getItemRenderer(item.product_type))"
+                  render="{name: getTemplate(), data: item }"
+            />
+            <!-- /ko -->
+        </div>
+        <!-- ko if: itemCount() > 1 -->
+        <div class="quoted-items" data-mage-init='{"collapsible":{"openedState": "active", "saveState": false, "active": false}}'>
+            <p data-role="title" class="quoted-items-header toggle">
+                <span><!-- ko i18n: 'My Quote items' --><!-- /ko --></span>
+                <span class="quote-counter"><!-- ko text: quote().summary_count --><!-- /ko --></span>
+            </p>
+            <div data-role="content" class="quoted-items-content content">
+                <div data-bind="foreach: { data: quote().items, as: 'item' }">
+                    <each args="$parent.getRegion($parent.getItemRenderer(item.product_type))"
+                          render="{name: getTemplate(), data: item }"
+                    />
+                </div>
+            </div>
+        </div>
+        <!-- /ko -->
+    </div>
+    <a data-bind="attr: { href: quoteListUrl }" class="view-request">
+        <!-- ko i18n: 'View and Edit Quote Request' --><!-- /ko -->
+    </a>
+</div>
+<div class="quote-form">
+    <p class="quote-form-header">
+        <!-- ko i18n: 'Quote Request for product' --><!-- /ko -->
+    </p>
+    <p class="quote-form-subheader">
+        <!-- ko i18n: 'Enter your details for a free and no obligation price proposal.' --><!-- /ko -->
+    </p>
+    <form method="POST" id="quick-quote-form" class="form" data-mage-init='{"validation":{}}'
+          data-bind="attr: {'action': submitQuoteUrl}">
+        <input type="hidden" name="form_key" data-bind="value: formKey"/>
+        <fieldset class="fieldset" data-bind="blockLoader: isLoading">
+            <div class="field required">
+                <label class="label" for="email">
+                    <span><!-- ko i18n: 'Email Address' --><!-- /ko --></span>
+                </label>
+                <div class="control">
+                    <input type="email"
+                           id="email"
+                           name="email"
+                           class="input-text"
+                           data-mage-init='{"mage/trim-input":{}}'
+                           data-validate="{required:true, 'validate-email':true}"
+                           data-bind="attr: { disabled: customer().isLoggedIn }, textInput: email, hasFocus: emailFocused">
+                    <span class="note" data-bind="fadeVisible: !emailAvailable()">
+                        <!-- ko i18n: 'You already have an account with us.' --><!-- /ko -->
+                        <a data-bind="click: login"><!-- ko i18n: 'Sign in' --><!-- /ko --></a>
+                        <!-- ko i18n: 'or continue as guest.' --><!-- /ko -->
+                    </span>
+                </div>
+            </div>
+            <div class="field required">
+                <label class="label" for="firstname">
+                    <span>
+                        <!-- ko i18n: 'First name' --><!-- /ko -->
+                    </span>
+                </label>
+                <div class="control">
+                    <input type="text"
+                           id="firstname"
+                           name="firstname"
+                           class="input-text"
+                           data-validate="{required:true}"
+                           data-bind="textInput: customer().firstname, attr: { disabled: customer().isLoggedIn }">
+                </div>
+            </div>
+            <div class="field required">
+                <label class="label" for="lastname">
+                    <span><!-- ko i18n: 'Last name' --><!-- /ko --></span>
+                </label>
+                <div class="control">
+                    <input type="text"
+                           id="lastname"
+                           name="lastname"
+                           class="input-text"
+                           data-validate="{required:true}"
+                           data-bind="textInput: customer().lastname, attr: { disabled: customer().isLoggedIn }">
+                </div>
+            </div>
+            <div class="show-remarks" data-bind="visible: showRemark">
+                <label for="show-remarks" class="remarks-label">
+                    <!-- ko i18n: 'Add a note with any special requests or other important details.' --><!-- /ko -->
+                    <i class="icon-c2q_plus"></i>
+                </label>
+                <input type="checkbox" id="show-remarks" class="show-remarks-checkbox">
+                <div class="remarks">
+                    <div class="field">
+                        <label class="label" for="remark">
+                            <span><!-- ko i18n: 'Remarks' --><!-- /ko --></span>
+                        </label>
+                        <div class="control">
+                            <textarea id="remark" class="input-text " name="remarks"></textarea>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>

@@ -1,0 +1,135 @@
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+  .review-widget-container {
+    &.aw-ar-widget {
+      border-bottom: 1px solid @aw-ar-widget__border-color;
+
+      .review-item {
+        padding: 20px 0 25px 0;
+        border: none;
+
+        .product-image {
+          &-container {
+            width: 54px !important;
+            min-width: 54px;
+            height: 54px;
+            border: none;
+            margin-right: 15px;
+            margin-top: 5px;
+          }
+
+          &-wrapper {
+
+          }
+
+          &-photo {
+
+          }
+        }
+
+        &-preview {
+          .lib-vendor-prefix-display(flex);
+          .lib-vendor-prefix-flex-wrap(nowrap);
+          margin-bottom: 10px;
+        }
+
+        .show-button,.read-more-link {
+          color: @aw-ar-show-more__color;
+          display: inline-block;
+          margin-top: @indent__s;
+          cursor: pointer;
+          font-size: @font-size__s + 1;
+
+          &:hover {
+            text-decoration: underline;
+          }
+        }
+        .show-button {
+          display: none;
+        }
+      }
+
+      .product-name {
+        max-height: 60px;
+        overflow: hidden;
+        margin-bottom: 5px;
+      }
+
+      .product-url {
+        font-weight: 600;
+        font-style: normal;
+        font-size: 14px;
+        color: @aw-ar-widget-link__color;
+      }
+
+      .review__rating-name {
+        margin: auto 0;
+      }
+
+      .content {
+        font-weight: @font-weight__regular;
+        font-style: @font-style__base;
+        font-size: @font-size__base;
+        line-height: 20px;
+        margin-top: 5px;
+      }
+
+      .rating-container {
+        .aw-ar-rating {
+          .rating {
+            height: @aw-ar-rating-wdidget__height;
+
+            &::before {
+              height: @aw-ar-rating-wdidget__height;
+              background-size: @aw-ar-rating-wdidget__width @aw-ar-rating-wdidget__height;
+            }
+          }
+
+          .not-editable {
+            .aw-ar-rating-container {
+              height: @aw-ar-rating-wdidget__height;
+              width: @aw-ar-rating-wdidget__width;
+
+              &::before {
+                height: @aw-ar-rating-wdidget__height;
+                background-size: @aw-ar-rating-wdidget__width @aw-ar-rating-wdidget__height;
+              }
+            }
+          }
+        }
+      }
+
+      .nickname {
+        font-weight: 400;
+        font-style: normal;
+        font-size: 13px;
+        color: #999999;
+        margin-bottom: 10px;
+      }
+
+      .summary {
+        font-weight: 600;
+        font-style: normal;
+        font-size: 15px;
+      }
+    }
+  }
+}
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+}

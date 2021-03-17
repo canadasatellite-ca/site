@@ -1,0 +1,2 @@
+<?php
+ namespace Cart2Quote\Features\Feature\CustomRemark\QuickQuote; final class ConfigProvider extends \Cart2Quote\License\Plugin\AbstractPlugin { public function afterGetConfig(\Cart2Quote\Quotation\Model\QuickQuote\ConfigProvider $XsuBZ, $iyl1a) { if ($this->{"\x69\x73\x41\x6c\x6c\157\167\x65\x64"}()) { goto lxtKA; } $iyl1a["\163\x68\x6f\x77\x52\x65\155\141\162\153"] = false; lxtKA: return $iyl1a; } }

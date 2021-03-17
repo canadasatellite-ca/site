@@ -1,0 +1,29 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Summary\Detailed $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="detailed-summary">
+    <div class="rating-values-statistics">
+
+        <?php foreach ($viewModel->getDetailedSummaryData() as $detailedSummaryDataRow): ?>
+            <div class="rating-value-row">
+                <span class="rating-value-label">
+                    <?= $block->escapeHtml($viewModel->getRatingLabel($detailedSummaryDataRow)) ?>
+                </span>
+                <span class="rating-value-reviews-count">
+                    <?= $block->escapeHtml($viewModel->getRatingReviewsCount($detailedSummaryDataRow)) ?>
+                </span>
+                <span class="rating-value-reviews-percent">
+                    <?= $block->escapeHtml('(' . $viewModel->getRatingReviewsPercent($detailedSummaryDataRow) . '%)') ?>
+                </span>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>

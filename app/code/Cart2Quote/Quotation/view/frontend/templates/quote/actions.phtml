@@ -1,0 +1,30 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php
+/**
+ * @var \Cart2Quote\Quotation\Block\Quote\View $block
+ */
+$quotationHelper = $block->getQuotationHelper();
+?>
+<?php if ($quotationHelper->canAccept($block->getQuote()) && $block->showCheckoutButton()) : ?>
+    <form action="<?php echo $block->escapeHtml($block->getAcceptUrl()) ?>" method="post"
+          data-mage-init='{"validation":{}}'
+          class="form form-quote">
+        <?php echo $block->getBlockHtml('formkey'); ?>
+        <div class="quote main actions clearfix">
+            <?php $checkoutButtonData = $block->getCheckoutActionButtonData(); ?>
+            <button <?php echo $block->escapeHtml($checkoutButtonData['flag']) ?>
+                    type="submit" name="update_quote_action"
+                    value="accept_checkout"
+                    title="<?php echo $block->escapeHtml($checkoutButtonData['label']) ?>"
+                    class="action primary cart2quote-accept-checkout-btn">
+                <span><?php echo $block->escapeHtml(__($checkoutButtonData['label'])) ?></span>
+            </button>
+        </div>
+    </form>
+<?php endif; ?>

@@ -1,0 +1,19 @@
+<?xml version="1.0"?><!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<!--
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Success Page</title>
+    </head>
+    <body>
+        <referenceBlock name="page.main.title" remove="true"/>
+        <referenceContainer name="content">
+            <block class="Cart2Quote\Quotation\Block\Quote\Success" name="quotation.success" template="quote/success/success.phtml" cacheable="false"/>
+        </referenceContainer>
+        <container name="quote.success.additional.info" label="Quote Success Additional Info"/>
+    </body>
+</page>

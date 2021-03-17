@@ -1,0 +1,36 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Summary\Brief $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="brief-summary">
+    <div class="aggregated-rating-absolute">
+        <span><?= $block->escapeHtml($viewModel->getAggregatedRatingAbsoluteValue()) ?></span>
+    </div>
+    <div>
+        <div class="aggregated-rating-view">
+            <div class="aw-advanced-reviews-admin-control-label aw-ar-rating">
+                <div class="not-editable">
+                    <span class="tooltip-rating">
+                        <?= $block->escapeHtml($viewModel->getAggregatedRatingTitle()) ?>
+                    </span>
+                    <div class="aw-ar-rating-container">
+                        <div class="rating">
+                            <?= $block->escapeHtml($viewModel->getAggregatedRatingPercentValue()) ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="reviews-count">
+            <span><?= $block->escapeHtml($viewModel->getReviewsCount()) ?></span>
+            <span><?= $block->escapeHtml(__('Reviews')) ?></span>
+        </div>
+    </div>
+</div>

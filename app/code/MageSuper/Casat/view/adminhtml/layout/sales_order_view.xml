@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="admin-2columns-left" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="order_tab_info">
+            <block class="Magento\Sales\Block\Adminhtml\Order\View\Info" name="order_info" template="MageSuper_Casat::order/view/info.phtml"/>
+            <block class="Magento\Sales\Block\Adminhtml\Order\View\History" name="order_history" template="MageSuper_Casat::order/view/history.phtml"/>
+        </referenceContainer>
+        <referenceBlock name="order_items">
+            <arguments>
+                <argument name="columns" xsi:type="array">
+                    <item name="profit" xsi:type="string" translate="true">Profit</item>
+                    <item name="margin" xsi:type="string" translate="true">Margin</item>
+                </argument>
+            </arguments>
+            <action method="setTemplate">
+                <argument name="template" xsi:type="string">MageSuper_Casat::grid/items.phtml</argument>
+            </action>
+        </referenceBlock>
+        <referenceBlock name="order_totals">
+            <block class="MageSuper\Casat\Block\Adminhtml\Order\Totals\Profit" name="profit" template="MageSuper_Casat::order/totals/profit.phtml"/>
+            <block class="MageSuper\Casat\Block\Adminhtml\Order\Totals\Profit" name="margin" template="MageSuper_Casat::order/totals/margin.phtml"/>
+        </referenceBlock>
+
+    </body>
+</page>

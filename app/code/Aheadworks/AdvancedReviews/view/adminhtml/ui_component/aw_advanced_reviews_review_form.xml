@@ -1,0 +1,592 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_advanced_reviews_review_form.aw_advanced_reviews_review_form_data_source</item>
+            <item name="deps" xsi:type="string">aw_advanced_reviews_review_form.aw_advanced_reviews_review_form_data_source</item>
+        </item>
+        <item name="label" xsi:type="string" translate="true">Review</item>
+        <item name="config" xsi:type="array">
+            <item name="dataScope" xsi:type="string">data</item>
+            <item name="namespace" xsi:type="string">aw_advanced_reviews_review_form</item>
+        </item>
+        <item name="template" xsi:type="string">templates/form/collapsible</item>
+        <item name="buttons" xsi:type="array">
+            <item name="back" xsi:type="string">Aheadworks\AdvancedReviews\Block\Adminhtml\Review\Edit\Button\Back</item>
+            <item name="reset" xsi:type="string">Aheadworks\AdvancedReviews\Block\Adminhtml\Review\Edit\Button\Reset</item>
+            <item name="delete" xsi:type="string">Aheadworks\AdvancedReviews\Block\Adminhtml\Review\Edit\Button\Delete</item>
+            <item name="save" xsi:type="string">Aheadworks\AdvancedReviews\Block\Adminhtml\Review\Edit\Button\Save</item>
+        </item>
+    </argument>
+    <dataSource name="aw_advanced_reviews_review_form_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\FormDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_advanced_reviews_review_form_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="submit_url" xsi:type="url" path="aw_advanced_reviews/review/save"/>
+                </item>
+            </argument>
+        </argument>
+        <argument name="data" xsi:type="array">
+            <item name="js_config" xsi:type="array">
+                <item name="component" xsi:type="string">Magento_Ui/js/form/provider</item>
+            </item>
+        </argument>
+    </dataSource>
+    <modal name="aw_advanced_reviews_products_listing_modal">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="dataScope" xsi:type="string"/>
+                <item name="options" xsi:type="array">
+                    <item name="title" xsi:type="string" translate="true">Select Product</item>
+                    <item name="buttons" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Cancel</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="string">closeModal</item>
+                            </item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="text" xsi:type="string" translate="true">Add Selected Product</item>
+                            <item name="class" xsi:type="string">action-primary</item>
+                            <item name="actions" xsi:type="array">
+                                <item name="0" xsi:type="array">
+                                    <item name="targetName" xsi:type="string">index = aw_advanced_reviews_products_listing</item>
+                                    <item name="actionName" xsi:type="string">save</item>
+                                </item>
+                                <item name="1" xsi:type="string">closeModal</item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </item>
+        </argument>
+        <insertListing name="aw_advanced_reviews_products_listing">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="cssclass" xsi:type="string">aw-advanced-reviews-products-listing</item>
+                    <item name="autoRender" xsi:type="boolean">true</item>
+                    <item name="dataScope" xsi:type="string">product_selected</item>
+                    <item name="externalProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_products_listing_data_source</item>
+                    <item name="selectionsProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_products_listing.product_columns.ids</item>
+                    <item name="ns" xsi:type="string">aw_advanced_reviews_products_listing</item>
+                    <item name="realTimeLink" xsi:type="boolean">true</item>
+                    <item name="dataLinks" xsi:type="array">
+                        <item name="imports" xsi:type="boolean">false</item>
+                        <item name="exports" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="behaviourType" xsi:type="string">simple</item>
+                    <item name="externalFilterMode" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </insertListing>
+    </modal>
+    <fieldset name="review_details">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Review Details</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <field name="id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">id</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">review</item>
+                </item>
+            </argument>
+        </field>
+        <field name="product_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">product_id</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">review</item>
+                </item>
+            </argument>
+        </field>
+        <field name="store_id">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">store_id</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">review</item>
+                </item>
+            </argument>
+        </field>
+        <field name="author_type">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\AuthorType</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">author_type</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="default" xsi:type="string">3</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="switcherConfig" xsi:type="array">
+                        <item name="enabled" xsi:type="boolean">true</item>
+                        <item name="rules" xsi:type="array">
+                            <item name="0" xsi:type="array">
+                                <item name="value" xsi:type="number">1</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="target" xsi:type="string">aw_advanced_reviews_review_form.aw_advanced_reviews_review_form.review_details.email</item>
+                                        <item name="callback" xsi:type="string">show</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="1" xsi:type="array">
+                                <item name="value" xsi:type="number">2</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="target" xsi:type="string">aw_advanced_reviews_review_form.aw_advanced_reviews_review_form.review_details.email</item>
+                                        <item name="callback" xsi:type="string">hide</item>
+                                    </item>
+                                </item>
+                            </item>
+                            <item name="2" xsi:type="array">
+                                <item name="value" xsi:type="number">3</item>
+                                <item name="actions" xsi:type="array">
+                                    <item name="0" xsi:type="array">
+                                        <item name="target" xsi:type="string">aw_advanced_reviews_review_form.aw_advanced_reviews_review_form.review_details.email</item>
+                                        <item name="callback" xsi:type="string">hide</item>
+                                    </item>
+                                </item>
+                            </item>
+                        </item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="select_product">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="additionalClasses" xsi:type="string">admin__field-small _required</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/components/button</item>
+                    <item name="template" xsi:type="string">ui/form/components/button/container</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="title" xsi:type="string" translate="true">Select Product</item>
+                    <item name="label" xsi:type="string" translate="true">Product</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="actions" xsi:type="array">
+                        <item name="0" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.ns }.${ $.ns }.aw_advanced_reviews_products_listing_modal</item>
+                            <item name="actionName" xsi:type="string">toggleModal</item>
+                        </item>
+                        <item name="1" xsi:type="array">
+                            <item name="targetName" xsi:type="string">${ $.ns }.${ $.ns }.aw_advanced_reviews_products_listing_modal.aw_advanced_reviews_products_listing</item>
+                            <item name="actionName" xsi:type="string">render</item>
+                        </item>
+                    </item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.newReview</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="product_name" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Form\Product">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">product_name</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="label" xsi:type="string" translate="true">Product</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/product-url</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.product_name</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </field>
+        <field name="author" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Form\Author">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">author</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="label" xsi:type="string" translate="true">Author</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/label-url</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">!${ $.provider }:data.newReview</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </field>
+        <field name="email">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">email</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="formElement" xsi:type="string">text</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="label" xsi:type="string" translate="true">Email</item>
+                    <item name="defaultLabel" xsi:type="string" translate="true">Not specified</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/mailto</item>
+                    <item name="sortOrder" xsi:type="number">25</item>
+                </item>
+            </argument>
+        </field>
+        <field name="created_at">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/date</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/date</item>
+                    <item name="dataScope" xsi:type="string">created_at</item>
+                    <item name="label" xsi:type="string" translate="true">Created At</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">date</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                        <item name="validate-date" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="options" xsi:type="array">
+                        <item name="showsTime" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="rating">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\RatingValue</item>
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/review/rating</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="elementTmpl" xsi:type="string">Aheadworks_AdvancedReviews/review/rating</item>
+                    <item name="dataScope" xsi:type="string">rating</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">radioset</item>
+                    <item name="label" xsi:type="string" translate="true">Rating</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="isEditable" xsi:type="boolean">true</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </field>
+        <field name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="default" xsi:type="string">2</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </field>
+        <field name="submitted_from" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Form\Store">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">submitted_from</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">text</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="labelVisible" xsi:type="boolean">true</item>
+                    <item name="inputName" xsi:type="string">store_id</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="label" xsi:type="string" translate="true">Submitted From</item>
+                    <item name="elementTmpl" xsi:type="string">ui/form/element/text</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">!${ $.provider }:data.newReview</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">60</item>
+                </item>
+            </argument>
+        </field>
+        <field name="nickname">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">nickname</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" xsi:type="string" translate="true">Nickname</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">70</item>
+                </item>
+            </argument>
+        </field>
+        <field name="summary">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">summary</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" xsi:type="string" translate="true">Summary of Review</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">false</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">80</item>
+                </item>
+            </argument>
+        </field>
+        <field name="pros">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/optional/textarea</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="dataScope" xsi:type="string">pros</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Advantages</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.areProsConsEnabledForReviewStore</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">81</item>
+                </item>
+            </argument>
+        </field>
+        <field name="cons">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/optional/textarea</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="dataScope" xsi:type="string">cons</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Disadvantages</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="visible" xsi:type="string">${ $.provider }:data.areProsConsEnabledForReviewStore</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">82</item>
+                </item>
+            </argument>
+        </field>
+        <field name="content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">content</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Review (Comment)</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="required-entry" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">90</item>
+                </item>
+            </argument>
+        </field>
+        <field name="product_recommended">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\ProductRecommended</item>
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">number</item>
+                    <item name="label" xsi:type="string" translate="true">Do you recommend this product?</item>
+                    <item name="formElement" xsi:type="string">select</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="dataScope" xsi:type="string">product_recommended</item>
+                    <item name="sortOrder" xsi:type="number">95</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_verified_buyer">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Verified Buyer</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="string">1</item>
+                        <item name="false" xsi:type="string">0</item>
+                    </item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="dataScope" xsi:type="string">is_verified_buyer</item>
+                    <item name="sortOrder" xsi:type="number">96</item>
+                </item>
+            </argument>
+        </field>
+        <field name="is_featured">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/review/form/element/is-featured</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="dataType" xsi:type="string">boolean</item>
+                    <item name="label" xsi:type="string" translate="true">Featured</item>
+                    <item name="formElement" xsi:type="string">checkbox</item>
+                    <item name="prefer" xsi:type="string">toggle</item>
+                    <item name="default" xsi:type="string">0</item>
+                    <item name="valueMap" xsi:type="array">
+                        <item name="true" xsi:type="string">1</item>
+                        <item name="false" xsi:type="string">0</item>
+                    </item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="dataScope" xsi:type="string">is_featured</item>
+                    <item name="additionalInfoTemplate" xsi:type="string" translate="true">This product already has {count} of {limit} possible featured review(s).</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="featuredReviewsCount" xsi:type="string">${ $.provider }:data.featuredReviewsCount</item>
+                        <item name="featuredReviewsLimit" xsi:type="string">${ $.provider }:data.featuredReviewsLimit</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">98</item>
+                </item>
+            </argument>
+        </field>
+        <field name="shared_store_ids" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Form\SharedStores">
+            <argument name="options" xsi:type="object">Magento\Store\Ui\Component\Listing\Column\Store\Options</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="dataScope" xsi:type="string">shared_store_ids</item>
+                    <item name="dataType" xsi:type="string">int</item>
+                    <item name="formElement" xsi:type="string">multiselect</item>
+                    <item name="label" xsi:type="string" translate="true">Display review on selected store views</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/form/element/shared-stores</item>
+                    <item name="template" xsi:type="string">ui/form/field</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+        </field>
+        <field name="votes_positive">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">votes_positive</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" xsi:type="string" translate="true">Votes Positive</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-digits" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">120</item>
+                </item>
+            </argument>
+        </field>
+        <field name="votes_negative">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">votes_negative</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="label" xsi:type="string" translate="true">Votes Negative</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="validation" xsi:type="array">
+                        <item name="validate-digits" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">130</item>
+                </item>
+            </argument>
+        </field>
+        <field name="attachments" class="Aheadworks\AdvancedReviews\Ui\Component\Review\Form\Attachments">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="componentType" xsi:type="string">fileUploader</item>
+                    <item name="formElement" xsi:type="string">fileUploader</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/form/element/file-uploader</item>
+                    <item name="template" xsi:type="string">ui/form/element/uploader/uploader</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="label" xsi:type="string" translate="true">Images</item>
+                    <item name="imagePlaceholderText" xsi:type="string" translate="true">Browse to find or drag image here</item>
+                    <item name="uploaderConfig" xsi:type="array">
+                        <item name="url" xsi:type="string">aw_advanced_reviews/review/upload</item>
+                    </item>
+                    <item name="isMultipleFiles" xsi:type="boolean">true</item>
+                    <item name="fileInputName" xsi:type="string">attachments</item>
+                    <item name="dataScope" xsi:type="string">attachments</item>
+                    <item name="sortOrder" xsi:type="number">140</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+    <fieldset name="comments">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="label" xsi:type="string" translate="true">Comments</item>
+                <item name="opened" xsi:type="boolean">true</item>
+            </item>
+        </argument>
+        <insertListing name="aw_advanced_reviews_comment_listing">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="cssclass" xsi:type="string">aw-advanced-reviews-comments-listing</item>
+                    <item name="autoRender" xsi:type="boolean">true</item>
+                    <item name="dataScope" xsi:type="string">aw_advanced_reviews_comment_listing</item>
+                    <item name="externalProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_comment_listing_data_source</item>
+                    <item name="selectionsProvider" xsi:type="string">${ $.ns }.aw_advanced_reviews_comment_listing.aw_advanced_reviews_comment_columns.ids</item>
+                    <item name="ns" xsi:type="string">aw_advanced_reviews_comment_listing</item>
+                    <item name="realTimeLink" xsi:type="boolean">true</item>
+                    <item name="showSpinner" xsi:type="boolean">false</item>
+                    <item name="behaviourType" xsi:type="string">simple</item>
+                    <item name="imports" xsi:type="array">
+                        <item name="reviewId" xsi:type="string">${ $.provider }:data.id</item>
+                    </item>
+                    <item name="exports" xsi:type="array">
+                        <item name="reviewId" xsi:type="string">${ $.externalProvider }:params.current_review_id</item>
+                    </item>
+                </item>
+            </argument>
+        </insertListing>
+        <field name="nickname">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">admin_comment.nickname</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">input</item>
+                    <item name="source" xsi:type="string">review</item>
+                </item>
+            </argument>
+        </field>
+        <field name="content">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="dataScope" xsi:type="string">admin_comment.content</item>
+                    <item name="dataType" xsi:type="string">text</item>
+                    <item name="formElement" xsi:type="string">textarea</item>
+                    <item name="label" xsi:type="string" translate="true">Admin Comment</item>
+                    <item name="source" xsi:type="string">review</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

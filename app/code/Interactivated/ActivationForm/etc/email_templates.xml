@@ -1,0 +1,6 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Email:etc/email_templates.xsd">
+    <template id="activation_tosales_template" label="Activation Request" file="activation-request.html" type="html" module="Interactivated_ActivationForm" area="frontend"/>
+    <template id="activation_tocustomer_template" label="Activation Request Confirmation" file="activation-request-confirmation.html" type="html" module="Interactivated_ActivationForm" area="frontend"/>
+    <template id="interactivated_activationform_confirm_email_template" label="Activation Request Confirm" file="activation-request-confirm.html" type="html" module="Interactivated_ActivationForm" area="frontend"/>
+</config>

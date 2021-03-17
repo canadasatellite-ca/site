@@ -1,0 +1,27 @@
+{
+    "name": "blackridgesoftware/module-reindexer",
+    "description": "Allows to Reindex your website database right from admin panel without command line and web administrator’s help",
+    "authors": [
+        {
+            "email": "hello@blackridgesoftware.com",
+            "name": "BlackRidge Software",
+            "homepage": "https://blackridgesoftware.com/"
+        }
+    ],
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Brsw\\Reindexer\\": ""
+        }
+    }
+}
+
+

@@ -1,0 +1,9 @@
+<div css="$col.getFieldClass($row())">
+    <span text="textBeforeUrl"/>
+    <if args="getUrl($row())">
+        <a href="#" data-bind="attr: {href: getUrl($row())}, html: getLabel($row())"></a>
+    </if>
+    <ifnot args="getUrl($row())">
+        <text args="getLabel($row())" />
+    </ifnot>
+</div>

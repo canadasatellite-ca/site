@@ -1,0 +1,53 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+
+<table class="data-grid">
+    <thead>
+    <tr>
+        <th class="data-grid-th"><span data-bind="i18n: '#'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'Field Name'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'Enabled'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'Required'"></span></th>
+        <th class="data-grid-th"><span data-bind="i18n: 'Additional CSS'"></span></th>
+    </tr>
+    </thead>
+    <tbody data-bind="foreach: getAddressFields(), afterRender: makeSortable">
+    <tr style="text-align: center">
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <span aria-hidden="true" class="abs-draggable-handle"></span>
+            <input type="text"
+                   data-bind="value: sortOrder"
+                   class="sort-order"
+                   style="display: none"
+                   name="sort-order"
+            />
+        </td>
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <span data-bind="i18n: label"></span>
+        </td>
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <input data-bind="checked: enabled,checkedValue: name, disable: locked"
+                   type="checkbox"
+                   name="enabled"/>
+        </td>
+
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <input data-bind="checked: required, checkedValue: name, disable: locked"
+                   type="checkbox"
+                   name="required"/>
+        </td>
+        <td style="padding: 1rem 1rem;" class="a-left col-description">
+            <input placeholder="cssClass"
+                   type="text"
+                   name="additional-css"
+                   data-bind="value: additionalCss, disable: !enabled"/>
+        </td>
+    </tr>
+    </tbody>
+</table>
+<input data-bind="attr: { id: htmlId, name: name}, value: ko.toJSON(getAddressFields())"
+       class=" input-text admin__control-text"
+       type="text"
+       style="display: none">

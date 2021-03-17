@@ -1,0 +1,65 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+/** @var $block \Aheadworks\AdvancedReviews\Block\Widget\Review */
+$review = $block->getReview();
+$product = $review ? $block->getProduct($review->getProductId()) : null;
+$componentName = $block->getComponentName();
+$countChar = 60;
+?>
+
+<?php if ($review && $product): ?>
+    <div class="aw-ar-widget review-widget-container" data-role="aw-ar-review-container">
+        <div class="review-item">
+            <div class="review-item-preview">
+                <?= $block->getImage($product, 'product_thumbnail_image')->toHtml(); ?>
+                <div class="review__rating-name">
+                    <div class="product-name">
+                        <a class="product-url" href="<?= $block->escapeUrl($product->getUrlModel()->getUrl($product)) ?>">
+                            <span>
+                                <?= $block->escapeHtml($block->getCutString($block->escapeHtml($product->getName()), $countChar)); ?>
+                            </span>
+                        </a>
+                    </div>
+                    <div class="rating-container" data-bind="scope: '<?php /* @noEscape */ echo $componentName ?>'">
+                        <!-- ko template: getTemplate() --><!-- /ko -->
+                    </div>
+                </div>
+            </div>
+
+            <div class="nickname">
+                <span><?= /* @noEscape */ __('Review by %1', $review->getNickname()); ?></span>
+            </div>
+            <div class="summary">
+                <span><?= $block->escapeHtml($review->getSummary()); ?></span>
+            </div>
+            <div class="content">
+                <?= $block->escapeHtml($block->getCutString($block->escapeHtml($review->getContent()), $block->getContentHeight())); ?>
+            </div>
+            <div>
+                <a href="<?= $block->escapeUrl($block->getProductReviewUrlByObject($product)); ?>" class="read-more-link">
+                    <span><?=  /* @noEscape */ __('Read more'); ?></span>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/x-magento-init">
+    {
+        ".rating-container": {
+            "Magento_Ui/js/core/app": {
+                "components": {
+                    "<?php /* @noEscape */ echo $componentName ?>": {
+                        "config": <?php /* @noEscape */ echo $block->getComponentConfigData($review->getRating()) ?>
+                    }
+                }
+            }
+        }
+    }
+    </script>
+<?php endif; ?>

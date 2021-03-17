@@ -1,0 +1,15 @@
+<?xml version="1.0"?><!--
+/**
+ * Cart2Quote
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <link src="Cart2Quote_Quotation::quote/create/scripts.js"/>
+    </head>
+    <body>
+        <referenceBlock name="content">
+            <block class="Cart2Quote\Quotation\Block\Adminhtml\Order\Create\QuoteButton" template="order/create/quoteButton.phtml" name="quote_button" after="order_content"/>
+        </referenceBlock>
+    </body>
+</page>

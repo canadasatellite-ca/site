@@ -1,0 +1,103 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Item\Renderer\Column $block */
+$thumbnailHelper = $this->helper(\Cart2Quote\Quotation\Helper\ProductThumbnail::class);
+$productHelper = $this->helper(\Magento\Catalog\Helper\Product\Configuration::class);
+$product = $block->getProduct();
+$item = $block->getItem();
+?>
+
+<?php if ($item->getParentItem()) : ?>
+    <tr class="options-label">
+        <?php $attributes = json_decode(
+            $item->getOptionByCode('bundle_selection_attributes')->getValue(),
+            true
+        ); ?>
+        <td class="col label" colspan="8"><?php echo $attributes['option_label']; ?></td>
+    </tr>
+<?php endif; ?>
+<?php
+$class = 'item-parent';
+if ($block->getItem()->getParentItem()) {
+    $class = 'item-options-container';
+}
+?>
+<tr id="order-item-row-<?php echo $block->getItem()->getItemId() ?>"
+    class="<?php echo $class; ?>"
+    <?php if ($item->getParentItem()) : ?>
+        data-th="<?php echo $item->getName() ?>"
+    <?php endif; ?>>
+    <?php if (!$item->getParentItem()) : ?>
+        <?php $colspan = 3; ?>
+        <?php if ($block->isShowCustomerDashboardImages()) : ?>
+            <?php $colspan = 2; ?>
+            <td colspan="1">
+                <img class="product-thumbnail" align="left"
+                     src="<?php echo $thumbnailHelper->getProductThumbnail($product)?>" width="75"
+                     height="75" alt="<?php echo $product->getName(); ?>"
+                     title="<?php echo $product->getName(); ?>"/>
+            </td>
+        <?php endif; ?>
+        <td colspan="<?php echo $colspan; ?>" class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+            <strong class="product name product-item-name"><?php echo $item->getName() ?></strong>
+            <?php if ($item->getDescription()) : ?>
+                <p><strong><?php echo $block->escapeHtml(__('Comment:')); ?></strong><br/>
+                    <?php echo $block->escapeHtml($item->getDescription()) ?></p>
+            <?php endif; ?>
+            <?php $options = $productHelper->getOptions($item) ?>
+            <?php if (!empty($options)) : ?>
+                <dl class="item-options">
+                    <?php foreach ($options as $option) : ?>
+                        <dt><?php echo $block->escapeHtml($option['label']) ?></dt>
+                        <?php if (!$block->getPrintStatus()) : ?>
+                            <?php $formatedOptionValue = $block->getFormatedOptionValue($option) ?>
+                            <dd>
+                                <?php if (isset($formatedOptionValue['full_view'])) : ?>
+                                    <?php echo $formatedOptionValue['full_view'] ?>
+                                <?php else : ?>
+                                    <?php echo $formatedOptionValue['value'] ?>
+                                <?php endif; ?>
+                            </dd>
+                        <?php else : ?>
+                            <dd>
+                                <?php
+                                if ((isset($option['print_value']))) {
+                                    $optionValue = $option['print_value'];
+                                } else {
+                                    $optionValue = $option['value'];
+                                } ?>
+                                <?php echo nl2br($block->escapeHtml($optionValue)) ?>
+                            </dd>
+                        <?php endif; ?>
+                    <?php endforeach; ?>
+                </dl>
+            <?php endif; ?>
+        </td>
+    <?php else : ?>
+        <td colspan="3" class="col value" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+            <?php $childProduct = $block->productRepositoryInterface->getById(
+                $item->getProduct()->getId(),
+                false,
+                $block->getQuote()->getStoreId()
+            ); ?>
+            <?php echo sprintf(
+                '%s x %s',
+                $item->getQty(),
+                $block->escapeHtml($childProduct->getName())
+            ); ?>
+
+            <?php if ($block->isHidePrices()) : ?>
+                <span class="price">
+        <span class="price">
+        <?php echo $this->helper(\Magento\Framework\Pricing\Helper\Data::class)
+                        ->currency($item->getCurrentTierItem()->getCustomPrice(), true, false) ?>
+        </span>
+        </span>
+            <?php endif; ?>
+        </td>
+    <?php endif; ?>

@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <alsobought_section>
+            <slider_settings>
+                <slider_loop>1</slider_loop>
+                <slider_nav>1</slider_nav>
+                <slider_dots>1</slider_dots>
+                <slider_items>4</slider_items>
+            </slider_settings>
+            <alsobought_product>
+                <alsobought_product_display>1</alsobought_product_display>
+                <alsobought_product_title>Customer Who Also Bought this products</alsobought_product_title>
+                <alsobought_product_position>content:after:-</alsobought_product_position>
+                <alsobought_product_layout>slider</alsobought_product_layout>
+                <alsobought_product_catalog>0</alsobought_product_catalog>
+                <alsobought_product_product_count>10</alsobought_product_product_count>
+                <alsobought_product_cart_button>1</alsobought_product_cart_button>
+            </alsobought_product>
+            <alsobought_cart>
+                <alsobought_cart_display>1</alsobought_cart_display>
+                <alsobought_cart_title>Customer Who Also Bought this products</alsobought_cart_title>
+                <alsobought_cart_position>content:after:-</alsobought_cart_position>
+                <alsobought_cart_layout>slider</alsobought_cart_layout>
+                <alsobought_cart_catalog>0</alsobought_cart_catalog>
+                <alsobought_cart_product_count>10</alsobought_cart_product_count>
+                <alsobought_cart_cart_button>1</alsobought_cart_cart_button>
+            </alsobought_cart>
+        </alsobought_section>
+    </default>
+</config>

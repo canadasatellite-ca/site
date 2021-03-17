@@ -1,0 +1,31 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Details\Account\Details $block */
+?>
+
+<div class="admin__page-section-item quote-account-information">
+    <?php /* Account Information */ ?>
+    <div class="admin__page-section-item-title">
+        <span class="title"><?php echo $block->escapeHtml(__('Account Information')) ?></span>
+        <button type="button"
+                onclick='quote.changeCustomer("<?php
+                echo $block->escapeHtml(
+                    $block->getUrl('quotation/quote_update/customer', $block->getUrlParams())
+                );
+                ?>");'
+                class="action-change-customer">
+            <span><?php echo $block->escapeHtml(__('Change Customer')) ?></span>
+        </button>
+        <div class="actions"><?php echo $block->escapeHtml($block->getAccountEditLink()) ?></div>
+    </div>
+    <div class="admin__page-section-item-content">
+        <table class="admin__table-secondary quote-account-information-table">
+            <?php echo $block->getChildHtml(); ?>
+        </table>
+    </div>
+</div>

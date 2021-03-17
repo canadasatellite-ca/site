@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">aw_advanced_reviews_customer_recent_review_listing.aw_advanced_reviews_customer_recent_review_listing_data_source</item>
+            <item name="deps" xsi:type="string">aw_advanced_reviews_customer_recent_review_listing.aw_advanced_reviews_customer_recent_review_listing_data_source</item>
+        </item>
+        <item name="spinner" xsi:type="string">aw_advanced_reviews_customer_recent_review_columns</item>
+    </argument>
+    <dataSource name="aw_advanced_reviews_customer_recent_review_listing_data_source">
+        <argument name="dataProvider" xsi:type="configurableObject">
+            <argument name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Frontend\Customer\RecentReview\ListingDataProvider</argument>
+            <argument name="name" xsi:type="string">aw_advanced_reviews_customer_recent_review_listing_data_source</argument>
+            <argument name="primaryFieldName" xsi:type="string">id</argument>
+            <argument name="requestFieldName" xsi:type="string">id</argument>
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/provider</item>
+                    <item name="update_url" xsi:type="url" path="mui/index/render"/>
+                    <item name="storageConfig" xsi:type="array">
+                        <item name="indexField" xsi:type="string">id</item>
+                        <item name="cacheRequests" xsi:type="boolean">true</item>
+                    </item>
+                </item>
+            </argument>
+        </argument>
+    </dataSource>
+    <columns name="aw_advanced_reviews_customer_recent_review_columns" template="Aheadworks_AdvancedReviews/customer/review/recent/grid/listing">
+        <argument name="data" xsi:type="array">
+            <item name="config" xsi:type="array">
+                <item name="additionalClasses" xsi:type="string">aw-ar__review-list customer recent</item>
+                <item name="listTemplate" xsi:type="string">Aheadworks_AdvancedReviews/customer/review/grid/listing</item>
+                <item name="viewAllReviewUrl" xsi:type="url" path="aw_advanced_reviews/customer"/>
+            </item>
+        </argument>
+        <column name="created_at">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                    <item name="label" xsi:type="string" translate="true">Created</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="date" xsi:type="boolean">true</item>
+                        <item name="created_at" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sorting" xsi:type="string">desc</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+            </argument>
+        </column>
+        <column name="product_name">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/grid/columns/url</item>
+                    <item name="label" xsi:type="string" translate="true">Product Name</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+            </argument>
+        </column>
+        <column name="status">
+            <argument name="data" xsi:type="array">
+                <item name="options" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\Status</item>
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Status</item>
+                    <item name="dataType" xsi:type="string">select</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/select</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="status" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+            </argument>
+        </column>
+        <column name="rating">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Rating</item>
+                    <item name="component" xsi:type="string">Aheadworks_AdvancedReviews/js/ui/grid/columns/rating</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+            </argument>
+        </column>
+        <column name="summary">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">Summary</item>
+                    <item name="component" xsi:type="string">Magento_Ui/js/grid/columns/column</item>
+                    <item name="draggable" xsi:type="boolean">false</item>
+                    <item name="sortable" xsi:type="boolean">false</item>
+                    <item name="bodyTmpl" xsi:type="string">Aheadworks_AdvancedReviews/ui/grid/cells/text</item>
+                    <item name="fieldClass" xsi:type="array">
+                        <item name="summary" xsi:type="boolean">true</item>
+                    </item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </column>
+    </columns>
+</listing>

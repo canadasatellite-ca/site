@@ -1,0 +1,98 @@
+<?php 
+/**
+ * Copyright © 2015 Iksanika. All rights reserved.
+ * See IKS-LICENSE.txt for license details.
+ */
+
+    $product = $block->getProduct();
+
+    /** @var \Magento\Catalog\Helper\Output $outputHelper */
+    $outputHelper = $this->helper('Magento\Catalog\Helper\Output');
+    $productNameHtml = $outputHelper->productAttribute($product, $product->getName(), 'name');
+
+    $required = ($block->hasRequiredOptions()) ? 'data-hasrequired="' . __('* Required Fields') . '"' : '';
+
+    $optHtml                = $block->getChildHtml('product_options');
+    $optHtmlConfigurable    = $block->getChildHtml('product_options_configurable');
+    $optHtmlGrouped         = $block->getChildHtml('product_options_grouped');
+    $optHtmlBundle          = $block->getChildHtml('product_options_bundle');
+    $optHtmlDownloadable    = $block->getChildHtml('product_options_downloadable');
+
+    $isImage = trim($optHtml) || $optHtmlConfigurable || $optHtmlGrouped || $optHtmlBundle || $optHtmlDownloadable;
+
+    $optHtmlSummarized = $optHtml . $optHtmlConfigurable . $optHtmlGrouped . $optHtmlBundle . $optHtmlDownloadable;
+?>
+<script type="text/x-magento-init">
+    {
+        "#ajaxcart-product_addtocart_form": {
+            "Magento_Catalog/product/view/validation": {
+                "radioCheckboxClosest": ".nested"
+            }
+        }
+    }
+</script>
+<div class="ajaxcart-popup-body ajaxcart-popup-options">
+
+
+
+
+    <?php /* @TODO: REMOVE THIS BLOCK AND PUT EXTESNION OWN MESSAGES */ ?>
+    <?php echo $block->getChildHtml('messages') ?>
+
+
+
+
+    <div class="ajaxcart-popup-row">
+
+        <div class="row-column ajaxcart-popup-product-gallery <?php  if($isImage): ?> small<?php endif; ?>">
+            <?php echo $block->getChildHtml('product_image') ?>
+        </div>
+
+        <div class="row-column">
+
+            <div class="ajaxcart-popup-product-info">
+
+                <h2 class="ajaxcart-popup-product-title"><?php  echo $productNameHtml ?></h2>
+
+                <?php echo $block->getChildHtml('product_reviews'); ?>
+                
+                <div class="ajaxcart-popup-product-price">
+                    <?php echo $block->getChildHtml('product_price') ?>
+                </div>
+
+                <?php if($block->getConfigShowProductShortDescription()): ?>
+                    <div class="ajaxcart-popup-product-short-description">
+                        <?php echo $outputHelper->productAttribute($product, $product->getShortDescription(), 'short_description') ?>
+                    </div>
+                <?php endif; ?>
+            </div>
+
+            <div class="ajaxcart-popup-form">
+                <form id="ajaxcart-product_addtocart_form" action="<?php echo $block->getAddToCartUrl($product) ?>"
+                    <?php  if ($product->getOptions()): ?> enctype="multipart/form-data"<?php  endif; ?>
+                      <?php /* data-mage-init='{"Magento_Catalog/product/view/validation": {"radioCheckboxClosest": ".nested"}}' */?>>
+                    <input type="hidden" name="product" value="<?php echo $product->getId() ?>" />
+                    <input type="hidden" name="selected_configurable_option" value="" />
+                    <input type="hidden" name="related_product" id="related-products-field" value="" />
+
+                    <?php  echo $block->getBlockHtml('formkey') ?>
+
+                    <div class="ajaxcart-popup-product-options-wrapper product-options-wrapper" id="product-options-wrapper" <?php echo $required; ?>>
+                        <div class="fieldset">
+                            <?php echo $optHtmlSummarized; ?>
+                        </div>
+                    </div>
+                    <div class="ajaxcart-popup-product-tocart-wrapper">
+                        <div class="ajaxcart-popup-product-qty box-tocart">
+                            <?php echo $block->getChildHtml('product_qty') ?>
+                        </div>
+                    </div>
+                    <div data-role="qty-error-placement"></div>
+                    <?php echo $block->getChildHtml('product_form_js') ?>
+
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div><?php echo $this->getLayout()->getBlock('optiondependent')->setTemplate('Iksanika_Ajaxcart::popup/dependent/js.phtml')->toHtml();?></div>

@@ -1,0 +1,65 @@
+<!--
+  ~ Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+  ~ See COPYING.txt for license details.
+  -->
+<div class="product product-wrapper">
+    <div class="product-image quick-quote-product">
+        <div class="image-wrapper">
+            <!-- ko if: product_has_url -->
+            <a data-bind="attr: {href: product_url, title: product_name}" tabindex="-1" class="product-item-photo">
+                <!-- ko foreach: $parent.getRegion('itemImage') -->
+                <!-- ko template: {name: getTemplate(), data: item.quickquote_product_image} --><!-- /ko -->
+                <!-- /ko -->
+            </a>
+            <!-- /ko -->
+            <!-- ko ifnot: product_has_url -->
+            <span class="product-item-photo">
+            <!-- ko foreach: $parent.getRegion('itemImage') -->
+                <!-- ko template: {name: getTemplate(), data: item.quickquote_product_image} --><!-- /ko -->
+                <!-- /ko -->
+            </span>
+            <!-- /ko -->
+        </div>
+    </div>
+    <div class="product-details">
+        <div>
+            <p class="product-name">
+                <!-- ko if: product_has_url -->
+                <a data-bind="attr: {href: product_url}, html: product_name"></a>
+                <!-- /ko -->
+                <!-- ko ifnot: product_has_url -->
+                <!-- ko text: product_name --><!-- /ko -->
+                <!-- /ko -->
+            </p>
+
+            <!-- ko if: options.length -->
+            <div class="product options" data-bind="click: function(item, event){ jQuery(event.currentTarget).toggleClass('active'); }">
+                <span data-role="title" class="toggle"><!-- ko i18n: 'See Details' --><!-- /ko --></span>
+
+                <div data-role="content" class="content">
+                    <dl class="product options list">
+                        <!-- ko foreach: { data: options, as: 'option' } -->
+                        <dt class="label"><!-- ko text: option.label --><!-- /ko --></dt>
+                        <dd class="values">
+                            <!-- ko if: Array.isArray(option.value) -->
+                            <span data-bind="html: option.value.join('<br>')"></span>
+                            <!-- /ko -->
+                            <!-- ko ifnot: Array.isArray(option.value) -->
+                            <span data-bind="html: option.value"></span>
+                            <!-- /ko -->
+                        </dd>
+                        <!-- /ko -->
+                    </dl>
+                </div>
+            </div>
+            <!-- /ko -->
+
+            <div class="product-item-pricing">
+                <!-- ko foreach: $parent.getRegion('priceSidebar') -->
+                <!-- ko template: {name: getTemplate(), data: item.product_price, as: 'price'} --><!-- /ko -->
+                <!-- /ko -->
+            </div>
+            <p class="product-qty"><!-- ko i18n: 'Qty:' --><!-- /ko --><b data-bind="html: qty">1</b></p>
+        </div>
+    </div>
+</div>

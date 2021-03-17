@@ -1,0 +1,20 @@
+<!--addition -->
+<?php
+$_dataHelper = $this->helper('Interactivated\Quotecheckout\Helper\Data');
+?>
+<?php if ($_dataHelper->enableGiftMessage()) : ?>
+<div class="mw-osc-giftmessagecontainer mw-osc-giftmessage">
+	<div class="onestepcheckout-giftmessages">
+		<div id="onepage-checkout-shipping-method-additional-load">
+			<?php echo $block->getChildHtml('additional') ?>
+		</div>
+	</div>
+</div>
+<?php endif; ?>
+
+<?php if ($_dataHelper->showComment()) : ?>	
+<div class="onestepcheckout-comments">
+		<label for="id_comments"><?php echo __('Comments'); ?></label><br/>
+		<textarea id="id_comments" name="onestepcheckout_comments" cols="40" rows="4"><?php if($_dataHelper->getCheckout()->getLicenseComment()) echo $_dataHelper->getCheckout()->getLicenseComment(); ?></textarea>
+</div>
+<?php endif; ?>

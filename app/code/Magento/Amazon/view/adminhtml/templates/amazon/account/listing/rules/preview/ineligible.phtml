@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright © Magento. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+
+?>
+<div class="general-info">
+    <div class="help-and-general-form">
+        <?= $block->escapeHtml(__('Products that will no longer be eligible for sales based on new or changed listing rules.')) ?>
+    </div>
+    <div class="help-button">
+        <button type="button"
+                class="action-default"
+                onclick="window.open('<?= $block->getUserGuideUrl() . $block->getListingRulesIneligibleUrl() ?>', '_blank')"
+                id="helpButton">
+            <span><?= $block->escapeHtml(__('View User Guide')) ?></span>
+        </button>
+    </div>
+</div>

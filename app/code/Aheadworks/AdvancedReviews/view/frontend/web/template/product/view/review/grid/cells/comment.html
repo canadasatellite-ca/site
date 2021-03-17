@@ -1,0 +1,20 @@
+<div class="data-grid-cell-content comments-block">
+    <div class="comments">
+        <div class="comment" repeat="foreach: $col.getComments($row()), item: '$comment'">
+            <div class="comment-wrapper" data-bind="css: $comment().type == 'admin' ? 'admin-comment' : ''">
+                <div class="nickname" text="$comment().nickname"/>
+                <div class="comment-date" text="$comment().created_at"/>
+                <div class="comment-content" text="$comment().content"/>
+                <div if="$col.isAllowForComment($comment().id)" class="report-abuse">
+                    <a click="$col.reportComment.bind($col, $comment().id, event)"></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="form-container" if="$col.isCommentsAllowed()">
+        <a class="add-comment" click="$col.openCommentForm.bind($data, $row()._rowIndex)">
+            <span translate="'Add Comment'"/>
+        </a>
+        <scope args="$col.getCommentForm($row())" render=""/>
+    </div>
+</div>

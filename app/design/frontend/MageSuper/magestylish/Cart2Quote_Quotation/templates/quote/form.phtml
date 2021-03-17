@@ -1,0 +1,55 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+/**  @var $block \Cart2Quote\Quotation\Block\Quote */
+?>
+<?php $form = $block->getForm(); ?>
+<?php $mergedCells = ($this->helper('Magento\Tax\Helper\Data')->displayCartBothPrices() ? 2 : 1); ?>
+
+<?php echo $this->getChildHtml('quotation.quote.validationmessages') ?>
+
+<form action="#" method="post" id="form-validate"
+      data-mage-init='{"validation":{}}' class="form form-cart">
+    <?php echo $block->getBlockHtml('formkey'); ?>
+    <?php echo $block->getCustomerNote() ?>
+
+    <div class="cart table-wrapper<?php echo $mergedCells == 2 ? ' detailed' : ''; ?>">
+        <table id="shopping-cart-table" class="cart items data table">
+            <caption role="heading" aria-level="2" class="table-caption"><?php echo __('Quote Items') ?></caption>
+            <thead>
+            <tr>
+                <th class="col item" scope="col"><span><?php echo __('Item') ?></span></th>
+                <!--<th class="col price" scope="col"><span><?php /*echo __('Price') */?></span></th>-->
+                <th class="col qty" scope="col"><span><?php echo __('Qty') ?></span></th>
+            </tr>
+            </thead>
+
+            <?php foreach ($block->getItems() as $item) : ?>
+                <?php echo $block->getItemHtml($item) ?>
+            <?php endforeach ?>
+
+            <div class="cart main actions">
+                <td colspan="4">
+                    <div style="text-align: right; margin-right: 5px;">
+                        <button type="submit" name="update_quote_action"
+                                value="empty_quote"
+                                title="<?php echo $block->escapeHtml(__('Clear Quote')); ?>"
+                                class="action clear"
+                                id="empty_quote_button"
+                                onclick="event.preventDefault();
+                                    window.location='<?php echo $block->getUrl('quotation/quote/clearQuote') ?>'"
+                                style="margin: 10px 5px 0 0;">
+                            <span><?php echo __('Clear Quote'); ?></span>
+                        </button>
+                    </div>
+                </td>
+            </div>
+        </table>
+    </div>
+</form>
+<?php echo $block->getChildHtml('quotation.quote.order.actions') ?>
+<?php echo $block->getChildHtml('quotation.quote.table.after'); ?>
+<?php echo $form;
+

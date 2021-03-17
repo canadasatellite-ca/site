@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+  ~ /**
+  ~  Copyright © 2016 Magestore. All rights reserved.
+  ~  See COPYING.txt for license details.
+  ~  */
+  -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="checkout_submit_all_after">
+        <observer name="MageSuperCasatSalesOrderPlaceAfterRest"
+                  instance="MageSuper\Casat\Observer\OrderPlaceAfter"/>
+    </event>
+    <event name="sales_quote_address_collect_totals_before">
+        <observer name="MageSuperFixFreeShippingIssueWebapi"
+                  instance="MageSuper\Casat\Observer\FixFreeShippingIssue"/>
+    </event>
+    <event name="sales_order_place_after">
+        <observer name="chage_order_increment" instance="MageSuper\Casat\Observer\ChangeOrderIncrement"/>
+    </event>
+</config>

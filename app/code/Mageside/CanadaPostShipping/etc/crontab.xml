@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Mageside. All rights reserved.
+ * See MS-LICENSE.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Cron:etc/crontab.xsd">
+    <group id="default">
+        <job name="mageside_get_shipment_cost"
+             instance="Mageside\CanadaPostShipping\Cron\ProcessShipment"
+             method="getCost">
+            <schedule>0 */3 * * *</schedule>
+        </job>
+        <job name="mageside_clean_request_logs" instance="Mageside\CanadaPostShipping\Cron\Logs" method="clearLogs">
+            <schedule>10 0 * * *</schedule>
+        </job>
+    </group>
+</config>

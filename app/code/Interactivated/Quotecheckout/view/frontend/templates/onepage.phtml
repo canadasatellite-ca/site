@@ -1,0 +1,12 @@
+<?php
+$_dataHelper = $this->helper('Interactivated\Quotecheckout\Helper\Data');
+?>
+
+<?php if ($_dataHelper->getStoreConfig('onestepcheckout/general/enabled')) : ?>
+<script>
+    window.checkoutConfig = <?php /* @escapeNotVerified */ echo \Zend_Json::encode($block->getCheckoutConfig()); ?>;
+    // Create aliases for customer.js model from customer module
+    window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+    window.customerData = window.checkoutConfig.customerData;
+</script>
+<?php endif; ?>

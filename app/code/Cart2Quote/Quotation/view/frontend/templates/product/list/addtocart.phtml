@@ -1,0 +1,58 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+use Magento\Framework\App\Action\Action;
+
+/** @var $block \Magento\Catalog\Block\Product\View */
+?>
+<?php $parentBlock = $block->getParentBlock(); ?>
+<?php $_product = $block->getListProduct(); ?>
+<?php $cartButtonTitle = __('Add to Cart'); ?>
+<?php $quoteButtonTitle = __('Add to Quote'); ?>
+<?php $quoteCondition = 'cart2quote_quotation/global/show_btn_list'; ?>
+
+<?php if ($_product->isSaleable() || $block->showQuoteButton($quoteCondition)) : ?>
+
+    <!-- Cart button start -->
+    <?php if ($_product->isSaleable()) : ?>
+        <?php $postParamsCart = $parentBlock->getAddToCartPostParams($_product); ?>
+        <form data-role="tocart-form" action="<?php echo $postParamsCart['action']; ?>" method="post">
+            <input type="hidden" name="product" value="<?php echo $postParamsCart['data']['product']; ?>">
+            <input type="hidden" name="<?php echo Action::PARAM_NAME_URL_ENCODED; ?>"
+                   value="<?php echo $postParamsCart['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+            <?php echo $parentBlock->getBlockHtml('formkey')?>
+            <button type="submit"
+                    title="<?php echo $block->escapeHtml($cartButtonTitle); ?>"
+                    class="action tocart primary">
+                <span><?php echo $cartButtonTitle ?></span>
+            </button>
+        </form>
+    <?php endif; ?>
+    <!-- Cart button stop -->
+    <br/>
+    <!-- Quote button start -->
+    <?php if ($block->showQuoteButton($quoteCondition)) : ?>
+        <?php $postParamsQuote = $block->getAddToQuotePostParams($_product); ?>
+        <form data-role="toquote-form" action="<?php echo $postParamsQuote['action']; ?>" method="post">
+            <input type="hidden" name="product" value="<?php echo $postParamsQuote['data']['product']; ?>">
+            <input type="hidden" name="<?php echo Action::PARAM_NAME_URL_ENCODED; ?>"
+                   value="<?php echo $postParamsQuote['data'][Action::PARAM_NAME_URL_ENCODED]; ?>">
+            <button type="submit"
+                    title="<?php echo $block->escapeHtml($quoteButtonTitle); ?>"
+                    class="action tocart quote-btn-list">
+                <span><?php echo $quoteButtonTitle ?></span>
+            </button>
+
+        </form>
+    <?php endif; ?>
+    <!-- Quote button stop -->
+
+<?php else : ?>
+    <?php if ($_product->getIsSalable()) : ?>
+        <div class="stock available"><span><?php echo __('In stock') ?></span></div>
+    <?php else : ?>
+        <div class="stock unavailable"><span><?php echo __('Out of stock') ?></span></div>
+    <?php endif; ?>
+<?php endif; ?>

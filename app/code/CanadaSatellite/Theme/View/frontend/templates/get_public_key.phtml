@@ -1,0 +1,17 @@
+<script type="text/javascript">
+    requirejs(['jquery'], function ($) {
+
+        recaptchaMainScriptAdded = false;
+
+        loadMainRecaptchaScript = function () {
+            if (!recaptchaMainScriptAdded) {
+                grecaptcha = undefined;
+                delete(grecaptcha);
+                var recaptchaScript = document.createElement('script');
+                recaptchaScript.setAttribute('src', 'https://www.google.com/recaptcha/api.js?render=<?php echo $block->getPublicKey() ?>');
+                jQuery('#maincontent').after(recaptchaScript);
+                recaptchaMainScriptAdded = true;
+            }
+        };
+    });
+</script>

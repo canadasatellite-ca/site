@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="1column" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <head>
+        <title>Sitemap Category</title>
+        <css src="Vsourz_HtmlSitemap/css/htmlsitemap.css" media="all"/>
+    </head>
+    <body>
+        <referenceContainer name="main">
+            <container name="htmlsitemap-container" label="HtmlSitemap Container" htmlTag="div" htmlClass="htmlsitemap-container outer">
+                <container name="top-sitemap-container" htmlTag="div" htmlClass="top-sitemap-container">
+                    <container name="category-container" htmlTag="div" htmlClass="categories-container sitemap-section">
+                        <block class="Vsourz\HtmlSitemap\Block\CategoryList" name="categoriesList" template="categorieslist.phtml" ifconfig="htmlsitemap/general/categories_enabled" />
+                    </container>
+                </container>
+            </container>
+        </referenceContainer>
+    </body>
+</page>

@@ -1,0 +1,22 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Quote\Item\Renderer\Column $block*/
+
+?>
+<?php if ($block->canAccept()) : ?>
+<?php if (!$block->getItem()->getParentItem()) : ?>
+        <?php if ($block->getItem()->getQty() > 0) : ?>
+            <td class="col tier"
+                data-th="<?php echo $block->escapeHtml(__('Select tier')); ?>">
+                <?php echo $block->getSelectedRadiobuttonHtml() ?>
+                <?php echo $block->getTierRadiobuttonsHtml() ?>
+            </td>
+        <?php endif; ?>
+<?php endif; ?>
+</tr>
+<?php endif; ?>

@@ -1,0 +1,21 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Quote\MoveToCart $block */ ?>
+<?php if ($block->getIsQuotationEnabled() && !$block->getShowOrderReferences() && $block->isMoveToCartEnabled()) : ?>
+    <div class="actions primary">
+        <button
+            data-mage-init='{ "quoteToCartActions" : { "buttonSelector" :  "#miniquote-movetocart"  } }'
+            id="miniquote-movetocart"
+            type="submit"
+            name="move_to_cart_action"
+            value="move_to_cart"
+            title="<?php echo $block->escapeHtml(__('Move to Cart')); ?>"
+            class="action primary checkout movetocart miniquote-movetocart-button">
+            <span><?php echo $block->escapeHtml(__('Move Items to Shopping Cart')); ?></span>
+        </button>
+    </div>
+<?php endif; ?>

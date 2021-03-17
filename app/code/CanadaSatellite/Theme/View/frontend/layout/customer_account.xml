@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceBlock name="customer_account_navigation">
+            <block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Sims" name="casat-sims" after="-">
+                <arguments>
+                    <argument name="path" xsi:type="string">casat/customer/viewsim</argument>
+                    <argument name="label" xsi:type="string">My SIMs</argument>
+                </arguments>
+            </block>
+            <block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Sims" name="casat-cards" after="-">
+                <arguments>
+                    <argument name="path" xsi:type="string">casat/customer/card_listing</argument>
+                    <argument name="label" xsi:type="string">My Credit Cards</argument>
+                </arguments>
+            </block>
+            <block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Devices" name="casat-devices" after="-">
+                <arguments>
+                    <argument name="path" xsi:type="string">casat/customer/viewdevices</argument>
+                    <argument name="label" xsi:type="string" translate="true">My Devices</argument>
+                </arguments>
+            </block>
+
+            <referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true" />
+            <block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Vault" name="customer-account-navigation-my-credit-cards-link-checked">
+                <arguments>
+                    <argument name="path" xsi:type="string">vault/cards/listaction</argument>
+                    <argument name="label" xsi:type="string" translate="true">Stored Payment Methods</argument>
+                    <argument name="sortOrder" xsi:type="number">35</argument>
+                </arguments>
+            </block>
+
+            <referenceBlock name="customer-account-navigation-orders-link" remove="true" />
+            <block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Orders" name="customer-account-navigation-orders-link-checked">
+                <arguments>
+                    <argument name="path" xsi:type="string">sales/order/history</argument>
+                    <argument name="label" xsi:type="string" translate="true">My Orders</argument>
+                    <argument name="sortOrder" xsi:type="number">230</argument>
+                </arguments>
+            </block>
+
+            <referenceBlock name="customer-account-navigation-quotes-link" remove="true" />
+            <block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Quote" name="customer-account-navigation-quotes-link-checked">
+                <arguments>
+                    <argument name="path" xsi:type="string">quotation/quote/history</argument>
+                    <argument name="label" xsi:type="string">My Quotes</argument>
+                </arguments>
+            </block>
+
+            <!--<referenceBlock name="customer-account-navigation-subscription-profile-link" remove="true" />-->
+            <!--<block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\SubscriptionProfiles" name="customer-account-navigation-subscription-profile-link-checked" cacheable="false">-->
+                <!--<arguments>-->
+                    <!--<argument name="path" xsi:type="string">subscribenow/account/profile</argument>-->
+                    <!--<argument name="label" xsi:type="string">My Subscription Profiles</argument>-->
+                <!--</arguments>-->
+            <!--</block>-->
+
+            <referenceBlock name="customer-account-navigation-product-reviews-link" remove="true" />
+            <!--<block class="CanadaSatellite\Theme\Block\Customer\Account\Navigation\Reviews" name="customer-account-navigation-product-reviews-link-checked">-->
+                <!--<arguments>-->
+                    <!--<argument name="path" xsi:type="string">review/customer</argument>-->
+                    <!--<argument name="label" xsi:type="string" translate="true">My Product Reviews</argument>-->
+                    <!--<argument name="sortOrder" xsi:type="number">50</argument>-->
+                <!--</arguments>-->
+            <!--</block>-->
+
+        </referenceBlock>
+    </body>
+</page>

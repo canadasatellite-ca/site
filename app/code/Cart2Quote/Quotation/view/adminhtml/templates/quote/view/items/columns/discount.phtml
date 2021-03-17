@@ -1,0 +1,32 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Columns\Discount $block */
+?>
+
+<?php if (!($block->getItem()->getProductType() == \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE)) : ?>
+    <?php $block->setPriceDataObject($block->getTierItem()) ?>
+    <?php echo $block->displayDiscountPriceAttribute('discount_amount') ?>
+    <?php if ($block->getIsSelectedTier()) : ?>
+        <div class="discount-price-block">
+            <input id="item_use_discount_<?php echo $block->escapeHtml($block->getItemId()) ?>"
+                   class="admin__control-checkbox"
+                   name="item[<?php echo $block->escapeHtml($block->getItemId()) ?>][use_discount]"
+                   <?php if (!$block->getItem()->getNoDiscount()) : ?>checked="checked"<?php endif; ?>
+                   value="1"
+                   type="checkbox"
+                   title="<?php echo $block->escapeHtml($block->getAvailableDiscount()); ?>"/>
+            <label for="item_use_discount_<?php echo $block->escapeHtml($block->getItemId()) ?>"
+                   class="normal admin__field-label"
+                   title="<?php echo $block->escapeHtml($block->getAvailableDiscount()); ?>">
+                <span><?php echo $block->escapeHtml(__('Apply')) ?></span>
+            </label>
+        </div>
+    <?php endif; ?>
+<?php else : ?>
+    <?php echo $block->getChildBlock('column_discount-bundle')->setItem($block->getItem())->toHtml() ?>
+<?php endif; ?>

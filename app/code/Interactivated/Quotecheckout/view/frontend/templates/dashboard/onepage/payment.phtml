@@ -1,0 +1,13 @@
+<div id="co-payment-form">
+    <?php echo $block->getChildHtml('methods') ?>
+</div>
+
+<div class="tool-tip" id="payment-tool-tip" style="display:none;">
+    <div class="btn-close">
+        <a href="#" id="payment-tool-tip-close" title="<?php echo __('Close') ?>"><?php echo __('Close') ?></a>
+    </div>
+
+    <div class="tool-tip-content">
+        <img src="<?php echo $block->getViewFileUrl('Magento_Checkout::cvv.png') ?>" alt="<?php echo __('Card Verification Number Visual Reference') ?>" title="<?php echo __('Card Verification Number Visual Reference') ?>" />
+    </div>
+</div>

@@ -1,0 +1,97 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+/** @var $block \Cart2Quote\Quotation\Block\Quote\Item\Renderer\DefaultRenderer */
+
+$item = $block->getItem();
+$product = $item->getProduct();
+
+/** @var Cart2Quote\Quotation\Block\Quote\Item\Renderer\DefaultRenderer $defaultRenderer */
+$defaultRenderer = $block->getParentBlock()->getChildBlock('quotation.defaultrenderer');
+$defaultRenderer->setItem($item);
+$isVisibleProduct = $product->isVisibleInSiteVisibility();
+/** @var \Magento\Msrp\Helper\Data $helper */
+$helper = $this->helper('Magento\Msrp\Helper\Data');
+$canApplyMsrp = $helper->isShowBeforeOrderConfirm($product) && $helper->isMinimalPriceLessMsrp($product);
+
+?>
+<tr id="order-item-row-<?php echo $item->getId() ?>">
+    <td class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+        <a href="<?php echo $block->escapeHtml($product->getProductUrl()) ?>">
+            <strong class="product name product-item-name"><?php echo $block->escapeHtml($item->getName()) ?></strong>
+        </a>
+        <?php if ($options = $block->getOptionList()) : ?>
+            <dl class="item-options">
+                <?php foreach ($options as $option) : ?>
+                    <dt><?php echo $block->escapeHtml($option['label']) ?></dt>
+                    <?php if (!$block->getPrintStatus()) : ?>
+                        <?php $formatedOptionValue = $block->getFormatedOptionValue($option) ?>
+                        <dd>
+                            <?php if (isset($formatedOptionValue['full_view'])) : ?>
+                                <?php echo $formatedOptionValue['full_view'] ?>
+                            <?php else : ?>
+                                <?php echo $formatedOptionValue['value'] ?>
+                            <?php endif; ?>
+                        </dd>
+                    <?php else : ?>
+                        <dd>
+                            <?php
+                            if ((isset($option['print_value']))) {
+                                $optionValue = $option['print_value'];
+                            } else {
+                                $optionValue = $option['value'];
+                            } ?>
+                            <?php echo nl2br($block->escapeHtml($optionValue)) ?>
+                        </dd>
+                    <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+        <?php endif; ?>
+        <?php $addtInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addtInfoBlock) : ?>
+            <?php echo $addtInfoBlock->setItem($item)->toHtml(); ?>
+        <?php endif; ?>
+        <?php echo $block->escapeHtml($item->getDescription()) ?>
+    </td>
+    <td class="col sku"
+        data-th="<?php echo $block->escapeHtml(__('SKU')); ?>"
+    ><?php echo $defaultRenderer->prepareSku($defaultRenderer->getSku()) ?></td>
+    <td class="col price" data-th="<?php echo $block->escapeHtml(__('Price')); ?>">
+        <?php if(!$item->getProduct()->getResource()->getAttributeRawValue($item->getProduct()->getEntityId(),'quote_hide_price',$item->getStoreId())):?>
+            <?php echo $defaultRenderer->getItemPriceHtml(); ?>
+        <?php else: ?>
+            --
+        <?php endif;?>
+    </td>
+    <td class="col qty" data-th="<?php echo $block->escapeHtml(__('Qty')); ?>">
+        <ul class="items-qty">
+            <?php if ($defaultRenderer->getItem()->getQty() > 0) : ?>
+                <li class="item">
+                    <span class="title"><?php echo __('Requested'); ?></span>
+                    <span class="content"><?php echo $block->getItem()->getQty() * 1 ?></span>
+                </li>
+            <?php endif; ?>
+        </ul>
+    </td>
+    <td class="col subtotal" data-th="<?php echo $block->escapeHtml(__('Subtotal')); ?>">
+        <?php if(!$item->getProduct()->getResource()->getAttributeRawValue($item->getProduct()->getEntityId(),'quote_hide_price',$item->getStoreId())):?>
+            <?php echo $defaultRenderer->getItemRowTotalHtml(); ?>
+        <?php else: ?>
+            --
+        <?php endif;?>
+    </td>
+
+    <?php if ($defaultRenderer->hasOptionalProducts()) : ?>
+        <?php $tierItems = $item->getTierItems(); ?>
+        <td class="col del" data-th="<?php echo $block->escapeHtml(__('Delete')); ?>">
+            <?php foreach ($tierItems as $tierItem) : ?>
+                <?php if ($defaultRenderer->canAccept() && $tierItem->getMakeOptional()) : ?>
+                    <a class="action action-delete"
+                       href="<?php echo $defaultRenderer->getDeleteUrl($item->getId()); ?>"></a>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        </td>
+    <?php endif; ?>
+</tr>

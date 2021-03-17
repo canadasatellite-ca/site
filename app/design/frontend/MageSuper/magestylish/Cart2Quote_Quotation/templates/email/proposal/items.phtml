@@ -1,0 +1,70 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+/** @var $block Cart2Quote\Quotation\Block\Quote\Email\Items */
+?>
+<?php
+$_quote = $block->getQuote();
+?>
+<?php if ($_quote) : ?>
+    <?php $_items = $_quote->getAllItems(); ?>
+    <table class="email-items">
+        <thead>
+        <tr>
+            <th class="item-info">
+                <?php echo __('Items'); ?>
+            </th>
+            <?php if (!$block->isProductRemarkDisabled()) : ?>
+                <th class="item-comment">
+                    <?php echo __('Comment'); ?>
+                </th>
+            <?php endif; ?>
+            <th class="item-qty">
+                <?php echo __('Qty'); ?>
+            </th>
+            <th class="item-price">
+                &nbsp;<?php //echo __('Quoted Price'); ?>
+            </th>
+            <th class="item-price">
+                <?php echo __('Row Total'); ?>
+            </th>
+        </tr>
+        </thead>
+        <?php foreach ($_items as $_item) : ?>
+            <?php
+            if ($_item->getParentItem()) {
+                continue;
+            }
+            ?>
+            <tbody>
+            <?php echo $block->getItemHtml($_item) ?>
+            </tbody>
+        <?php endforeach; ?>
+        <tfoot class="order-totals">
+        <?php echo $block->getChildHtml('quote_totals') ?>
+        </tfoot>
+    </table>
+    <?php if ($this->helper('Magento\GiftMessage\Helper\Message')->isMessagesAllowed('quote', $_quote,
+            $_quote->getStore()) && $_quote->getGiftMessageId()
+    ) : ?>
+        <?php
+        $_giftMessageHelper = $this->helper('Magento\GiftMessage\Helper\Message');
+        $_giftMessage = $_giftMessageHelper->getGiftMessage($_quote->getGiftMessageId()); ?>
+        <?php if ($_giftMessage) : ?>
+            <br/>
+            <table class="message-gift">
+                <tr>
+                    <td>
+                        <h3><?php echo __('Gift Message for this Quote') ?></h3>
+                        <strong><?php echo __('From:'); ?></strong> <?php echo $block->escapeHtml($_giftMessage->getSender()) ?>
+                        <br/><strong><?php echo __('To:'); ?></strong> <?php echo $block->escapeHtml($_giftMessage->getRecipient()) ?>
+                        <br/><strong><?php echo __('Message:'); ?></strong>
+                        <br/><?php echo $block->escapeHtml($_giftMessage->getMessage()) ?>
+                    </td>
+                </tr>
+            </table>
+        <?php endif; ?>
+    <?php endif; ?>
+<?php endif; ?>

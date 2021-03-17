@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <md_faq>
+            <general>
+                <enabled_product>1</enabled_product>
+                <enabled_faq>1</enabled_faq>
+            </general>
+            <general_product>
+                <enabled_product_guest>0</enabled_product_guest>
+            </general_product>
+            <faq_general>
+                <faq_tabs_jquery>1</faq_tabs_jquery>
+                <faq_view>2</faq_view>
+                <authorinfo>1</authorinfo>
+                <sociallinks>1</sociallinks>
+                <faq_link_title>FAQ</faq_link_title>
+                <faq_page_title>FAQ</faq_page_title>
+                <faq_page_url_key>faq</faq_page_url_key>
+                <faq_page_url_suffix>.html</faq_page_url_suffix>
+            </faq_general>
+        </md_faq>
+        <customer>
+            <captcha>
+                <shown_to_logged_in_user>
+                    <faq_form>1</faq_form>
+                </shown_to_logged_in_user>
+                <always_for>
+                    <faq_form>1</faq_form>
+                </always_for>
+            </captcha>
+        </customer>
+        <captcha translate="label">
+            <frontend>
+                <areas>
+                    <faq_form>
+                        <label>Product Question Answer</label>
+                    </faq_form>
+                </areas>
+            </frontend>
+        </captcha>
+    </default>
+</config>

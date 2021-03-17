@@ -1,0 +1,8 @@
+.product.media{
+    float: left;
+    width: 40%;
+}
+.product-info-main{
+    float: right;
+    width: 60%;
+}

@@ -1,0 +1,419 @@
+<?xml version="1.0"?>
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+		<tab id="mageworld" translate="label" sortOrder="1">
+			<label>Mageworld</label>
+		</tab>
+		<section id="onestepcheckout" translate="label" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+			<label>One Step Checkout Pro</label>
+			<tab>mageworld</tab>
+			<resource>MW_Onestepcheckout::system_config</resource>
+			<group id="general" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>General Settings</label>
+                <field id="enabled" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable One Step Checkout</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="page_title" translate="label comment" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Page Title</label>
+					<comment>Enter Title</comment>
+				</field>
+				<field id="page_content" translate="label comment" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Page Sub-Heading</label>
+					<comment>Enter Content</comment>
+				</field>
+				<field id="default_country" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Default Country</label>
+					<source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+				</field>
+				<field id="enable_geoip" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Auto detect user country using GeoIP</label>
+					<comment>Override default country</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="default_shippingmethod" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Default Shipping Method</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Shipping\Allowedmethods</source_model>
+				</field>
+				<field id="default_paymentmethod" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Default Payment Method</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Payment\Allowedmethods</source_model>
+				</field>
+				<field id="allowshippingotheraddress" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow shipping to different address</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowguestcheckout" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow checkout as guest</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowregister" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow Guest to register</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="create_account" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Create an Account Option</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Checkuncheck</source_model>
+				</field>
+				<field id="enable_quicklogin" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow Quick Login</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="disable_shop_cart" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Disable Shopping Cart Page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<comment>If you enable this option, it will automatically redirect your customers to the checkout page after they click the "Add to Cart" button</comment>
+				</field>
+				<field id="updateqtyproduct" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow updating product quantity in checkout page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="allowremoveproduct" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow removing product in checkout page</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="valid_vat" translate="label" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Validate EU VAT #</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="save_into_account" translate="label" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Auto update account information</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="disable_os" translate="label comment" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Auto disable One Step Checkout Pro on Smartphone</label>
+					<comment>For example: iphone,ipod,android,blackberry</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+
+			<group id="display_setting" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Display Settings</label>
+				<field id="page_layout" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Checkout Page Layout</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Pagelayout</source_model>
+				</field>
+				<field id="style" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Style Theme</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Style</source_model>
+				</field>
+				<field id="style_color" translate="label comment" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Style Color</label>
+					<comment>Choose color (Scroll over vertical bar, then move circle to desired color in left hand box, save setting with ball in lower right corner)</comment>
+				</field>
+				<field id="checkout_button_color" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Place Order Button Color</label>
+					<comment>Choose color (Scroll over vertical bar, then move circle to desired color in left hand box, save setting with ball in lower right corner)</comment>
+				</field>
+				<field id="round_corner" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Round Corner</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Corner</source_model>
+				</field>
+				<field id="height_bar" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Title Bar / Button Height</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Heightbar</source_model>
+				</field>
+			</group>
+
+			<group id="addfield" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Manage Fields</label>
+				<field id="addressbook" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Customer Address Book</label>
+					<comment>Allow autofill address fields</comment>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Disablefield</source_model>
+				</field>
+				<field id="prefix_show" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Prefix</label>
+					<source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+					<backend_model>Magento\Customer\Model\Config\Backend\Show\Address</backend_model>
+				</field>
+				<field id="middlename_show" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Middle Name (initial)</label>
+					<comment>Always optional.</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+					<backend_model>Magento\Customer\Model\Config\Backend\Show\Address</backend_model>
+				</field>
+				<field id="suffix_show" translate="label" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Suffix</label>
+					<source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+					<backend_model>Magento\Customer\Model\Config\Backend\Show\Address</backend_model>
+				</field>
+				<field id="dob_show" translate="label" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Date of Birth</label>
+					<source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+					<backend_model>Magento\Customer\Model\Config\Backend\Show\Customer</backend_model>
+				</field>
+				<field id="taxvat_show" translate="label" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Tax/VAT Number</label>
+					<source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+					<backend_model>Magento\Customer\Model\Config\Backend\Show\Customer</backend_model>
+				</field>
+				<field id="gender_show" translate="label" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show Gender</label>
+					<source_model>Magento\Config\Model\Config\Source\Nooptreq</source_model>
+					<backend_model>Magento\Customer\Model\Config\Backend\Show\Customer</backend_model>
+				</field>
+				<field id="company" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Company</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="street" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Address</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="street_lines" translate="label comment" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Number of Lines in a Street Address</label>
+					<comment>Leave empty for default (2). Valid range: 1-4</comment>
+					<backend_model>Magento\Customer\Model\Config\Backend\Address\Street</backend_model>
+				</field>
+				<field id="country" translate="label" type="select" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Country</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="city" translate="label" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>City</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="state" translate="label" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>State/Province</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="zip" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Zip/Postal Code</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="telephone" translate="label" type="select" sortOrder="15" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Telephone</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionaddfield</source_model>
+				</field>
+				<field id="fax" translate="label" type="select" sortOrder="16" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Fax</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Optionhidefield</source_model>
+				</field>
+				<field id="enable_messagetosystem" translate="label" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Allow Comment Field</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Disablefield</source_model>
+				</field>
+				<field id="allowsubscribenewsletter" translate="label" type="select" sortOrder="18" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Subscribe to Newsletter checkbox</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Subscribenewletter</source_model>
+				</field>
+				<field id="allowcoupon" translate="label comment" type="select" sortOrder="19" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Coupon Code</label>
+					<comment>Set up coupons under Promotions – Shopping Cart Rule</comment>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Disablefield</source_model>
+				</field>
+				<field id="showimageproduct" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Image</label>
+					<comment>Show Thumbnail image in Checkout Cart</comment>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Disablefield</source_model>
+				</field>
+				<field id="img_product_size" translate="label comment" type="text" sortOrder="21" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Product Image Size</label>
+					<comment>Enter image product size (example : 128x128)</comment>
+				</field>
+				<field id="enable_giftmessage" translate="label comment" type="select" sortOrder="22" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Gift Message</label>
+					<comment>Please enable gift messages in Configuration/Sales/Sales/Gift Options</comment>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Disablefield</source_model>
+				</field>
+				<field id="editcartlink" translate="label" type="select" sortOrder="23" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>"Edit your cart" checkbox</label>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Disablefield</source_model>
+				</field>
+				<field id="price_gift_wrap" translate="label comment" type="text" sortOrder="24" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Gift Wrap Fee</label>
+					<comment>Enter the amount of gift wrap fee. Leave empty to disable service</comment>
+					<validate>validate-digits</validate>
+				</field>
+				<field id="app_fb_id" translate="label comment" type="text" sortOrder="25" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Facebook App ID</label>
+					<comment>Your App Facebook ID</comment>
+					<validate>validate-digits</validate>
+				</field>
+			</group>
+
+			<group id="options_sort" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Sort Fields</label>
+				<comment>Set the same position number if two fields are on the same line (Ignore if field is disabled). First/Last name automatically on first line.</comment>
+				<field id="sort_email" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Email Order</label>
+				</field>
+				<field id="sort_company" translate="label" type="text" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Company Order</label>
+				</field>
+				<field id="sort_street" translate="label" type="text" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Address Order</label>
+				</field>
+				<field id="sort_city" translate="label" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>City Order</label>
+				</field>
+				<field id="sort_state" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>State/Province Order</label>
+				</field>
+				<field id="sort_zip" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Zip/Postal Code Order</label>
+				</field>
+				<field id="sort_country" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Country Order</label>
+				</field>
+				<field id="sort_telephone" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Telephone Order</label>
+				</field>
+				<field id="sort_fax" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Fax Order</label>
+				</field>
+				<field id="sort_dob" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Date of birth</label>
+				</field>
+				<field id="sort_gender" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Gender</label>
+				</field>
+				<field id="sort_taxvat" translate="label" type="text" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Tax/Vat #</label>
+				</field>
+			</group>
+
+			<group id="allow_ajax" translate="label" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Ajax Update Settings</label>
+				<field id="mw_onestepcheckout_label1" translate="label" type="text" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<frontend_model>MW\Onestepcheckout\Block\Adminhtml\System\Config\Label1</frontend_model>
+				</field>
+				<field id="ajax_shippingmethod" translate="label comment" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Update Shipping Methods</label>
+					<comment>Update shipping methods when address fields change. Set Yes only if shipping methods need to reload.</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_paymentmethod" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Update Payment Methods</label>
+					<comment>Update payment methods when address fields change. Set Yes only if payment methods need to reload.</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_country" translate="label comment" type="select" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ajax Update for Country</label>
+					<comment>Default: Yes</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_region" translate="label comment" type="select" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ajax Update for State/Province</label>
+					<comment>Default: Yes</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_city" translate="label comment" type="select" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ajax Update for City</label>
+					<comment>Default: No</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_zipcode" translate="label comment" type="select" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Ajax Update for Zip/Postal Code</label>
+					<comment>Default: No</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="mw_onestepcheckout_label2" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<frontend_model>MW\Onestepcheckout\Block\Adminhtml\System\Config\Label2</frontend_model>
+				</field>
+				<field id="ajax_shipping" translate="label" type="select" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Shipping Methods change</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_payment" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Payment Methods change</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="mw_onestepcheckout_label3" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+					<frontend_model>MW\Onestepcheckout\Block\Adminhtml\System\Config\Label3</frontend_model>
+				</field>
+				<field id="ajax_updatepro_shipping" translate="label comment" type="select" sortOrder="12" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Update shipping method when customer updates product quantity</label>
+					<comment>Default: No</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_shipping_payment" translate="label comment" type="select" sortOrder="13" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Update payment method when customer updates shipping method</label>
+					<comment>Default: No</comment>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="ajax_email" translate="label" type="select" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Auto update guest email</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+			</group>
+
+			<group id="deliverydate" translate="label" type="text" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Delivery Settings</label>
+				<field id="allow_options" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Delivery Time</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="asa_option" translate="label" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Show As soon as possible option</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="formatdate" translate="label comment" type="select" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Format Date</label>
+					<comment>This format date will show in checkout page with customer</comment>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Formatdate</source_model>
+				</field>
+				<field id="rangeday" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Maximum Allowed Delivery Period (in weeks)</label>
+					<comment>Choose maximum # of weeks customer may select delivery period within</comment>
+				</field>
+				<field id="weekend" translate="label" type="multiselect" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Weekend Days (no delivery)</label>
+					<source_model>Magento\Config\Model\Config\Source\Locale\Weekdays</source_model>
+				</field>
+				<field id="disableday" translate="label comment" type="textarea" sortOrder="6" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>National Holidays (no delivery)</label>
+					<comment>Enter off-shipping days with the format (mm/dd/yyyy), comma separated and no spaces</comment>
+				</field>
+				<field id="enableday" translate="label comment" type="textarea" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Extra Available Days to Ship</label>
+					<comment>Enter only weekend days with the format (mm/dd/yyyy), comma separated and no space</comment>
+				</field>
+				<field id="timerange" translate="label" type="select" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Delivery Time Range</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="addtimerange" translate="label comment" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+					<comment>Add Time Range with the format 24h (h:m), ex. 7:30</comment>
+					<frontend_model>MW\Onestepcheckout\Block\Adminhtml\System\Config\Form\Field\Addtimerange</frontend_model>
+					<backend_model>Magento\Config\Model\Config\Backend\Serialized\ArraySerialized</backend_model>
+				</field>
+			</group>
+
+			<group id="termcondition" translate="label" type="text" sortOrder="7" showInDefault="1" showInWebsite="1" showInStore="1">
+				<label>Terms and Conditions</label>
+				<field id="allow_options" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Enable Terms And Conditions</label>
+					<source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+				</field>
+				<field id="select_term_conditions" translate="label comment" type="select" sortOrder="2" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Select Terms and Conditions</label>
+					<comment>You can add other agreements in Stores/Terms and Conditions</comment>
+					<source_model>MW\Onestepcheckout\Model\System\Config\Source\Term</source_model>
+				</field>
+				<field id="content_options" translate="label comment" type="textarea" sortOrder="3" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Content Terms And Conditions</label>
+					<comment>If you choose custom agreement, please enter the content of the terms and conditions into box</comment>
+				</field>
+				<field id="boxwidth" translate="label comment" type="text" sortOrder="4" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Width</label>
+					<comment>Enter width for popup(default 420px)</comment>
+				</field>
+				<field id="boxheight" translate="label comment" type="text" sortOrder="5" showInDefault="1" showInWebsite="1" showInStore="1">
+					<label>Height</label>
+					<comment>Enter height for popup (default 250px)</comment>
+				</field>
+			</group>
+
+			<group id="author_information" translate="label" type="text" sortOrder="8" showInDefault="1" showInWebsite="1" showInStore="1">
+				<frontend_model>MW\Onestepcheckout\Block\Adminhtml\System\Config\AuthorInformation</frontend_model>
+			</group>
+
+			<group id="resetconfig" translate="label" type="text" sortOrder="9" showInDefault="1" showInWebsite="1" showInStore="1">
+				<frontend_model>MW\Onestepcheckout\Block\Adminhtml\System\Config\ResetConfig</frontend_model>
+			</group>
+		</section>
+    </system>
+</config>

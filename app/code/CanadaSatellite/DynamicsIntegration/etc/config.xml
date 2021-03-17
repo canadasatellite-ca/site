@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <dynamics>
+            <credentials>
+                <client_id>0f26018d-12e1-4a69-b1b2-b50e913dec62</client_id>
+                <client_secret>PqOSXmbagQE58rps5hy7UvZVaIGTEZdrApk3BsnEYbE=</client_secret>
+                <resource>https://canadasatellite.crm.dynamics.com</resource>
+            </credentials>
+        </dynamics>
+    </default>
+</config>

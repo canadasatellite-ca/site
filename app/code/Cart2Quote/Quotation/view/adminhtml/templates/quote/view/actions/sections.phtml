@@ -1,0 +1,28 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+
+/**
+ * @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\Sections $block
+ */
+?>
+<div id="section-grid" data-bind="scope:'section-grid'" class="section-grid">
+    <!-- ko template: getTemplate() --><!-- /ko -->
+    <script type="text/x-magento-init">
+            {
+                "*": {
+                    "Magento_Ui/js/core/app": {
+                        "components": {
+                            "section-grid": {
+                                "component": "Cart2Quote_Quotation/quote/section/grid",
+                                "data": <?php echo $block->getJsonConfig(); ?>
+                            }
+                        }
+                    }
+                }
+            }
+    </script>
+</div>

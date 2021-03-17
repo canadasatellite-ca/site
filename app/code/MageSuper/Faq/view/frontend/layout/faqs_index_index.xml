@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page layout="2columns-left" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="MageSuper\Faq\Block\Faq\Questions" name="md.faq.pages" cacheable="false">
+                <action method="setCustomTemplate"/>
+            </block>
+        </referenceContainer>
+        <referenceContainer name="sidebar.additional">
+            <block class="MageSuper\Faq\Block\Faq\Questions" name="md.faq.category.sidebar" template="Magedelight_Faqs::sidebar/sidebar-tabs.phtml" before="-"/>
+        </referenceContainer>
+    </body>
+</page>

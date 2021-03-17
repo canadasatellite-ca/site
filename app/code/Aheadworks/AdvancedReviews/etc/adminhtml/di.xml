@@ -1,0 +1,91 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Copyright 2019 aheadWorks. All rights reserved.
+* See LICENSE.txt for license details.
+*/
+-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="Aheadworks\AdvancedReviews\Controller\Adminhtml\Review\PostDataProcessor" type="Aheadworks\AdvancedReviews\Model\Data\CompositeProcessor">
+        <arguments>
+            <argument name="processors" xsi:type="array">
+                <item name="created_at" xsi:type="object">Aheadworks\AdvancedReviews\Model\Data\Processor\Review\CreatedAt</item>
+                <item name="store_id" xsi:type="object">Aheadworks\AdvancedReviews\Model\Data\Processor\Review\StoreId</item>
+                <item name="customer_id" xsi:type="object">Aheadworks\AdvancedReviews\Model\Data\Processor\Review\CustomerId</item>
+                <item name="shared_store_ids" xsi:type="object">Aheadworks\AdvancedReviews\Model\Data\Processor\Review\SharedStoreIds</item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Aheadworks\AdvancedReviews\Controller\Adminhtml\Review\Save">
+        <arguments>
+            <argument name="postDataProcessor" xsi:type="object">Aheadworks\AdvancedReviews\Controller\Adminhtml\Review\PostDataProcessor</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="advanced_reviews" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Product\Form\Modifier\Review</item>
+                    <item name="sortOrder" xsi:type="number">100</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\DataProvider\Review\FormDataProvider\Pool" type="Magento\Ui\DataProvider\Modifier\Pool">
+        <arguments>
+            <argument name="modifiers" xsi:type="array">
+                <item name="common" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Modifier\Common</item>
+                    <item name="sortOrder" xsi:type="number">10</item>
+                </item>
+                <item name="shared_stores" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Modifier\SharedStores</item>
+                    <item name="sortOrder" xsi:type="number">20</item>
+                </item>
+                <item name="attachments" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Modifier\Attachments</item>
+                    <item name="sortOrder" xsi:type="number">30</item>
+                </item>
+                <item name="pros_and_cons_fields" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Modifier\ProsAndConsFields</item>
+                    <item name="sortOrder" xsi:type="number">40</item>
+                </item>
+                <item name="featured_data" xsi:type="array">
+                    <item name="class" xsi:type="string">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\Modifier\FeaturedData</item>
+                    <item name="sortOrder" xsi:type="number">50</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <type name="Aheadworks\AdvancedReviews\Ui\DataProvider\Review\FormDataProvider">
+        <arguments>
+            <argument name="pool" xsi:type="object">Aheadworks\AdvancedReviews\Ui\DataProvider\Review\FormDataProvider\Pool</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\Statuses" type="Aheadworks\AdvancedReviews\Ui\Component\Listing\MassAction\SourceOptions">
+        <arguments>
+            <argument name="optionSource" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\Status</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\VerifiedBuyerValues" type="Aheadworks\AdvancedReviews\Ui\Component\Listing\MassAction\SourceOptions">
+        <arguments>
+            <argument name="optionSource" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\IsVerifiedBuyer</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\ProductRecommendedValues" type="Aheadworks\AdvancedReviews\Ui\Component\Listing\MassAction\SourceOptions">
+        <arguments>
+            <argument name="optionSource" xsi:type="object">Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\Source\ProductRecommended</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\Component\Comment\Listing\MassAction\Statuses" type="Aheadworks\AdvancedReviews\Ui\Component\Listing\MassAction\SourceOptions">
+        <arguments>
+            <argument name="optionSource" xsi:type="object">Aheadworks\AdvancedReviews\Model\Source\Review\Status</argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\Column\Actions" type="Aheadworks\AdvancedReviews\Ui\Component\Listing\Column\AbstractActions"/>
+    <virtualType name="Aheadworks\AdvancedReviews\Ui\Component\Queue\Listing\Column\Actions" type="Aheadworks\AdvancedReviews\Ui\Component\Listing\Column\AbstractActions"/>
+
+</config>

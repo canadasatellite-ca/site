@@ -1,0 +1,23 @@
+<?php
+/**
+ * Copyright 2019 aheadWorks. All rights reserved.
+ * See LICENSE.txt for license details.
+ */
+
+// @codingStandardsIgnoreFile
+/** @var \Magento\Framework\View\Element\Template $block */
+/** @var \Aheadworks\AdvancedReviews\ViewModel\StaticRenderer\Reviews\Listing\Filters\Select $viewModel */
+$viewModel = $block->getViewModel();
+?>
+<div class="aw-ar__form-field-wrap">
+    <div class="aw-ar__form-field-control">
+        <select id="<?= $block->escapeHtml($viewModel->getId()) ?>"
+                class="admin__control-select">
+            <?php foreach ($viewModel->getOptions() as $optionData): ?>
+                <option value="<?= $block->escapeHtml($viewModel->getOptionValue($optionData)) ?>">
+                    <?= $block->escapeHtml($viewModel->getOptionLabel($optionData)) ?>
+                </option>
+            <?php endforeach; ?>
+        </select>
+    </div>
+</div>

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Cart2Quote
+ */
+
+/** @var Cart2Quote\Quotation\Block\Quote\Items $block */
+?>
+<?php
+$_quote = $block->getQuote();
+?>
+<div class="table-wrapper order-items">
+    <table class="data table table-order-items" id="my-quotes-table" summary="<?php echo __('Items Requested') ?>">
+        <caption class="table-caption"><?php echo __('Items Requested') ?></caption>
+        <thead>
+        <tr>
+            <th class="col name"><?php echo __('Product Name') ?></th>
+            <th class="col sku"><?php echo __('SKU') ?></th>
+            <th class="col price"><?php echo __('Price') ?></th>
+            <th class="col qty"><?php echo __('Qty') ?></th>
+            <th class="col subtotal"><?php echo __('Subtotal') ?></th>
+            <?php if ($block->hasOptionalProducts()) : ?>
+                <th class="col del">&nbsp;</th>
+            <?php endif; ?>
+        </tr>
+        </thead>
+        <?php $_items = $_quote->getItemsCollection(); ?>
+        <?php $_index = 0; ?>
+        <?php $_count = $_items->count(); ?>
+        <?php foreach ($_items as $_item) : ?>
+            <?php if ($_item->getParentItem()) {
+                continue;
+            } ?>
+            <tbody>
+            <?php echo $block->getItemHtml($_item) ?>
+            <?php $child = $block->getChildBlock('catalog.product.top.list.mageworx.downloads.attachments'); ?>
+            <?php $child->setProductItem($_item); ?>
+            <?php echo $child->toHtml() ; ?>
+            </tbody>
+        <?php endforeach; ?>
+        <tfoot>
+        <?php echo $block->getChildHtml('quote_totals') ?>
+        </tfoot>
+    </table>
+</div>
+

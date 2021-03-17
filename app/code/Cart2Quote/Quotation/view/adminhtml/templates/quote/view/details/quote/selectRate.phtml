@@ -1,0 +1,36 @@
+<?php
+/**
+ * Copyright (c) 2020. Cart2Quote B.V. All rights reserved.
+ * See COPYING.txt for license details.
+ * @codingStandardsIgnoreFile
+ */
+?>
+<?php /** @var \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\SelectRate $block */ ?>
+<?php if ($block->getCustomerId()) : ?>
+    <tr>
+        <th>
+            <label class="admin__field-label" for="currency_switcher">
+                <?php echo $block->escapeHtml(__('Quote Currency:')) ?>
+            </label>
+        </th>
+        <td>
+            <select id="currency_switcher"
+                    class="admin__control-select"
+                    name="order[currency]"
+                    onchange="quote.setCurrencyId(this.value);
+                    quote.setCurrencySymbol(this.options[this.selectedIndex].getAttribute('symbol'));">
+                <?php foreach ($block->getAvailableCurrencies() as $code) : ?>
+                    <option symbol="<?php echo $block->escapeHtml($block->getCurrencySymbol($code)) ?>"
+                            value="<?php echo $block->escapeHtml($code) ?>"
+                        <?php if ($code == $block->getQuoteCurrencyCode()) : ?>
+                            selected="selected"
+                        <?php endif ?>
+                    >
+                        <?php echo $block->escapeHtml($block->getCurrencyName($code)) ?>
+                    </option>
+                <?php endforeach; ?>
+            </select>
+        </td>
+    </tr>
+<?php
+endif;
