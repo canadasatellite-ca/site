@@ -250,7 +250,6 @@ return [
         'Amazon_Payment' => 1,
         'Apptrian_ImageOptimizer' => 1,
         'Auctane_Api' => 1,
-        'BroSolutions_CheckoutReCapcha' => 0,
         'BroSolutions_CryptoCoins' => 1,
         'BroSolutions_GuestRegistration' => 1,
         'BroSolutions_IssueNotification' => 1,
