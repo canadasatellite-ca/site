@@ -334,7 +334,6 @@ return [
         'Interactivated_Price' => 1,
         'Interactivated_Quotecheckout' => 1,
         'Itoris_Core' => 1,
-        'Itoris_ReassignOrder' => 0,
         'Klarna_Core' => 1,
         'Klarna_Ordermanagement' => 1,
         'Klarna_Kp' => 1,
