@@ -22,7 +22,6 @@
         "onestepcheckout/iosc": "^1.2",
         "apptrian/image-optimizer": "^2.2",
         "coingate/magento2-plugin": "^1.2",
-        "adyen/module-payment": "^6.6",
         "magento/services-connector": "^1.0",
         "m2e/ebay-amazon-magento2": "^1.4",
         "mageplaza/magento-2-chinese-language-pack": "dev-master",

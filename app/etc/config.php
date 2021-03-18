@@ -234,7 +234,6 @@ return [
         'Magento_Wishlist' => 1,
         'Magento_WishlistAnalytics' => 1,
         'Magento_WishlistGraphQl' => 1,
-        'Adyen_Payment' => 0,
         'Aheadworks_AdvancedReviews' => 1,
         'Aitoc_OrdersExportImport' => 1,
         'Amasty_Acart' => 1,
