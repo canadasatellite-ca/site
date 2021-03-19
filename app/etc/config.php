@@ -381,7 +381,6 @@ return [
         'Mageside_CanadaPostShipping' => 1,
         'Magestore_PurchaseOrderSuccess' => 1,
         'MageSuper_Casat' => 1,
-        'Magestore_WebposPaypal' => 1,
         'Magics_All' => 1,
         'Magics_Gross' => 1,
         'Mirasvit_SearchAutocomplete' => 1,
