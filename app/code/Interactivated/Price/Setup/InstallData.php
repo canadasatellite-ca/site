@@ -17,24 +17,6 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 class InstallData implements InstallDataInterface
 {
     /**
-     * InstallData constructor.
-     * @param \Magestore\Webpos\Model\Staff\StaffFactory $staffFactory
-     * @param \Magestore\Webpos\Model\Staff\RoleFactory $roleFactory
-     * @param \Magestore\Webpos\Model\Staff\AuthorizationRuleFactory $authorizationRuleFactory
-     * @param \Magestore\Webpos\Model\Location\LocationFactory $locationFactory
-     * @param \Magento\User\Model\ResourceModel\User\CollectionFactory $collectionFactory
-     */
-    public function __construct(
-        \Magestore\Webpos\Model\Staff\StaffFactory $staffFactory,
-        \Magestore\Webpos\Model\Staff\RoleFactory $roleFactory,
-        \Magestore\Webpos\Model\Staff\AuthorizationRuleFactory $authorizationRuleFactory,
-        \Magestore\Webpos\Model\Location\LocationFactory $locationFactory,
-        \Magento\User\Model\ResourceModel\User\CollectionFactory $collectionFactory
-    ){
-    }
-
-
-    /**
      * @param ModuleDataSetupInterface $setup
      * @param ModuleContextInterface $context
      */
