@@ -394,7 +394,6 @@ return [
         'Mirasvit_SearchReport' => 1,
         'Mirasvit_SearchSphinx' => 1,
         'Mirasvit_SearchUltimate' => 1,
-        'Onestepcheckout_Iosc' => 0,
         'Schogini_Beanstream' => 1,
         'Spontaneous_Importcategory' => 1,
         'Temando_ShippingRemover' => 1,

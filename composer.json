@@ -19,7 +19,6 @@
         "mageplaza/magento-2-spanish-language-pack": "dev-master",
         "mageplaza/magento-2-portuguese-brazilian-language-pack": "dev-master",
         "mageplaza/magento-2-french-language-pack": "dev-master",
-        "onestepcheckout/iosc": "^1.2",
         "apptrian/image-optimizer": "^2.2",
         "coingate/magento2-plugin": "^1.2",
         "magento/services-connector": "^1.0",
