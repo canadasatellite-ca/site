@@ -653,7 +653,13 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
         }
         $this->logit('_beanstreamapi curl_response', [$spf8f74c]);
         $this->beanstreamLogger('beanstreamapi curl_response', [$spf8f74c]);
-
+        # 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "Beanstream: «Microsoft OLE DB Driver for SQL Server» / «TCP Provider: The wait operation timed out» /
+		# «C:\INETPUB\BEANSTREAM\ERRORPAGES\../admin/include/VBScript_ado_connection_v2.asp»":
+		# https://github.com/canadasatellite-ca/site/issues/18
+        if (df_contains($spf8f74c, 'Microsoft OLE DB Driver for SQL Server')) {
+        	df_log_l($this, ['request' => $sp05e2c8, 'response' => $spf8f74c], 'error-ole');
+		}
         $sp1e8be2 = explode('&', $spf8f74c);
         $spb41165 = array();
         foreach (@$sp1e8be2 as $sp107d68) {
