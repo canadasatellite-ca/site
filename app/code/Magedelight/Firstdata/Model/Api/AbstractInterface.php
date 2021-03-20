@@ -49,6 +49,10 @@ class AbstractInterface extends \Magento\Framework\DataObject
         $this->regionFactory = $regionFactory;
         $this->countryFactory = $countryFactory;
         $this->_httpRequest = $httpRequest;
+		# 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «var/log/Magedelight_Firstdata_SOAPError.log" cannot be opened with mode "a"»:
+		# https://github.com/canadasatellite-ca/site/issues/22
+        df_mkdir_log();
         $this->_soaperror = new \Zend\Log\Writer\Stream(BP.'/var/log/Magedelight_Firstdata_SOAPError.log');
         $this->_soaplog = new \Zend\Log\Writer\Stream(BP.'/var/log/md_firstdata.log');
         $this->_zendlogger = new \Zend\Log\Logger();
