@@ -198,7 +198,7 @@ return [
         'Magento_SendFriendGraphQl' => 1,
         'Magento_ServicesConnector' => 1,
         'Magento_Tax' => 1,
-        'Magento_Signifyd' => 1,
+        'Magento_Signifyd' => 0,
         'Magento_Sitemap' => 1,
         'Magento_Bundle' => 1,
         'Magento_UrlRewriteGraphQl' => 1,
@@ -325,8 +325,8 @@ return [
         'Digit_Customshipprice' => 1,
         'BroSolutions_PdfPrint' => 1,
         'Digit_Paymentmethods' => 1,
-        'Dotdigitalgroup_Email' => 1,
-        'Dotdigitalgroup_Chat' => 1,
+        'Dotdigitalgroup_Email' => 0,
+        'Dotdigitalgroup_Chat' => 0,
         'Emizentech_Featuredwidget' => 1,
         'Ess_M2ePro' => 1,
         'MageKey_XsdMerger' => 1,
@@ -398,15 +398,15 @@ return [
         'Spontaneous_Importcategory' => 1,
         'Temando_ShippingRemover' => 1,
         'ThLassche_RegenerateRewrites' => 1,
-        'Vertex_Tax' => 1,
-        'Vertex_AddressValidation' => 1,
+        'Vertex_Tax' => 0,
+        'Vertex_AddressValidation' => 0,
         'Virtua_SearchFix' => 1,
         'CanadaSatellite_Theme' => 1,
         'Wyomind_Core' => 1,
         'Wyomind_CronScheduler' => 1,
         'Wyomind_SimpleGoogleShopping' => 1,
         'Xumulus_FastGalleryLoad' => 1,
-        'Yotpo_Yotpo' => 1
+        'Yotpo_Yotpo' => 0
     ],
     'system' => [
         'default' => [
