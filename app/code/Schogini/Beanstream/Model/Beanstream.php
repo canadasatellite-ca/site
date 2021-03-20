@@ -631,9 +631,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
         ordProvince=' . urlencode($sp21957c['x_state']) . '&
         ordPostalCode=' . urlencode($sp21957c['x_zip']) . "&
         ordCountry={$sp21957c['x_country']}" . $sp8d1f04;
-
-        $this->logit('Calling CURL with POST', [$sp05e2c8]);
-        $this->beanstreamLogger('Calling CURL with POST', [$sp05e2c8]);
         $specd301 = curl_init();
         curl_setopt($specd301, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
         curl_setopt($specd301, CURLOPT_POST, 1);
@@ -647,18 +644,16 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
         $sp35fa42 = curl_error($specd301);
         curl_close($specd301);
         if ($sp35fa42 != '') {
-            $this->logit('_beanstreamapi curl_error', array('curl_error' => $sp35fa42));
-            $this->beanstreamLogger('error', [$sp35fa42]);
+            df_log_l($this, ['request' => $sp05e2c8, 'response' => $sp35fa42], 'error-curl');
             self::throwException('Error: ' . $sp35fa42);
         }
-        $this->logit('_beanstreamapi curl_response', [$spf8f74c]);
-        $this->beanstreamLogger('beanstreamapi curl_response', [$spf8f74c]);
         # 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# "Beanstream: «Microsoft OLE DB Driver for SQL Server» / «TCP Provider: The wait operation timed out» /
 		# «C:\INETPUB\BEANSTREAM\ERRORPAGES\../admin/include/VBScript_ado_connection_v2.asp»":
 		# https://github.com/canadasatellite-ca/site/issues/18
         if (df_contains($spf8f74c, 'Microsoft OLE DB Driver for SQL Server')) {
         	df_log_l($this, ['request' => $sp05e2c8, 'response' => $spf8f74c], 'error-ole');
+        	self::throwException('Error: ' . $spf8f74c);
 		}
         $sp1e8be2 = explode('&', $spf8f74c);
         $spb41165 = array();
@@ -666,9 +661,14 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
             list($sp005512, $sp5b9bbc) = explode('=', $sp107d68);
             $spb41165[$sp005512] = strip_tags(urldecode($sp5b9bbc));
         }
-        $this->logit('Response Array', $spb41165);
-        $this->beanstreamLogger('Response Array', [$spb41165]);
-
+        # 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "Prevent the `Schogini_Beanstream` module from logging successful transactions to `beanstream.log`":
+		# https://github.com/canadasatellite-ca/site/issues/17
+        if ('N' !== ($errorType = dfa($spb41165, 'errorType', 'unknown'))) { /** @var string $errorType */
+			df_log_l($this, [
+				'request' => $sp05e2c8, 'response parsed' => $spb41165, 'response raw' => $spf8f74c
+			], "error-$errorType");
+		}
         $spc59ec5 = array();
         $spc59ec5['response_code'] = '1';
         $spc59ec5['response_subcode'] = '1';
@@ -737,46 +737,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
     {
         return self::getResourceModel('\\Magento\\Framework\\Encryption\\EncryptorInterface')->decrypt($sp882b00);
     }
-
-    private function beanstreamLogger($title, $sp1e8be2 = [])
-    {
-        $spb0dc2a = '';
-        if (count($sp1e8be2) > 0) {
-            $spb0dc2a = var_export($sp1e8be2, true);
-        }
-        $sp349edd = '<creditcard>
-						<cardnumber>xxxxxxxxxxxxxxxx</cardnumber>
-						<cardexpmonth>xx</cardexpmonth>
-						<cardexpyear>xx</cardexpyear>
-						<cvmvalue>xxx</cvmvalue>
-						<cvmindicator>provided</cvmindicator>
-					</creditcard>';
-        $spb0dc2a = preg_replace('/<creditcard>(.*)<\\/creditcard>/smUi', $sp349edd, $spb0dc2a);
-        $this->beanstreamLogger->info($title . '   ----------   ' . $spb0dc2a);
-    }
-
-    function logit($sp914372, $sp1e8be2 = array())
-    {
-        if (!$this->getConfigData('debug') || !$this->getConfigData('test')) {
-            return;
-        }
-        $spb0dc2a = '';
-        if (count($sp1e8be2) > 0) {
-            $spb0dc2a = var_export($sp1e8be2, true);
-        }
-        $sp349edd = '<creditcard>
-						<cardnumber>xxxxxxxxxxxxxxxx</cardnumber>
-						<cardexpmonth>xx</cardexpmonth>
-						<cardexpyear>xx</cardexpyear>
-						<cvmvalue>xxx</cvmvalue>
-						<cvmindicator>provided</cvmindicator>
-					</creditcard>';
-        $spb0dc2a = preg_replace('/<creditcard>(.*)<\\/creditcard>/smUi', $sp349edd, $spb0dc2a);
-        $spbabc0e = self::getResourceModel('\\Magento\\Framework\\Logger\\Monolog');
-        $spbabc0e->addRecord(Logger::INFO, '----- Inside ' . $sp914372 . ' =1= ' . date('d/M/Y H:i:s') . ' -----' . '
-' . $spb0dc2a);
-    }
-
 
     /**
      * Validate payment method information object
