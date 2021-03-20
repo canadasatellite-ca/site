@@ -773,7 +773,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 					</creditcard>';
         $spb0dc2a = preg_replace('/<creditcard>(.*)<\\/creditcard>/smUi', $sp349edd, $spb0dc2a);
         $spbabc0e = self::getResourceModel('\\Magento\\Framework\\Logger\\Monolog');
-        $spbabc0e->addRecord(LOGGER::INFO, '----- Inside ' . $sp914372 . ' =1= ' . date('d/M/Y H:i:s') . ' -----' . '
+        $spbabc0e->addRecord(Logger::INFO, '----- Inside ' . $sp914372 . ' =1= ' . date('d/M/Y H:i:s') . ' -----' . '
 ' . $spb0dc2a);
     }
 
