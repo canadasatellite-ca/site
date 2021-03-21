@@ -41,7 +41,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface
                     $message = 'You just catched on trying to change product name and(or) description for not default store!(ID ' . $product->getEntityId() . ')';
                 }
                 $this->messageManager->addNoticeMessage($message);
-                $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/productsave.log');
+                $writer = new \Zend\Log\Writer\Stream(BP . '/var/log/MageSuper_Casat.log');
                 $logger = new \Zend\Log\Logger();
                 $logger->addWriter($writer);
                 $e = new \Exception();
