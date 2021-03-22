@@ -264,6 +264,7 @@ return [
         'Brsw_Reindexer' => 1,
         'Bss_AdminActionLog' => 1,
         'Cadence_ScopeFix' => 1,
+        'CanadaSatellite_Core' => 1,
         'CanadaSatellite_Cron' => 1,
         'Interactivated_ActivationForm' => 1,
         'CanadaSatellite_SimpleAmqp' => 1,
