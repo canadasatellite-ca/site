@@ -82,9 +82,10 @@ class CustomerVisibility extends AbstractHelper
 
     /**
      * @return bool
+	 * @used-by isVisibilityFilterRequired()
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function isAreaFrontend()
+    private function isAreaFrontend()
     {
         return $this->state->getAreaCode() == 'frontend' || $this->state->getAreaCode() == 'webapi_rest';
     }
@@ -102,6 +103,9 @@ class CustomerVisibility extends AbstractHelper
      */
     public function isVisibilityFilterRequired()
     {
-        return $this->isAreaFrontend() || $this->isOrderCreate();
+    	# 2021-03-23 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «Unknown column 'visibility_by_customer_group_id' in 'having clause'»:
+		# https://github.com/canadasatellite-ca/site/issues/35
+        return $this->isAreaFrontend() || $this->isOrderCreate() || df_is_cron();
     }
 }
