@@ -457,8 +457,13 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
 		 * "Prevent the Mageside_CanadaPostShipping module from logging successful rate requests to shipping.log":
 		 * https://github.com/canadasatellite-ca/site/issues/25
 		 * @see \Mageside\CanadaPostShipping\Model\Service\Rating::getRates()
+		 * 2021-03-23
+		 * $response can be `null`:
+		 * «Argument 1 passed to dfa() must be of the type array, null given,
+		 * called in app/code/Mageside/CanadaPostShipping/Model/Carrier.php on line 461»:
+		 * https://github.com/canadasatellite-ca/site/issues/34
 		 */
-        if (!($r = dfa($response, 'rates')) || dfa($r, 'NoRatesMethod')) {
+        if (!$response || !($r = dfa($response, 'rates')) || dfa($r, 'NoRatesMethod')) {
 			df_log_l($this, $debugData);
 		}
         return $response;
