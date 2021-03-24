@@ -64,8 +64,6 @@ switch ($_columnCountTablet) {
     default:
         $_columnclassTablet .= "8";
 }
-
-$plaholdeimage=$block->getPlaceholderImage();
 ?>
 <?php $iterator = 1; ?>
 <?php if (!$_subcategoriesCollection->count()): ?>
@@ -85,18 +83,15 @@ $plaholdeimage=$block->getPlaceholderImage();
                         <a href="<?php echo $link; ?>">
                             <h3 class="subcat-title"><?php echo $subcategory->getName();?></h3>
                             <div class="subcat-image">
-                                <?php	if ($_imgUrl = $block->getThumbnailUrl($subcategory)) :
+                                <?php if ($_imgUrl = $block->getThumbnailUrl($subcategory)) :
                                     $_imgHtml = '<img src="' . $_imgUrl . '" alt="' . $block->escapeHtml($subcategory->getName()) . '" title="' . $block->escapeHtml($subcategory->getName()) . '" class="image" />';
                                     $_imgHtml = $_helper->categoryAttribute($subcategory, $_imgHtml, 'thumbnail');
                                     /* @escapeNotVerified */ echo $_imgHtml;
                                     ?>
-                                <?php else :?>
-                                    <img src="<?php echo $plaholdeimage ?>" title="<?php echo $subcategory->getName() ?>"/>
                                 <?php endif;?>
                             </div>
                         </a>
                     </div>
-
                 </li>
             <?php endforeach; ?>
             <div class="clear"></div>

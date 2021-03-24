@@ -67,10 +67,6 @@
         {
             return $this->getCurrentCategory()->getNoofsubcategoriestablet();
         }
-		public function getPlaceholderImage()		
-		{			
-			return $this->_storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA).'catalog/category/subcategory.jpg';			
-		}		
 		public function getCategoryList()		
 		{			
 			$_category  = $this->getCurrentCategory();			
