@@ -1,5 +1,6 @@
 <?php
 namespace CanadaSatellite\Theme\Plugin\Model;
+use Magento\Bundle\Api\Data\LinkInterface as ILink;
 use Magento\Bundle\Model\LinkManagement as ParentLinkManagement;
 use Magento\Bundle\Model\SelectionFactory;
 use Magento\Catalog\Api\Data\ProductInterface;
@@ -8,36 +9,21 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
+# 2021-03-25
 final class LinkManagement {
 	/**
-	 * @var \Magento\Catalog\Api\ProductRepositoryInterface
+	 * 2021-03-25
+	 * @param ParentLinkManagement $subject
+	 * @param callable $proceed
+	 * @param $sku
+	 * @param ILink $linkedProduct
+	 * @return bool
+	 * @throws CouldNotSaveException
+	 * @throws InputException
+	 * @throws \Magento\Framework\Exception\NoSuchEntityException
 	 */
-	protected $productRepository;
-
-	/**
-	 * @var SelectionFactory
-	 */
-	protected $bundleSelection;
-
-	/**
-	 * @var MetadataPool
-	 */
-	private $metadataPool;
-
-	function __construct(
-		ProductRepositoryInterface $productRepository,
-		SelectionFactory $bundleSelection
-	){
-		$this->productRepository = $productRepository;
-		$this->bundleSelection = $bundleSelection;
-	}
-
-
 	function aroundSaveChild(
-		ParentLinkManagement $subject,
-		callable $proceed,
-		$sku,
-		\Magento\Bundle\Api\Data\LinkInterface $linkedProduct
+		ParentLinkManagement $subject, callable $proceed, $sku, ILink $linkedProduct
 	) {
 		$product = $this->productRepository->get($sku, true);
 		if ($product->getTypeId() != \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
@@ -136,5 +122,28 @@ final class LinkManagement {
 		}
 
 		return $selectionModel;
+	}
+
+	/**
+	 * @var \Magento\Catalog\Api\ProductRepositoryInterface
+	 */
+	protected $productRepository;
+
+	/**
+	 * @var SelectionFactory
+	 */
+	protected $bundleSelection;
+
+	/**
+	 * @var MetadataPool
+	 */
+	private $metadataPool;
+
+	function __construct(
+		ProductRepositoryInterface $productRepository,
+		SelectionFactory $bundleSelection
+	){
+		$this->productRepository = $productRepository;
+		$this->bundleSelection = $bundleSelection;
 	}
 }
