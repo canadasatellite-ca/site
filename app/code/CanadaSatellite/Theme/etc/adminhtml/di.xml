@@ -4,16 +4,16 @@
 	xsi:noNamespaceSchemaLocation='urn:magento:framework:ObjectManager/etc/config.xsd'
 >
 	<preference
-		for='MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main'
-		type='CanadaSatellite\Theme\Block\Adminhtml\Attachment\Edit\Tab\Main'
-	/>
-	<preference
 		for='Cart2Quote\Desk\Block\Adminhtml\Edit\Left\Form'
 		type='CanadaSatellite\Theme\Block\Adminhtml\Desk\Edit\Left\Form'
 	/>
 	<preference
 		for='Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Columns\Name'
 		type='CanadaSatellite\Theme\Block\Adminhtml\Quote\View\Items\Columns\Name'
+	/>
+	<preference
+		for='MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main'
+		type='CanadaSatellite\Theme\Block\Adminhtml\Attachment\Edit\Tab\Main'
 	/>
 	<preference
 		for='MageWorx\OptionFeatures\Ui\DataProvider\Product\Form\Modifier\Features'
@@ -32,9 +32,6 @@
 			type='CanadaSatellite\Theme\Block\Adminhtml\Quote\View\ReminderDate'
 		/>
 	</type>
-	<type name='MageWorx\OptionBase\Model\Entity\Base'>
-		<plugin name='CanadaSatellite\Theme\Plugin\Model\Entity\Base' type='CanadaSatellite\Theme\Plugin\Model\Entity\Base'/>
-	</type>
 	<type name='Magento\Bundle\Model\LinkManagement'>
 		<plugin
 			name='CanadaSatellite\Theme\Plugin\Model\LinkManagement' type='CanadaSatellite\Theme\Plugin\Model\LinkManagement'
@@ -45,6 +42,9 @@
 			name='CanadaSatellite\Theme\Plugin\Serializer\JsonExensionPhone'
 			type='CanadaSatellite\Theme\Plugin\Serializer\JsonExensionPhone'
 		/>
+	</type>
+	<type name='MageWorx\OptionBase\Model\Entity\Base'>
+		<plugin name='CanadaSatellite\Theme\Plugin\Model\Entity\Base' type='CanadaSatellite\Theme\Plugin\Model\Entity\Base'/>
 	</type>
 	<virtualType name='Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\Pool'>
 		<arguments>
