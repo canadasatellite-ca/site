@@ -4,7 +4,6 @@ use Magento\Bundle\Api\Data\LinkInterface as ILink;
 use Magento\Bundle\Model\LinkManagement as Sb;
 use Magento\Bundle\Model\SelectionFactory;
 use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Catalog\Api\ProductRepositoryInterface;
 use Magento\Framework\App\ObjectManager;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\CouldNotSaveException;
@@ -25,14 +24,14 @@ final class LinkManagement {
 	 * @throws NSE
 	 */
 	function aroundSaveChild(Sb $sb, \Closure $f, $sku, ILink $linkedProduct) {
-		$product = $this->productRepository->get($sku, true);
+		$product = df_product_r()->get($sku, true);
 		if ($product->getTypeId() != \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
 			throw new InputException(
 				__('The product with the "%1" SKU isn\'t a bundle product.', [$product->getSku()])
 			);
 		}
 		/** @var \Magento\Catalog\Model\Product $linkProductModel */
-		$linkProductModel = $this->productRepository->get($linkedProduct->getSku());
+		$linkProductModel = df_product_r()->get($linkedProduct->getSku());
 		if ($linkProductModel->isComposite()) {
 			throw new InputException(__('The bundle product can\'t contain another composite product.'));
 		}
@@ -124,11 +123,6 @@ final class LinkManagement {
 	}
 
 	/**
-	 * @var \Magento\Catalog\Api\ProductRepositoryInterface
-	 */
-	protected $productRepository;
-
-	/**
 	 * @var SelectionFactory
 	 */
 	protected $bundleSelection;
@@ -138,11 +132,7 @@ final class LinkManagement {
 	 */
 	private $metadataPool;
 
-	function __construct(
-		ProductRepositoryInterface $productRepository,
-		SelectionFactory $bundleSelection
-	){
-		$this->productRepository = $productRepository;
+	function __construct(SelectionFactory $bundleSelection) {
 		$this->bundleSelection = $bundleSelection;
 	}
 }
