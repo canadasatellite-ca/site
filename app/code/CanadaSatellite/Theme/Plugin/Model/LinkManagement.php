@@ -28,23 +28,28 @@ final class LinkManagement {
 		$product = $this->productRepository->get($sku, true);
 		if ($product->getTypeId() != \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
 			throw new InputException(
-				__('Product with specified sku: "%1" is not a bundle product', [$product->getSku()])
+				__('The product with the "%1" SKU isn\'t a bundle product.', [$product->getSku()])
 			);
 		}
 		/** @var \Magento\Catalog\Model\Product $linkProductModel */
 		$linkProductModel = $this->productRepository->get($linkedProduct->getSku());
 		if ($linkProductModel->isComposite()) {
-			throw new InputException(__('Bundle product could not contain another composite product'));
+			throw new InputException(__('The bundle product can\'t contain another composite product.'));
 		}
 		if (!$linkedProduct->getId()) {
-			throw new InputException(__('Id field of product link is required'));
+			throw new InputException(__('The product link needs an ID field entered. Enter and try again.'));
 		}
+		# 2021-03-26 A custom code BEGIN
 		$linkedProduct->setPrice($linkProductModel->getFinalPrice())->setSelectionPriceValue($linkProductModel->getFinalPrice());
+		# 2021-03-26 A custom code END
 		/** @var \Magento\Bundle\Model\Selection $selectionModel */
 		$selectionModel = $this->bundleSelection->create();
 		$selectionModel->load($linkedProduct->getId());
 		if (!$selectionModel->getId()) {
-			throw new InputException(__('Can not find product link with id "%1"', [$linkedProduct->getId()]));
+			throw new InputException(__(
+				'The product link with the "%1" ID field wasn\'t found. Verify the ID and try again.'
+				,[$linkedProduct->getId()]
+			));
 		}
 		$linkField = $this->getMetadataPool()->getMetadata(ProductInterface::class)->getLinkField();
 		$selectionModel = $this->mapProductLinkToSelectionModel(
@@ -62,7 +67,8 @@ final class LinkManagement {
 	}
 
 	/**
-	 * Get MetadataPool instance
+	 * 2021-03-25
+	 * @used-by aroundSaveChild()
 	 * @return MetadataPool
 	 */
 	private function getMetadataPool()
@@ -74,19 +80,18 @@ final class LinkManagement {
 	}
 
 	/**
+	 * 2021-03-25
+	 * @used-by aroundSaveChild()
 	 * @param \Magento\Bundle\Model\Selection $selectionModel
-	 * @param \Magento\Bundle\Api\Data\LinkInterface $productLink
+	 * @param ILink $productLink
 	 * @param string $linkedProductId
 	 * @param string $parentProductId
 	 * @return \Magento\Bundle\Model\Selection
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
-	protected function mapProductLinkToSelectionModel(
-		\Magento\Bundle\Model\Selection $selectionModel,
-		\Magento\Bundle\Api\Data\LinkInterface $productLink,
-		$linkedProductId,
-		$parentProductId
+	private function mapProductLinkToSelectionModel(
+		\Magento\Bundle\Model\Selection $selectionModel, ILink $productLink, $linkedProductId, $parentProductId
 	) {
 		$selectionModel->setProductId($linkedProductId);
 		$selectionModel->setParentProductId($parentProductId);
