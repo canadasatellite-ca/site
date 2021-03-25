@@ -1,0 +1,15 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+<div class="order-date">
+<?php /*
+# 2021-03-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "«DOMDocument::loadHTML(): Tag date invalid in Entity, line: 1» on /sales/order/view/order_id/<order_id>":
+# https://github.com/canadasatellite-ca/site/issues/45
+# https://github.com/magento/magento2/issues/25738#issuecomment-563473682
+*/ ?>
+    <?= $block->escapeHtml(__('<span class="label">Order Date:</span> %1', '<span>' . $block->formatDate($block->getOrder()->getCreatedAt(), \IntlDateFormatter::LONG) . '</span>'), ['span', 'date']) ?>
+</div>
