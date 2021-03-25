@@ -1,7 +1,7 @@
 <?php
 namespace CanadaSatellite\Theme\Plugin\Model;
 use Magento\Bundle\Api\Data\LinkInterface as ILink;
-use Magento\Bundle\Model\LinkManagement as ParentLinkManagement;
+use Magento\Bundle\Model\LinkManagement as Sb;
 use Magento\Bundle\Model\SelectionFactory;
 use Magento\Catalog\Api\Data\ProductInterface;
 use Magento\Catalog\Api\ProductRepositoryInterface;
@@ -14,7 +14,8 @@ use Magento\Framework\Exception\NoSuchEntityException as NSE;
 final class LinkManagement {
 	/**
 	 * 2021-03-25
-	 * @param ParentLinkManagement $subject
+	 * @see \Magento\Bundle\Model\LinkManagement::saveChild()
+	 * @param Sb $subject
 	 * @param callable $proceed
 	 * @param $sku
 	 * @param ILink $linkedProduct
@@ -23,7 +24,7 @@ final class LinkManagement {
 	 * @throws InputException
 	 * @throws NSE
 	 */
-	function aroundSaveChild(ParentLinkManagement $subject, callable $proceed, $sku, ILink $linkedProduct) {
+	function aroundSaveChild(Sb $subject, callable $proceed, $sku, ILink $linkedProduct) {
 		$product = $this->productRepository->get($sku, true);
 		if ($product->getTypeId() != \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
 			throw new InputException(
