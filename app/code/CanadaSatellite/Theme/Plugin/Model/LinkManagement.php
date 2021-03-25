@@ -9,6 +9,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
+use Magento\Framework\Exception\NoSuchEntityException as NSE;
 # 2021-03-25
 final class LinkManagement {
 	/**
@@ -20,30 +21,24 @@ final class LinkManagement {
 	 * @return bool
 	 * @throws CouldNotSaveException
 	 * @throws InputException
-	 * @throws \Magento\Framework\Exception\NoSuchEntityException
+	 * @throws NSE
 	 */
-	function aroundSaveChild(
-		ParentLinkManagement $subject, callable $proceed, $sku, ILink $linkedProduct
-	) {
+	function aroundSaveChild(ParentLinkManagement $subject, callable $proceed, $sku, ILink $linkedProduct) {
 		$product = $this->productRepository->get($sku, true);
 		if ($product->getTypeId() != \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
 			throw new InputException(
 				__('Product with specified sku: "%1" is not a bundle product', [$product->getSku()])
 			);
 		}
-
 		/** @var \Magento\Catalog\Model\Product $linkProductModel */
 		$linkProductModel = $this->productRepository->get($linkedProduct->getSku());
 		if ($linkProductModel->isComposite()) {
 			throw new InputException(__('Bundle product could not contain another composite product'));
 		}
-
 		if (!$linkedProduct->getId()) {
 			throw new InputException(__('Id field of product link is required'));
 		}
-
 		$linkedProduct->setPrice($linkProductModel->getFinalPrice())->setSelectionPriceValue($linkProductModel->getFinalPrice());
-
 		/** @var \Magento\Bundle\Model\Selection $selectionModel */
 		$selectionModel = $this->bundleSelection->create();
 		$selectionModel->load($linkedProduct->getId());
@@ -57,13 +52,11 @@ final class LinkManagement {
 			$linkProductModel->getId(),
 			$product->getData($linkField)
 		);
-
 		try {
 			$selectionModel->save();
 		} catch (\Exception $e) {
 			throw new CouldNotSaveException(__('Could not save child: "%1"', $e->getMessage()), $e);
 		}
-
 		return true;
 	}
 
