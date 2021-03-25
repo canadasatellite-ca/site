@@ -31,15 +31,17 @@
 			$this->_categoryFactory = $categoryFactory;			
 			$this->categoryHelper = $categoryHelper;			
 			//$this->_storeManager = $storeManager;			
-		}		
-		
-		/**			
-			* Retrieve image URL			
-			*			
-			* @return string			
-		*/		
-		public function getThumbnailUrl($category)		
-		{			
+		}
+
+		/**
+		 * 2021-03-25
+		 * @used-by app/code/MageSuper/AdvancedSubcategoryList/view/frontend/templates/category/subcategories.phtml
+		 * @param $category
+		 * @return false|string
+		 * @throws \Magento\Framework\Exception\LocalizedException
+		 * @throws \Magento\Framework\Exception\NoSuchEntityException
+		 */
+		function getThumbnailUrl($category) {
 			$url = false;			
 			$image = $category->getThumbnail();			
 			if ($image) {				
