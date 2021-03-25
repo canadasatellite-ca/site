@@ -15,8 +15,8 @@ final class LinkManagement {
 	/**
 	 * 2021-03-25
 	 * @see \Magento\Bundle\Model\LinkManagement::saveChild()
-	 * @param Sb $subject
-	 * @param callable $proceed
+	 * @param Sb $sb
+	 * @param \Closure $f
 	 * @param $sku
 	 * @param ILink $linkedProduct
 	 * @return bool
@@ -24,7 +24,7 @@ final class LinkManagement {
 	 * @throws InputException
 	 * @throws NSE
 	 */
-	function aroundSaveChild(Sb $subject, callable $proceed, $sku, ILink $linkedProduct) {
+	function aroundSaveChild(Sb $sb, \Closure $f, $sku, ILink $linkedProduct) {
 		$product = $this->productRepository->get($sku, true);
 		if ($product->getTypeId() != \Magento\Catalog\Model\Product\Type::TYPE_BUNDLE) {
 			throw new InputException(
