@@ -2,15 +2,21 @@
 namespace CanadaSatellite\Theme\Plugin\Model;
 use Magento\Bundle\Api\Data\LinkInterface as ILink;
 use Magento\Bundle\Model\LinkManagement as Sb;
-use Magento\Bundle\Model\SelectionFactory;
 use Magento\Catalog\Api\Data\ProductInterface;
-use Magento\Framework\App\ObjectManager;
-use Magento\Framework\EntityManager\MetadataPool;
 use Magento\Framework\Exception\CouldNotSaveException;
 use Magento\Framework\Exception\InputException;
 use Magento\Framework\Exception\NoSuchEntityException as NSE;
 # 2021-03-25
-final class LinkManagement {
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
+class LinkManagement extends Sb {
+	/**
+	 * 2016-01-01
+	 * The empty constructor allows us to skip the parent's one.
+	 * Magento (at least at 2016-01-01) is unable to properly inject arguments into a plugin's constructor,
+	 * and it leads to the error like: «Missing required argument $amount of Magento\Framework\Pricing\Amount\Base».
+	 */
+	function __construct() {}
+
 	/**
 	 * 2021-03-25
 	 * @see \Magento\Bundle\Model\LinkManagement::saveChild()
@@ -42,7 +48,7 @@ final class LinkManagement {
 		$linkedProduct->setPrice($linkProductModel->getFinalPrice())->setSelectionPriceValue($linkProductModel->getFinalPrice());
 		# 2021-03-26 A custom code END
 		/** @var \Magento\Bundle\Model\Selection $selectionModel */
-		$selectionModel = $this->bundleSelection->create();
+		$selectionModel = $sb->bundleSelection->create();
 		$selectionModel->load($linkedProduct->getId());
 		if (!$selectionModel->getId()) {
 			throw new InputException(__(
@@ -50,8 +56,8 @@ final class LinkManagement {
 				,[$linkedProduct->getId()]
 			));
 		}
-		$linkField = $this->getMetadataPool()->getMetadata(ProductInterface::class)->getLinkField();
-		$selectionModel = $this->mapProductLinkToSelectionModel(
+		$linkField = df_metadata_pool()->getMetadata(ProductInterface::class)->getLinkField();
+		$selectionModel = $sb->mapProductLinkToSelectionModel(
 			$selectionModel,
 			$linkedProduct,
 			$linkProductModel->getId(),
@@ -63,76 +69,5 @@ final class LinkManagement {
 			throw new CouldNotSaveException(__('Could not save child: "%1"', $e->getMessage()), $e);
 		}
 		return true;
-	}
-
-	/**
-	 * 2021-03-25
-	 * @used-by aroundSaveChild()
-	 * @return MetadataPool
-	 */
-	private function getMetadataPool()
-	{
-		if (!$this->metadataPool) {
-			$this->metadataPool = ObjectManager::getInstance()->get(MetadataPool::class);
-		}
-		return $this->metadataPool;
-	}
-
-	/**
-	 * 2021-03-25
-	 * @used-by aroundSaveChild()
-	 * @param \Magento\Bundle\Model\Selection $selectionModel
-	 * @param ILink $productLink
-	 * @param string $linkedProductId
-	 * @param string $parentProductId
-	 * @return \Magento\Bundle\Model\Selection
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 */
-	private function mapProductLinkToSelectionModel(
-		\Magento\Bundle\Model\Selection $selectionModel, ILink $productLink, $linkedProductId, $parentProductId
-	) {
-		$selectionModel->setProductId($linkedProductId);
-		$selectionModel->setParentProductId($parentProductId);
-		if ($productLink->getSelectionId() !== null) {
-			$selectionModel->setSelectionId($productLink->getSelectionId());
-		}
-		if ($productLink->getOptionId() !== null) {
-			$selectionModel->setOptionId($productLink->getOptionId());
-		}
-		if ($productLink->getPosition() !== null) {
-			$selectionModel->setPosition($productLink->getPosition());
-		}
-		if ($productLink->getQty() !== null) {
-			$selectionModel->setSelectionQty($productLink->getQty());
-		}
-		if ($productLink->getPriceType() !== null) {
-			$selectionModel->setSelectionPriceType($productLink->getPriceType());
-		}
-		if ($productLink->getPrice() !== null) {
-			$selectionModel->setSelectionPriceValue($productLink->getPrice());
-		}
-		if ($productLink->getCanChangeQuantity() !== null) {
-			$selectionModel->setSelectionCanChangeQty($productLink->getCanChangeQuantity());
-		}
-		if ($productLink->getIsDefault() !== null) {
-			$selectionModel->setIsDefault($productLink->getIsDefault());
-		}
-
-		return $selectionModel;
-	}
-
-	/**
-	 * @var SelectionFactory
-	 */
-	protected $bundleSelection;
-
-	/**
-	 * @var MetadataPool
-	 */
-	private $metadataPool;
-
-	function __construct(SelectionFactory $bundleSelection) {
-		$this->bundleSelection = $bundleSelection;
 	}
 }
