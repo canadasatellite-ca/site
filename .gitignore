@@ -20,6 +20,9 @@
 # «preg_match() expects parameter 2 to be string, object given
 # in vendor/magento/module-catalog/Helper/Output.php:245»: https://github.com/canadasatellite-ca/site/issues/28
 !/vendor/magento/module-catalog/Helper/Output.php
+# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Invalid customer address id 45558»: https://github.com/canadasatellite-ca/site/issues/49
+!/vendor/magento/module-quote/Model/QuoteAddressValidator.php
 # 2021-03-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "«DOMDocument::loadHTML(): Tag date invalid in Entity, line: 1» on /sales/order/view/order_id/<order_id>":
 # https://github.com/canadasatellite-ca/site/issues/45
