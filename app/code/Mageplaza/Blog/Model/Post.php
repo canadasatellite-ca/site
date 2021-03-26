@@ -370,10 +370,10 @@ class Post extends \Magento\Framework\Model\AbstractModel
 
     /**
      * get related posts
-     * @return \Mageplaza\Blog\Model\ResourceModel\Post\Collection
+	 * @used-by app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml
+     * @return \Mageplaza\Blog\Model\ResourceModel\Post\Collection|null
      */
-    public function getRelatedPostsCollection()
-    {
+    function getRelatedPostsCollection() {
         if ($this->getTopicSting()) {
             $collection = $this->postCollectionFactory->create();
 
