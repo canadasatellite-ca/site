@@ -336,7 +336,11 @@ class Data extends AbstractHelper
         $thumbFilePath = $thumbAbsolutePath . $fileName;
         if (!file_exists($thumbFilePath)) {
             $this->createThumbFile(
-                $fileAbsolutePath,
+            	# 2021-03-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# «MageWorx\OptionFeatures\Helper\Data::createThumbFile():
+				# "File 'pub/media/mageworx/optionfeatures/product/option/value/<…>' does not exist"»:
+				# https://github.com/canadasatellite-ca/site/issues/46
+                file_exists($fileAbsolutePath) ? $fileAbsolutePath : df_product_image_path2abs($path),
                 $thumbAbsolutePath,
                 $fileName,
                 $thumbHeight,
