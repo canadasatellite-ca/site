@@ -60,7 +60,10 @@ class MultiFile extends File
      */
     public function getUrl()
     {
-        $uploadUrl = $this->urlBuilder->addSessionParam()->getUrl('*/*/uploader');
+    	# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "MageWorx_Downloads: «User Deprecated Functionality: Session ID is not used as URL parameter anymore»
+		# in vendor/magento/framework/Url.php on line 76": https://github.com/canadasatellite-ca/site/issues/51
+        $uploadUrl = $this->urlBuilder->getUrl('*/*/uploader');
         return $uploadUrl;
     }
 }

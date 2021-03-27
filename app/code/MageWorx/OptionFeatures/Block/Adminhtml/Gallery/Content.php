@@ -67,7 +67,10 @@ class Content extends Widget
      */
     public function getUploaderUrl()
     {
-        return $this->_urlBuilder->addSessionParam()->getUrl('mageworx_optionfeatures/option_value_gallery/upload');
+    	# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "MageWorx_Downloads: «User Deprecated Functionality: Session ID is not used as URL parameter anymore»
+		# in vendor/magento/framework/Url.php on line 76": https://github.com/canadasatellite-ca/site/issues/51
+        return $this->_urlBuilder->getUrl('mageworx_optionfeatures/option_value_gallery/upload');
     }
 
     /**
@@ -203,7 +206,10 @@ class Content extends Widget
         );
 
         $this->getUploader()->getConfig()->setUrl(
-            $this->_urlBuilder->addSessionParam()->getUrl('mageworx_optionfeatures/option_value_gallery/upload')
+			# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "MageWorx_Downloads: «User Deprecated Functionality: Session ID is not used as URL parameter anymore»
+			# in vendor/magento/framework/Url.php on line 76": https://github.com/canadasatellite-ca/site/issues/51
+            $this->_urlBuilder->getUrl('mageworx_optionfeatures/option_value_gallery/upload')
         )->setFileField(
             'image'
         )->setFilters(
