@@ -454,7 +454,10 @@ class Frontend extends Template
 		$results    = array();
 		$firstIndex = 0;
 		$lastIndex  = $limit - 1;
-		if ($page) {
+		# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «A non well formed numeric value encountered in app/code/Mageplaza/Blog/Block/Frontend.php on line 462»:
+		# https://github.com/canadasatellite-ca/site/issues/52
+		if ($page && is_numeric($page)) {
 			if ($page > $numOfPage || $page < 1) {
 				$page = 1;
 			}
