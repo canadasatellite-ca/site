@@ -246,13 +246,15 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 						fjs.parentNode.insertBefore(js, fjs);
 					}(document, 'script', 'facebook-jssdk'));
 				</script>
-
-
-				<div class="fb-comments" data-href="<?= $b->getUrlByPost($_post); ?>" data-numposts="<?= $b->helperComment('facebook_number_comment'); ?>"
-					 data-width="100%" data-colorscheme="<?= $b->helperComment('facebook_colorscheme') ?>" data-order-by="<?= $b->helperComment('facebook_order_by') ?>"></div>
-
+				<div
+					class="fb-comments"
+					data-colorscheme="<?= $b->helperComment('facebook_colorscheme') ?>"
+					data-href="<?= $b->getUrlByPost($_post); ?>"
+					data-numposts="<?= $b->helperComment('facebook_number_comment'); ?>"
+					data-order-by="<?= $b->helperComment('facebook_order_by') ?>"
+					data-width="100%"
+				></div>
 			</div>
-
 		<?php } elseif ($typeComment == CType::DEFAULT_COMMENT) { ?>
 			<div class="container default-cmt">
 				<div class="row">
