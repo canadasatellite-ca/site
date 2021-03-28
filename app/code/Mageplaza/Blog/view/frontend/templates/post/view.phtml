@@ -26,44 +26,46 @@ if ($b->filterPost($_post)): ?>
 	<?php } ?>
 	<div class="mpcss post-view" id="mpblog-list-container">
 		<div class="row">
-			<?php if ($b->getBlogConfig('sidebar/sidebar_left_right')==1){
-			?>
-			<div class="col-md-9 col-sm-6">
-
-				<div class="post-image col-xs-12">
-				   <?php if ($_post->getImage()) : ?>
-					   <a class="fancybox" href="<?= $b->getImageUrl($_post->getImage()); ?>">
-						   <img class="img-responsive" src="<?= $b->getImageUrl($_post->getImage()); ?>" alt="<?= $b->escapeHtml($_post->getName()); ?>"/>
-					   </a>
-				   <?php endif; ?>
-				</div>
-
-
-				<div class="post-post_content col-xs-12">
-					 <?= $b->getPageFilter($_post->getPostContent()); ?>
-				</div>
-
-				<div class="col-xs-12">
-					<hr/>
-					<div class="mp-post-info">
-						<span><i class="fa fa-calendar-times-o"></i> <?= $b->getDateFormat($_post->getCreatedAt()); ?></span>
-						<?php if ($b->getPostCategoryHtml($_post)) {?>
-							| <span><i class="fa fa-folder-open-o"></i> <?= __('Categories:'); ?> <?= $b->getPostCategoryHtml($_post); ?> </span>
-						<?php } ?>
-						<?php if ($b->getTagList($_post)) {?>
-							| <span><i class="fa fa-tags"></i> <?= __('Tags:'); ?>  <?= $b->getTagList($_post); ?></span>
-						<?php } ?>
-						<?php if ($authorName && $b->getBlogConfig('general/display_author')){ ?>
-							| <span><i class="fa fa-user"></i> By: <a class="mp-info" href="<?= $b->getAuthorUrl($author) ?>"><?= $authorName; ?></a></span>
-							<?php if ($authorName != $modifierName && $modifierName){ ?>
-								| <span><i class="fa fa-edit"></i> Modify By: <a class="mp-info" href="<?= $b->getAuthorUrl($modifier) ?>"><?= $modifierName;?></a><?= ' at : '.$_post->getUpdatedAt(); ?></span>
-							<?php } ?>
-						<?php } ?>
-
+			<?php if (1 == $b->getBlogConfig('sidebar/sidebar_left_right')) { ?>
+				<div class="col-md-9 col-sm-6">
+					<div class="post-image col-xs-12">
+					   <?php if ($_post->getImage()) { ?>
+						   <a
+							   class="fancybox"
+							   href="<?= $b->getImageUrl($_post->getImage()); ?>"
+						   >
+							   <img
+								   alt="<?= $b->escapeHtml($_post->getName()); ?>"
+								   class="img-responsive"
+								   src="<?= $b->getImageUrl($_post->getImage()); ?>"
+							   />
+						   </a>
+					   <?php } ?>
 					</div>
-					<hr/>
+					<div class="post-post_content col-xs-12">
+						 <?= $b->getPageFilter($_post->getPostContent()); ?>
+					</div>
+					<div class="col-xs-12">
+						<hr/>
+						<div class="mp-post-info">
+							<span><i class="fa fa-calendar-times-o"></i> <?= $b->getDateFormat($_post->getCreatedAt()); ?></span>
+							<?php if ($b->getPostCategoryHtml($_post)) {?>
+								| <span><i class="fa fa-folder-open-o"></i> <?= __('Categories:'); ?> <?= $b->getPostCategoryHtml($_post); ?> </span>
+							<?php } ?>
+							<?php if ($b->getTagList($_post)) {?>
+								| <span><i class="fa fa-tags"></i> <?= __('Tags:'); ?>  <?= $b->getTagList($_post); ?></span>
+							<?php } ?>
+							<?php if ($authorName && $b->getBlogConfig('general/display_author')){ ?>
+								| <span><i class="fa fa-user"></i> By: <a class="mp-info" href="<?= $b->getAuthorUrl($author) ?>"><?= $authorName; ?></a></span>
+								<?php if ($authorName != $modifierName && $modifierName){ ?>
+									| <span><i class="fa fa-edit"></i> Modify By: <a class="mp-info" href="<?= $b->getAuthorUrl($modifier) ?>"><?= $modifierName;?></a><?= ' at : '.$_post->getUpdatedAt(); ?></span>
+								<?php } ?>
+							<?php } ?>
+
+						</div>
+						<hr/>
+					</div>
 				</div>
-			</div>
 
 			<div class="mp-sidebar col-md-3 col-sm-6">
 					<?= $this->getChildHtml(); ?>
