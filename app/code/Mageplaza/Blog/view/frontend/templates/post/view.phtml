@@ -140,18 +140,21 @@ if ($b->filterPost($_post)): ?>
 			</div>
 			<div class="share-col-right">
 				<div class="post-sharing-button">
-						<div class="addthis_sharing_toolbox"></div>
+					<div class="addthis_sharing_toolbox"></div>
 				</div>
 			</div>
 		</div>
 	</div>
-<?php } ?>
-<?php
-if($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/author_description')): ?>
+<?php }
+if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/author_description')) { ?>
 	<div class="mpcss about-admin">
 		<div class="row">
 			<div class="col-xs-12 author-title">
-				<h4 class="admin-title"><?= __('About the Author: ');?><a class="mp-info"><?php if($b->getBlogConfig('general/author_name')) echo $b->getBlogConfig('general/author_name');?></a></h4>
+				<h4 class="admin-title"><?= __('About the Author: ');?>
+					<a class="mp-info">
+						<?php if($b->getBlogConfig('general/author_name')) {echo $b->getBlogConfig('general/author_name');} ?>
+					</a>
+				</h4>
 				<div id="admin-border"></div>
 			</div>
 			<div class="col-xs-12 author-des">
@@ -162,13 +165,11 @@ if($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/aut
 				<?php endif;?>
 				<div class="admin-description">
 					<?= $b->getBlogConfig('general/author_description');?>
-<!--					--><?php //echo $b->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('mageplaza_blog_author_admin')->toHtml(); ?>
 				</div>
 			</div>
 		</div>
 	</div>
-<?php endif;?>
-
+<?php } ?>
 <?php
 	$relatedPosts = $_post->getRelatedPostsCollection(); /** @var PostC|null $relatedPosts */
 	$countRelated = 0;
