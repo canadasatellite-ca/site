@@ -1,5 +1,6 @@
 <?php
 use Mageplaza\Blog\Block\Post\View as B; /** @var B $block */ $b = $block; /** @var B $b */
+use Mageplaza\Blog\Model\Config\Source\Comments\Type as CType;
 use Mageplaza\Blog\Model\Post;
 use Mageplaza\Blog\Model\ResourceModel\Post\Collection as PostC;
 $_post = $b->getCurrentPost(); /** @var Post $_post */
@@ -214,9 +215,9 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 		</div>
 	<?php } ?>
 <div class="mpcss mp-comment">
-	<?php if( $_post->getAllowComment()==1) { ?>
-		<?php $typeComment = $b->checkComment(); ?>
-		<?php if ($typeComment == Mageplaza\Blog\Model\Config\Source\Comments\Type::DISQUS): ?>
+	<?php if (1 == $_post->getAllowComment()) {
+		$typeComment = $b->checkComment();
+		if ($typeComment == CType::DISQUS): ?>
 			<div class="box-collateral box-reviews" id="post-reviews">
 				<h2><?= __('Comments') ?></h2>
 
@@ -236,7 +237,7 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 
 
 			</div>
-		<?php elseif ($typeComment == Mageplaza\Blog\Model\Config\Source\Comments\Type::FACEBOOK): ?>
+		<?php elseif ($typeComment == CType::FACEBOOK): ?>
 			<div class="box-collateral box-reviews" id="post-reviews">
 				<h2><?= __('Comments') ?></h2>
 
@@ -256,7 +257,7 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 
 			</div>
 
-		<?php elseif ($typeComment == Mageplaza\Blog\Model\Config\Source\Comments\Type::DEFAULT_COMMENT): ?>
+		<?php elseif ($typeComment == CType::DEFAULT_COMMENT): ?>
 			<div class="container default-cmt">
 				<div class="row">
 					<div class="col-xs-10"> <h2><?= __('Comments'); ?></h2></div>
