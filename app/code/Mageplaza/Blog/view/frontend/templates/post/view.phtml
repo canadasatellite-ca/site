@@ -178,17 +178,15 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 	# «count(): Parameter must be an array or an object that implements Countable
 	# in app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml on line 185»:
 	# https://github.com/canadasatellite-ca/site/issues/50
-	if ($relatedPosts && count($relatedPosts)): ?>
-	<div class="post-same-topics topic-list mpcss">
-		<div class="row">
-			<div class="col-xs-12 row">
+	if ($relatedPosts && count($relatedPosts)) { ?>
+		<div class="post-same-topics topic-list mpcss">
+			<div class="row">
+				<div class="col-xs-12 row">
 					<h2><?= ($limitRelated) ? __('Related Posts') : __(''); ?></h2>
-					<?php foreach ($relatedPosts as $relatedPost): ?>
-						<?php
-							if($b->filterPost($relatedPost)):
-								$countRelated++;
-							?>
-								<?php if($countRelated > $limitRelated) break; ?>
+					<?php foreach ($relatedPosts as $relatedPost) {
+						if ($b->filterPost($relatedPost)) {
+							$countRelated++;
+							if ($countRelated > $limitRelated) {break;} ?>
 						<div class="relate-content item col-xs-3" style="margin-right:10px;">
 							<a class="mp-relate-link" href="<?= $b->getUrlByPost($relatedPost) ?>">
 								<?php if ($relatedPost->getImage()){ ?>
@@ -199,13 +197,12 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 								<?= $relatedPost->getName(); ?>
 							</a>
 						</div>
-							<?php endif; ?>
-					<?php endforeach; ?>
+						<?php }
+					} ?>
+				</div>
 			</div>
 		</div>
-	</div>
-
-<?php endif; ?>
+	<?php } ?>
 <div class="mpcss mp-comment">
 	<?php if( $_post->getAllowComment()==1) { ?>
 		<?php $typeComment = $b->checkComment(); ?>
