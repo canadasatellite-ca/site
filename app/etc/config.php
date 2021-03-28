@@ -346,6 +346,8 @@ return [
         'MSP_TwoFactorAuth' => 1,
         'MW_Onestepcheckout' => 1,
         'MageWorx_Downloads' => 1,
+        'MagePal_Core' => 1,
+        'MagePal_GmailSmtpApp' => 1,
         'MageSuper_AdvancedSubcategoryList' => 1,
         'MageWorx_OptionBase' => 1,
         'MageSuper_Categoryattribute' => 1,
