@@ -158,19 +158,19 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 				<div id="admin-border"></div>
 			</div>
 			<div class="col-xs-12 author-des">
-				<?php if($b->getBlogConfig('general/upload_image')):?>
-				<div class="admin-avatar">
-					<img class="img-responsive" src="<?= $b->getImageUrl('mageplaza/author/'.$b->getBlogConfig('general/upload_image'));?>">
-				</div>
-				<?php endif;?>
-				<div class="admin-description">
-					<?= $b->getBlogConfig('general/author_description');?>
-				</div>
+				<?php if($b->getBlogConfig('general/upload_image')) { ?>
+					<div class="admin-avatar">
+						<img
+							class="img-responsive"
+							src="<?= $b->getImageUrl('mageplaza/author/' . $b->getBlogConfig('general/upload_image')) ?>"
+						/>
+					</div>
+				<?php } ?>
+				<div class="admin-description"><?= $b->getBlogConfig('general/author_description') ?></div>
 			</div>
 		</div>
 	</div>
-<?php } ?>
-<?php
+<?php }
 	$relatedPosts = $_post->getRelatedPostsCollection(); /** @var PostC|null $relatedPosts */
 	$countRelated = 0;
 	$limitRelated = $b->getBlogConfig('general/related_post');
@@ -179,7 +179,6 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 	# in app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml on line 185»:
 	# https://github.com/canadasatellite-ca/site/issues/50
 	if ($relatedPosts && count($relatedPosts)): ?>
-
 	<div class="post-same-topics topic-list mpcss">
 		<div class="row">
 			<div class="col-xs-12 row">
