@@ -8,14 +8,15 @@ $authorName = $author !== null ? $author->getName() : '';
 $modifier = $b->getAuthorByPost($_post->getModifierId());
 $modifierName = $modifier !== null ? $modifier->getName() : '';
 $checkRss = $b->checkRss();
-if ($checkRss):
+if ($checkRss) {
 	?>
 	<div class="mp-blog-rss">
-			<a href="<?= $checkRss ?>" class="bb-rss-icon"><img src="
-				<?= $this->getViewFileUrl('Mageplaza_Blog::media/images/rss.png') ?>" width="16px"> </a>
-		</div>
-<?php endif; ?>
-<?php if($b->filterPost($_post)): ?>
+		<a href="<?= $checkRss ?>" class="bb-rss-icon">
+			<img src="<?= $this->getViewFileUrl('Mageplaza_Blog::media/images/rss.png') ?>" width="16px" />
+		</a>
+	</div>
+<?php }
+if($b->filterPost($_post)): ?>
 
 <?php if ($b->getBlogConfig('share/enabled')): ?>
 	<script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=<?= $b->getBlogConfig('share/pubid_id') ?>"
