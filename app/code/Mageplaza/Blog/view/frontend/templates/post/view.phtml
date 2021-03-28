@@ -217,15 +217,12 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 <div class="mpcss mp-comment">
 	<?php if (1 == $_post->getAllowComment()) {
 		$typeComment = $b->checkComment();
-		if ($typeComment == CType::DISQUS): ?>
+		if ($typeComment == CType::DISQUS) { ?>
 			<div class="box-collateral box-reviews" id="post-reviews">
 				<h2><?= __('Comments') ?></h2>
-
 				<div id="disqus_thread"></div>
 				<script type="text/javascript">
 					var disqus_shortname = '<?= $b->helperComment('disqus');?>';
-
-					/* * * DON'T EDIT BELOW THIS LINE * * */
 					(function () {
 						var dsq = document.createElement('script');
 						dsq.type = 'text/javascript';
@@ -234,22 +231,21 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 						(document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
 					})();
 				</script>
-
-
 			</div>
-		<?php elseif ($typeComment == CType::FACEBOOK): ?>
+		<?php } elseif ($typeComment == CType::FACEBOOK) { ?>
 			<div class="box-collateral box-reviews" id="post-reviews">
 				<h2><?= __('Comments') ?></h2>
-
 				<div id="fb-root"></div>
-				<script>(function (d, s, id) {
+				<script>
+					(function (d, s, id) {
 						var js, fjs = d.getElementsByTagName(s)[0];
 						if (d.getElementById(id)) return;
 						js = d.createElement(s);
 						js.id = id;
 						js.src = "//connect.facebook.net/en_GB/sdk.js#xfbml=1&version=v2.5&appId=<?= $this->getAppId()?>";
 						fjs.parentNode.insertBefore(js, fjs);
-					}(document, 'script', 'facebook-jssdk'));</script>
+					}(document, 'script', 'facebook-jssdk'));
+				</script>
 
 
 				<div class="fb-comments" data-href="<?= $b->getUrlByPost($_post); ?>" data-numposts="<?= $b->helperComment('facebook_number_comment'); ?>"
@@ -257,7 +253,7 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 
 			</div>
 
-		<?php elseif ($typeComment == CType::DEFAULT_COMMENT): ?>
+		<?php } elseif ($typeComment == CType::DEFAULT_COMMENT) { ?>
 			<div class="container default-cmt">
 				<div class="row">
 					<div class="col-xs-10"> <h2><?= __('Comments'); ?></h2></div>
@@ -310,8 +306,7 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 					'comment'
 				]);
 			</script>
-
-		<?php endif;
+		<?php }
 	}?>
 </div>
 <script>
