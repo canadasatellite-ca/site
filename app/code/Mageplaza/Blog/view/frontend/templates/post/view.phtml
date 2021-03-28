@@ -95,7 +95,9 @@ if ($b->filterPost($_post)): ?>
 					<div class="col-xs-12">
 						<hr/>
 						<div class="mp-post-info">
-							<span><i class="fa fa-calendar-times-o"></i> <?= $b->getDateFormat($_post->getCreatedAt()) ?></span>
+							<span>
+								<i class="fa fa-calendar-times-o"></i> <?= $b->getDateFormat($_post->getCreatedAt()) ?>
+							</span>
 							<?php if ($b->getPostCategoryHtml($_post)) { ?>
 								|
 								<span>
@@ -115,23 +117,22 @@ if ($b->filterPost($_post)): ?>
 							<?php if ($authorName != $modifierName && $modifierName) { ?>
 									|
 									<span>
-										<i class="fa fa-edit"></i> Modify By: <a class="mp-info" href="<?= $b->getAuthorUrl($modifier) ?>"><?= $modifierName;?></a><?= ' at : '.$_post->getUpdatedAt(); ?>
+										<i class="fa fa-edit"></i> Modify By:
+										<a
+											class="mp-info"
+											href="<?= $b->getAuthorUrl($modifier) ?>"
+										><?= $modifierName;?></a><?= ' at : '.$_post->getUpdatedAt(); ?>
 									</span>
-
 								<?php } ?>
 							<?php } ?>
-
 						</div>
 						<hr/>
 					</div>
 				</div>
-
 			<?php }?>
 		</div>
 	</div>
-
-
-<?php if ($b->getBlogConfig('share/enabled')): ?>
+<?php if ($b->getBlogConfig('share/enabled')) { ?>
 	<div class="mpcss">
 		<div id="sharing">
 			<div class="share-col-left">
@@ -144,8 +145,7 @@ if ($b->filterPost($_post)): ?>
 			</div>
 		</div>
 	</div>
-<?php endif; ?>
-
+<?php } ?>
 <?php
 if($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/author_description')): ?>
 	<div class="mpcss about-admin">
