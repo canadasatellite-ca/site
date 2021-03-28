@@ -380,7 +380,6 @@ return [
         'Mageplaza_AutoRelated' => 1,
         'Mageplaza_GoogleRecaptcha' => 1,
         'Mageplaza_Security' => 1,
-        'Mageplaza_Smtp' => 1,
         'Mageside_CanadaPostShipping' => 1,
         'Magestore_PurchaseOrderSuccess' => 1,
         'MageSuper_Casat' => 1,
