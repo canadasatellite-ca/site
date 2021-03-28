@@ -106,11 +106,17 @@ if ($b->filterPost($_post)): ?>
 							<?php if ($b->getTagList($_post)) {?>
 								| <span><i class="fa fa-tags"></i> <?= __('Tags:'); ?>  <?= $b->getTagList($_post); ?></span>
 							<?php } ?>
-
 							<?php if ($authorName && $b->getBlogConfig('general/display_author')){ ?>
-								| <span><i class="fa fa-user"></i> By: <a class="mp-info" href="<?= $b->getAuthorUrl($author) ?>"><?= $authorName; ?></a></span>
-							<?php if ($authorName != $modifierName && $modifierName){ ?>
-									| <span><i class="fa fa-edit"></i> Modify By: <a class="mp-info" href="<?= $b->getAuthorUrl($modifier) ?>"><?= $modifierName;?></a><?= ' at : '.$_post->getUpdatedAt(); ?></span>
+								|
+								<span>
+									<i class="fa fa-user"></i> By:
+									<a class="mp-info" href="<?= $b->getAuthorUrl($author) ?>"><?= $authorName; ?></a>
+								</span>
+							<?php if ($authorName != $modifierName && $modifierName) { ?>
+									|
+									<span>
+										<i class="fa fa-edit"></i> Modify By: <a class="mp-info" href="<?= $b->getAuthorUrl($modifier) ?>"><?= $modifierName;?></a><?= ' at : '.$_post->getUpdatedAt(); ?>
+									</span>
 
 								<?php } ?>
 							<?php } ?>
