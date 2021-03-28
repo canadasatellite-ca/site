@@ -358,13 +358,8 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 		</script>
 	<?php } ?>
 <?php } ?>
-
 <script type="text/javascript">
-	require([
-		'jquery',
-		'fancybox',
-		'migrate'
-	], function($){
+	require(['jquery', 'fancybox', 'migrate'], function($) {
 		var addToAll = false;
 		var gallery = true;
 		var titlePosition = 'inside';
@@ -375,10 +370,9 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 			var a = $('<a href="#" class="fancybox"></a>').attr('href', src).attr('title', title);
 			$this.wrap(a);
 		});
-		if (gallery)
+		if (gallery) {
 			$('a.fancybox').attr('rel', 'fancyboxgallery');
-		$('a.fancybox').fancybox({
-			titlePosition: titlePosition
-		});
+		}
+		$('a.fancybox').fancybox({titlePosition: titlePosition});
 	});
 </script>
