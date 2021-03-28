@@ -91,16 +91,17 @@ if ($b->filterPost($_post)): ?>
 						   </a>
 					   <?php } ?>
 					</div>
-					<div class="post-post_content col-xs-12">
-						<?= $b->getPageFilter($_post->getPostContent()); ?>
-					</div>
-
+					<div class="post-post_content col-xs-12"><?= $b->getPageFilter($_post->getPostContent()); ?></div>
 					<div class="col-xs-12">
 						<hr/>
 						<div class="mp-post-info">
-							<span><i class="fa fa-calendar-times-o"></i> <?= $b->getDateFormat($_post->getCreatedAt()); ?></span>
-							<?php if ($b->getPostCategoryHtml($_post)) {?>
-								| <span><i class="fa fa-folder-open-o"></i> <?= __('Categories:'); ?> <?= $b->getPostCategoryHtml($_post); ?> </span>
+							<span><i class="fa fa-calendar-times-o"></i> <?= $b->getDateFormat($_post->getCreatedAt()) ?></span>
+							<?php if ($b->getPostCategoryHtml($_post)) { ?>
+								|
+								<span>
+									<i class="fa fa-folder-open-o"></i>
+									<?= __('Categories:') . ' ' . $b->getPostCategoryHtml($_post); ?>
+								</span>
 							<?php } ?>
 							<?php if ($b->getTagList($_post)) {?>
 								| <span><i class="fa fa-tags"></i> <?= __('Tags:'); ?>  <?= $b->getTagList($_post); ?></span>
