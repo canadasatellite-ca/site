@@ -17,7 +17,10 @@ if ($checkRss) {
 		</a>
 	</div>
 <?php }
-if ($b->filterPost($_post)): ?>
+if (!$b->filterPost($_post)) {
+	?><div><?= __('This store has no post with name: ') . $_post->getName() ?></div><?php
+}
+else { ?>
 	<?php if ($b->getBlogConfig('share/enabled')) { ?>
 		<script
 			async="async"
@@ -354,11 +357,7 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 		}
 		</script>
 	<?php } ?>
-
-<?php else: ?>
-	<div><?= __('This store has no post with name: ').$_post->getName() ?></div>
-
-<?php endif;?>
+<?php } ?>
 
 <script type="text/javascript">
 	require([
