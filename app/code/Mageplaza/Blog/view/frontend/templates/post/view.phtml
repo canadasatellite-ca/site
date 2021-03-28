@@ -187,16 +187,26 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 						if ($b->filterPost($relatedPost)) {
 							$countRelated++;
 							if ($countRelated > $limitRelated) {break;} ?>
-						<div class="relate-content item col-xs-3" style="margin-right:10px;">
-							<a class="mp-relate-link" href="<?= $b->getUrlByPost($relatedPost) ?>">
-								<?php if ($relatedPost->getImage()){ ?>
-								<img class="img-responsive" src="<?= $b->getImageUrl($relatedPost->getImage()); ?>" align="middle" alt="<?= $b->escapeHtml($relatedPost->getName()); ?>">
-								<?php } else {?>
-									<img class="img-responsive" src="<?= $b->getDefaultImageUrl() ?>"align="middle" alt="<?= $b->escapeHtml($relatedPost->getName()); ?>">
-								<?php }?>
-								<?= $relatedPost->getName(); ?>
-							</a>
-						</div>
+							<div class="relate-content item col-xs-3" style="margin-right:10px;">
+								<a class="mp-relate-link" href="<?= $b->getUrlByPost($relatedPost) ?>">
+									<?php if ($relatedPost->getImage()) { ?>
+										<img
+											align="middle"
+											alt="<?= $b->escapeHtml($relatedPost->getName()) ?>"
+											class="img-responsive"
+											src="<?= $b->getImageUrl($relatedPost->getImage()) ?>"
+										>
+									<?php } else {?>
+										<img
+											align="middle"
+											alt="<?= $b->escapeHtml($relatedPost->getName()) ?>"
+											class="img-responsive"
+											src="<?= $b->getDefaultImageUrl() ?>"
+										>
+									<?php } ?>
+									<?= $relatedPost->getName() ?>
+								</a>
+							</div>
 						<?php }
 					} ?>
 				</div>
