@@ -319,6 +319,9 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 		fileAsync: false,
 		functions: {},
 		logLevel: 2,
+		// 2021-03-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		// @todo "modifyVars in the app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml file
+		// does not work in the production mode": https://github.com/canadasatellite-ca/site/issues/59
 		modifyVars: {'@color': '<?= $b->getBlogConfig('general/font_color') ?>'},
 		poll: 1000,
 		relativeUrls: false,
