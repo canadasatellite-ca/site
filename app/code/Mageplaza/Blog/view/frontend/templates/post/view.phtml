@@ -178,10 +178,15 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 	$relatedPosts = $_post->getRelatedPostsCollection(); /** @var PostC|null $relatedPosts */
 	$countRelated = 0;
 	$limitRelated = $b->getBlogConfig('general/related_post');
-	# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	# «count(): Parameter must be an array or an object that implements Countable
-	# in app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml on line 185»:
-	# https://github.com/canadasatellite-ca/site/issues/50
+	// 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	// «count(): Parameter must be an array or an object that implements Countable
+	// in app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml on line 185»:
+	// https://github.com/canadasatellite-ca/site/issues/50
+	// 2021-03-29
+	// `#` comments (instead of `//`) lead to the error in the production mode:
+	// "«syntax error, unexpected 'else' (T_ELSE), expecting end of file»
+	// in var/view_preprocessed/pub/static/app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml:79":
+	// https://github.com/canadasatellite-ca/site/issues/58
 	if ($relatedPosts && count($relatedPosts)) { ?>
 		<div class="post-same-topics topic-list mpcss">
 			<div class="row">
