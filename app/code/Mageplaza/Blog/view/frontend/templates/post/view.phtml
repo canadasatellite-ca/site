@@ -183,10 +183,11 @@ if ($b->getBlogConfig('general/display_author') && $b->getBlogConfig('general/au
 	// in app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml on line 185»:
 	// https://github.com/canadasatellite-ca/site/issues/50
 	// 2021-03-29
-	// `#` comments (instead of `//`) lead to the error in the production mode:
+	// 1) `#` comments (instead of `//`) lead to the error in the production mode:
 	// "«syntax error, unexpected 'else' (T_ELSE), expecting end of file»
 	// in var/view_preprocessed/pub/static/app/code/Mageplaza/Blog/view/frontend/templates/post/view.phtml:79":
 	// https://github.com/canadasatellite-ca/site/issues/58
+	// 2) `//` comments do not lead to the error, because Magento removes them for `var/view_preprocessed`-based *.phtml files.
 	if ($relatedPosts && count($relatedPosts)) { ?>
 		<div class="post-same-topics topic-list mpcss">
 			<div class="row">
