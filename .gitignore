@@ -23,6 +23,10 @@
 # 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
 !/vendor/magento/module-quote/Model/QuoteAddressValidator.php
+# 2021-03-30 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "«The following tag(s) are not allowed: img» on sales/order/invoice/order_id/<…>":
+# https://github.com/canadasatellite-ca/site/issues/57
+!/vendor/magento/module-sales/view/frontend/templates/order/invoice/items/renderer/default.phtml
 # 2021-03-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "«DOMDocument::loadHTML(): Tag date invalid in Entity, line: 1» on /sales/order/view/order_id/<order_id>":
 # https://github.com/canadasatellite-ca/site/issues/45
