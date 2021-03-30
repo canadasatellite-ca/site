@@ -72,6 +72,7 @@ service cron restart
 service mysql restart
 service nginx restart
 service php7.2-fpm restart
+service prod_dynamics_integration restart
 service rabbitmq-server restart
 service redis restart
 ```
