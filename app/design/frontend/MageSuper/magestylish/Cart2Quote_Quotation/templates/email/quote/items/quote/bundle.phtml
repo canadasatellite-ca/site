@@ -1,21 +1,16 @@
 <?php
-/**
- * Cart2Quote
- */
-
-/** @var $block \Magento\Bundle\Block\Sales\Order\Items\Renderer */
+use Cart2Quote\Quotation\Block\Quote\Email\Items\Bundle as B; /** @var B $block */ $b = $block; /** @var B $b */
+use Magento\Catalog\Model\Product as P;
 /** @var $_quote \Cart2Quote\Quotation\Model\Quote */
-?>
-<?php $parentItem = $block->getItem() ?>
-<?php $items = array_merge([$parentItem], $parentItem->getChildren()); ?>
-<?php $_count = count($items) ?>
-<?php $_index = 0 ?>
-<?php $_item = $block->getItem() ?>
-
-<?php $_prevOptionId = '' ?>
-
-<?php foreach ($items as $_item): ?>
-    <?php $_quote = $_item->getQuote() ?>
+$parentItem = $b->getItem();
+$items = array_merge([$parentItem], $parentItem->getChildren());
+$_count = count($items);
+$_index = 0;
+$_item = $b->getItem();
+$_prevOptionId = '';
+foreach ($items as $_item):
+	$p = $_item->getProduct(); /** @var P $p */
+	$_quote = $_item->getQuote() ?>
     <?php if ($_item->getOptions() || $parentItem->getDescription()): ?>
         <?php $_showlastRow = true ?>
     <?php else: ?>
@@ -30,14 +25,22 @@
     <?php endif; ?>
     <tr id="order-item-row-<?php echo $_item->getItemId() ?>" class="<?php if ($_item->getParentItem()): ?>item-options-container<?php else: ?>item-parent<?php endif; ?>"<?php if ($_item->getParentItem()): ?> data-th="<?php echo $_item->getName() ?>"<?php endif; ?>>
         <?php if (!$_item->getParentItem()): ?>
-            <td class="col name" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>">
+            <td class="col name" data-th="<?php echo $b->escapeHtml(__('Product Name')); ?>">
                 <strong class="product name product-item-name"><?php echo $_item->getName() ?></strong>
-                <p class="product-description"><?php echo $block->escapeHtml($_item->getProduct()->getResource()->getAttributeRawValue($_item->getProduct()->getEntityId(),'quote_description',0)) ?></p>
-                <p class="sku"><?php echo  __('SKU'); ?>: <?php echo $block->escapeHtml($_item->getSku()) ?></p>
+<?php
+	# 2021-03-31 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	# "`Cart2Quote_Quotation`: «Array to string conversion»
+	# in `app/design/frontend/MageSuper/magestylish/Cart2Quote_Quotation/templates/email/quote/items/quote/bundle.phtml:35`":
+	# https://github.com/canadasatellite-ca/site/issues/63
+	if ($v = $p->getResource()->getAttributeRawValue($p->getEntityId(), 'quote_description', 0)) { /** @var mixed $v */
+		echo df_tag('p', 'product-description', $b->escapeHtml($v));
+	}
+?>
+                <p class="sku"><?php echo  __('SKU'); ?>: <?php echo $b->escapeHtml($_item->getSku()) ?></p>
             </td>
         <?php else: ?>
-            <td class="col value" data-th="<?php echo $block->escapeHtml(__('Product Name')); ?>" style="padding: 2px 20px;">
-                <?php echo $block->escapeHtml($_item->getQty() . ' x ' . $_item->getName()) ?>
+            <td class="col value" data-th="<?php echo $b->escapeHtml(__('Product Name')); ?>" style="padding: 2px 20px;">
+                <?php echo $b->escapeHtml($_item->getQty() . ' x ' . $_item->getName()) ?>
                 <span class="price">
                     &nbsp;<?php echo $this->helper('Magento\Framework\Pricing\Helper\Data')->currency($_item->getPrice() * $_item->getQty(),true,false) ?>
                 </span>
@@ -49,9 +52,9 @@
             </td>
         <?php endif; ?>
         <?php if (!$_item->getParentItem()): ?>
-            <td class="col subtotal" data-th="<?php echo $block->escapeHtml(__('Subtotal')); ?>" style="padding: 10px;">
+            <td class="col subtotal" data-th="<?php echo $b->escapeHtml(__('Subtotal')); ?>" style="padding: 10px;">
                 <?php if(!$_item->getProduct()->getResource()->getAttributeRawValue($_item->getProduct()->getEntityId(),'quote_hide_price',$_item->getStoreId())):?>
-                    <?php echo $block->getItemRowTotalHtml(); ?>
+                    <?php echo $b->getItemRowTotalHtml(); ?>
                 <?php else: ?>
                     --
                 <?php endif;?>
@@ -70,5 +73,3 @@
         </tr>
     <?php endif; ?>
 <?php endforeach; ?>
-
-
