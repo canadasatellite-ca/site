@@ -7,6 +7,15 @@
                    name="catalog.product.top.list.mageworx.downloads.attachments"
                    template="CanadaSatellite_Theme::attachment_container_quote.phtml"
             />
+<!-- 2021-03-31 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+"`Cart2Quote_Quotation`: «Call to a member function setItem() on boolean»
+in vendor/magento/module-sales/Block/Order/Item/Renderer/DefaultRenderer.php:252":
+https://github.com/canadasatellite-ca/site/issues/66 -->
+			<block
+				class='Cart2Quote\Quotation\Block\Quote\Email\Items\DefaultItems'
+				name='item_row_total'
+				template='email/proposal/items/price/row.phtml'
+			/>			
         </referenceBlock>
     </body>
 </page>
