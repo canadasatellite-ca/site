@@ -19,7 +19,15 @@ foreach ($items as $_item):
 
     <?php if ($_item->getParentItem()): ?>
         <tr class="options-label">
-            <?php $attributes = unserialize($_item->getOptionByCode('bundle_selection_attributes')->getValue()); ?>
+            <?php
+				# 2021-04-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# 1) "`Cart2Quote_Quotation`: «unserialize(): Error at offset 0 of 61 bytes» in
+				# `app/design/frontend/MageSuper/magestylish/Cart2Quote_Quotation/templates/email/quote/items/quote/bundle.phtml:22`":
+				# https://github.com/canadasatellite-ca/site/issues/67
+				# 2) "`bundle_selection_attributes` should be decoded using `json_decode` instead of `unserialize`":
+				# https://github.com/canadasatellite-ca/site/issues/68
+				$attributes = df_json_decode($_item->getOptionByCode('bundle_selection_attributes')->getValue());
+			?>
             <td class="col label" colspan="2" style="padding: 2px 20px; font-weight: bold; font-style: italic;"><?php echo $attributes['option_label']; ?></td>
         </tr>
     <?php endif; ?>
