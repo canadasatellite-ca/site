@@ -2,13 +2,8 @@
 namespace MageSuper\Casat\Observer;
 class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
     protected $messageManager;
-    protected $directory;
-    function __construct(
-		\Magento\Framework\Message\ManagerInterface $messageManager,
-		\Magento\Directory\Helper\Data $directory
-	) {
+    function __construct(\Magento\Framework\Message\ManagerInterface $messageManager) {
         $this->messageManager = $messageManager;
-        $this->directory = $directory;
     }
 
     /**
@@ -57,7 +52,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                         $optionText = $attr->getSource()->getOptionText($vendor_currency);
                     }
                     if ($vendor_currency && $optionText !== 'CAD') {
-                        $cost = $this->directory->currencyConvert($cost, $optionText, 'CAD');
+                        $cost = df_currency_convert($cost, $optionText, 'CAD');
                     }
                     if ($cost == !NULL) {
                         $totalCost += ($cost * $selection_data[0]['selection_qty']);
@@ -75,7 +70,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 $optionText = $attr->getSource()->getOptionText($vendor_currency);
             }
             if ($vendor_currency && $optionText !== 'CAD') {
-                $cost = $this->directory->currencyConvert($cost, $optionText, 'CAD');
+                $cost = df_currency_convert($cost, $optionText, 'CAD');
             }
         }
         if ($cost > 0) {
