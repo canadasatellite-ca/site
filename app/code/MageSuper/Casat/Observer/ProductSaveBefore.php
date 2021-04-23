@@ -1,19 +1,12 @@
 <?php
-
-
 namespace MageSuper\Casat\Observer;
-
-class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface
-{
-    protected $authSession;
+class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
     protected $messageManager;
     protected $directory;
-
-    function __construct(\Magento\Backend\Model\Auth\Session $authSession,
-                                \Magento\Framework\Message\ManagerInterface $messageManager,
-                                \Magento\Directory\Helper\Data $directory)
-    {
-        $this->authSession = $authSession;
+    function __construct(
+		\Magento\Framework\Message\ManagerInterface $messageManager,
+		\Magento\Directory\Helper\Data $directory
+	) {
         $this->messageManager = $messageManager;
         $this->directory = $directory;
     }
@@ -24,12 +17,11 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    function execute(\Magento\Framework\Event\Observer $observer)
-    {
+    function execute(\Magento\Framework\Event\Observer $observer) {
         /** @var \Magento\Catalog\Model\Product $product */
         $product = $observer->getEvent()->getProduct();
         if ($product->getStoreId() != 0) {
-            $user = $this->authSession->getUser();
+            $user = df_backend_user();
             $name = $product->getName();
             $description = $product->getDescription();
 
