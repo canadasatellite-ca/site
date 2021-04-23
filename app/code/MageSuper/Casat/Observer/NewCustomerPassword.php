@@ -29,7 +29,7 @@ class NewCustomerPassword implements ObserverInterface
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Json\Helper\Data $jsonHelper,
         \Magento\Framework\DataObjectFactory $dataObjectFactory,
         \Magento\Customer\Model\Session $session,
@@ -47,7 +47,7 @@ class NewCustomerPassword implements ObserverInterface
      * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         $request = $observer->getData('request');
         $additionalData = $this->_dataObjectFactory->create([

@@ -25,7 +25,7 @@ use Magento\Tax\Helper\Data as TaxHelper;
 class Calculator extends \Magento\Bundle\Pricing\Adjustment\Calculator implements \Magento\Bundle\Pricing\Adjustment\BundleCalculatorInterface
 {
 
-    public function calculateBundleAmount($basePriceValue, $bundleProduct, $selectionPriceList, $exclude = null)
+    function calculateBundleAmount($basePriceValue, $bundleProduct, $selectionPriceList, $exclude = null)
     {
         if ($bundleProduct->getPriceType() == Price::PRICE_TYPE_FIXED) {
             //return $this->calculateFixedBundleAmount($basePriceValue, $bundleProduct, $selectionPriceList, $exclude);

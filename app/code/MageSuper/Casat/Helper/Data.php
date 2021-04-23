@@ -25,7 +25,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return bool
      */
-    public function getPhone()
+    function getPhone()
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_PHONE,

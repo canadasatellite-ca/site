@@ -9,7 +9,7 @@ use Magento\Framework\App\ResourceConnection as AppResource;
 class SalesModelServiceQuoteSubmitSuccess implements ObserverInterface
 {
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $observer->getQuote();

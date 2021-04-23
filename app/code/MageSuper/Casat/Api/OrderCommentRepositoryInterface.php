@@ -7,13 +7,13 @@ use Magento\Framework\Api\SearchCriteriaInterface;
 
 interface OrderCommentRepositoryInterface 
 {
-    public function save(OrderCommentInterface $page);
+    function save(OrderCommentInterface $page);
 
-    public function getById($id);
+    function getById($id);
 
-    public function getList(SearchCriteriaInterface $criteria);
+    function getList(SearchCriteriaInterface $criteria);
 
-    public function delete(OrderCommentInterface $page);
+    function delete(OrderCommentInterface $page);
 
-    public function deleteById($id);
+    function deleteById($id);
 }

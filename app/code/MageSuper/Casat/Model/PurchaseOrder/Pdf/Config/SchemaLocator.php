@@ -30,7 +30,7 @@ class SchemaLocator extends \Magento\Sales\Model\Order\Pdf\Config\SchemaLocator 
     /**
      * @param \Magento\Framework\Module\Dir\Reader $moduleReader
      */
-    public function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
+    function __construct(\Magento\Framework\Module\Dir\Reader $moduleReader)
     {
         $dir = $moduleReader->getModuleDir(\Magento\Framework\Module\Dir::MODULE_ETC_DIR, 'Cart2Quote_Quotation');
         $this->_schema = $dir . '/po_pdf.xsd';
@@ -40,7 +40,7 @@ class SchemaLocator extends \Magento\Sales\Model\Order\Pdf\Config\SchemaLocator 
     /**
      * Get path to merged config schema
      */
-    public function getSchema()
+    function getSchema()
     {
         return $this->_schema;
     }
@@ -48,7 +48,7 @@ class SchemaLocator extends \Magento\Sales\Model\Order\Pdf\Config\SchemaLocator 
     /**
      * Get path to per file validation schema
      */
-    public function getPerFileSchema()
+    function getPerFileSchema()
     {
         return $this->_schemaFile;
     }

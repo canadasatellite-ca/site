@@ -18,7 +18,7 @@ use Magento\Store\Model\StoreManagerInterface;
 class FixIncorrectStore
 {
     protected $httpRequest;
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Request\Http $httpRequest
     ) {
         $this->httpRequest  = $httpRequest;
@@ -30,7 +30,7 @@ class FixIncorrectStore
      * @return mixed
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeDispatch(
+    function beforeDispatch(
         \Magento\Framework\App\FrontControllerInterface $subject,
         \Magento\Framework\App\RequestInterface $request
     ) {

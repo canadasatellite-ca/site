@@ -6,12 +6,12 @@ use Magento\Framework\Event\ObserverInterface;
 class ProductAllowOrderOutOfStock implements ObserverInterface
 {
     protected $state;
-    public function __construct(\Magento\Framework\App\State $state)
+    function __construct(\Magento\Framework\App\State $state)
     {
         $this->state = $state;
     }
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         $collection = $observer->getData('collection');
         if(get_class($collection)=='Magento\CatalogInventory\Model\ResourceModel\Stock\Item\Collection'){

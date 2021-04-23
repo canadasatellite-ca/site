@@ -6,7 +6,7 @@ use Magento\Framework\Event\ObserverInterface;
 class ProductIsSalableCheck implements ObserverInterface
 {
     protected $_catalogProduct = null;
-    public function __construct(
+    function __construct(
         \Magento\Catalog\Helper\Product $catalogProduct
     )
     {
@@ -19,7 +19,7 @@ class ProductIsSalableCheck implements ObserverInterface
      * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         $this->_catalogProduct->setSkipSaleableCheck(true);
         $salable = $observer->getData('salable');

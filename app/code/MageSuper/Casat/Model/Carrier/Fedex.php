@@ -26,7 +26,7 @@ class Fedex extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\Mo
 {
     public $multiplier;
 
-    public function setRequest(RateRequest $request)
+    function setRequest(RateRequest $request)
     {
         $this->_request = $request;
 
@@ -245,7 +245,7 @@ class Fedex extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\Mo
         return $ratesRequest;
     }
 
-    public function collectRates(RateRequest $request)
+    function collectRates(RateRequest $request)
     {
         if (!$this->canCollectRates()) {
             return $this->getErrorMessage();
@@ -258,7 +258,7 @@ class Fedex extends \Magento\Fedex\Model\Carrier implements \Magento\Shipping\Mo
         $this->multiplyRates();
         return $this->getResult();
     }
-    public function multiplyRates()
+    function multiplyRates()
     {
         if ($this->multiplier > 1) {
             $result = $this->getResult();

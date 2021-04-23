@@ -81,7 +81,7 @@ abstract class PurchaseOrder extends \Magento\Backend\App\Action
      * @param \Cart2Quote\Quotation\Model\QuoteFactory $poFactory
      * @param \Cart2Quote\Quotation\Model\ResourceModel\Status\Collection $statusCollection
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Escaper $escaper,
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
@@ -178,7 +178,7 @@ abstract class PurchaseOrder extends \Magento\Backend\App\Action
      * Quotes grid
      * @return null|\Magento\Backend\Model\View\Result\Page
      */
-    public function execute()
+    function execute()
     {
         return null;
     }

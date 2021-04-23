@@ -29,7 +29,7 @@ class Profit extends \Magento\Sales\Block\Adminhtml\Order\Totals
      *
      * @return $this
      */
-    public function initTotals()
+    function initTotals()
     {
         $total = new \Magento\Framework\DataObject(
             [
@@ -50,7 +50,7 @@ class Profit extends \Magento\Sales\Block\Adminhtml\Order\Totals
      * @param float $amount
      * @return string
      */
-    public function displayPrices($baseAmount, $amount)
+    function displayPrices($baseAmount, $amount)
     {
         return $this->_adminHelper->displayPrices($this->getOrder(), $baseAmount, $amount);
     }
@@ -63,7 +63,7 @@ class Profit extends \Magento\Sales\Block\Adminhtml\Order\Totals
      * @param string $separator
      * @return string
      */
-    public function displayPriceAttribute($code, $strong = false, $separator = '<br/>')
+    function displayPriceAttribute($code, $strong = false, $separator = '<br/>')
     {
         return $this->_adminHelper->displayPriceAttribute($this->getSource(), $code, $strong, $separator);
     }
@@ -73,7 +73,7 @@ class Profit extends \Magento\Sales\Block\Adminhtml\Order\Totals
      *
      * @return \Magento\Sales\Model\Order
      */
-    public function getSource()
+    function getSource()
     {
         return $this->getParentBlock()->getSource();
     }

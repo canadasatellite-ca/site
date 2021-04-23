@@ -10,7 +10,7 @@ class Service
     protected $_supplierProductCollectionFactory;
     protected $productCollectionFactory;
 
-    public function __construct(
+    function __construct(
         \Magestore\SupplierSuccess\Model\ResourceModel\Supplier\Product\CollectionFactory $supplierProductCollectionFactory,
         \Magento\Catalog\Model\ResourceModel\Product\CollectionFactory $productCollectionFactory
     )
@@ -19,7 +19,7 @@ class Service
         $this->productCollectionFactory = $productCollectionFactory;
     }
 
-    public function updateCost()
+    function updateCost()
     {
         $supplierProductCollection = $this->_supplierProductCollectionFactory->create();
         $supplierProductCollection->load();

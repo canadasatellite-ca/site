@@ -22,7 +22,7 @@ class BeforeSelectValuesHtml
      */
     protected $_storeManager;
 
-    public function __construct(
+    function __construct(
         Currency $currencyModel,
         StoreManagerInterface $storeManager
     ){
@@ -30,7 +30,7 @@ class BeforeSelectValuesHtml
         $this->_storeManager = $storeManager;
     }
 
-    public function beforeGetValuesHtml(Select $subject)
+    function beforeGetValuesHtml(Select $subject)
     {
         $option = $subject->getOption();
         $currencyCode = $option->getCurrencyCode();

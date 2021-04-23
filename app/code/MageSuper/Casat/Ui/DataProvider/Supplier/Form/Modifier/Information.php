@@ -38,7 +38,7 @@ class Information extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplier\Da
      */
     protected $loadedData;
 
-    public function __construct(
+    function __construct(
         LocatorInterface $locator,
         SupplierService $supplierService,
         \Magento\Framework\Locale\ListsInterface $listsInterface
@@ -57,7 +57,7 @@ class Information extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplier\Da
      *
      * @return array
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }
@@ -65,7 +65,7 @@ class Information extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplier\Da
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $meta = array_replace_recursive(
             $meta,
@@ -78,7 +78,7 @@ class Information extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplier\Da
      * @param $meta
      * @return mixed
      */
-    public function getSupplierInformation($meta)
+    function getSupplierInformation($meta)
     {
         $meta['information']['children'] = $this->getSupplierInformationChildren();
         return $meta;
@@ -87,7 +87,7 @@ class Information extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplier\Da
     /**
      * @return array
      */
-    public function getSupplierInformationChildren()
+    function getSupplierInformationChildren()
     {
         $children = [
             'supplier_currrency' => $this->getField(__('Supplier Currency'), Field::NAME, true, 'text', 'select', [],null,$this->getCurrencyOptions()),
@@ -99,7 +99,7 @@ class Information extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplier\Da
     /**
      * get status options
      */
-    public function getCurrencyOptions()
+    function getCurrencyOptions()
     {
         return $this->listsInterface->getOptionCurrencies();
     }

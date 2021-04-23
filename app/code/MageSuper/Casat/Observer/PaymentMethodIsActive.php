@@ -9,7 +9,7 @@ use Magento\Framework\App\ResourceConnection as AppResource;
 class PaymentMethodIsActive implements ObserverInterface
 {
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $method_instance = $observer->getMethodInstance();

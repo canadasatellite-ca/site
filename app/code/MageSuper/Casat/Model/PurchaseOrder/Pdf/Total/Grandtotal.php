@@ -22,7 +22,7 @@ class Grandtotal extends DefaultTotal
      * @param \Magento\Tax\Model\Config $taxConfig
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Tax\Helper\Data $taxHelper,
         \Magento\Tax\Model\Calculation $taxCalculation,
         \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory $ordersFactory,
@@ -37,7 +37,7 @@ class Grandtotal extends DefaultTotal
      * Get grand total for display on PDF
      * @return mixed
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $emptyRowAmount = 2;
         $store = $this->getSource()->getStore();

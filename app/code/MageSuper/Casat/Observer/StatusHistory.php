@@ -9,13 +9,13 @@ use Magento\Framework\App\ResourceConnection as AppResource;
 class StatusHistory implements ObserverInterface
 {
     protected $request;
-    public function __construct(\Magento\Framework\App\RequestInterface $request)
+    function __construct(\Magento\Framework\App\RequestInterface $request)
     {
         $this->request = $request;
     }
 
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $object = $observer->getData('data_object');

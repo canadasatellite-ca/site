@@ -11,7 +11,7 @@ class ChangeOrderIncrement implements ObserverInterface
     private $connection;
     private $meta;
 
-    public function __construct(
+    function __construct(
         \Magento\SalesSequence\Model\Meta $meta,
         AppResource $resource
 
@@ -24,7 +24,7 @@ class ChangeOrderIncrement implements ObserverInterface
 
     }
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         return;
         /** @var \Magento\Sales\Model\Order $order */

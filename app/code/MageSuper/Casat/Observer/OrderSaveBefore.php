@@ -5,7 +5,7 @@ class OrderSaveBefore implements \Magento\Framework\Event\ObserverInterface
 {
     protected $directory;
 
-    public function __construct(\Magento\Directory\Helper\Data $directory)
+    function __construct(\Magento\Directory\Helper\Data $directory)
     {
         $this->directory = $directory;
     }
@@ -16,7 +16,7 @@ class OrderSaveBefore implements \Magento\Framework\Event\ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $order = $observer->getOrder();
@@ -37,7 +37,7 @@ class OrderSaveBefore implements \Magento\Framework\Event\ObserverInterface
         $this->updateProfitMargin($order);
     }
 
-    public function updateProfitMargin($order)
+    function updateProfitMargin($order)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $items = $order->getAllItems();

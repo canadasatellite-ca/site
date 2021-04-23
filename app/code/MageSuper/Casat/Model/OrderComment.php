@@ -9,7 +9,7 @@ class OrderComment extends \Magento\Framework\Model\AbstractModel implements \Ma
         $this->_init('MageSuper\Casat\Model\ResourceModel\OrderComment');
     }
 
-    public function getIdentities()
+    function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }

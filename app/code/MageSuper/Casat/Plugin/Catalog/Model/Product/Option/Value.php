@@ -29,7 +29,7 @@ class Value extends \Magento\Catalog\Model\Product\Option\Value implements \Mage
     /**
      * @return $this
      */
-    public function saveValues()
+    function saveValues()
     {
         foreach ($this->getValues() as $value) {
             $this->setData(

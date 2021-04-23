@@ -11,7 +11,7 @@ class CustomerAddressSaveAfter implements \Magento\Framework\Event\ObserverInter
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Customer\Model\Address $customer_address */
         $customer_address = $observer->getEvent()->getCustomerAddress();

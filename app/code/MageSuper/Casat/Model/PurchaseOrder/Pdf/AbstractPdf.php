@@ -34,7 +34,7 @@ abstract class AbstractPdf extends \Magento\Sales\Model\Order\Pdf\AbstractPdf
      * @param Items\QuoteItem $renderer
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Payment\Helper\Data $paymentData,
         \Magento\Framework\Stdlib\StringUtils $string,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -81,7 +81,7 @@ abstract class AbstractPdf extends \Magento\Sales\Model\Order\Pdf\AbstractPdf
      * get StringUtils Object
      * @return \Magento\Framework\Stdlib\StringUtils
      */
-    public function getStringUtils()
+    function getStringUtils()
     {
         return $this->string;
     }
@@ -709,7 +709,7 @@ abstract class AbstractPdf extends \Magento\Sales\Model\Order\Pdf\AbstractPdf
      * @throws \Magento\Framework\Exception\LocalizedException
      * @return \Zend_Pdf_Page
      */
-    public function drawLineBlocks(\Zend_Pdf_Page $page, array $draw, array $pageSettings = [])
+    function drawLineBlocks(\Zend_Pdf_Page $page, array $draw, array $pageSettings = [])
     {
         foreach ($draw as $itemsProp) {
             if (!isset($itemsProp['lines']) || !is_array($itemsProp['lines'])) {

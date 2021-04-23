@@ -44,7 +44,7 @@ class Freeshipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier imple
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
@@ -63,7 +63,7 @@ class Freeshipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier imple
      * @param RateRequest $request
      * @return \Magento\Shipping\Model\Rate\Result|bool
      */
-    public function collectRates(RateRequest $request)
+    function collectRates(RateRequest $request)
     {
         if (!$this->getConfigFlag('active')) {
             return false;
@@ -119,7 +119,7 @@ class Freeshipping extends \Magento\Shipping\Model\Carrier\AbstractCarrier imple
     /**
      * @return array
      */
-    public function getAllowedMethods()
+    function getAllowedMethods()
     {
         return ['freeshippingcustom' => $this->getConfigData('name')];
     }

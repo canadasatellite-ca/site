@@ -16,7 +16,7 @@ class CustomerManagement extends \Magento\Sales\Model\Order\CustomerManagement i
     /**
      * {@inheritdoc}
      */
-    public function createWithPassword($orderId,$customerPassword)
+    function createWithPassword($orderId,$customerPassword)
     {
         $order = $this->orderRepository->get($orderId);
         if ($order->getCustomerId()) {

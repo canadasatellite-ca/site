@@ -18,7 +18,7 @@ class PrintPurchaseOrder extends \Magestore\PurchaseOrderSuccess\Block\Adminhtml
     /**
      * {@inheritdoc}
      */
-    public function getButtonData()
+    function getButtonData()
     {
         $purchaseOrder = $this->registry->registry('current_purchase_order');
         $purchaseOrderId = $purchaseOrder->getId();

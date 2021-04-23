@@ -27,7 +27,7 @@ class Tax extends DefaultTotal
      * @param \Magento\Tax\Model\Config $taxConfig
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Tax\Helper\Data $taxHelper,
         \Magento\Tax\Model\Calculation $taxCalculation,
         \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory $ordersFactory,
@@ -43,7 +43,7 @@ class Tax extends DefaultTotal
      * Get tax amount for display on PDF
      * @return array
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $quote = $this->getQuote();
         $totals = [];

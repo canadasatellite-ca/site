@@ -14,7 +14,7 @@ class Toolbar
     protected $_objectManager;
     protected $_registry;
 
-    public function __construct(
+    function __construct(
 
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\ObjectManagerInterface $objectManager,
@@ -34,7 +34,7 @@ class Toolbar
      * @param ButtonList $buttonList
      * @return array
      */
-    public function beforePushButtons(
+    function beforePushButtons(
         ToolbarContext $toolbar,
         AbstractBlock $context,
         ButtonList $buttonList

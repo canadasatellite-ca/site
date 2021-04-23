@@ -5,7 +5,7 @@ class PurchaseorderSaveBefore implements \Magento\Framework\Event\ObserverInterf
 {
     protected $supplierRepository;
 
-    public function __construct(\Magestore\SupplierSuccess\Model\Repository\SupplierRepository $supplierRepository)
+    function __construct(\Magestore\SupplierSuccess\Model\Repository\SupplierRepository $supplierRepository)
     {
         $this->supplierRepository = $supplierRepository;
     }
@@ -16,7 +16,7 @@ class PurchaseorderSaveBefore implements \Magento\Framework\Event\ObserverInterf
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         $purchaseorder = $observer->getData('purchaseorder');
         $suplierId = $purchaseorder->getData('supplier_id');

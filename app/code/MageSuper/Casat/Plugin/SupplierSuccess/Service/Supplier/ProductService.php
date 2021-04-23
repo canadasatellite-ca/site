@@ -13,7 +13,7 @@ class ProductService extends AbstractService
 {
     protected $supplierCollectionFactory;
     protected $productFactory;
-    public function __construct(
+    function __construct(
         \Magestore\SupplierSuccess\Model\ResourceModel\Supplier\CollectionFactory $supplierCollectionFactory,
         \Magento\Catalog\Model\ProductFactory $productFactory
     ) {
@@ -24,7 +24,7 @@ class ProductService extends AbstractService
     /**
      * @param $data
      */
-    public function beforeAssignProductToSupplier(\Magestore\SupplierSuccess\Service\Supplier\ProductService $productService, $data)
+    function beforeAssignProductToSupplier(\Magestore\SupplierSuccess\Service\Supplier\ProductService $productService, $data)
     {
         /** @var \Magento\Catalog\Model\Product $product */
         $product = $this->productFactory->create();

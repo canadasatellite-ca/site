@@ -13,7 +13,7 @@ use Magento\Quote\Model\Quote\Address\RateCollectorInterface;
  */
 class Shipping
 {
-    public function aroundCollectRates(
+    function aroundCollectRates(
         \Magento\Shipping\Model\Shipping $shipping,
         \Closure $closure,
         \Magento\Quote\Model\Quote\Address\RateRequest $request

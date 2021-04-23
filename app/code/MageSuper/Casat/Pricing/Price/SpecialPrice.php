@@ -23,7 +23,7 @@ class SpecialPrice extends \Magento\Catalog\Pricing\Price\SpecialPrice implement
      *
      * @return bool|float
      */
-    public function getDiscountPercent()
+    function getDiscountPercent()
     {
         if ($this->percent === null) {
             $this->percent = parent::getValue();
@@ -36,7 +36,7 @@ class SpecialPrice extends \Magento\Catalog\Pricing\Price\SpecialPrice implement
      *
      * @return bool|float
      */
-    public function getValue()
+    function getValue()
     {
         if ($this->value !== null) {
             return $this->value;
@@ -66,7 +66,7 @@ class SpecialPrice extends \Magento\Catalog\Pricing\Price\SpecialPrice implement
     /**
      * @return bool
      */
-    public function isPercentageDiscount()
+    function isPercentageDiscount()
     {
         return false;
     }

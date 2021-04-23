@@ -23,7 +23,7 @@ class Product extends originClass
      * @param int $newId
      * @return $this
      */
-    public function duplicate($oldId, $newId)
+    function duplicate($oldId, $newId)
     {
         return $this;
         $eavTables = ['datetime', 'decimal', 'int', 'text', 'varchar'];

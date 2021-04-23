@@ -12,7 +12,7 @@ namespace MageSuper\Casat\Plugin\Sales\Model\Order;
 class Comment
 {
 
-    public function aroundExecute(\Magento\Sales\Controller\Adminhtml\Order\AddComment $subject, \Closure $proceed)
+    function aroundExecute(\Magento\Sales\Controller\Adminhtml\Order\AddComment $subject, \Closure $proceed)
     {
         $params = $subject->getRequest()->getParams();
         $orderId = $params['order_id'];

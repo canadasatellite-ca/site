@@ -42,7 +42,7 @@ class QuoteItem extends AbstractItems
      * @param \Cart2Quote\Quotation\Helper\Data $cart2QuoteHelper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Tax\Helper\Data $taxData,
@@ -75,7 +75,7 @@ class QuoteItem extends AbstractItems
      *
      * @return void
      */
-    public function draw()
+    function draw()
     {
         $quote = $this->getQuote();
         $item = $this->getItem();

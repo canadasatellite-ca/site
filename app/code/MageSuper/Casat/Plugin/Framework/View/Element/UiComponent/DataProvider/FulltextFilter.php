@@ -15,7 +15,7 @@ use Magento\Framework\Api\Filter;
  */
 class FulltextFilter
 {
-    public function beforeApply($subject, $collection, $filter)
+    function beforeApply($subject, $collection, $filter)
     {
         if (get_class($collection) == 'Magento\Sales\Model\ResourceModel\Order\Grid\Collection') {
             $v = $filter->getValue();
@@ -32,7 +32,7 @@ class FulltextFilter
             return array($collection, $filter);
         }
     }
-    public function aroundApply($subject, \Closure $process, $collection, $filter){
+    function aroundApply($subject, \Closure $process, $collection, $filter){
         if (get_class($collection) == 'Magento\Sales\Model\ResourceModel\Order\Grid\Collection') {
             if (!$collection instanceof AbstractDb) {
                 throw new \InvalidArgumentException('Database collection required.');
