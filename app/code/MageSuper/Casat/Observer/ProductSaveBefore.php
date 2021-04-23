@@ -10,25 +10,16 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
      */
     function execute(\Magento\Framework\Event\Observer $observer) {
         $p = $observer->getEvent()->getProduct(); /** @var P $p */
-        if ($p->getStoreId()) {
-            $user = df_backend_user();
-            $name = $p->getName();
-            $description = $p->getDescription();
-            if ($name || $description) {
-                if($user){
-                    $message = $user->getUserName() . ', you just catched on trying to change product name and(or) description for not default store!(ID ' . $p->getEntityId() . ')';
-                }
-                else{
-                    $message = 'You just catched on trying to change product name and(or) description for not default store!(ID ' . $p->getEntityId() . ')';
-                }
-                df_message_notice($message);
-				# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-				# "MageSuper_Casat:
-				# «You just catched on trying to change product name and(or) description for not default store»":
-				# https://github.com/canadasatellite-ca/site/issues/27
-                df_log_l($this, $message);
-            }
-        }
+		if ($p->getStoreId() && df_backend_user() && ($p->getName() || $p->getDescription())) {
+			df_message_notice(
+				$m = "The product's name and/or description is changed in a non-default scope! (Product ID: {$p->getEntityId()})"
+			);
+			# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "MageSuper_Casat:
+			# «You just catched on trying to change product name and(or) description for not default store»":
+			# https://github.com/canadasatellite-ca/site/issues/27
+			df_log_l($this, $m);
+		}
         if (df_product_is_bundle($p)) {
             $totalCost = 0;
 			foreach (df_eta($p->getBundleSelectionsData()) as $selection_data) {
