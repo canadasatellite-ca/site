@@ -10,7 +10,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
      */
     function execute(\Magento\Framework\Event\Observer $observer) {
         $p = $observer->getEvent()->getProduct(); /** @var P $p */
-        if ($p->getStoreId() != 0) {
+        if ($p->getStoreId()) {
             $user = df_backend_user();
             $name = $p->getName();
             $description = $p->getDescription();
@@ -29,7 +29,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 df_log_l($this, $message);
             }
         }
-        if ($p->getTypeId() == 'bundle') {
+        if ('bundle' === $p->getTypeId()) {
             $totalCost = 0;
             $selections_data = $p->getBundleSelectionsData();
             if($selections_data){
