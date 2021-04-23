@@ -1,15 +1,16 @@
 <?php
 namespace MageSuper\Casat\Observer;
 use Magento\Catalog\Model\Product as P;
+use Magento\Framework\Event\Observer as Ob;
 # 2021-04-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `MageSuper_Casat` module": https://github.com/canadasatellite-ca/site/issues/73
 class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
     /**
-     * @param \Magento\Framework\Event\Observer $observer
+     * @param Ob $ob
      * @return void
      */
-    function execute(\Magento\Framework\Event\Observer $observer) {
-        $p = $observer->getEvent()->getProduct(); /** @var P $p */
+    function execute(Ob $ob) {
+        $p = $ob['product']; /** @var P $p */
 		if ($p->getStoreId() && df_backend_user() && ($p->getName() || $p->getDescription())) {
 			df_message_notice(
 				$m = "The product's name and/or description is changed in a non-default scope! (Product ID: {$p->getEntityId()})"
