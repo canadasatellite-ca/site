@@ -29,7 +29,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 df_log_l($this, $message);
             }
         }
-        if ('bundle' === $p->getTypeId()) {
+        if (df_product_is_bundle($p)) {
             $totalCost = 0;
             $selections_data = $p->getBundleSelectionsData();
             if($selections_data){
