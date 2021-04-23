@@ -1,15 +1,15 @@
 <?php
 namespace MageSuper\Casat\Observer;
+use Magento\Catalog\Model\Product as P;
+# 2021-04-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "Refactor the `MageSuper_Casat` module": https://github.com/canadasatellite-ca/site/issues/73
 class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
     /**
-     * Execute observer
-     *
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
     function execute(\Magento\Framework\Event\Observer $observer) {
-        /** @var \Magento\Catalog\Model\Product $product */
-        $product = $observer->getEvent()->getProduct();
+        $product = $observer->getEvent()->getProduct(); /** @var P $product */
         if ($product->getStoreId() != 0) {
             $user = df_backend_user();
             $name = $product->getName();
@@ -29,9 +29,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
 				# https://github.com/canadasatellite-ca/site/issues/27
                 df_log_l($this, $message);
             }
-
         }
-
         if ($product->getTypeId() == 'bundle') {
             $totalCost = 0;
             $selections_data = $product->getBundleSelectionsData();
@@ -55,7 +53,8 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 }
             }
             $cost = $totalCost;
-        } else {
+        }
+        else {
             $cost = $product->getCost();
             $cost = str_replace(',', '', $cost);
             $vendor_currency = $product->getData('vendor_currency');
@@ -74,7 +73,6 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
             $product->setPrice($price);
             $price = str_replace(',', '', $product->getSpecialPrice());
             $product->setSpecialPrice($price);
-
             $product->setData('force_adminprices',true);
             $price = $product->getFinalPrice();
             $product->setData('force_adminprices',false);
