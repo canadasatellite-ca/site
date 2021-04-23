@@ -28,7 +28,7 @@ class ProfitMarginAdvancedPricing extends AbstractModifier
      * @param LocatorInterface $locator
      * @param ArrayManager $arrayManager
      */
-    public function __construct(
+    function __construct(
         LocatorInterface $locator,
         ArrayManager $arrayManager
     ) {
@@ -38,7 +38,7 @@ class ProfitMarginAdvancedPricing extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $meta = $this->arrayManager->merge(
             $this->arrayManager->findPath('profit', $meta, null, 'children') . static::META_CONFIG_PATH,
@@ -70,7 +70,7 @@ class ProfitMarginAdvancedPricing extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }

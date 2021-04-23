@@ -20,7 +20,7 @@ class FrontTabPlugin
     /**
      * @param Weight $weightSource
      */
-    public function __construct(Weight $weightSource)
+    function __construct(Weight $weightSource)
     {
         $this->weightSource = $weightSource;
     }
@@ -32,7 +32,7 @@ class FrontTabPlugin
      * @return Front
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function aroundSetForm(Front $subject, \Closure $proceed, Form $form)
+    function aroundSetForm(Front $subject, \Closure $proceed, Form $form)
     {
         $block = $proceed($form);
         /** @var Fieldset $fieldset */

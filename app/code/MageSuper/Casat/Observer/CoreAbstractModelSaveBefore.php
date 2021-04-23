@@ -9,7 +9,7 @@ use Magento\Framework\App\ResourceConnection as AppResource;
 class CoreAbstractModelSaveBefore implements ObserverInterface
 {
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $object = $observer->getObject();

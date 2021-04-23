@@ -14,7 +14,7 @@ class DefaultTotal extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
      * Get total for display on PDF
      * @return array
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $amount = $this->getSource()->formatPriceTxt($this->getAmount());
 
@@ -46,7 +46,7 @@ class DefaultTotal extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
      *
      * @return array
      */
-    public function getFullTaxInfo()
+    function getFullTaxInfo()
     {
         $fontSize = $this->getFontSize() ? $this->getFontSize() : 7;
         $taxClassAmount = $this->_taxHelper->getCalculatedTaxes($this->getQuote());
@@ -96,7 +96,7 @@ class DefaultTotal extends \Magento\Sales\Model\Order\Pdf\Total\DefaultTotal
      * @param $amount
      * @return array
      */
-    public function appendEmptyRows($totals, $amount)
+    function appendEmptyRows($totals, $amount)
     {
         for ($i = 0; $amount > $i; $i++) {
             $totals[] = [

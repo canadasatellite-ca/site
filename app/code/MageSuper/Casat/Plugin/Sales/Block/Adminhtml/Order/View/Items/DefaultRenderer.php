@@ -14,7 +14,7 @@ class DefaultRenderer
      * @param $after
      * @return array
      */
-    public function afterGetColumns(Template $originalBlock, $after)
+    function afterGetColumns(Template $originalBlock, $after)
     {
         $after = $after + ['profit' => "col-profit",'margin'=>'col-margin'] ;
         return $after;

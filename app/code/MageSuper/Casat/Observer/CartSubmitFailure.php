@@ -66,7 +66,7 @@ class CartSubmitFailure implements ObserverInterface
      * @param \Magento\Payment\Helper\Data $paymentHelper
      * @param \Magestore\OneStepCheckout\Helper\Data $helper
      */
-    public function __construct(
+    function __construct(
         \Magento\Customer\Model\Session $customerSession,
         \MageSuper\Casat\Model\Order\CustomerManagement $customerManagement
     )
@@ -81,7 +81,7 @@ class CartSubmitFailure implements ObserverInterface
      * @return void
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         $order = $observer->getEvent()->getOrder();
         /** @var \Magento\Quote\Model\Quote $quote */

@@ -35,7 +35,7 @@ class Instorepickup extends \Magento\Shipping\Model\Carrier\AbstractCarrier impl
      * @param \Magento\Quote\Model\Quote\Address\RateResult\MethodFactory $rateMethodFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Quote\Model\Quote\Address\RateResult\ErrorFactory $rateErrorFactory,
         \Psr\Log\LoggerInterface $logger,
@@ -56,7 +56,7 @@ class Instorepickup extends \Magento\Shipping\Model\Carrier\AbstractCarrier impl
      * @param RateRequest $request
      * @return \Magento\Shipping\Model\Rate\Result|bool
      */
-    public function collectRates(RateRequest $request)
+    function collectRates(RateRequest $request)
     {
         $area_code  = $this->state->getAreaCode();
         if(!($area_code == \Magento\Backend\App\Area\FrontNameResolver::AREA_CODE))
@@ -89,7 +89,7 @@ class Instorepickup extends \Magento\Shipping\Model\Carrier\AbstractCarrier impl
     /**
      * @return array
      */
-    public function getAllowedMethods()
+    function getAllowedMethods()
     {
         return ['instorepickup' => $this->getConfigData('name')];
     }

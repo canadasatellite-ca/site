@@ -23,7 +23,7 @@ class Subtotal extends DefaultTotal
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Tax\Helper\Data $taxHelper,
         \Magento\Tax\Model\Calculation $taxCalculation,
         \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory $ordersFactory,
@@ -38,7 +38,7 @@ class Subtotal extends DefaultTotal
      * Get subtotal for display on PDF
      * @return array
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $store = $this->getSource()->getStore();
         $helper = $this->_taxHelper;

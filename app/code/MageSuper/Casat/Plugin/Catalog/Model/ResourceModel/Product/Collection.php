@@ -24,7 +24,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Collection
      *
      * @return $this
      */
-    public function addOptionsToResult()
+    function addOptionsToResult()
     {
         $productsByLinkId = [];
 

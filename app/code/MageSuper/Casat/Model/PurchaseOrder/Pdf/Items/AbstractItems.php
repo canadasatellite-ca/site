@@ -22,7 +22,7 @@ abstract class AbstractItems extends \Magento\Sales\Model\Order\Pdf\Items\Abstra
      * @param  \Cart2Quote\Quotation\Model\Quote
      * @return $this
      */
-    public function setQuote(\Magestore\PurchaseOrderSuccess\Model\PurchaseOrder $quote)
+    function setQuote(\Magestore\PurchaseOrderSuccess\Model\PurchaseOrder $quote)
     {
         $this->_quote = $quote;
 
@@ -35,7 +35,7 @@ abstract class AbstractItems extends \Magento\Sales\Model\Order\Pdf\Items\Abstra
      * @throws \Magento\Framework\Exception\LocalizedException
      * @return \Cart2Quote\Quotation\Model\Quote
      */
-    public function getQuote()
+    function getQuote()
     {
         if (null === $this->_quote) {
             throw new \Magento\Framework\Exception\LocalizedException(__('The quote object is not specified.'));

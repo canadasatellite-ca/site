@@ -34,7 +34,7 @@ class MassConvertToBundle extends \Magento\Catalog\Controller\Adminhtml\Product
      * @param Filter $filter
      * @param CollectionFactory $collectionFactory
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Builder $productBuilder,
         Filter $filter,
@@ -51,7 +51,7 @@ class MassConvertToBundle extends \Magento\Catalog\Controller\Adminhtml\Product
     /**
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
         $productConverted = 0;
@@ -106,7 +106,7 @@ class MassConvertToBundle extends \Magento\Catalog\Controller\Adminhtml\Product
         return $this->resultFactory->create(ResultFactory::TYPE_REDIRECT)->setPath('catalog/*/index');
     }
 
-    public function reindex($ids)
+    function reindex($ids)
     {
         $productCategoryIndexer = $this->indexerRegistry->get('catalog_product_price');
         $productCategoryIndexer->reindexList($ids);

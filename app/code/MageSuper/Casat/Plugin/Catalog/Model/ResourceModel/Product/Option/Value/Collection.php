@@ -12,7 +12,7 @@ namespace MageSuper\Casat\Plugin\Catalog\Model\ResourceModel\Product\Option\Valu
  */
 class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Option\Value\Collection
 {
-    public function addRowidToResult()
+    function addRowidToResult()
     {
         $optionTitleTable = $this->getTable('optiondependent_value');
 

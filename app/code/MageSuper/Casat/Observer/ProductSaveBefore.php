@@ -9,7 +9,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface
     protected $messageManager;
     protected $directory;
 
-    public function __construct(\Magento\Backend\Model\Auth\Session $authSession,
+    function __construct(\Magento\Backend\Model\Auth\Session $authSession,
                                 \Magento\Framework\Message\ManagerInterface $messageManager,
                                 \Magento\Directory\Helper\Data $directory)
     {
@@ -24,7 +24,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Catalog\Model\Product $product */
         $product = $observer->getEvent()->getProduct();

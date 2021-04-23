@@ -33,7 +33,7 @@ class Discount extends DefaultTotal
      * @param \Magento\Tax\Model\Config $taxConfig
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Tax\Helper\Data $taxHelper,
         \Magento\Tax\Model\Calculation $taxCalculation,
         \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory $ordersFactory,
@@ -48,7 +48,7 @@ class Discount extends DefaultTotal
     /**
      * @return \Magento\Tax\Model\Config
      */
-    public function getTaxConfig()
+    function getTaxConfig()
     {
         return $this->_taxConfig;
     }
@@ -64,7 +64,7 @@ class Discount extends DefaultTotal
     /**
      * @return \Magento\Tax\Model\Calculation
      */
-    public function getTaxCalculation()
+    function getTaxCalculation()
     {
         return $this->_taxCalculation;
     }
@@ -72,7 +72,7 @@ class Discount extends DefaultTotal
     /**
      * @return \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory
      */
-    public function getTaxOrdersFactory()
+    function getTaxOrdersFactory()
     {
         return $this->_taxOrdersFactory;
     }
@@ -80,7 +80,7 @@ class Discount extends DefaultTotal
     /**
      * @return mixed
      */
-    public function getQuote()
+    function getQuote()
     {
         return $this->_quote;
     }
@@ -88,7 +88,7 @@ class Discount extends DefaultTotal
     /**
      * @return \Magento\Tax\Helper\Data
      */
-    public function getTaxHelper()
+    function getTaxHelper()
     {
         return $this->_taxHelper;
     }
@@ -97,7 +97,7 @@ class Discount extends DefaultTotal
      * Get discounts for display on PDF
      * @return array
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $totals = [];
         $amount = 0;
@@ -127,7 +127,7 @@ class Discount extends DefaultTotal
     /**
      * @return float
      */
-    public function getAmount()
+    function getAmount()
     {
         return $this->getSource()->getBaseSubtotalWithDiscount() - $this->getSource()->getBaseSubtotal();
     }

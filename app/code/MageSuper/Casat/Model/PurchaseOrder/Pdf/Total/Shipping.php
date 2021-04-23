@@ -23,7 +23,7 @@ class Shipping extends DefaultTotal
      * @param \Magento\Tax\Model\Config $taxConfig
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Tax\Helper\Data $taxHelper,
         \Magento\Tax\Model\Calculation $taxCalculation,
         \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory $ordersFactory,
@@ -38,7 +38,7 @@ class Shipping extends DefaultTotal
      * Get shipping totals for display on PDF
      * @return array
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $source = $this->getSource();
         $store = $source->getStore();
@@ -87,7 +87,7 @@ class Shipping extends DefaultTotal
      /**
      * @return \Magento\Quote\Model\Quote\Address
      */
-    public function getSource()
+    function getSource()
     {
         return $this->getData('source')->getShippingAddress();
     }

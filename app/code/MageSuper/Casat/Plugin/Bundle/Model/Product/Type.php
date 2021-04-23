@@ -18,7 +18,7 @@ class Type
     protected $registry;
     protected $request;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\Request\Http $request
     )
@@ -27,7 +27,7 @@ class Type
         $this->registry = $registry;
     }
 
-    public function beforeGetOptionsCollection(
+    function beforeGetOptionsCollection(
         \Magento\Bundle\Model\Product\Type $subject,
         $product)
     {

@@ -19,7 +19,7 @@ class Item
      * @param string $field the custom item field
      * @return string
      */
-    public function aroundGetColumnHtml(
+    function aroundGetColumnHtml(
         \Magento\Sales\Block\Adminhtml\Items\AbstractItems $items,
         \Closure $work,
         \Magento\Framework\DataObject $item,

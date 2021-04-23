@@ -38,7 +38,7 @@ class Pdf extends \MageSuper\Casat\Controller\Adminhtml\PurchaseOrder
      * @param \Magento\Downloadable\Helper\Download $downloadHelper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Escaper $escaper,
         Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
@@ -87,7 +87,7 @@ class Pdf extends \MageSuper\Casat\Controller\Adminhtml\PurchaseOrder
     /**
      * Download PDF for the quotation quote item
      */
-    public function execute()
+    function execute()
     {
         if ($results = parent::execute()) {
             return $results;

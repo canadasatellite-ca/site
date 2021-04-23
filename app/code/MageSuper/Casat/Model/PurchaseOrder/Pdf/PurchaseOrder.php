@@ -48,7 +48,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      * @param \Magento\Framework\App\Response\Http\FileFactory $fileFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Payment\Helper\Data $paymentData,
         \Magento\Framework\Stdlib\StringUtils $string,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -93,7 +93,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      * @param  \Cart2Quote\Quotation\Model\Quote\Pdf\AbstractPdf $pdf
      * @return $this
      */
-    public function setPdf(\Cart2Quote\Quotation\Model\Quote\Pdf\AbstractPdf $pdf)
+    function setPdf(\Cart2Quote\Quotation\Model\Quote\Pdf\AbstractPdf $pdf)
     {
         $this->_pdf = $pdf;
 
@@ -107,7 +107,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      * @return string|null
      * @throws \Magento\Framework\Exception\FileSystemException
      */
-    public function createQuotePdf(array $quotes)
+    function createQuotePdf(array $quotes)
     {
         $this->setQuotes($quotes);
         $pdf = $this->getPdf();
@@ -139,7 +139,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      * @return \Zend_Pdf
      * @internal param array|\Cart2Quote\Quotation\Traits\Model\Quote\Pdf\Collection $quotes
      */
-    public function getPdf()
+    function getPdf()
     {
         $this->_beforeGetPdf();
 
@@ -208,7 +208,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      *
      * @return array
      */
-    public function getQuotes()
+    function getQuotes()
     {
         return $this->quotes;
     }
@@ -220,7 +220,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      * @return $this
      * @throws \Exception
      */
-    public function setQuotes(array $quotes)
+    function setQuotes(array $quotes)
     {
         foreach ($quotes as $quote) {
             if (!$quote instanceof \Magestore\PurchaseOrderSuccess\Model\PurchaseOrder) {
@@ -279,7 +279,7 @@ class PurchaseOrder extends \MageSuper\Casat\Model\PurchaseOrder\Pdf\AbstractPdf
      * @param array $quotes
      * @return string
      */
-    public function getIncrementId(array $quotes)
+    function getIncrementId(array $quotes)
     {
         $incrementIds = [];
         foreach ($quotes as $quote) {

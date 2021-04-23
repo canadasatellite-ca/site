@@ -2,7 +2,7 @@
 namespace MageSuper\Casat\Plugin\Directory\Model;
 
 class Currency{
-    public function afterGetConfigBaseCurrencies(\Magento\Directory\Model\Currency $currency, $result)
+    function afterGetConfigBaseCurrencies(\Magento\Directory\Model\Currency $currency, $result)
     {
         $result[]='USD';
         $result[]='EUR';

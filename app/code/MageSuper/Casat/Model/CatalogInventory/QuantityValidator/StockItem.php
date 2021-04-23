@@ -22,7 +22,7 @@ class StockItem extends originalClass
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function initialize(
+    function initialize(
         \Magento\CatalogInventory\Api\Data\StockItemInterface $stockItem,
         \Magento\Quote\Model\Quote\Item $quoteItem,
         $qty

@@ -13,7 +13,7 @@ class QuoteAddressSaveBefore implements \Magento\Framework\Event\ObserverInterfa
      * @param CategorySetupFactory $categorySetupFactory
      * @param EavSetupFactory $eavSetupFactory
      */
-    public function __construct(\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig)
+    function __construct(\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig)
     {
         $this->scopeConfig = $scopeConfig;
     }
@@ -23,7 +23,7 @@ class QuoteAddressSaveBefore implements \Magento\Framework\Event\ObserverInterfa
      * @param \Magento\Framework\Event\Observer $observer
      * @return void
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Quote\Model\Quote\Address $quote_address */
         $quote_address = $observer->getData('quote_address');

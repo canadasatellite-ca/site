@@ -43,7 +43,7 @@ class Sequence implements SequenceInterface
      * @param AppResource $resource
      * @param string $pattern
      */
-    public function __construct(
+    function __construct(
         \Magento\SalesSequence\Model\Meta $meta,
         AppResource $resource,
         $pattern = self::DEFAULT_PATTERN
@@ -58,7 +58,7 @@ class Sequence implements SequenceInterface
      *
      * @return string
      */
-    public function getCurrentValue()
+    function getCurrentValue()
     {
         if (!isset($this->lastIncrementId)) {
             return null;
@@ -77,7 +77,7 @@ class Sequence implements SequenceInterface
      *
      * @return string
      */
-    public function getNextValue()
+    function getNextValue()
     {
         if($this->meta->getEntityType()=='order'){
             $this->pattern = "1%s%d%s";

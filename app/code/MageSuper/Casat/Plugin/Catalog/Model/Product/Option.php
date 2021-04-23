@@ -35,7 +35,7 @@ class Option extends \Magento\Catalog\Model\Product\Option implements ProductCus
      * @param Product $product
      * @return \Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection
      */
-    public function getProductOptionCollection(Product $product)
+    function getProductOptionCollection(Product $product)
     {
         $collection = clone $this->getCollection();
         $collection->addFieldToFilter(

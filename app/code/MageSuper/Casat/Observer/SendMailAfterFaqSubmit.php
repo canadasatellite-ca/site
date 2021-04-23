@@ -61,7 +61,7 @@ class SendMailAfterFaqSubmit implements ObserverInterface
     /**
      * @param \Magedelight\Faqs\Model\Faq $model
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Mail\Template\TransportBuilder $transportBuilder,
         \Magento\Framework\Translate\Inline\StateInterface $inlineTranslation,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
@@ -94,7 +94,7 @@ class SendMailAfterFaqSubmit implements ObserverInterface
         $this->fileSystem = $fileSystem;
     }
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /** @var \Magento\Sales\Model\Order $order */
         $object = $observer->getObject();
@@ -109,7 +109,7 @@ class SendMailAfterFaqSubmit implements ObserverInterface
 
     }
 
-    public function emailSentAction($data, $createdby, $model)
+    function emailSentAction($data, $createdby, $model)
     {
         if ($createdby == \Magedelight\Faqs\Model\Faq::LOGIN_CUSTOMER ||
             $createdby == \Magedelight\Faqs\Model\Faq::GUEST_CUSTOMER

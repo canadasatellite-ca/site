@@ -9,7 +9,7 @@ class Profit extends \Magento\Catalog\Model\Product\Attribute\Backend\Price
      * @return bool
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function validate($object)
+    function validate($object)
     {
         $value = $object->getData($this->getAttribute()->getAttributeCode());
         if (empty($value)) {

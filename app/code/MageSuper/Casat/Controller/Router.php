@@ -23,7 +23,7 @@ class Router implements RouterInterface
      */
     private $actionFactory;
 
-    public function __construct(
+    function __construct(
         \Magento\Catalog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         ActionFactory $actionFactory,
         \Magento\Framework\App\ResponseFactory $responseFactory
@@ -37,7 +37,7 @@ class Router implements RouterInterface
     /**
      * {@inheritdoc}
      */
-    public function match(RequestInterface $request)
+    function match(RequestInterface $request)
     {
         /** @var \Magento\Framework\App\Request\Http $request */
         $identifier = trim($request->getPathInfo(), '/');

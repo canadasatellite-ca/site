@@ -17,7 +17,7 @@ use Magento\Framework\Api\ExtensionAttribute\JoinProcessorInterface;
 class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Option\Collection
 {
 
-    public function addDescriptionToResult($storeId)
+    function addDescriptionToResult($storeId)
     {
         $productOptionTitleTable = $this->getTable('catalog_product_option_title');
         $connection = $this->getConnection();
@@ -46,7 +46,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Option\Col
         return $this;
     }
 
-    public function getProductOptions($productId, $storeId, $requiredOnly = false)
+    function getProductOptions($productId, $storeId, $requiredOnly = false)
     {
         $collection = $this->addFieldToFilter(
             'cpe.entity_id',
@@ -80,7 +80,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Option\Col
         return $this->joinProcessor;
     }
 
-    public function addValuesToResult($storeId = null)
+    function addValuesToResult($storeId = null)
     {
         if ($storeId === null) {
             $storeId = $this->_storeManager->getStore()->getId();

@@ -52,7 +52,7 @@ class Account extends AbstractForm
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(
+    function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Backend\Model\Session\Quote $sessionQuote,
         \Magento\Sales\Model\AdminOrder\Create $orderCreate,
@@ -83,7 +83,7 @@ class Account extends AbstractForm
      *
      * @return string
      */
-    public function getHeaderCssClass()
+    function getHeaderCssClass()
     {
         return 'head-account';
     }
@@ -93,7 +93,7 @@ class Account extends AbstractForm
      *
      * @return \Magento\Framework\Phrase
      */
-    public function getHeaderText()
+    function getHeaderText()
     {
         return __('Account Information');
     }
@@ -159,7 +159,7 @@ class Account extends AbstractForm
      *
      * @return array
      */
-    public function getFormValues()
+    function getFormValues()
     {
         try {
             $customer = $this->customerRepository->getById($this->getCustomerId());

@@ -28,7 +28,7 @@ class SetRedirectUrl
      * @param UrlFinderInterface $urlFinder
      * @param RequestInterface $request
      */
-    public function __construct(
+    function __construct(
         UrlHelper $urlHelper,
         UrlInterface $urlBuilder,
         UrlFinderInterface $urlFinder,
@@ -49,7 +49,7 @@ class SetRedirectUrl
      * @return array
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function beforeGetTargetStorePostData(
+    function beforeGetTargetStorePostData(
         \Magento\Store\Block\Switcher $switcher,
         \Magento\Store\Model\Store $store,
         $data = []

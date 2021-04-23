@@ -20,7 +20,7 @@ class DiscountCalculator extends  \Magento\Bundle\Pricing\Price\DiscountCalculat
      * @param float|null $value
      * @return float|null
      */
-    public function calculateDiscount(Product $product, $value = null)
+    function calculateDiscount(Product $product, $value = null)
     {
         if ($value === null) {
             $value = $product->getPriceInfo()->getPrice(FinalPrice::PRICE_CODE)->getValue();

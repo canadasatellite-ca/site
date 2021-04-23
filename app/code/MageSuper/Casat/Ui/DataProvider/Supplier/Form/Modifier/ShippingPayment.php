@@ -37,7 +37,7 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
     protected $paymentTerms;
 
 
-    public function __construct(
+    function __construct(
         SourceCountry $sourceCountry,
         DirectoryHelper $directoryHelper,
         \Magento\Framework\ObjectManagerInterface $objectManager
@@ -50,7 +50,7 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
     /**
      * {@inheritdoc}
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }
@@ -58,7 +58,7 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $meta = array_replace_recursive(
             $meta,
@@ -71,7 +71,7 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
      * @param $meta
      * @return mixed
      */
-    public function getSupplierInformation($meta)
+    function getSupplierInformation($meta)
     {
         $meta['casat-shipping-payment']['arguments']['data']['config'] = [
             'label' => __('Shipping and Payment'),
@@ -88,7 +88,7 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
     /**
      * @return array
      */
-    public function getSupplierAddressChildren()
+    function getSupplierAddressChildren()
     {
         $this->shippingMethods = $this->objectManager
             ->get('Magestore\PurchaseOrderSuccess\Model\PurchaseOrder\Option\ShippingMethod')->getOptionArray();
@@ -111,11 +111,11 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
         ];
         return $children;
     }
-    public function addFormFieldTextArea(
+    function addFormFieldTextArea(
         $label, $sortOrder, $validation = false, $defaultValue = null, $notice = ''){
         return $this->addFormField($label, 'text', 'textarea', $sortOrder, $validation, $defaultValue, $notice);
     }
-    public function addFormField(
+    function addFormField(
         $label, $dataType , $formElement, $sortOrder, $validation = false, $defaultValue = null, $notice = ''){
         $field = [
             'arguments' => [
@@ -138,7 +138,7 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
             $field = $this->setDefaultValue($field, $defaultValue);
         return $field;
     }
-    public function addFormFieldSelect(
+    function addFormFieldSelect(
         $label, $options = [], $sortOrder, $validation = false, $defaultValue = null, $notice = '', $switcherConfig = null, $disabled = false
     ){
         $field = [
@@ -165,11 +165,11 @@ class ShippingPayment extends \Magestore\SupplierSuccess\Ui\DataProvider\Supplie
             $field['arguments']['data']['config']['disabled'] = $disabled;
         return $field;
     }
-    public function setDefaultValue($field, $value){
+    function setDefaultValue($field, $value){
         $field['arguments']['data']['config']['default'] = $value;
         return $field;
     }
-    public function addFormFieldText(
+    function addFormFieldText(
         $label, $formElement, $sortOrder, $validation = false, $defaultValue = null, $notice = '', $disabled = false){
         $field = $this->addFormField($label, 'text', $formElement, $sortOrder, $validation, $defaultValue, $notice);
         if($disabled)

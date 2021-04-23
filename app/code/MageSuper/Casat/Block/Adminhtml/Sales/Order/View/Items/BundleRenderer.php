@@ -12,7 +12,7 @@ class BundleRenderer
     /**
      * @param Template $originalBlock
      */
-    public function beforeToHtml(Template $originalBlock)
+    function beforeToHtml(Template $originalBlock)
     {
         $originalBlock->setTemplate('MageSuper_Casat::order/view/items/renderer/bundle.phtml');
     }

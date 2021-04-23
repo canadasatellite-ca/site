@@ -19,7 +19,7 @@ class General extends \Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOr
     protected $supplierCollectionFactory;
     protected $directory;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\App\RequestInterface $request,
@@ -48,7 +48,7 @@ class General extends \Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOr
      *
      * @return array
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }
@@ -59,7 +59,7 @@ class General extends \Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOr
      * @param array $meta
      * @return array
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $meta = array_replace_recursive(
             $meta,
@@ -77,7 +77,7 @@ class General extends \Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOr
      *
      * @return array
      */
-    public function getGeneralChildren()
+    function getGeneralChildren()
     {
         $children['purchased_at']['arguments']['data']['config']['default'] = date('Y-m-d');
         $children['supplier_id']['arguments']['data']['config']['component'] = 'MageSuper_Casat/js/form/element/suplier';
@@ -86,7 +86,7 @@ class General extends \Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOr
         return $children;
     }
 
-    public function getOpened()
+    function getOpened()
     {
         if (!$this->request->getParam('id')) {
             return true;
@@ -95,7 +95,7 @@ class General extends \Magestore\PurchaseOrderSuccess\Ui\DataProvider\PurchaseOr
     }
 
 
-    public function getSuppliersCurrencyDataJson()
+    function getSuppliersCurrencyDataJson()
     {
         $collection = $this->supplierCollectionFactory->create()
             ->addFieldToSelect('supplier_currrency')

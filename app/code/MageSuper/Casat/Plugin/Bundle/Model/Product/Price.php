@@ -18,7 +18,7 @@ class Price
     protected $_localeDate;
     protected $_eventManager;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
         \Magento\Framework\Event\ManagerInterface $eventManager
     )
@@ -37,7 +37,7 @@ class Price
      * @param mixed $store
      * @return float
      */
-    public function aroundCalculateSpecialPrice(
+    function aroundCalculateSpecialPrice(
         \Magento\Bundle\Model\Product\Price $subject, \Closure $proceed,
         $finalPrice,
         $specialPrice,
@@ -57,7 +57,7 @@ class Price
         return $finalPrice;
     }
 
-    public function aroundGetFinalPrice(
+    function aroundGetFinalPrice(
         \Magento\Bundle\Model\Product\Price $subject, \Closure $proceed,
         $qty, $product)
     {

@@ -37,7 +37,7 @@ class BundleAdvancedPricing extends AbstractModifier
      * @param LocatorInterface $locator
      * @param ArrayManager $arrayManager
      */
-    public function __construct(
+    function __construct(
         LocatorInterface $locator,
         ArrayManager $arrayManager
     ) {
@@ -47,7 +47,7 @@ class BundleAdvancedPricing extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $meta = $this->arrayManager->merge(
             $this->arrayManager->findPath(static::CODE_PRICE_TYPE, $meta, null, 'children') . static::META_CONFIG_PATH,
@@ -86,7 +86,7 @@ class BundleAdvancedPricing extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }

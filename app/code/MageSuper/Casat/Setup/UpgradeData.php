@@ -44,7 +44,7 @@ class UpgradeData implements UpgradeDataInterface
      * @param CategorySetupFactory $categorySetupFactory
      * @param EavSetupFactory $eavSetupFactory
      */
-    public function __construct(CategorySetupFactory $categorySetupFactory,
+    function __construct(CategorySetupFactory $categorySetupFactory,
                                 EavSetupFactory $eavSetupFactory,
                                 \Magento\Framework\ObjectManagerInterface $objectmanager,
                                 WriterInterface $configWriter,
@@ -62,7 +62,7 @@ class UpgradeData implements UpgradeDataInterface
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
+    function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
 

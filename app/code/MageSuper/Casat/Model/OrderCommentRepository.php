@@ -15,7 +15,7 @@ class OrderCommentRepository implements \MageSuper\Casat\Api\OrderCommentReposit
 {
     protected $objectFactory;
     protected $collectionFactory;
-    public function __construct(
+    function __construct(
         OrderCommentFactory $objectFactory,
         CollectionFactory $collectionFactory,
         SearchResultsInterfaceFactory $searchResultsFactory       
@@ -26,7 +26,7 @@ class OrderCommentRepository implements \MageSuper\Casat\Api\OrderCommentReposit
         $this->searchResultsFactory = $searchResultsFactory;
     }
     
-    public function save(OrderCommentInterface $object)
+    function save(OrderCommentInterface $object)
     {
         try
         {
@@ -39,7 +39,7 @@ class OrderCommentRepository implements \MageSuper\Casat\Api\OrderCommentReposit
         return $object;
     }
 
-    public function getById($id)
+    function getById($id)
     {
         $object = $this->objectFactory->create();
         $object->load($id);
@@ -49,7 +49,7 @@ class OrderCommentRepository implements \MageSuper\Casat\Api\OrderCommentReposit
         return $object;        
     }       
 
-    public function delete(OrderCommentInterface $object)
+    function delete(OrderCommentInterface $object)
     {
         try {
             $object->delete();
@@ -59,12 +59,12 @@ class OrderCommentRepository implements \MageSuper\Casat\Api\OrderCommentReposit
         return true;    
     }    
 
-    public function deleteById($id)
+    function deleteById($id)
     {
         return $this->delete($this->getById($id));
     }    
 
-    public function getList(SearchCriteriaInterface $criteria)
+    function getList(SearchCriteriaInterface $criteria)
     {
         $searchResults = $this->searchResultsFactory->create();
         $searchResults->setSearchCriteria($criteria);  

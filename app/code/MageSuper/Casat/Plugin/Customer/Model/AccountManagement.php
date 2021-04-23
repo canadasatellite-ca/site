@@ -51,7 +51,7 @@ class AccountManagement extends \Magento\Customer\Model\AccountManagement
 {
     protected $customerRepository;
     protected $customerRegistry;
-    public function __construct(
+    function __construct(
         \Magento\Customer\Model\CustomerFactory $customerFactory,
         ManagerInterface $eventManager,
         StoreManagerInterface $storeManager,
@@ -81,12 +81,12 @@ class AccountManagement extends \Magento\Customer\Model\AccountManagement
         parent::__construct($customerFactory, $eventManager, $storeManager, $mathRandom, $validator, $validationResultsDataFactory, $addressRepository, $customerMetadataService, $customerRegistry, $logger, $encryptor, $configShare, $stringHelper, $customerRepository, $scopeConfig, $transportBuilder, $dataProcessor, $registry, $customerViewHelper, $dateTime, $customerModel, $objectFactory, $extensibleDataObjectConverter);
     }
 
-    public function authenticate($email, $password) {
+    function authenticate($email, $password) {
         $this->_beforeAuthenticate($email, $password);
         $result = parent::authenticate($email, $password);
         return $result;
     }
-    public function _beforeAuthenticate($username, $password){
+    function _beforeAuthenticate($username, $password){
         try {
             $customer = $this->customerRepository->get($username);
         } catch (NoSuchEntityException $e) {

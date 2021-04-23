@@ -55,7 +55,7 @@ class BundlePanel extends AbstractModifier
      * @param ShipmentType $shipmentType
      * @param ArrayManager $arrayManager
      */
-    public function __construct(
+    function __construct(
         LocatorInterface $locator,
         UrlInterface $urlBuilder,
         ShipmentType $shipmentType,
@@ -71,7 +71,7 @@ class BundlePanel extends AbstractModifier
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $path = $this->arrayManager->findPath(static::CODE_BUNDLE_DATA, $meta, null, 'children');
 
@@ -91,7 +91,7 @@ class BundlePanel extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }

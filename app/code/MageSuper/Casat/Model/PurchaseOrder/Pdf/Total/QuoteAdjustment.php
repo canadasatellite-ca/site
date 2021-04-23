@@ -28,7 +28,7 @@ class QuoteAdjustment extends \Cart2Quote\Quotation\Model\Quote\Pdf\Total\Defaul
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Tax\Helper\Data $taxHelper,
         \Magento\Tax\Model\Calculation $taxCalculation,
         \Magento\Tax\Model\ResourceModel\Sales\Order\Tax\CollectionFactory $ordersFactory,
@@ -45,7 +45,7 @@ class QuoteAdjustment extends \Cart2Quote\Quotation\Model\Quote\Pdf\Total\Defaul
      * Get Quote Reduction for display on PDF
      * @return array
      */
-    public function getTotalsForDisplay()
+    function getTotalsForDisplay()
     {
         $totals = parent::getTotalsForDisplay();
         $showAdjustment = $this->scopeConfig->getValue(\Cart2Quote\Quotation\Block\Quote\Totals::XML_PATH_CART2QUOTE_QUOTATION_GLOBAL_SHOW_QUOTE_ADJUSTMENT);
@@ -60,7 +60,7 @@ class QuoteAdjustment extends \Cart2Quote\Quotation\Model\Quote\Pdf\Total\Defaul
      * Function to return the amount that should be included in QuoteReduction block
      * @return mixed
      */
-    public function getAmount()
+    function getAmount()
     {
         $amount = $this->getSource()->getSubtotal() - $this->getSource()->getOriginalSubTotal();
 

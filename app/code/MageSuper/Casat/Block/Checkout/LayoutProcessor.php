@@ -16,7 +16,7 @@ class LayoutProcessor implements \Magento\Checkout\Block\Checkout\LayoutProcesso
      * @param array $jsLayout
      * @return array
      */
-    public function process($jsLayout)
+    function process($jsLayout)
     {
         // The following code is a workaround for custom address attributes
 //        if (isset($jsLayout['components']['checkout']['children']['steps']['children']['billing-step']['children']
