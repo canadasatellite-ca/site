@@ -9,18 +9,17 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
      * @return void
      */
     function execute(\Magento\Framework\Event\Observer $observer) {
-        $product = $observer->getEvent()->getProduct(); /** @var P $product */
-        if ($product->getStoreId() != 0) {
+        $p = $observer->getEvent()->getProduct(); /** @var P $p */
+        if ($p->getStoreId() != 0) {
             $user = df_backend_user();
-            $name = $product->getName();
-            $description = $product->getDescription();
-
+            $name = $p->getName();
+            $description = $p->getDescription();
             if ($name || $description) {
                 if($user){
-                    $message = $user->getUserName() . ', you just catched on trying to change product name and(or) description for not default store!(ID ' . $product->getEntityId() . ')';
+                    $message = $user->getUserName() . ', you just catched on trying to change product name and(or) description for not default store!(ID ' . $p->getEntityId() . ')';
                 }
                 else{
-                    $message = 'You just catched on trying to change product name and(or) description for not default store!(ID ' . $product->getEntityId() . ')';
+                    $message = 'You just catched on trying to change product name and(or) description for not default store!(ID ' . $p->getEntityId() . ')';
                 }
                 df_message_notice($message);
 				# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -30,16 +29,16 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 df_log_l($this, $message);
             }
         }
-        if ($product->getTypeId() == 'bundle') {
+        if ($p->getTypeId() == 'bundle') {
             $totalCost = 0;
-            $selections_data = $product->getBundleSelectionsData();
+            $selections_data = $p->getBundleSelectionsData();
             if($selections_data){
                 foreach ($selections_data as $selection_data) {
                     $id = $selection_data[0]['product_id'];
-                    $cost = $product->getResource()->getAttributeRawValue($id, 'cost', 0);
+                    $cost = $p->getResource()->getAttributeRawValue($id, 'cost', 0);
                     $cost = str_replace(',', '', $cost);
-                    $vendor_currency = $product->getResource()->getAttributeRawValue($id, 'vendor_currency', 0);
-                    $attr = $product->getResource()->getAttribute('vendor_currency');
+                    $vendor_currency = $p->getResource()->getAttributeRawValue($id, 'vendor_currency', 0);
+                    $attr = $p->getResource()->getAttribute('vendor_currency');
                     $optionText = 'CAD';
                     if ($attr->usesSource()) {
                         $optionText = $attr->getSource()->getOptionText($vendor_currency);
@@ -55,10 +54,10 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
             $cost = $totalCost;
         }
         else {
-            $cost = $product->getCost();
+            $cost = $p->getCost();
             $cost = str_replace(',', '', $cost);
-            $vendor_currency = $product->getData('vendor_currency');
-            $attr = $product->getResource()->getAttribute('vendor_currency');
+            $vendor_currency = $p->getData('vendor_currency');
+            $attr = $p->getResource()->getAttribute('vendor_currency');
             $optionText = 'CAD';
             if ($attr->usesSource()) {
                 $optionText = $attr->getSource()->getOptionText($vendor_currency);
@@ -69,20 +68,20 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
         }
         if ($cost > 0) {
             $cost = str_replace(',', '', $cost);
-            $price = str_replace(',', '', $product->getPrice());
-            $product->setPrice($price);
-            $price = str_replace(',', '', $product->getSpecialPrice());
-            $product->setSpecialPrice($price);
-            $product->setData('force_adminprices',true);
-            $price = $product->getFinalPrice();
-            $product->setData('force_adminprices',false);
+            $price = str_replace(',', '', $p->getPrice());
+            $p->setPrice($price);
+            $price = str_replace(',', '', $p->getSpecialPrice());
+            $p->setSpecialPrice($price);
+            $p->setData('force_adminprices',true);
+            $price = $p->getFinalPrice();
+            $p->setData('force_adminprices',false);
             $profit = $price - $cost;
-            $product->setProfit($profit);
+            $p->setProfit($profit);
             $margin = 0;
             if ($price){
                 $margin = $profit * 100 / $price;
             }
-            $product->setMargin($margin);
+            $p->setMargin($margin);
         }
     }
 }
