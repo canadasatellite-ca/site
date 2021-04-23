@@ -1,11 +1,6 @@
 <?php
 namespace MageSuper\Casat\Observer;
 class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
-    protected $messageManager;
-    function __construct(\Magento\Framework\Message\ManagerInterface $messageManager) {
-        $this->messageManager = $messageManager;
-    }
-
     /**
      * Execute observer
      *
@@ -27,7 +22,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 else{
                     $message = 'You just catched on trying to change product name and(or) description for not default store!(ID ' . $product->getEntityId() . ')';
                 }
-                $this->messageManager->addNoticeMessage($message);
+                df_message_notice($message);
 				# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 				# "MageSuper_Casat:
 				# «You just catched on trying to change product name and(or) description for not default store»":
