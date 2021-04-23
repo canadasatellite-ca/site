@@ -297,6 +297,7 @@ return [
         'Df_InventoryCatalog' => 1,
         'Df_MediaStorage' => 1,
         'Df_OAuth' => 1,
+        'Df_PageCache' => 1,
         'Df_Payment' => 1,
         'Df_Paypal' => 1,
         'Df_PaypalClone' => 1,
