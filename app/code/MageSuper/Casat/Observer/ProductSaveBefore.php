@@ -31,26 +31,23 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
         }
         if (df_product_is_bundle($p)) {
             $totalCost = 0;
-            $selections_data = $p->getBundleSelectionsData();
-            if($selections_data){
-                foreach ($selections_data as $selection_data) {
-                    $id = $selection_data[0]['product_id'];
-                    $cost = $p->getResource()->getAttributeRawValue($id, 'cost', 0);
-                    $cost = str_replace(',', '', $cost);
-                    $vendor_currency = $p->getResource()->getAttributeRawValue($id, 'vendor_currency', 0);
-                    $attr = $p->getResource()->getAttribute('vendor_currency');
-                    $optionText = 'CAD';
-                    if ($attr->usesSource()) {
-                        $optionText = $attr->getSource()->getOptionText($vendor_currency);
-                    }
-                    if ($vendor_currency && $optionText !== 'CAD') {
-                        $cost = df_currency_convert($cost, $optionText, 'CAD');
-                    }
-                    if ($cost == !NULL) {
-                        $totalCost += ($cost * $selection_data[0]['selection_qty']);
-                    }
-                }
-            }
+			foreach (df_eta($p->getBundleSelectionsData()) as $selection_data) {
+				$id = $selection_data[0]['product_id'];
+				$cost = $p->getResource()->getAttributeRawValue($id, 'cost', 0);
+				$cost = str_replace(',', '', $cost);
+				$vendor_currency = $p->getResource()->getAttributeRawValue($id, 'vendor_currency', 0);
+				$attr = $p->getResource()->getAttribute('vendor_currency');
+				$optionText = 'CAD';
+				if ($attr->usesSource()) {
+					$optionText = $attr->getSource()->getOptionText($vendor_currency);
+				}
+				if ($vendor_currency && $optionText !== 'CAD') {
+					$cost = df_currency_convert($cost, $optionText, 'CAD');
+				}
+				if ($cost == !NULL) {
+					$totalCost += ($cost * $selection_data[0]['selection_qty']);
+				}
+			}
             $cost = $totalCost;
         }
         else {
