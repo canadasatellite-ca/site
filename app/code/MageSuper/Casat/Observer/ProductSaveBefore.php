@@ -2,6 +2,7 @@
 namespace MageSuper\Casat\Observer;
 use Magento\Catalog\Model\Product as P;
 use Magento\Framework\Event\Observer as Ob;
+use Magento\Framework\Model\AbstractModel as M;
 # 2021-04-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `MageSuper_Casat` module": https://github.com/canadasatellite-ca/site/issues/73
 class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
@@ -11,15 +12,21 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
      */
     function execute(Ob $ob) {
         $p = $ob['product']; /** @var P $p */
-		if ($p->getStoreId() && df_backend_user() && ($p->getName() || $p->getDescription())) {
-			df_message_notice(
-				$m = "The product's name and/or description is changed in a non-default scope! (Product ID: {$p->getEntityId()})"
-			);
-			# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-			# "MageSuper_Casat:
-			# «You just catched on trying to change product name and(or) description for not default store»":
-			# https://github.com/canadasatellite-ca/site/issues/27
-			df_log_l($this, $m);
+		if ($p->getStoreId() && df_backend_user()) {
+			$cDesc = df_product_att_changed($p, 'description'); /** @var bool $cDesc */
+			$cName = df_product_att_changed($p, 'name'); /** @var bool $cName */
+			if ($cDesc || $cName) {
+				$fields = $cDesc && $cName ? 'name and description' : ($cName ? 'name' : 'description');
+				$is = $cDesc && $cName ? 'are' : 'is';
+				df_message_notice(
+					$m = "The product's $fields $is changed in a non-default scope! (Product ID: {$p->getEntityId()})"
+				);
+				# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# "MageSuper_Casat:
+				# «You just catched on trying to change product name and(or) description for not default store»":
+				# https://github.com/canadasatellite-ca/site/issues/27
+				df_log_l($this, $m);
+			}
 		}
         if (df_product_is_bundle($p)) {
             $totalCost = 0;
