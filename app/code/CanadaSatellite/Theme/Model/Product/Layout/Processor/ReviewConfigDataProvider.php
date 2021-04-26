@@ -101,7 +101,7 @@ class ReviewConfigDataProvider extends ConfigDataProvider
             $jsLayout,
             [
                 'data' => array_merge_recursive(
-                    $this->getGeneralConfigData($productId, $storeId),
+                    $this->getGeneralConfigData($productId),
                     [
                         'review_form' => $this->getReviewFormConfigData($storeId)
                     ],
@@ -119,31 +119,19 @@ class ReviewConfigDataProvider extends ConfigDataProvider
      * Retrieve general config data
      *
      * @param int|null $productId
-     * @param int|null $storeId
      * @return array
      */
-    private function getGeneralConfigData($productId = null, $storeId = null)
+    private function getGeneralConfigData($productId = null)
     {
         return [
             'is_customer_logged_in' => $this->httpContext->getValue(CustomerContext::CONTEXT_AUTH),
             'register_url' => $this->customerUrl->getRegisterUrl(),
             'login_url' => $this->customerUrl->getLoginUrl(),
-            'total_reviews_count' => $this->getTotalReviewsCount($productId, $storeId),
+			# 2021-04-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "`Aheadworks_AdvancedReviews`: reviews should be shown on the frontend regardless the store":
+			# https://github.com/canadasatellite-ca/site/issues/81
+            'total_reviews_count' => cs_aw_reviews_count($productId)
         ];
-    }
-
-    /**
-     * Retrieve total count of reviews to display
-     *
-     * @param int|null $productId
-     * @param int|null $storeId
-     * @return int
-     */
-    private function getTotalReviewsCount($productId = null, $storeId = null)
-    {
-        $statisticsInstance = $this->statisticsRepository->getByProductId($productId, $storeId);
-        $totalReviewsCount = $statisticsInstance->getReviewsCount();
-        return $totalReviewsCount;
     }
 
     /**
