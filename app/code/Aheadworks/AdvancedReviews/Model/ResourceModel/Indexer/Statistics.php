@@ -8,9 +8,9 @@ namespace Aheadworks\AdvancedReviews\Model\ResourceModel\Indexer;
 
 use Magento\Framework\Exception\LocalizedException;
 use Magento\Indexer\Model\ResourceModel\AbstractResource;
-use Aheadworks\AdvancedReviews\Api\Data\ReviewInterface;
+use Aheadworks\AdvancedReviews\Api\Data\ReviewInterface as IR;
 use Aheadworks\AdvancedReviews\Model\ResourceModel\Review as ReviewResource;
-use Aheadworks\AdvancedReviews\Api\Data\StatisticsInterface;
+use Aheadworks\AdvancedReviews\Api\Data\StatisticsInterface as IS;
 use Aheadworks\AdvancedReviews\Model\Source\Review\Status;
 use Aheadworks\AdvancedReviews\Model\DateTime\Formatter as DateTimeFormatter;
 use Magento\Framework\DB\Select;
@@ -133,7 +133,7 @@ class Statistics extends AbstractResource
     {
         $this->getConnection()->delete(
             $this->getMainTable(),
-            [ReviewInterface::PRODUCT_ID . ' IN (?)' => $productIds]
+            [IR::PRODUCT_ID . ' IN (?)' => $productIds]
         );
     }
 
@@ -149,7 +149,7 @@ class Statistics extends AbstractResource
         $selectForStatisticsData = $this->getSelectForStatisticsData();
 
         if ($productIds) {
-            $selectForStatisticsData->where(ReviewInterface::PRODUCT_ID . ' IN (?)', $productIds);
+            $selectForStatisticsData->where(IR::PRODUCT_ID . ' IN (?)', $productIds);
         }
 
         return $this->getConnection()->fetchAll($selectForStatisticsData);
@@ -161,41 +161,33 @@ class Statistics extends AbstractResource
      * @return Select
      * @throws \Zend_Db_Select_Exception
      */
-    private function getSelectForStatisticsData()
-    {
-        $connection = $this->getConnection();
-        $countExpr = new \Zend_Db_Expr('COUNT(*)');
-        $aggregatedRatingExpr = new \Zend_Db_Expr(
-            'CEIL(SUM(' . self::TMP_TABLE_ALIAS . '.rating)/COUNT(*))'
-        );
-        $mainReviewsSelect = $this->getMainReviewsSelect();
-        $sharedByStoreReviewsSelect = $this->getSharedByStoreReviewsSelect();
-        $unionSelect = $connection->select()->union(
-            [
-                $mainReviewsSelect,
-                $sharedByStoreReviewsSelect
-            ],
-            Select::SQL_UNION_ALL
-        );
-
-        $select = $connection
+    private function getSelectForStatisticsData() {
+        $conn = $this->getConnection();
+        # 2021-04-30 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "Aheadworks_AdvancedReviews: reviews should be shown on the frontend regardless the store":
+		# https://github.com/canadasatellite-ca/site/issues/81
+        $tmp = df_db_from(
+        	['r' => df_table('aw_ar_review')]
+			,[
+				IR::STORE_ID => 's.' . IR::STORE_ID,
+				IR::PRODUCT_ID => 'r.' . IR::PRODUCT_ID,
+				IR::RATING => 'r.' . IR::RATING
+			]
+		)->joinCross(['s' => df_table('store')], [])
+			->where('r.status IN (?)', Status::getDisplayStatuses())
+			->where('r.created_at <= ?', $this->getCurrentFormattedDate())
+		;
+        return $conn
             ->select()
             ->from(
-                [self::TMP_TABLE_ALIAS => $unionSelect],
+                [self::TMP_TABLE_ALIAS => $tmp],
                 [
-                    StatisticsInterface::STORE_ID,
-                    StatisticsInterface::PRODUCT_ID,
-                    StatisticsInterface::REVIEWS_COUNT => $countExpr,
-                    StatisticsInterface::AGGREGATED_RATING => $aggregatedRatingExpr
+                    IS::STORE_ID,
+                    IS::PRODUCT_ID,
+                    IS::REVIEWS_COUNT => new \Zend_Db_Expr('COUNT(*)'),
+                    IS::AGGREGATED_RATING => new \Zend_Db_Expr('CEIL(SUM(' . self::TMP_TABLE_ALIAS . '.rating)/COUNT(*))')
                 ]
-            )->group(
-                [
-                    StatisticsInterface::STORE_ID,
-                    StatisticsInterface::PRODUCT_ID
-                ]
-            );
-
-        return $select;
+            )->group([IS::STORE_ID, IS::PRODUCT_ID]);
     }
 
     /**
@@ -210,9 +202,9 @@ class Statistics extends AbstractResource
             ->from(
                 ['review_table' => $this->getTable(ReviewResource::MAIN_TABLE_NAME)],
                 [
-                    ReviewInterface::STORE_ID,
-                    ReviewInterface::PRODUCT_ID,
-                    ReviewInterface::RATING
+                    IR::STORE_ID,
+                    IR::PRODUCT_ID,
+                    IR::RATING
                 ]
             )->where(
                 'review_table.status IN (?)',
@@ -237,9 +229,9 @@ class Statistics extends AbstractResource
             ->from(
                 ['review_table' => $this->getTable(ReviewResource::MAIN_TABLE_NAME)],
                 [
-                    ReviewInterface::STORE_ID => 'shared_store_table.' . ReviewInterface::STORE_ID,
-                    ReviewInterface::PRODUCT_ID => 'review_table.' . ReviewInterface::PRODUCT_ID,
-                    ReviewInterface::RATING => 'review_table.' . ReviewInterface::RATING
+                    IR::STORE_ID => 'shared_store_table.' . IR::STORE_ID,
+                    IR::PRODUCT_ID => 'review_table.' . IR::PRODUCT_ID,
+                    IR::RATING => 'review_table.' . IR::RATING
                 ]
             )->join(
                 ['shared_store_table' => $this->getTable(ReviewResource::SHARED_STORE_TABLE_NAME)],
