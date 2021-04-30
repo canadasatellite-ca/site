@@ -80,13 +80,9 @@ class Container extends Template implements IdentityInterface
 
         $this->currentProductId = $productResolver->getCurrentProductId();
         $this->currentStoreId = $storeManager->getStore(true)->getId();
+
         if ($this->isNeedToRenderContainer()) {
-            $this->setData('title',
-				# 2021-04-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-				# "`Aheadworks_AdvancedReviews`: reviews should be shown on the frontend regardless the store":
-				# https://github.com/canadasatellite-ca/site/issues/81
-				$this->generateTitle(cs_aw_reviews_count($this->currentProductId))
-			);
+            $this->addTitle($statisticsRepository);
         }
     }
 
@@ -133,6 +129,39 @@ class Container extends Template implements IdentityInterface
             $config = array_merge($config, $commentCaptcha->getConfigData());
         }
         return $this->serializer->serialize($config);
+    }
+
+    /**
+     * Add tab title with total reviews count
+     *
+     * @param StatisticsRepositoryInterface $statisticsRepository
+     * @return $this
+     */
+    private function addTitle($statisticsRepository)
+    {
+        $totalReviewsCount = $this->getTotalReviewsCount($statisticsRepository);
+        $title = $this->generateTitle($totalReviewsCount);
+        $this->setData('title', $title);
+        return $this;
+    }
+
+    /**
+     * Retrieve total count of reviews to display
+     *
+     * @param StatisticsRepositoryInterface $statisticsRepository
+     * @return int
+     */
+    private function getTotalReviewsCount($statisticsRepository)
+    {
+        $totalReviewsCount = 0;
+        if (isset($this->currentProductId)) {
+            $statisticsInstance = $statisticsRepository->getByProductId(
+                $this->currentProductId,
+                $this->currentStoreId
+            );
+            $totalReviewsCount = $statisticsInstance->getReviewsCount();
+        }
+        return $totalReviewsCount;
     }
 
     /**
