@@ -2,6 +2,8 @@
 
 namespace CanadaSatellite\DynamicsIntegration\Consumer;
 
+use CanadaSatellite\Theme\Model;
+
 class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerInterface
 {
 	private $customerFactory;
@@ -12,6 +14,7 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 	private $productUpdater;
 	private $activationFormFactory;
 	private $activationFormUpdater;
+	private $orderNoteProcessor;
 	private $logger;
 
 	public function __construct(
@@ -23,6 +26,7 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 		\CanadaSatellite\DynamicsIntegration\Updater\ProductUpdater $productUpdater,
 		\CanadaSatellite\DynamicsIntegration\Model\ActivationFormFactory $activationFormFactory,
 		\CanadaSatellite\DynamicsIntegration\Updater\ActivationFormUpdater $activationFormUpdater,
+		\CanadaSatellite\DynamicsIntegration\LogicProcessors\OrderNoteProcessor $orderNoteProcessor,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
 		$this->customerFactory = $customerFactory;
@@ -36,6 +40,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 
 		$this->activationFormFactory = $activationFormFactory;
 		$this->activationFormUpdater = $activationFormUpdater;
+
+		$this->orderNoteProcessor = $orderNoteProcessor;
 
 		$this->logger = $logger;
 	}
@@ -67,6 +73,11 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 						case 'OrderSaved':
 							$order = $event->data;
 							$this->processOrder($order);
+							break;
+						case 'OrderNoteAdded':
+							$orderId = $event->id;
+							$note = $event->data;
+							$this->processOrderNote($orderId, $note);
 							break;
 						case 'ProductSaved':
 							$product = $event->data;
@@ -111,7 +122,6 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 			if (!array_key_exists($event->kind, $groups)) {
 				$groups[$event->kind] = array();
 			}
-
 
 			$kindGroup = &$groups[$event->kind];
 			if (!array_key_exists($event->id, $kindGroup)) {
@@ -169,6 +179,19 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 
 		$this->logger->info("[OrderConsumer] -> Order message processed");
 	}
+
+	private function processOrderNote($orderId, $note) {
+		$this->logger->info("[OrderNoteConsumer] -> Order note message received for order $orderId");
+		$this->orderUpdater->createOrderNote($orderId, $note);
+
+		$order = $this->orderUpdater->getOrder($orderId);
+		if ($order) {
+			$accountId = $order->_customerid_value;
+			$this->orderNoteProcessor->processSimInNote($accountId, $note);
+		}
+
+        $this->logger->info("[OrderNoteConsumer] -> Order note message processed");
+    }
 
 	private function processProduct($productEnvelope, $sku)
 	{

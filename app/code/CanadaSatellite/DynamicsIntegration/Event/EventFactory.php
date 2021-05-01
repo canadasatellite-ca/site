@@ -31,6 +31,15 @@ class EventFactory
 		);
 	}
 
+	public function createOrderNoteCreatedEvent($orderId, $orderNote)
+	{
+		return array(
+			'kind' => 'OrderNoteAdded',
+			'id' => $orderId,
+			'data' => $orderNote,
+		);
+	}
+
 	public function createProductSavedEvent($productId, $sku, $productEnvelope)
 	{
 		return array(

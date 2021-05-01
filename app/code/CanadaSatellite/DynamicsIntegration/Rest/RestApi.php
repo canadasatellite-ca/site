@@ -733,6 +733,22 @@ class RestApi {
 		return $orderId;
 	}
 
+	public function getOrderById($orderId) {
+		$this->login();
+
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Accept' => 'application/json',
+			'Content-Type' => 'application/json; charset=utf-8',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0'
+		);
+		$query = array();
+		$response = $this->sendGetRequest($this->getCrmUrl() . "/api/data/v8.1/salesorders($orderId)", $headers, $query);
+		$json = $this->getResponseJsonIfSuccess($response);
+
+		return $json;
+	}
 
 	public function updateOrder($orderId, $crmOrder) {
 		$this->login();
@@ -774,6 +790,25 @@ class RestApi {
 			return false;
 
 		return $json->value[0]->salesorderid;
+	}
+
+	public function createOrderNote($orderId, $note) {
+		$this->login();
+
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Content-Type' => 'application/json; charset=utf-8',
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'return=representation'
+		);
+
+		$note["objectid_salesorder@odata.bind"] = "/salesorders($orderId)";
+
+		$response = $this->sendPostRequestJson($this->getCrmUrl() . "/api/data/v8.1/annotations", $headers, json_encode($note));
+		$json = $this->getResponseJsonIfSuccess($response);
+		return $json->annotationid;
 	}
 
 	public function findCountryByName($country) {
@@ -907,6 +942,28 @@ class RestApi {
 			return;
 
 		$this->checkResponseIsSuccess($response);
+	}
+	
+	/*
+	 * @param array $crmSim
+	 * @return string Sim identifier
+	 */
+	public function createSim($crmSim) {
+		$this->login();
+
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Content-Type' => 'application/json; charset=utf-8',
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'return=representation'
+		);
+
+		$response = $this->sendPostRequestJson($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, json_encode($crmSim));
+		$json = $this->getResponseJsonIfSuccess($response);
+
+		return $json->cs_simid;
 	}
 
 	public function getSimByNumber($simNumber)
