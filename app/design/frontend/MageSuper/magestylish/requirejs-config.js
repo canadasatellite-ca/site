@@ -6,10 +6,12 @@ var config = {
         }
     },
     paths:  {
-        "owlslider" : "js/owlcarousel/owl.carousel.min"    
+        "owlslider" : "js/owlcarousel/owl.carousel.min",
+        'jquery/compat': 'js/compat',
+        'jquery/jquery-migrate': 'js/jquery-migrate'
     },
     "shim": {
 		"js/owlcarousel/owl.carousel.min": ["jquery"]
 	},
 };
- 
+
