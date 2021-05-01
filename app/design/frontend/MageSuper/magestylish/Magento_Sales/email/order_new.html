@@ -81,6 +81,11 @@
             {{layout handle="sales_email_order_items" order=$order area="frontend"}}
         </td>
     </tr>
+    <tr>
+        <td colspan="5">
+            <a href="{{store direct_url='sales/order/view/order_id/'}}{{var order.getId()}}">Download Order PDF</a>
+        </td>
+    </tr>
 </table>
 
 {{template config_path="design/email/footer_template"}}
