@@ -3,12 +3,15 @@
 namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 
 use CanadaSatellite\DynamicsIntegration\Utils\ProductProfitCalculator;
+use Exception;
 
 class DynamicsCrm {
 	private $customerHelper;
 	private $priceListHelper;
 	private $productComposer;
 	private $orderComposer;
+	private $orderNoteComposer;
+	private $simComposer;
 	private $restApi;
 	private $logger;
 
@@ -17,6 +20,8 @@ class DynamicsCrm {
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductModelComposer $productComposer,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderModelComposer $orderComposer,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderNoteComposer $orderNoteComposer,
+		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\SimModelComposer $simComposer,
 		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -24,6 +29,8 @@ class DynamicsCrm {
 		$this->priceListHelper = $priceListHelper;
 		$this->productComposer = $productComposer;
 		$this->orderComposer = $orderComposer;
+		$this->orderNoteComposer = $orderNoteComposer;
+		$this->simComposer = $simComposer;
 		$this->restApi = $restApi;
 		$this->logger = $logger;
 	}
@@ -117,7 +124,7 @@ class DynamicsCrm {
 			$customer = $order->getCustomer();
 			if ($customer === null) {
 				$this->logger->info("[createOrUpdateOrder] Order $orderId has no customer id. Stop processing.");
-				throw new \Exception("Order $orderId has no customer id.");
+				throw new Exception("Order $orderId has no customer id.");
 			}
 
 			$customerId = $order->getCustomerId();
@@ -134,6 +141,39 @@ class DynamicsCrm {
 		$crmOrder = $this->orderComposer->compose($order);
 		$this->restApi->updateOrder($crmId, $crmOrder);
 		return $crmId;
+	}
+
+	public function getOrder($orderId) {
+		$this->logger->info("[getOrder] Enter");
+		
+		$crmOrderId = $this->restApi->findOrderByNumber($orderId);
+		$crmOrder = $this->restApi->getOrderById($crmOrderId);
+		if ($crmOrder === false) {
+			$this->logger->info("[getOrder] Order ($orderId) not found");
+			return;
+		}
+
+		$this->logger->info("[getOrder] Order received");
+		return $crmOrder;
+	}
+
+	/**
+	* @param $orderId string
+	* @param $note string
+	* @throws Exception
+	*/
+	public function createOrderNote($orderId, $note)
+	{
+		$this->logger->info("[createOrderNote] Enter");
+
+		$crmId = $this->restApi->findOrderByNumber($orderId);
+		if ($crmId === false) {
+			throw new Exception("Order $orderId not found");
+		}
+
+		$this->logger->info("[createOrderNote] Creating note for order $crmId");
+		$crmNote = $this->orderNoteComposer->compose($note);
+		$this->restApi->createOrderNote($crmId, $crmNote);
 	}
 
 	/**
@@ -237,9 +277,17 @@ class DynamicsCrm {
         } else {
         	$this->logger->info("[createOrUpdateActivationRequest] SIM $crmSimId in Dynamics CRM for activation request $requestId is not found. Skipping activation...");
         }
-        
 
 		return $crmId;
+	}
+
+	public function createSim($sim) {
+		$this->logger->info("Start compose SIM model from #".$sim->getSimNumber());
+		$crmSim = $this->simComposer->compose($sim);
+		$this->logger->info("Send request to CRM with new SIM - ".json_encode($crmSim));
+		$simId = $this->restApi->createSim($crmSim);
+		$this->logger->info("SIM created on CRM. SimId = $simId");
+		return $simId;
 	}
 
 	private function activateSim($crmSim, $satelliteNumber, $dataNumber, $activationDate, $expirationDate)

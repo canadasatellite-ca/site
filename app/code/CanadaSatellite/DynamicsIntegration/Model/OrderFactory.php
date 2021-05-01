@@ -18,7 +18,6 @@ class OrderFactory
 		$this->itemFactory = $itemFactory;
 	}
 
-
 	public function fromEnvelope($envelope)
 	{
 		if ($envelope === null) {

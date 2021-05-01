@@ -8,5 +8,10 @@
                 <resource>https://canadasatellite.crm.dynamics.com</resource>
             </credentials>
         </dynamics>
+		<magento>
+			<regulars>
+				<get_sim_from_order_note>/(\d*).*please visit.*to activate your sim/i</get_sim_from_order_note>
+			</regulars>
+		</magento>
     </default>
 </config>

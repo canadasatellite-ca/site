@@ -1,30 +1,33 @@
 <?xml version="1.0"?>
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
 	<event name="catalog_product_delete_after">
-    	<observer name="catalog_product_delete_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\ProductDeleteAfterObserver" />
-    </event>
+		<observer name="catalog_product_delete_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\ProductDeleteAfterObserver" />
+	</event>
 	<event name="catalog_product_save_commit_after">
-        <observer name="catalog_product_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\ProductSaveAfterObserver" />
-    </event>
-    <event name="cataloginventory_stock_item_save_commit_after">
-        <observer name="cataloginventory_stock_item_save_commit_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\StockItemSaveAfterObserver" />
-    </event>
-    <event name="sales_order_save_commit_after">
-        <observer name="sales_order_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\SalesOrderSaveAfterObserver" />
-    </event>
-    <event name="sales_order_address_save_commit_after">
-        <observer name="sales_order_address_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\SalesOrderAddressSaveAfterObserver" />
-    </event>
-    <event name="customer_save_commit_after">
-        <observer name="customer_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\CustomerSaveAfterObserver" />
-    </event>
-    <event name="customer_address_save_commit_after">
-    	<observer name="customer_address_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\CustomerAddressSaveAfterObserver" />
-    </event>
-    <event name="customer_delete_after">
-        <observer name="customer_delete_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\CustomerDeleteAfterObserver" />
-    </event>
-    <event name="activationform_save_commit_after">
-        <observer name="activationform_save_commit_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\ActivationFormSaveAfterObserver" />
-    </event>
+		<observer name="catalog_product_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\ProductSaveAfterObserver" />
+	</event>
+	<event name="cataloginventory_stock_item_save_commit_after">
+		<observer name="cataloginventory_stock_item_save_commit_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\StockItemSaveAfterObserver" />
+	</event>
+	<event name="sales_order_save_commit_after">
+		<observer name="sales_order_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\SalesOrderSaveAfterObserver" />
+	</event>	
+	<event name="sales_order_status_history_save_after">
+		<observer name="sales_order_status_history_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\SalesOrderStatusHistorySaveAfterObserver" />
+	</event>
+	<event name="sales_order_address_save_commit_after">
+		<observer name="sales_order_address_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\SalesOrderAddressSaveAfterObserver" />
+	</event>
+	<event name="customer_save_commit_after">
+		<observer name="customer_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\CustomerSaveAfterObserver" />
+	</event>
+	<event name="customer_address_save_commit_after">
+		<observer name="customer_address_save_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\CustomerAddressSaveAfterObserver" />
+	</event>
+	<event name="customer_delete_after">
+		<observer name="customer_delete_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\CustomerDeleteAfterObserver" />
+	</event>
+	<event name="activationform_save_commit_after">
+		<observer name="activationform_save_commit_after_observer" instance="CanadaSatellite\DynamicsIntegration\Observer\ActivationFormSaveAfterObserver" />
+	</event>
 </config>
