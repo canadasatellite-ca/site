@@ -23,50 +23,91 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
         $page = $this->getPage();
         $lines = [];
         $lines[0] = [];
+
         // draw QTY
-        $lines[0][] = ['text' => $item->getQty() * 1, 'feed' => 35];
+        $lines[0][] = [
+            'text' => $item->getQty() * 1,
+            'feed' => 5,
+            'align' => 'center',
+            'font' => 'bold',
+            'width' => 50
+        ];
 
         // draw Product name
         $lines[0][] = [
-            'text' => $this->string->split($item->getName(), 75, true, true),
-            'feed' => 80,
-            'font' => 'bold'
-        ];
-        // draw SKU
-        $lines[1][] = [
-            'text' => $this->string->split(__("SKU: ").$this->getSku($item), 75),
-            'feed' => 80,
+            'text' => $this->string->split($item->getName(), 65, true, true),
             'align' => 'left',
-//            'font' => 'bold'
+            'feed' => 65,
+            'font' => 'bold',
+            'width' => 340
+        ];
+        $lines[1][] = [
+            'text' => $this->string->split($item->getProduct()->getQuoteDescription(), 75),
+            'feed' => 65,
+            'align' => 'left',
+            'width' => 70,
+            'font_size' => 10,
+            'height' => 12
+        ];
+
+        $lines[2][] = [
+            'text' => '',
+            'feed' => 65,
+            'width' => 70,
+            'height' => 10
+        ];
+
+        // draw SKU
+        $lines[3][] = [
+            'text' => $this->string->split(__("SKU: ") . $this->getSku($item), 75),
+            'feed' => 65,
+            'align' => 'left',
+            'width' => 70
         ];
 
 
         // draw item Prices
         $i = 0;
         $prices = $this->getItemPricesForDisplay();
-        $feedPrice = 500;
-        $feedSubtotal = $feedPrice + 60;
+        $feedPrice = 430;
+        $feedSubtotal = $feedPrice + 70;
         foreach ($prices as $priceData) {
-            /**/if (isset($priceData['label'])) {
-                // draw Price label
-                $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedPrice, 'align' => 'right'];
-                // draw Subtotal label
-                $lines[$i][] = ['text' => $priceData['label'], 'feed' => $feedSubtotal, 'align' => 'right'];
+            if (isset($priceData['label'])) {
+
+                // draw Unit Price label
+                $lines[$i][] = [
+                    'text' => $priceData['label'],
+                    'feed' => $feedPrice,
+                    'align' => 'center',
+                    'width' => 70
+                ];
+
+                // draw Extended Cost label
+                $lines[$i][] = [
+                    'text' => $priceData['label'],
+                    'feed' => $feedSubtotal,
+                    'align' => 'center',
+                    'width' => 85
+                ];
                 $i++;
-            }/**/
-            // draw Price
+            }
+
+            // draw Unit Price
             $lines[$i][] = [
                 'text' => $priceData['price'],
                 'feed' => $feedPrice,
                 'font' => 'bold',
-                'align' => 'right',
+                'align' => 'center',
+                'width' => 70
             ];
-            // draw Subtotal
+
+            // draw Extended Cost
             $lines[$i][] = [
                 'text' => $priceData['subtotal'],
                 'feed' => $feedSubtotal,
                 'font' => 'bold',
-                'align' => 'right',
+                'align' => 'center',
+                'width' => 85
             ];
             $i++;
         }
@@ -79,37 +120,66 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
             'align' => 'right',
         ];*/
 
+        $lineBlock = ['lines' => $lines, 'height' => 20];
+
+        $page = $pdf->drawLineBlocks($page, [$lineBlock], ['table_header' => true]);
+
         // custom options
         $options = $this->getItemOptions();
         if ($options) {
             $optionsText = '';
-            foreach ($options as $option) {
-                $optionsText.= $option['label'];
-
+            $optionsLabels = [];
+            foreach ($options as $ket => $option) {
+                $optionsText .= $option['label'];
+                $optionsLabels[] = $option['label'] . ':';
                 if ($option['value']) {
                     if (isset($option['print_value'])) {
-                        $printValue = $option['print_value'];
+                        $optionsLabels[] = $option['print_value'];
                     } else {
-                        $printValue = $this->filterManager->stripTags($option['value']);
+                        $optionsLabels = $this->filterManager->stripTags($option['value']);
                     }
-                    $values = explode(', ', $printValue);
-                    foreach ($values as $value) {
-                        $optionsText.= " ".$value;
-                    }
+//                    $values = explode(', ', $printValue);
+//                    foreach ($values as $value) {
+//                        $optionsText .= " " . $value;
+//                    }
                 }
-                $optionsText.= ";";
+                $optionsText .= ";";
             }
-            $lines[][] = [
-                'text' => $this->string->split($this->filterManager->stripTags($optionsText), 65, true, true),
-                'font' => 'italic',
-                'feed' => 82,
-            ];
+            $optionsLines = [];
+            foreach ($optionsLabels as $key => $optionsLabel) {
+                if ($key % 2 == 0) {
+                    $optionsLines[][] = [
+                        'text' => $this->string->split(
+                            $this->filterManager->stripTags($optionsLabel),
+                            65,
+                            true,
+                            true
+                        ),
+                        'font' => 'bold',
+                        'feed' => 65,
+                        'font_size' => 10
+                    ];
+                    continue;
+                }
 
+                $optionsLines[][] = [
+                    'text' => $this->string->split(
+                        $this->filterManager->stripTags($optionsLabel),
+                        65,
+                        true,
+                        true
+                    ),
+                    'feed' => 85,
+                    'font_size' => 10
+                ];
+            }
+
+            if (count($optionsLines) > 0) {
+                $optionsLineBlock = ['lines' => $optionsLines, 'height' => 15];
+                $page = $pdf->drawLineBlocks($page, [$optionsLineBlock], ['table_header' => true]);
+            }
         }
 
-        $lineBlock = ['lines' => $lines, 'height' => 20];
-
-        $page = $pdf->drawLineBlocks($page, [$lineBlock], ['table_header' => true]);
         $this->setPage($page);
     }
 }
