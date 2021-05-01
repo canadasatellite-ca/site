@@ -6,11 +6,20 @@
 namespace Cart2Quote\Features\Traits\Model\Quote\Pdf;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Framework\Exception\LocalizedException;
+use Magento\MediaStorage\Helper\File\Storage\Database;
+
 /**
  * Quote PDF model
  */
 trait Quote
 {
+
+    public function __construct(\Magento\MediaStorage\Helper\File\Storage\Database $fileStorageDatabase = null)
+    {
+        $this->fileStorageDatabase = $fileStorageDatabase ?:
+            \Magento\Framework\App\ObjectManager::getInstance()->get(Database::class);
+    }
+
     /**
      * Set Pdf model
      *
@@ -111,6 +120,7 @@ trait Quote
             );
             /* Add image */
             $this->insertLogo($page, $store);
+
             //extra event
             $this->eventManager->dispatch(
                 'quotation_quotepdf_getpdf_before_address',
@@ -122,7 +132,7 @@ trait Quote
                 ]
             );
             /* Add address */
-            $this->insertAddress($page, $store);
+//            $this->insertAddress($page, $store);
             //extra event
             $this->eventManager->dispatch(
                 'quotation_quotepdf_getpdf_before_quote',
@@ -155,6 +165,7 @@ trait Quote
                         $page = $this->_drawSectionHeader($page, $section);
                     }
                     /* Add table */
+                    $headerY = $this->y;
                     $this->_drawHeader($page);
                     /*draw optional disclaimer */
                     $this->drawDisclaimer($page, $quote);
@@ -165,6 +176,9 @@ trait Quote
                         }
                         /* Draw item */
                         $this->_drawQuoteItem($item, $page, $quote);
+                        $page->setLineColor(new \Zend_Pdf_Color_GrayScale(0.5));
+                        $page->setLineWidth(0.5);
+                        $page->drawLine(5, $this->y + 12.5, 585, $this->y + 12.5);
                         $page = end($pdf->pages);
                     }
                 }
@@ -179,9 +193,30 @@ trait Quote
                     'store' => $store
                 ]
             );
+
+            $page->drawLine(5, $headerY, 5, $this->y + 12.5);
+            $page->drawLine(55, $headerY, 55, $this->y + 12.5);
+            $page->drawLine(430, $headerY, 430, $this->y + 12.5);
+            $page->drawLine(500, $headerY, 500, $this->y + 12.5);
+            $page->drawLine(585, $headerY, 585, $this->y + 12.5);
+            $this->_setFontBold($page, 10);
+            $page->drawText(__('GST / HST Registration #775933914'), 5, $this->y - 5, 'UTF-8');
             /* Add totals */
+//            $this->y += 10;
             $totalsY = $this->y;
+            $beforeTotalsY = $this->y + 12.5;
             $this->insertTotals($page, $quote);
+            $page->drawLine(430, $beforeTotalsY, 430, $this->y + 12.5);
+            $page->drawLine(500, $beforeTotalsY, 500, $this->y + 12.5);
+            $page->drawLine(585, $beforeTotalsY, 585, $this->y + 12.5);
+            $beforeTotalsY -= 10;
+            while (($beforeTotalsY -= 20) > ($this->y + 12.5)) {
+                $page->drawLine(430, $beforeTotalsY, 585, $beforeTotalsY);
+            }
+            $page->drawLine(430, $beforeTotalsY, 430, $this->y + 12.5);
+            $page->drawLine(500, $beforeTotalsY, 500, $this->y + 12.5);
+            $page->drawLine(585, $beforeTotalsY, 585, $this->y + 12.5);
+            $page->drawLine(430, $this->y + 5, 585, $this->y + 5);
             $page = end($pdf->pages);
             //extra event
             $this->eventManager->dispatch(
@@ -194,17 +229,17 @@ trait Quote
                 ]
             );
             /* Draw Comments */
-            if ($quote->getCustomerNoteNotify() && $quote->getCustomerNote() != '') {
-                $afterTotalsY = $this->y;
-                $this->y = $totalsY;
-                if ($this->newPage) {
-                    $this->y = self::NEW_PAGE_Y_VALUE;
-                }
-                $this->insertComments($page, $quote);
-                if ($afterTotalsY < $this->y) {
-                    $this->y = $afterTotalsY;
-                }
-            }
+//            if ($quote->getCustomerNoteNotify() && $quote->getCustomerNote() != '') {
+//                $afterTotalsY = $this->y;
+//                $this->y = $totalsY;
+//                if ($this->newPage) {
+//                    $this->y = self::NEW_PAGE_Y_VALUE;
+//                }
+//                $this->insertComments($page, $quote);
+//                if ($afterTotalsY < $this->y) {
+//                    $this->y = $afterTotalsY;
+//                }
+//            }
             //extra event
             $this->eventManager->dispatch(
                 'quotation_quotepdf_getpdf_before_footer',
@@ -297,7 +332,7 @@ trait Quote
         $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
         $page->setLineColor(new \Zend_Pdf_Color_GrayScale(0.5));
         $page->setLineWidth(0.5);
-        $page->drawRectangle(25, $this->y + 10, 570, $this->y - 35);
+        $page->drawRectangle(25, $this->y + 10, 585, $this->y - 35);
         $this->y -= 10;
         $page->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
         //columns headers
@@ -349,24 +384,59 @@ trait Quote
     {
 		if(\Cart2Quote\License\Model\License::getInstance()->isValid()) {
 			/* Add table head */
-        $this->_setFontRegular($page, 10);
-        $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
-        $page->setLineColor(new \Zend_Pdf_Color_GrayScale(0.5));
-        $page->setLineWidth(0.5);
-        $page->drawRectangle(25, $this->y, 570, $this->y - 15);
-        $this->y -= 10;
-        $page->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
-        //columns headers
-        $lines[0][] = ['text' => __('Products'), 'feed' => 35];
-        $lines[0][] = ['text' => __('SKU'), 'feed' => 237, 'align' => 'right'];
-        $lines[0][] = ['text' => __('Qty'), 'feed' => 431, 'align' => 'right'];
-        $lines[0][] = ['text' => __('Price'), 'feed' => 348, 'align' => 'right'];
-        $lines[0][] = ['text' => __('Tax'), 'feed' => 484, 'align' => 'right'];
-        $lines[0][] = ['text' => __('Subtotal'), 'feed' => 558, 'align' => 'right'];
-        $lineBlock = ['lines' => $lines, 'height' => 5];
-        $this->drawLineBlocks($page, [$lineBlock], ['table_header' => true]);
-        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
-        $this->y -= 10;
+            $this->_setFontRegular($page, 10);
+            $page->setFillColor(new \Zend_Pdf_Color_Rgb(1, 1, 1));
+            $page->setLineColor(new \Zend_Pdf_Color_GrayScale(0.5));
+            $page->setLineWidth(0.5);
+            $page->drawRectangle(5, $this->y, 585, $this->y - 25);
+            $this->y -= 15;
+            $page->setFillColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
+
+            //columns headers
+            $lines[0][] = [
+                'text' => __('Quantity'),
+                'feed' => 5,
+                'align' => 'center',
+                'font' => 'bold',
+                'width' => 50,
+                'font_size' => 12
+            ];
+
+            $lines[0][] = [
+                'text' => __('Product'),
+                'feed' => 75,
+                'align' => 'center',
+                'font' => 'bold',
+                'width' => 340,
+                'font_size' => 12
+            ];
+
+            $lines[0][] = [
+                'text' => __('Each'),
+                'feed' => 430,
+                'align' => 'center',
+                'font' => 'bold',
+                'width' => 70,
+                'font_size' => 12
+            ];
+
+            $lines[0][] = [
+                'text' => __('Extended Cost'),
+                'feed' => 500,
+                'align' => 'center',
+                'font' => 'bold',
+                'width' => 85,
+                'font_size' => 12
+            ];
+
+            $lineBlock = [
+                'lines' => $lines,
+                'height' => 5
+            ];
+
+            $this->drawLineBlocks($page, [$lineBlock], ['table_header' => true]);
+            $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
+            $this->y -= 10;
 		}
 	}
     /**
@@ -378,13 +448,13 @@ trait Quote
      */
     private function drawDisclaimer(\Zend_Pdf_Page $page, $quote)
     {
-		if(\Cart2Quote\License\Model\License::getInstance()->isValid()) {
-			if ($quote->hasOptionalItems()) {
-            $this->_setFontRegular($page, 7);
-            $disclaimer = __('Products with * are optional');
-            $page->drawText($disclaimer, 38, $this->y + 8);
+        if (\Cart2Quote\License\Model\License::getInstance()->isValid()) {
+            if ($quote->hasOptionalItems()) {
+                $this->_setFontRegular($page, 7);
+                $disclaimer = __('Products with * are optional');
+                $page->drawText($disclaimer, 38, $this->y + 8);
+            }
         }
-		}
 	}
     /**
      * Get array of increments
@@ -471,4 +541,204 @@ trait Quote
         return $page;
 		}
 	}
+
+    protected function insertFooter(\Zend_Pdf_Page $page, $text)
+    {
+        $text = $this->_scopeConfig->getValue(
+            'cart2quote_pdf/quote/pdf_footer_text',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE
+        );
+        $text = '';
+        $boxTop = 65;
+        $top = $boxTop + 20;
+        $boxHeight = 20;
+        $boxMargin = 20;
+        $font = $this->_setFontRegular($page, 10);
+
+        if ($this->y - 20 < 15) {
+            $page = $this->newPage([]);
+        }
+
+        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(1));
+        foreach ($this->string->split($text, 100, true, true) as $_value) {
+            $boxHeight += 10;
+        }
+        //$page->drawRectangle($boxMargin, $boxTop, $page->getWidth() - $boxMargin, $boxTop + $boxHeight);
+        $page->setLineColor(new \Zend_Pdf_Color_Rgb(0.71,0,0));
+        $page->setLineWidth(1);
+        //$page->drawLine(30, $top-20, 570, $top-20);
+
+        $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.714, 0.012, 0.016));
+        $page->setLineWidth(0.5);
+        $page->drawRectangle(0, $top-20, 400, $top-10);
+        $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.5725, 0.5412, 0.5333));
+        $page->setLineColor(new \Zend_Pdf_Color_Rgb(0.5725, 0.5412, 0.5333));
+        $page->drawRectangle(400, $top-20, 595, $top-10);
+
+
+        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0.20));
+        foreach ($this->string->split($text, 100, true, true) as $_value) {
+            $feed = $this->getAlignCenter(
+                trim(strip_tags($_value)),
+                $boxMargin,
+                $page->getWidth() - ($boxMargin * 2),
+                $font,
+                10
+            );
+
+            $page->drawText(
+                trim(strip_tags($_value)),
+                $feed,
+                $top,
+                'UTF-8'
+            );
+
+            $top -= 10;
+        }
+
+
+        $this->insertAddress($page);
+    }
+
+    protected function insertAddress(&$page, $store = null)
+    {
+        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
+        $page->setLineWidth(0);
+        $top = 45;
+
+        $addr = $this->_scopeConfig->getValue(self::XML_PATH_SALES_PDF_INVOICE_PACKINGSLIP_ADDRESS) . "\n";
+        $addr = str_replace("\nCanada", ' Canada', $addr);
+        $this->_setFontBold($page, 10);
+        $page->drawText(
+            'Canada Satellite',
+            5,
+            $top,
+            'UTF-8'
+        );
+
+        $top -= 10;
+
+        $this->_setFontRegular($page, 10);
+        foreach (explode("\n", $addr) as $value) {
+            if ($value !== '') {
+                $value = preg_replace('/<br[^>]*>/i', "", $value);
+                foreach ($this->string->split($value, 55, true, true) as $_value) {
+                    $page->drawText(
+                        trim(strip_tags($_value)),
+                        5,
+                        $top,
+                        'UTF-8'
+                    );
+                    $top -= 10;
+                }
+            }
+        }
+
+        /**
+         * draw right block
+         */
+        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
+        $this->_setFontBold($page, 10);
+        $page->drawText(
+            'www.canadasatellite.ca',
+            450,
+            35,
+            'UTF-8'
+        );
+
+        $page->drawText(
+            $this->_scopeConfig->getValue('trans_email/ident_sales/email'),
+            450,
+            25,
+            'UTF-8'
+        );
+
+        /**
+         * draw middle block
+         */
+        $this->_setFontBold($page, 10);
+
+        $page->drawText(
+            'Toll Free:',
+            239,
+            35,
+            'UTF-8'
+        );
+
+        $page->drawText(
+            'Direct:',
+            239,
+            25,
+            'UTF-8'
+        );
+
+
+        $this->_setFontRegular($page, 10);
+        $page->drawText(
+            '1 (403) 918-6300',
+            275,
+            25,
+            'UTF-8'
+        );
+        $page->drawText(
+            '1 (855) 552-2623',
+            290,
+            35,
+            'UTF-8'
+        );
+
+        $this->y = 45;
+    }
+
+    protected function insertLogo(&$page, $store = null)
+    {
+        $this->y = $this->y ? $this->y : 815;
+        $image = $this->_scopeConfig->getValue(
+            'sales/identity/logo',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            $store
+        );
+        if ($image) {
+            $imagePath = '/sales/store/logo/' . $image;
+//            if ($this->fileStorageDatabase->checkDbUsage() &&
+//                !$this->_mediaDirectory->isFile($imagePath)
+//            ) {
+//                $this->fileStorageDatabase->saveFileToFilesystem($imagePath);
+//            }
+            if ($this->_mediaDirectory->isFile($imagePath)) {
+                $image = \Zend_Pdf_Image::imageWithPath($this->_mediaDirectory->getAbsolutePath($imagePath));
+                $top = 830;
+                //top border of the page
+                $widthLimit = 270;
+                //half of the page width
+                $heightLimit = 270;
+                //assuming the image is not a "skyscraper"
+                $width = 120;
+                $height = 50;
+
+                //preserving aspect ratio (proportions)
+                $ratio = $width / $height;
+                if ($ratio > 1 && $width > $widthLimit) {
+                    $width = $widthLimit;
+                    $height = $width / $ratio;
+                } elseif ($ratio < 1 && $height > $heightLimit) {
+                    $height = $heightLimit;
+                    $width = $height * $ratio;
+                } elseif ($ratio == 1 && $height > $heightLimit) {
+                    $height = $heightLimit;
+                    $width = $widthLimit;
+                }
+
+                $y1 = $top - $height;
+                $y2 = $top;
+                $x1 = 5;
+                $x2 = $x1 + $width;
+
+                //coordinates after transformation are rounded by Zend
+                $page->drawImage($image, $x1, $y1, $x2, $y2);
+
+                $this->y = $y1 - 10;
+            }
+        }
+    }
 }

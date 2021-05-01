@@ -186,52 +186,73 @@ trait AbstractPdf
         }
         $this->y = $this->y ? $this->y : 815;
         $top = $this->y;
-        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0.45));
-        $page->setLineColor(new \Zend_Pdf_Color_GrayScale(0.45));
-        $page->drawRectangle(25, $top, 570, $top - 75);
-        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(1));
-        $this->setDocHeaderCoordinates([25, $top, 570, $top - 75]);
-        $this->_setFontRegular($page, 10);
-        if ($putQuoteId) {
-            $page->drawText(__('Quotation # ') . $quote->getIncrementId(), 35, $top -= 30, 'UTF-8');
-        }
-        //workaround for Magento 2.3.4 and newer? date print issue when date include time
-        $createdAtDate = explode(" ", $quote->getQuotationCreatedAt());
-        if (!empty($createdAtDate)) {
-            $createdAtDate = $createdAtDate[0];
-        }
-        $page->drawText(
-            __('Quotation Date: ') .
-            $this->_localeDate->formatDate(
-                $this->_localeDate->scopeDate(
-                    $quote->getStore(),
-                    $createdAtDate,
-                    true
-                ),
-                \IntlDateFormatter::MEDIUM,
-                false
-            ),
-            35,
-            $top -= 15,
-            'UTF-8'
-        );
-        if ($quote->getExpiryEnabled() && ($quote->getExpiryDate() !== null)) {
-            $page->drawText(
-                __('Quotation Valid Until: ') .
-                $this->_localeDate->formatDate(
+            $page->setFillColor(new \Zend_Pdf_Color_GrayScale(1));
+            $page->setLineColor(new \Zend_Pdf_Color_GrayScale(1));
+            $page->drawRectangle(25, $top, 570, $top - 55);
+            $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
+            $this->setDocHeaderCoordinates([25, $top, 570, $top - 55]);
+            $this->y += 20;
+//        $top += 20;
+
+            $headerLines[0][0] = [
+                'text' => __('Quote - '),
+                'feed' => 470,
+                'align' => 'right',
+//            'font' => 'italic',
+                'width' => 50,
+                'font_size' => 16
+            ];
+
+            $headerLines[0][1] = [
+                'text' => $quote->getIncrementId(),
+                'feed' => 530,
+                'align' => 'center',
+                'font' => 'bold',
+                'width' => 50,
+                'font_size' => 16
+            ];
+
+            $headerLines[2][] = [
+                'text' =>$this->_localeDate->formatDate(
                     $this->_localeDate->scopeDate(
                         $quote->getStore(),
-                        $quote->getExpiryDate(),
+                        $quote->getCreatedAt(),
                         true
                     ),
-                    \IntlDateFormatter::MEDIUM,
+                    \IntlDateFormatter::LONG,
                     false
                 ),
-                35,
-                $top -= 15,
-                'UTF-8'
-            );
-        }
+                'feed' => 544,
+                'align' => 'right',
+//            'font' => 'italic',
+                'width' => 50,
+                'font_size' => 14,
+                'addToTop' => 5
+            ];
+
+            $lineBlock1 = [
+                'lines' => $headerLines,
+                'height' => 50
+            ];
+
+            $this->drawLineBlocks($page, [$lineBlock1], ['table_header' => true]);
+//        if ($quote->getExpiryEnabled() && ($quote->getExpiryDate() !== null)) {
+//            $page->drawText(
+//                __('Quotation Valid Until: ') .
+//                $this->_localeDate->formatDate(
+//                    $this->_localeDate->scopeDate(
+//                        $quote->getStore(),
+//                        $quote->getExpiryDate(),
+//                        true
+//                    ),
+//                    \IntlDateFormatter::MEDIUM,
+//                    false
+//                ),
+//                375,
+//                $top -= 15,
+//                'UTF-8'
+//            );
+//        }
         /**
          * Guest should not display addres or name.
          * still return a white line to ensure layout does not break.
@@ -246,11 +267,15 @@ trait AbstractPdf
             /** The rest of the styling is ignored */
         }
         $top -= 10;
-        $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
-        $page->setLineColor(new \Zend_Pdf_Color_GrayScale(0.5));
-        $page->setLineWidth(0.5);
-        $page->drawRectangle(25, $top, 275, $top - 25);
-        $page->drawRectangle(275, $top, 570, $top - 25);
+            $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.714, 0.012, 0.016));
+            $page->setLineColor(new \Zend_Pdf_Color_Rgb(0.714, 0.012, 0.016));
+            $page->setLineWidth(0.5);
+            $page->drawRectangle(0, $top, 275, $top - 23);
+            $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.5725, 0.5412, 0.5333));
+            $page->setLineColor(new \Zend_Pdf_Color_Rgb(0.5725, 0.5412, 0.5333));
+            $page->drawRectangle(275, $top, 595, $top - 23);
+
+            $page->setLineColor(new \Zend_Pdf_Color_Rgb(1, 1, 1));
         /* Calculate blocks info */
         /* Billing Address */
         $billingAddress = $this->_formatAddress(
@@ -293,41 +318,52 @@ trait AbstractPdf
      */
     private function insertTotals($page, $quote)
     {
-		if(\Cart2Quote\License\Model\License::getInstance()->isValid()) {
-			$totals = $this->_getTotalsList();
-        $lineBlock = ['lines' => [], 'height' => 15];
-        $quote->collectTotals();
-        foreach ($totals as $total) {
-            $total->setQuote($quote)->setSource($quote)->setOrder($quote);
-            $candisplay = $total->canDisplay();
-            if ($candisplay) {
-                $total->setFontSize(10);
-                foreach ($total->getTotalsForDisplay() as $totalData) {
-                    $lineBlock['lines'][] = [
-                        [
-                            'text' => $totalData['label'],
-                            'feed' => 475,
-                            'align' => 'right',
-                            'font_size' => $totalData['font_size'],
-                            'font' => 'bold',
-                            'addToTop' => 2
-                        ],
-                        [
-                            'text' => $totalData['amount'],
-                            'feed' => 565,
-                            'align' => 'right',
-                            'font_size' => $totalData['font_size'],
-                            'font' => 'bold',
-                            'addToTop' => 2
-                        ],
-                    ];
+        if (\Cart2Quote\License\Model\License::getInstance()->isValid()) {
+            $totals = $this->_getTotalsList();
+            $lineBlock = ['lines' => [], 'height' => 20];
+            $quote->collectTotals();
+            foreach ($totals as $total) {
+                $total->setQuote($quote)->setSource($quote)->setOrder($quote);
+                $candisplay = $total->canDisplay();
+                if ($candisplay)
+                {
+                    $total->setFontSize(10);
+                    foreach ($total->getTotalsForDisplay() as $totalData) {
+                        if ($totalData['label'] == '') {
+                            continue;
+                        }
+                        if ($totalData['label'] == 'Shipping & Handling:') {
+                            $totalData['label'] = 'Shipping Cost';
+                        }
+//                        $this->y -= 1;
+
+                        $lineBlock['lines'][] = [
+                            [
+                                'text' => str_replace(':', '', $totalData['label']),
+                                'feed' => 430,
+                                'align' => 'center',
+                                'font_size' => $totalData['font_size'],
+                                'font' => 'bold',
+                                'width' => 70,
+                                'addToTop' => 10
+                            ],
+                            [
+                                'text' => $totalData['amount'],
+                                'align' => 'center',
+                                'feed' => 500,
+                                'font_size' => $totalData['font_size'],
+                                'font' => 'bold',
+                                'width' => 80,
+                                'addToTop' => 10
+                            ],
+                        ];
+                    }
                 }
             }
+//            $this->y -= 1;
+            $page = $this->drawLineBlocks($page, [$lineBlock]);
+            return $page;
         }
-        $this->y -= 20;
-        $page = $this->drawLineBlocks($page, [$lineBlock]);
-        return $page;
-		}
 	}
     /**
      * Draw lines
@@ -357,50 +393,50 @@ trait AbstractPdf
     private function drawLineBlocks(\Zend_Pdf_Page $page, array $draw, array $pageSettings = [])
     {
 		if(\Cart2Quote\License\Model\License::getInstance()->isValid()) {
-			foreach ($draw as $itemsProp) {
-            if (!isset($itemsProp['lines']) || !is_array($itemsProp['lines'])) {
-                throw new \Magento\Framework\Exception\LocalizedException(
-                    __('We don\'t recognize the draw line data. Please define the "lines" array.')
-                );
-            }
-            $lines = $itemsProp['lines'];
-            $height = isset($itemsProp['height']) ? $itemsProp['height'] : 10;
-            if (empty($itemsProp['shift'])) {
-                $shift = 0;
-                foreach ($lines as $line) {
-                    $maxHeight = 0;
-                    foreach ($line as $column) {
-                        $lineSpacing = !empty($column['height']) ? $column['height'] : $height;
-                        if (!is_array($column['text'])) {
-                            $column['text'] = [$column['text']];
-                        }
-                        $top = 0;
-                        foreach ($column['text'] as $part) {
-                            $top += $lineSpacing;
-                        }
-                        $maxHeight = $top > $maxHeight ? $top : $maxHeight;
-                    }
-                    $shift += $maxHeight;
+            foreach ($draw as $itemsProp) {
+                if (!isset($itemsProp['lines']) || !is_array($itemsProp['lines'])) {
+                    throw new \Magento\Framework\Exception\LocalizedException(
+                        __('We don\'t recognize the draw line data. Please define the "lines" array.')
+                    );
                 }
-                $itemsProp['shift'] = $shift;
+                $lines = $itemsProp['lines'];
+                $height = isset($itemsProp['height']) ? $itemsProp['height'] : 10;
+                if (empty($itemsProp['shift'])) {
+                    $shift = 0;
+                    foreach ($lines as $line) {
+                        $maxHeight = 0;
+                        foreach ($line as $column) {
+                            $lineSpacing = !empty($column['height']) ? $column['height'] : $height;
+                            if (!is_array($column['text'])) {
+                                $column['text'] = [$column['text']];
+                            }
+                            $top = 0;
+                            foreach ($column['text'] as $part) {
+                                $top += $lineSpacing;
+                            }
+                            $maxHeight = $top > $maxHeight ? $top : $maxHeight;
+                        }
+                        $shift += $maxHeight;
+                    }
+                    $itemsProp['shift'] = $shift;
+                }
+                if ($this->newPage == true) {
+                    $this->newPage = false;
+                }
+                $fullLineHeight = 15;
+                if ($this->thumbnailHelper->showProductThumbnailPdf() == true) {
+                    $fullLineHeight = 40;
+                }
+                if ($this->y - $itemsProp['shift'] < $fullLineHeight) {
+                    $page = $this->newPage($pageSettings);
+                    $this->newPage = true;
+                }
+                foreach ($lines as $line) {
+                    $page = $this->drawLineBlockRow($page, $pageSettings, $line, $height);
+                }
             }
-            if ($this->newPage == true) {
-                $this->newPage = false;
-            }
-            $fullLineHeight = 15;
-            if ($this->thumbnailHelper->showProductThumbnailPdf() == true) {
-                $fullLineHeight = 40;
-            }
-            if ($this->y - $itemsProp['shift'] < $fullLineHeight) {
-                $page = $this->newPage($pageSettings);
-                $this->newPage = true;
-            }
-            foreach ($lines as $line) {
-                $page = $this->drawLineBlockRow($page, $pageSettings, $line, $height);
-            }
+            return $page;
         }
-        return $page;
-		}
 	}
     /**
      * Before getPdf processing
@@ -466,7 +502,7 @@ trait AbstractPdf
     private function drawShippingOptionsAndPricesReplacement(&$page, $quote, $shipment, $yPayments)
     {
 		if(\Cart2Quote\License\Model\License::getInstance()->isValid()) {
-			$topMargin = 15;
+			$topMargin = 0;
         $methodStartY = $this->y;
         $this->y -= 15;
         foreach ($this->string->split(
@@ -478,6 +514,7 @@ trait AbstractPdf
             $page->drawText(strip_tags(trim($_value)), 285, $this->y, 'UTF-8');
             $this->y -= 15;
         }
+        $this->_setFontRegular($page, 11);
         $yShipments = $this->y;
         $totalShippingChargesText = "(";
         $totalShippingChargesText .= __('Total Shipping Charges');
@@ -607,6 +644,9 @@ trait AbstractPdf
             }
             $font = \Zend_Pdf_Font::fontWithPath($fontPath);
         }
+            $font = \Zend_Pdf_Font::fontWithName(
+                \Zend_Pdf_Font::FONT_HELVETICA
+            );
         $object->setFont($font, $size);
         return $font;
 		}
@@ -636,6 +676,9 @@ trait AbstractPdf
             }
             $font = \Zend_Pdf_Font::fontWithPath($fontPath);
         }
+            $font = \Zend_Pdf_Font::fontWithName(
+                \Zend_Pdf_Font::FONT_HELVETICA_BOLD
+            );
         $object->setFont($font, $size);
         return $font;
 		}
@@ -780,14 +823,14 @@ trait AbstractPdf
             );
             $shippingMethod = $quote->getShippingDescription();
         }
-        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
-        $this->_setFontBold($page, 12);
-        $page->drawText(__('Quote for:'), 35, $top - 15, 'UTF-8');
-        if (!$quote->getIsVirtual()) {
-            $page->drawText(__('Ship to:'), 285, $top - 15, 'UTF-8');
-        } else {
-            $page->drawText(__('Payment Method:'), 285, $top - 15, 'UTF-8');
-        }
+        $page->setFillColor(new \Zend_Pdf_Color_GrayScale(1));
+        $this->_setFontBold($page, 14);
+        $page->drawText(__('Quote for'), 5, $top - 15, 'UTF-8');
+            if (!$quote->getIsVirtual()) {
+                $page->drawText(__('Ship to'), 285, $top - 15, 'UTF-8');
+            } else {
+                $page->drawText(__('Payment Method'), 285, $top - 15, 'UTF-8');
+            }
         $addressesHeight = $this->_calcAddressHeight($billingAddress);
         if (isset($shippingAddress)) {
             $addressesHeight = max($addressesHeight, $this->_calcAddressHeight($shippingAddress));
@@ -802,11 +845,11 @@ trait AbstractPdf
             if ($value !== '') {
                 $text = [];
                 foreach ($this->string->split($value, 45, true, true) as $_value) {
-                    $text[] = $_value;
+                    $text[] = str_replace('T:', '', $_value);
                 }
                 foreach ($text as $part) {
-                    $page->drawText(strip_tags(ltrim($part)), 35, $this->y, 'UTF-8');
-                    $this->y -= 15;
+                    $page->drawText(strip_tags(ltrim($part)), 5, $this->y, 'UTF-8');
+                    $this->y -= 12;
                 }
             }
         }
@@ -817,34 +860,49 @@ trait AbstractPdf
                 if ($value !== '') {
                     $text = [];
                     foreach ($this->string->split($value, 45, true, true) as $_value) {
-                        $text[] = $_value;
+                        $text[] = str_replace('T:', '', $_value);
                     }
                     foreach ($text as $part) {
                         $page->drawText(strip_tags(ltrim($part)), 285, $this->y, 'UTF-8');
-                        $this->y -= 15;
+                        $this->y -= 12;
                     }
                 }
             }
             $addressesEndY = min($addressesEndY, $this->y);
             $this->y = $addressesEndY;
-            $page->setFillColor(new \Zend_Pdf_Color_Rgb(0.93, 0.92, 0.92));
-            $page->setLineWidth(0.5);
-            $page->drawRectangle(25, $this->y, 275, $this->y - 25);
-            $page->drawRectangle(275, $this->y, 570, $this->y - 25);
-            $this->y -= 15;
-            $this->_setFontBold($page, 12);
-            $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
-            $page->drawText(__('Payment Method'), 35, $this->y, 'UTF-8');
-            $page->drawText(__('Shipping Method:'), 285, $this->y, 'UTF-8');
+            $page->setLineColor(new \Zend_Pdf_Color_Rgb(0, 0, 0));
+            $page->setLineWidth(0.2);
+            $page->drawLine(5, $this->y, 135, $this->y);
+            $page->drawLine(285, $this->y, 410, $this->y);
             $this->y -= 10;
+
+            $page->setLineColor(new \Zend_Pdf_Color_Rgb(255, 255, 255));
+            $this->y -= 10;
+
+            $this->_setFontBold($page, 14);
+            $page->drawText(
+                __('Payment Method'),
+                5,
+                $this->y,
+                'UTF-8'
+            );
+            $page->drawText(
+                __('Shipping Method'),
+                285,
+                $this->y,
+                'UTF-8'
+            );
+            $this->y -= 10;
+
             $page->setFillColor(new \Zend_Pdf_Color_GrayScale(1));
             $this->_setFontRegular($page, 10);
             $page->setFillColor(new \Zend_Pdf_Color_GrayScale(0));
+
             $paymentLeft = 35;
             $yPayments = $this->y - 15;
         } else {
             $yPayments = $addressesStartY;
-            $paymentLeft = 285;
+            $paymentLeft = 310;
         }
         foreach ($payment as $value) {
             if (trim($value) != '') {

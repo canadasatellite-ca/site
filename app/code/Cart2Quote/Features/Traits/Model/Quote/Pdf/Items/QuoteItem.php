@@ -27,7 +27,7 @@ trait QuoteItem
         $drawItems = [];
         $line = [];
         $feed = 30;
-        $split = 35;
+        $split = 65;
         $skuFeed = 205;
         $isCustomProduct = $this->customProductHelper->isCustomProduct($item);
         //Print Thumbnails Next to Product Name if enabled
@@ -44,72 +44,126 @@ trait QuoteItem
         if ($item->getCurrentTierItem()->getMakeOptional()) {
             $name .= '*';
         }
-        $nameArray['font'] = 'bold';
-        $nameArray['text'] = $pdf->getStringUtils()->split($name, $split, true, true);
-        $nameArray['feed'] = $feed;
-        $nameArray['addToTop'] = -5;
-        $nameArray['isProductLine'] = true;
-        $line[] = $nameArray;
+            $nameArray['font'] = 'bold';
+            $nameArray['text'] = $pdf->getStringUtils()->split($name, $split, true, true);
+            $nameArray['feed'] = 65;
+            $nameArray['addToTop'] = -5;
+            $nameArray['isProductLine'] = true;
+            $nameArray['width'] = 340;
+            $nameArray['align'] = 'left';
+        $line[0] = $nameArray;
         $nameLineCount = count($nameArray['text']);
         $enabledShortDescription = $this->_scopeConfig->getValue(
             'cart2quote_pdf/quote/pdf_enable_short_description',
             \Magento\Store\Model\ScopeInterface::SCOPE_STORE
         );
         $splitDescription = [];
-        if ($enabledShortDescription) {
-            /* set short description beneath name*/
-            $product = $this->productRepositoryInterface->getById($item->getProductId());
-            $shortDescription = $product->getShortDescription();
-            if ($nameLineCount > 1) {
-                $shortDescription = ' ';
-            }
-            if ($shortDescription != '' && $shortDescription != null) {
-                $shortDescription = strip_tags(trim($shortDescription));
-            }
-            $splitDescription = $pdf->getStringUtils()->split($shortDescription, 35, true, true);
-            $line[] = [
-                'text' => $splitDescription,
-                'feed' => $feed + 5,
-                'addToLeft' => 5,
-                'addToTop' => 5,
-                'font' => 'italic',
-                'isProductLine' => true
-            ];
-        }
+//        if ($enabledShortDescription) {
+//            /* set short description beneath name*/
+//            $product = $this->productRepositoryInterface->getById($item->getProductId());
+//            $shortDescription = $product->getShortDescription();
+//            if ($nameLineCount > 1) {
+//                $shortDescription = ' ';
+//            }
+//            if ($shortDescription != '' && $shortDescription != null) {
+//                $shortDescription = strip_tags(trim($shortDescription));
+//            }
+//            $splitDescription = $pdf->getStringUtils()->split($shortDescription, 65, true, true);
+//            $line[] = [
+//                'text' => $splitDescription,
+//                'feed' => 65,
+//                'addToLeft' => 5,
+//                'addToTop' => 5,
+//                'font' => 'italic',
+//                'isProductLine' => true
+//            ];
+//        }
+
         // draw SKUs
-        $text = [];
-        $skuSplit = 14;
-        $skuLineCount = count($pdf->getStringUtils()->split($item->getSku(), $skuSplit));
-        foreach ($pdf->getStringUtils()->split($item->getSku(), $skuSplit) as $part) {
-            if ($isCustomProduct) {
-                $text[] = $this->customProductHelper->getCustomProductSku($item);
-            } else {
-                $text[] = $part;
+            $text = [];
+            $skuSplit = 65;
+            $skuLineCount = count($pdf->getStringUtils()->split($item->getSku(), $skuSplit));
+            foreach ($pdf->getStringUtils()->split($item->getSku(), $skuSplit) as $part) {
+                if ($isCustomProduct) {
+                    $text[] = $this->customProductHelper->getCustomProductSku($item);
+                } else {
+                    $text[] = $part;
+                }
             }
-        }
-        $line[] = ['text' => $text, 'feed' => $skuFeed, 'isProductLine' => true, 'addToTop' => -5];
+            $text[0] = 'SKU: ' . $text[0];
+            $skuPosition = $nameLineCount * 10;
+            $line[] = ['text' => $text, 'feed' => 65, 'isProductLine' => false, 'width' => 340, 'align' => 'left', 'addToTop' => $skuPosition];
+            $line[] = ['text' => '', 'feed' => 65, 'isProductLine' => false, 'width' => 340, 'align' => 'left', 'addToTop' => $skuPosition + 10];
+
+
         // draw prices
+//            var_dump($line); die;
         $line = $this->drawProductPrices($item, $quote, $line);
         /**
          * Draw Options
          */
         $options = $this->getQuoteItemOptions();
-        if ($options) {
-            foreach ($options as $option) {
-                $customOption = sprintf('%s: %s', $option['label'], strip_tags($option['value']));
-                foreach ($pdf->getStringUtils()->split($customOption, $split) as $part) {
-                    $optionText[] = $part;
+            if ($options) {
+                $optionsLabels = [];
+                foreach ($options as $ket => $option) {
+                    $optionsLabels[] = $option['label'] . ':';
+                    if ($option['value']) {
+                        if (isset($option['print_value'])) {
+                            $optionsLabels[] = $option['print_value'];
+                        } else {
+                            $optionsLabels = $this->filterManager->stripTags($option['value']);
+                        }
+                    }
                 }
+                $optionsLines = [];
+
+                foreach ($optionsLabels as $key => $optionsLabel) {
+                    if ($key % 2 == 0) {
+                        $optionsLines[][] = [
+                            'text' => $optionsLabel,
+                            'font' => 'bold',
+                            'feed' => 65,
+                            'font_size' => 10
+                        ];
+                        continue;
+                    }
+
+                    $optionsLines[][] = [
+                        'text' => $optionsLabel,
+                        'feed' => 85,
+                        'font_size' => 10
+                    ];
+                }
+
+                $optionsLines[][] = [
+                    'text' => '',
+                    'feed' => 65,
+                    'align' => 'left',
+                    'width' => 70,
+                    'font_size' => 10,
+                    'height' => 12
+                ];
             }
-            $top = (count($splitDescription) + $nameLineCount) * 10;
-            $line[] = [
-                'text' => $optionText,
-                'feed' => $feed + 10,
-                'isProductLine' => true,
-                'addToTop' => $top,
-                'font' => 'italic'
-            ];
-        }
+//        if ($options) {
+//            foreach ($options as $option) {
+//                $customOption = sprintf('%s: %s', $option['label'], strip_tags($option['value']));
+//                foreach ($pdf->getStringUtils()->split($customOption, $split) as $part) {
+//                    $optionText[] = $part;
+//                }
+//            }
+//            if ($nameLineCount == 1) {
+//                $nameLineCount = 2;
+//            }
+//            $top = (count($splitDescription) + ($nameLineCount * 2)) * 10;
+//            $line[] = [
+//                'text' => $optionText,
+//                'feed' => 65,
+//                'isProductLine' => true,
+//                'addToTop' => $top
+//            ];
+//            $line[] = ['text' => '', 'feed' => 95, 'isProductLine' => false, 'width' => 340, 'align' => 'left', 'addToTop' => $top + 50];
+//
+//        }
         /**
          * Print Bundle Options
          */
@@ -128,12 +182,11 @@ trait QuoteItem
                 $bundleText[] = $childLine;
             }
             if ($longestChildLine < ($split - 5)) {
-                $top = (count($splitDescription) + $nameLineCount) * 10;
+                $top = (count($splitDescription) + $nameLineCount) * 10 + 20;
             } else {
-                $top = (count($splitDescription) + max($nameLineCount, $skuLineCount)) * 10;
+                $top = (count($splitDescription) + max($nameLineCount, $skuLineCount)) * 10 + 20;
             }
             $line[] = [
-                'text' => $bundleText,
                 'feed' => $feed + 10,
                 'isProductLine' => true,
                 'addToTop' => $top,
@@ -185,6 +238,10 @@ trait QuoteItem
          * Print all lines on the page
          */
         $page = $pdf->drawLineBlocks($page, $drawItems, ['table_header' => true]);
+            if (count($optionsLines) > 0) {
+                $optionsLineBlock = ['lines' => $optionsLines, 'height' => 15];
+                $page = $pdf->drawLineBlocks($page, [$optionsLineBlock], ['table_header' => true]);
+            }
         $this->setPage($page);
 		}
 	}
@@ -329,7 +386,7 @@ trait QuoteItem
                     if ($top > 840) {
                         $top = 830;
                     }
-                    $x1 = 25;
+                    $x1 = 5;
                     $x2 = $x1 + $width;
                     $y1 = $top - $height;
                     $y2 = $top;
@@ -373,11 +430,12 @@ trait QuoteItem
             // draw Price
             $line[] = [
                 'text' => $priceData['label'] . $priceData['price'],
-                'feed' => $this::PRICE_FEED,
+                'feed' => 430,
                 'font' => 'bold',
-                'align' => 'right',
+                'align' => 'center',
                 'isProductLine' => true,
-                'addToTop' => $i
+                'addToTop' => $i,
+                'width' => 70
             ];
             // draw Subtotal
             $line[] = [
@@ -393,19 +451,21 @@ trait QuoteItem
         if ($item->getCurrentTierItem()->getCustomPrice() != null) {
             $line[] = [
                 'text' => $qty,
-                'feed' => $this::QTY_FEED,
+                'feed' => 5,
                 'font' => $fontType,
                 'isProductLine' => true,
-                'addToTop' => -5
+                'addToTop' => -5,
+                'width' => 50,
+                'align' => 'center'
             ];
-            $line[] = [
-                'text' => $tax,
-                'feed' => $this::TAX_FEED,
-                'font' => $fontType,
-                'align' => 'right',
-                'isProductLine' => true,
-                'addToTop' => -5
-            ];
+//            $line[] = [
+//                'text' => $tax,
+//                'feed' => $this::TAX_FEED,
+//                'font' => $fontType,
+//                'align' => 'right',
+//                'isProductLine' => true,
+//                'addToTop' => -5
+//            ];
             if ($item->getTierItems()) {
                 $lineTier = $this->setTierItemsPdf($quote, $item);
                 $line = array_merge($line, $lineTier);
