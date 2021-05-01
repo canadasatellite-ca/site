@@ -60,6 +60,15 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
         $this->setTabTitle();
     }
 
+    public function getPdfUrl()
+    {
+        $orderId = $this->getRequest()->getParam('order_id');
+        if (!$orderId) {
+            return false;
+        }
+        return $this->_urlBuilder->getBaseUrl() . 'sales/order/view/order_id/' . $orderId;
+    }
+
     /**
      * @param boolean $isUseCustomerGroupFilter
      * @return \MageWorx\Downloads\Model\ResourceModel\Attachment\Collection
@@ -67,7 +76,7 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
     public function getAttachmentCollection($isUseCustomerGroupFilter = true)
     {
         $id = $this->getProductId();
-        if(!$id) {
+        if (!$id) {
             $id = $this->getData('product_id');
             if ($this->getProductItem() && $productId = $this->getProductItem()->getProductId()) {
                 $id = $productId;
