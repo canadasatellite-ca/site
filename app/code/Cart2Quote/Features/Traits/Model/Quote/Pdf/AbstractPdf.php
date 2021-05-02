@@ -731,9 +731,10 @@ trait AbstractPdf
         );
 		}
 	}
+
     /**
      * Draws row data in line block
-     *
+     * @used-by drawLineBlocks()
      * @param \Zend_Pdf_Page $page
      * @param array $pageSettings
      * @param array $line
@@ -751,6 +752,11 @@ trait AbstractPdf
             }
             $fontSize = empty($column['font_size']) ? 10 : $column['font_size'];
             $font = $this->setFont($page, $column);
+			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# «Notice: Undefined index: text
+			# in app/code/Cart2Quote/Features/Traits/Model/Quote/Pdf/AbstractPdf.php on line 754»:
+			# https://github.com/canadasatellite-ca/site/issues/98
+			$column += ['text' => ''];
             if (!is_array($column['text'])) {
                 $column['text'] = [$column['text']];
             }
