@@ -37,58 +37,52 @@ trait Quote
      * Creates the Quote PDF and return the filepath
      *
      * @param array $quotes
-     * @return string|null
+     * @return string
      * @throws \Exception
      */
     private function createQuotePdf(array $quotes)
     {
 		if(\Cart2Quote\License\Model\License::getInstance()->isValid()) {
 			$this->setQuotes($quotes);
-        try {
-            $pdfRender = null;
-            //event to allow other PDF renderer
-            $this->eventManager->dispatch(
-                'quotation_quote_pdf_create_before',
-                ['quotes' => $quotes, 'render' => $pdfRender]
-            );
-            //if PDF render isn't set in the event, create te render
-            if ($pdfRender === null || !is_string($pdfRender)) {
-                //get the PDF object
-                $pdf = $this->getPdf();
-                if (isset($pdf)) {
-                    //render the PDF
-                    $pdfRender = $pdf->render();
-                }
-            }
-            //write the PDF render to a file
-            if (isset($pdfRender) && is_string($pdfRender)) {
-                //write pdf to var/export_quotation/pdf directory
-                $ds = DIRECTORY_SEPARATOR;
-                $fileName = sprintf(
-                    'export_quotation' . $ds . 'pdf' . $ds . '%s.pdf',
-                    $this->getIncrementId($quotes)
-                );
-                $this->varDirectory->writeFile(
-                    $fileName,
-                    $pdfRender
-                );
-                //return the filename
-                return $fileName;
-            }
-        } catch (LocalizedException $e) {
-			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-			# "Implement exception logging in the `Cart2Quote\Features\Traits\Model\Quote\Pdf\Quote::createQuotePdf()` method":
-			# https://github.com/canadasatellite-ca/site/issues/96
-        	df_log_e($e, $this);
-            $this->logger->error($e->getMessage());
-        } catch (\Exception $e) {
-			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-			# "Implement exception logging in the `Cart2Quote\Features\Traits\Model\Quote\Pdf\Quote::createQuotePdf()` method":
-			# https://github.com/canadasatellite-ca/site/issues/96
-        	df_log_e($e, $this);
-            $this->logger->error($e->getMessage());
-        }
-        return null;
+			try {
+				$pdfRender = null;
+				//event to allow other PDF renderer
+				$this->eventManager->dispatch(
+					'quotation_quote_pdf_create_before',
+					['quotes' => $quotes, 'render' => $pdfRender]
+				);
+				//if PDF render isn't set in the event, create te render
+				if ($pdfRender === null || !is_string($pdfRender)) {
+					//get the PDF object
+					$pdf = $this->getPdf();
+					if (isset($pdf)) {
+						//render the PDF
+						$pdfRender = $pdf->render();
+					}
+				}
+				//write the PDF render to a file
+				if (isset($pdfRender) && is_string($pdfRender)) {
+					//write pdf to var/export_quotation/pdf directory
+					$ds = DIRECTORY_SEPARATOR;
+					$fileName = sprintf(
+						'export_quotation' . $ds . 'pdf' . $ds . '%s.pdf',
+						$this->getIncrementId($quotes)
+					);
+					$this->varDirectory->writeFile(
+						$fileName,
+						$pdfRender
+					);
+					//return the filename
+					return $fileName;
+				}
+			}
+			catch (\Exception $e) {
+				# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# "Implement exception logging in the `Cart2Quote\Features\Traits\Model\Quote\Pdf\Quote::createQuotePdf()` method":
+				# https://github.com/canadasatellite-ca/site/issues/96
+				df_log_e($e, $this);
+				throw $e;
+			}
 		}
 	}
     /**
