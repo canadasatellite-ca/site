@@ -1,15 +1,7 @@
 <?php
-/**
- * Copyright © 2013-2017 Magento, Inc. All rights reserved.
- * See COPYING.txt for license details.
- */
 namespace Interactivated\Pdf\Plugin\Sales\Model\Order\Pdf\Items\Invoice;
-
-/**
- * Sales Order Invoice Pdf default items renderer
- */
-class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\DefaultInvoice
-{
+use Magento\Sales\Model\Order\Invoice\Item as II;
+class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\DefaultInvoice {
     /**
      * Draw item line
      *
@@ -18,7 +10,7 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
     public function draw()
     {
         $order = $this->getOrder();
-        $item = $this->getItem();
+        $item = $this->getItem(); /** @var II $item */
         $pdf = $this->getPdf();
         $page = $this->getPage();
         $lines = [];
