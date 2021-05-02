@@ -75,10 +75,18 @@ trait Quote
                 //return the filename
                 return $fileName;
             }
-        } catch (LocalizedException $exception) {
-            $this->logger->error($exception->getMessage());
-        } catch (\Exception $exception) {
-            $this->logger->error($exception->getMessage());
+        } catch (LocalizedException $e) {
+			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "Implement exception logging in the `Cart2Quote\Features\Traits\Model\Quote\Pdf\Quote::createQuotePdf()` method":
+			# https://github.com/canadasatellite-ca/site/issues/96
+        	df_log_e($e, $this);
+            $this->logger->error($e->getMessage());
+        } catch (\Exception $e) {
+			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "Implement exception logging in the `Cart2Quote\Features\Traits\Model\Quote\Pdf\Quote::createQuotePdf()` method":
+			# https://github.com/canadasatellite-ca/site/issues/96
+        	df_log_e($e, $this);
+            $this->logger->error($e->getMessage());
         }
         return null;
 		}
