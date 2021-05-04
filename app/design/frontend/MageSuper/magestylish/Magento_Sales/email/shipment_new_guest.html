@@ -49,7 +49,10 @@
                 </tr>
             </table>
             {{/depend}}
-            {{block class='Magento\\Framework\\View\\Element\\Template' area='frontend' template='Magento_Sales::email/shipment/track.phtml' shipment=$shipment order=$order}}
+<!-- 2021-05-04 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+«Call to a member function getUrl() on null in vendor/magento/module-sales/view/frontend/templates/email/shipment/track.phtml»:
+https://github.com/canadasatellite-ca/site/issues/102 -->
+            {{layout handle="sales_email_order_shipment_track" shipment=$shipment order=$order}}
             <table class="order-details">
                 <tr>
                     <td class="address-details">
