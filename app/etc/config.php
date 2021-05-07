@@ -280,6 +280,7 @@ return [
         'CoinGate_Merchant' => 1,
         'CustomGento_DefaultStoreCodeRemover' => 1,
         'Df_Core' => 1,
+        'Df_AdobeStockImageAdminUi' => 1,
         'Df_Backend' => 1,
         'Df_Catalog' => 1,
         'Df_CatalogInventory' => 1,
