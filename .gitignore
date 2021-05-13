@@ -20,6 +20,11 @@
 # «preg_match() expects parameter 2 to be string, object given
 # in vendor/magento/module-catalog/Helper/Output.php:245»: https://github.com/canadasatellite-ca/site/issues/28
 !/vendor/magento/module-catalog/Helper/Output.php
+# 2021-05-14 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «A non well formed numeric value encountered
+# in vendor/magento/module-catalog-search/Model/Layer/Filter/Price.php on line 145»:
+# https://github.com/canadasatellite-ca/site/issues/28
+!/vendor/magento/module-catalog/Model/Layer/Filter/DataProvider/Price.php
 # 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
 !/vendor/magento/module-quote/Model/QuoteAddressValidator.php
