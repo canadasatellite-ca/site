@@ -30,7 +30,11 @@
 		<move element="product.info.custom.attribute" destination="product.info.container" after="product.extra.information"/>
 		<referenceBlock name="product.info.sku" remove="true" />
         <move element="product.info.stock.sku" destination="product.extra.custom.attribure" after="product.info.warranty"/>
-        <move element="product.info.review" destination="page.main.title" after="product.info.stock.sku"/>
+<!-- 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+«Broken reference: the 'product.info.review' tries to reorder itself towards 'product.info.stock.sku',
+but their parents are different: 'page.main.title' and 'product.extra.custom.attribure' respectively»:
+https://github.com/canadasatellite-ca/site/issues/113 -->
+        <move element="product.info.review" destination="page.main.title"/>
 		<referenceBlock name="product.info.overview" template="Magento_Catalog::product/view/short_description.phtml">
 			<arguments>
 				<argument name="at_call" xsi:type="string">getShortDescription</argument>
