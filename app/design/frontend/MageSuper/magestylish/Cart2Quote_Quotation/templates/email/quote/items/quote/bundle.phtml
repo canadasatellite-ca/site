@@ -40,9 +40,7 @@ foreach ($items as $_item):
 	# "`Cart2Quote_Quotation`: «Array to string conversion»
 	# in `app/design/frontend/MageSuper/magestylish/Cart2Quote_Quotation/templates/email/quote/items/quote/bundle.phtml:35`":
 	# https://github.com/canadasatellite-ca/site/issues/63
-	if ($v = $p->getResource()->getAttributeRawValue($p->getEntityId(), 'quote_description', 0)) { /** @var mixed $v */
-		echo df_tag('p', 'product-description', $b->escapeHtml($v));
-	}
+	echo cs_quote_description($p);
 ?>
                 <p class="sku"><?php echo  __('SKU'); ?>: <?php echo $b->escapeHtml($_item->getSku()) ?></p>
             </td>
