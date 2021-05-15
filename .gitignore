@@ -25,6 +25,11 @@
 # in vendor/magento/module-catalog-search/Model/Layer/Filter/Price.php on line 145»:
 # https://github.com/canadasatellite-ca/site/issues/28
 !/vendor/magento/module-catalog/Model/Layer/Filter/DataProvider/Price.php
+# 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Broken reference: the 'skip_gallery_before' tries to reorder itself towards 'product.info.media.image',
+# but their parents are different: 'skip_gallery_before.wrapper' and 'product.info.media' respectively»:
+# https://github.com/canadasatellite-ca/site/issues/111
+!/vendor/magento/module-catalog/view/frontend/layout/catalog_product_view.xml
 # 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
 !/vendor/magento/module-quote/Model/QuoteAddressValidator.php
