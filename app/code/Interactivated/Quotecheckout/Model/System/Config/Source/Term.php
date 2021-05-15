@@ -18,20 +18,20 @@ class Term implements \Magento\Framework\Option\ArrayInterface
     /**
      * @param CollectionFactory $agreementCollectionFactory
      */
-    public function __construct(
+    function __construct(
         CollectionFactory $agreementCollectionFactory
     ) {
         $this->_agreementCollectionFactory = $agreementCollectionFactory;
     }
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         $agreement = $this->getAllTermConditions();
 
         return $agreement;
     }
 
-    public function getAllTermConditions()
+    function getAllTermConditions()
     {
         $models = $this->_agreementCollectionFactory->create()->getData();
         $result = [];
@@ -43,7 +43,7 @@ class Term implements \Magento\Framework\Option\ArrayInterface
         return $result;
     }
 
-    public function getTermById($termId)
+    function getTermById($termId)
     {
         $models = $this->_agreementCollectionFactory->create()
             ->addFieldToFilter('agreement_id', $termId)

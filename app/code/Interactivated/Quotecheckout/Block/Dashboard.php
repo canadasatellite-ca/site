@@ -32,7 +32,7 @@ class Dashboard extends \Magento\Framework\View\Element\Template
      * @param \Interactivated\Quotecheckout\Model\System\Config\Source\Term $termCondition
      * @param array $data
      */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Interactivated\Quotecheckout\Helper\Data $dataHelper,
 		\Magento\Customer\Model\Session $customerSession,
@@ -84,7 +84,7 @@ class Dashboard extends \Magento\Framework\View\Element\Template
      * Retrive session manager object
      * @return object
      */
-    public function getSessionManager()
+    function getSessionManager()
     {
     	return $this->_sessionManager;
     }
@@ -93,7 +93,7 @@ class Dashboard extends \Magento\Framework\View\Element\Template
      * Retrive customer session object
      * @return object
      */
-    public function getCustomerSession()
+    function getCustomerSession()
     {
     	return $this->_customerSession;
     }
@@ -104,7 +104,7 @@ class Dashboard extends \Magento\Framework\View\Element\Template
      * @param  int $condition
      * @return string
      */
-    public function getTermByCondition($condition)
+    function getTermByCondition($condition)
     {
         return $this->_termCondition->getTermById($condition);
     }

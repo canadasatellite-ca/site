@@ -17,7 +17,7 @@ class Iframe extends \Magento\Paypal\Block\Iframe
      * @param \Interactivated\Quotecheckout\Helper\Data $dataHelper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Sales\Model\OrderFactory $orderFactory,
         \Cart2Quote\Quotation\Model\Session $checkoutSession,

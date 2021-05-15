@@ -19,7 +19,7 @@ class Onepage extends \Magento\Checkout\Controller\Onepage
      */
     protected $_sessionManager = null;
 
-    public function execute()
+    function execute()
     {
         parent::execute();
     }
@@ -27,7 +27,7 @@ class Onepage extends \Magento\Checkout\Controller\Onepage
     /**
      * Define properties for methods
      */
-    public function defineProperties()
+    function defineProperties()
     {
         $this->_dataHelper      = $this->_objectManager->get('Interactivated\Quotecheckout\Helper\Data');
         $this->_checkoutSession = $this->_objectManager->get('Cart2Quote\Quotation\Model\Session');
@@ -39,7 +39,7 @@ class Onepage extends \Magento\Checkout\Controller\Onepage
      *
      * @return \Magento\Checkout\Model\Session
      */
-    public function getCheckout()
+    function getCheckout()
     {
         return $this->_objectManager->get('Cart2Quote\Quotation\Model\Session');
     }
@@ -49,7 +49,7 @@ class Onepage extends \Magento\Checkout\Controller\Onepage
      *
      * @return Quote
      */
-    public function getQuote()
+    function getQuote()
     {
         return $this->getCheckout()->getQuote();
     }
@@ -64,14 +64,14 @@ class Onepage extends \Magento\Checkout\Controller\Onepage
         return $this->_objectManager->get('Cart2Quote\Quotation\Model\QuotationCart')->getQuote();
     }
 
-    public function getOnepage()
+    function getOnepage()
     {
         return $this->_objectManager->get('Interactivated\Quotecheckout\Model\Checkout\Type\Onepage');
     }
     /**
      * Clear billing form session
      */
-    public function clearBillingSession()
+    function clearBillingSession()
     {
         if ($this->_sessionManager->getCountryId()) {
             $this->_sessionManager->unsCountryId();

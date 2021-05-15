@@ -18,7 +18,7 @@ class Allowedmethods implements \Magento\Framework\Option\ArrayInterface
      * @param \Magento\Payment\Model\Config $paymentConfig
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
-	public function __construct(
+	function __construct(
 		\Magento\Payment\Model\Config $paymentConfig,
 		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
 	) {
@@ -26,7 +26,7 @@ class Allowedmethods implements \Magento\Framework\Option\ArrayInterface
 		$this->_scopeConfig = $scopeConfig;
 	}
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         $methods = [
         	['value'=>'', 'label'=>'']

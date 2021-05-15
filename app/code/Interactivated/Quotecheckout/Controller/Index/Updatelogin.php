@@ -4,7 +4,7 @@ namespace Interactivated\Quotecheckout\Controller\Index;
 
 class Updatelogin extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 {
-	public function execute()
+	function execute()
 	{
         $customerSession = $this->_objectManager->get('Magento\Customer\Model\Session');
         if ($customerSession->isLoggedIn()) {

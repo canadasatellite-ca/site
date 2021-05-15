@@ -21,7 +21,7 @@ class Download extends \Magento\Framework\App\Action\Action
     protected $_currentQuote;
     protected $_coreRegistry;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Framework\App\Response\Http\FileFactory $fileFactory,
@@ -49,7 +49,7 @@ class Download extends \Magento\Framework\App\Action\Action
     /**
      * Download PDF for the quotation quote item
      */
-    public function execute()
+    function execute()
     {
         ini_set('zlib.output_compression', '0');
         $quote = $this->_initQuote();

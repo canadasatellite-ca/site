@@ -10,7 +10,7 @@ class Giftwrap extends \Magento\Sales\Model\Order\Invoice\Total\AbstractTotal
      * @param \Magento\Sales\Model\Order\Invoice $invoice
      * @return $this
      */
-    public function collect(\Magento\Sales\Model\Order\Invoice $invoice)
+    function collect(\Magento\Sales\Model\Order\Invoice $invoice)
     {
         $order = $invoice->getOrder();
 

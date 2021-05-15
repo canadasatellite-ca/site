@@ -10,7 +10,7 @@ class Giftwrap extends \Magento\Framework\View\Element\Template
      *
      * @return \Magento\Sales\Model\Order
      */
-    public function getOrder()
+    function getOrder()
     {
         return $this->getParentBlock()->getOrder();
     }
@@ -20,7 +20,7 @@ class Giftwrap extends \Magento\Framework\View\Element\Template
      *
      * @return \Magento\Sales\Model\Order
      */
-    public function getSource()
+    function getSource()
     {
         return $this->getParentBlock()->getSource();
     }
@@ -30,7 +30,7 @@ class Giftwrap extends \Magento\Framework\View\Element\Template
      *
      * @return Interactivated\Quotecheckout\Block\Sales\Order\Giftwrap
      */
-    public function initTotals()
+    function initTotals()
     {
         if ((float) $this->getOrder()->getBaseGiftwrapAmount()) {
             $source = $this->getSource();

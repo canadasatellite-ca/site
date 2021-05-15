@@ -21,7 +21,7 @@ class Payment extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return float
      */
-    public function getQuoteBaseGrandTotal()
+    function getQuoteBaseGrandTotal()
     {
         return (double)$this->getQuote()->getBaseGrandTotal();
     }
@@ -31,7 +31,7 @@ class Payment extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return array
      */
-    public function getOptions()
+    function getOptions()
     {
         $registerParam = $this->getRequest()->getParam('register');
         return [

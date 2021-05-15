@@ -201,7 +201,7 @@ class Onepage extends \Magento\Checkout\Model\Type\Onepage
      * @codeCoverageIgnore
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Magento\Checkout\Helper\Data $helper,
         \Magento\Customer\Model\Url $customerUrl,

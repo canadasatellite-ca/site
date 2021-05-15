@@ -20,7 +20,7 @@ class Js extends \Magento\Framework\View\Element\Template
 	 * @param \Magento\Customer\Model\Session $customerSession
 	 * @param array $data
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Magento\Framework\App\ScopeResolverInterface $scopeResolver,
 		\Magento\Customer\Model\Session $customerSession,
@@ -31,17 +31,17 @@ class Js extends \Magento\Framework\View\Element\Template
 		parent::__construct($context, $data);
 	}
 
-	public function _construct()
+	function _construct()
 	{
 		$this->setTemplate('Interactivated_Quotecheckout::config/js.phtml');
 	}
 
-	public function isCurrentlySecure()
+	function isCurrentlySecure()
 	{
 		return (int) $this->_scopeResolver->getScope()->isCurrentlySecure();
 	}
 
-	public function getCustomer()
+	function getCustomer()
 	{
 		return $this->_customerSession->getCustomer();
 	}

@@ -6,7 +6,7 @@ use Magento\Customer\Model\AccountManagement;
 
 class Forgotpassword extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 {
-	public function execute()
+	function execute()
 	{
         $email      = $this->getRequest()->getPost('email');
         if ($email) {

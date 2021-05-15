@@ -18,7 +18,7 @@ class Session
     protected $request;
     protected $quotationSession;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \Cart2Quote\Quotation\Model\Session $quotationSession
     )
@@ -34,7 +34,7 @@ class Session
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function aroundGetQuote(\Magento\Checkout\Model\Session $session, \Closure $process)
+    function aroundGetQuote(\Magento\Checkout\Model\Session $session, \Closure $process)
     {
         $checkout_session = $session;
         $name = $this->request->getModuleName();

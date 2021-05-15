@@ -64,7 +64,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      * @param \Magento\Framework\Session\SessionManagerInterface $sessionManager
      * @param array $data
      */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Magento\Directory\Helper\Data $directoryHelper,
         \Magento\Framework\App\Cache\Type\Config $configCacheType,
@@ -126,7 +126,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
     /**
      * @return bool
      */
-    public function isUseBillingAddressForShipping()
+    function isUseBillingAddressForShipping()
     {
         if ($this->getQuote()->getIsVirtual() || !$this->getQuote()->getShippingAddress()->getSameAsBilling()) {
             return false;
@@ -139,7 +139,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return \Magento\Directory\Model\ResourceModel\Country\Collection
      */
-    public function getCountries()
+    function getCountries()
     {
         return $this->_countryCollectionFactory->create()->loadByStore();
     }
@@ -149,7 +149,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return string
      */
-    public function getMethod()
+    function getMethod()
     {
         return $this->getQuote()->getCheckoutMethod();
     }
@@ -159,7 +159,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return \Magento\Quote\Model\Quote\Address
      */
-    public function getAddress()
+    function getAddress()
     {
         if ($this->_address === null) {
             if ($this->isCustomerLoggedIn()) {
@@ -184,7 +184,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return string
      */
-    public function getFirstname()
+    function getFirstname()
     {
         return $this->getAddress()->getFirstname();
     }
@@ -195,7 +195,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return string
      */
-    public function getLastname()
+    function getLastname()
     {
         return $this->getAddress()->getLastname();
     }
@@ -205,7 +205,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return bool
      */
-    public function canShip()
+    function canShip()
     {
         return !$this->getQuote()->isVirtual();
     }
@@ -213,7 +213,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
     /**
      * @return void
      */
-    public function getSaveUrl()
+    function getSaveUrl()
     {
     }
 
@@ -236,7 +236,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      *
      * @return bool
      */
-    public function isTaxvatEnabled()
+    function isTaxvatEnabled()
     {
         return $this->_getTaxvat()->isEnabled();
     }
@@ -244,7 +244,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
     /**
      * @return string
      */
-    public function getTaxvatHtml()
+    function getTaxvatHtml()
     {
         return $this->_getTaxvat()->setTaxvat(
             $this->getQuote()->getCustomerTaxvat()
@@ -255,7 +255,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
         )->toHtml();
     }
 
-    public function getCountryHtmlSelect($type)
+    function getCountryHtmlSelect($type)
     {
         if ($this->_sessionManager->getCountryId()) {
             $countryId = $this->_sessionManager->getCountryId();
@@ -288,7 +288,7 @@ class Billing extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstr
      * Retrive session manager object
      * @return object
      */
-    public function getSessionManager()
+    function getSessionManager()
     {
         return $this->_sessionManager;
     }

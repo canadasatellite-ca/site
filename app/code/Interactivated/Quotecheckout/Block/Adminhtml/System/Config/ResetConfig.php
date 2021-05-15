@@ -15,12 +15,12 @@ class ResetConfig extends \Magento\Config\Block\System\Config\Form\Field
         return $this->_toHtml();
     }
 
-    public function getAjaxCheckUrl()
+    function getAjaxCheckUrl()
     {
         return $this->getUrl('onestepcheckout/onestepcheckout/check');
     }
 
-    public function getButtonHtml()
+    function getButtonHtml()
     {
         $button = $this->getLayout()->createBlock('Magento\Backend\Block\Widget\Button')
             ->setData(

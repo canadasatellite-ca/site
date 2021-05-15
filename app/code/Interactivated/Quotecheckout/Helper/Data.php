@@ -85,7 +85,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param \Magento\Store\Model\Website $websiteModel
      * @param \Magento\Framework\App\Config\ReinitableConfigInterface $reinitConfig
      */
-    public function __construct(
+    function __construct(
     	\Magento\Framework\App\Helper\Context $context,
         \Magento\Config\Model\ResourceModel\Config $config,
         \Cart2Quote\Quotation\Model\Session $checkoutSession,
@@ -115,7 +115,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     	parent::__construct($context);
     }
 
-    public function enabledInFrontend()
+    function enabledInFrontend()
     {
         return (int) $this->getStoreConfig(self::XML_PATH_ENABLE);
     }
@@ -126,7 +126,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param string $xmlPath
      * @return string|int
      */
-	public function getStoreConfig($xmlPath)
+	function getStoreConfig($xmlPath)
 	{
 		return $this->_scopeConfig->getValue(
 			$xmlPath,
@@ -140,7 +140,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param  string $xmlPath
      * @param  string|int $value
      */
-    public function saveStoreConfig($xmlPath, $value)
+    function saveStoreConfig($xmlPath, $value)
     {
         $this->_config->saveConfig(
             $xmlPath,
@@ -155,7 +155,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return object
      */
-    public function getSessionManager()
+    function getSessionManager()
     {
         return $this->_sessionManager;
     }
@@ -165,7 +165,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return int
      */
-    public function checkSession()
+    function checkSession()
     {
         $iswrap = $this->_sessionManager->getIsWrap();
         if ($iswrap) {
@@ -180,7 +180,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return \Cart2Quote\Quotation\Model\Session
      */
-    public function getCheckout()
+    function getCheckout()
     {
         return $this->_checkoutSession;
     }
@@ -190,12 +190,12 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return Quote
      */
-    public function getQuote()
+    function getQuote()
     {
         return $this->getCheckout()->getQuote();
     }
 
-    public function onlyProductDownloadable()
+    function onlyProductDownloadable()
     {
         $itemProduct = $this->getQuote()->getAllVisibleItems();
         foreach ($itemProduct as $item) {
@@ -210,7 +210,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return true;
     }
 
-    public function haveProductDownloadable()
+    function haveProductDownloadable()
     {
         $itemProduct = $this->getQuote()->getAllVisibleItems();
         foreach ($itemProduct as $item) {
@@ -222,7 +222,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return false;
     }
 
-    public function switchTemplate()
+    function switchTemplate()
     {
         $changeStyle = 0;
         $disableOs = $this->getStoreConfig('onestepcheckout/general/disable_os');
@@ -259,7 +259,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         }
     }
 
-    public function isDDateRunning()
+    function isDDateRunning()
     {
         if ($this->isModuleOutputEnabled('MW_Ddate')) {
             if ($this->getStoreConfig('onestepcheckout/deliverydate/allow_options') != self::DELIVERY_ENABLE) {
@@ -270,7 +270,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return false;
     }
 
-    public function getAdditionaldays()
+    function getAdditionaldays()
     {
         $result = [];
         $week = $this->getStoreConfig('onestepcheckout/deliverydate/weekend');
@@ -290,7 +290,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
         return implode(",", $result);
     }
 
-    public function getNationaldays()
+    function getNationaldays()
     {
         $result = [];
         $week = $this->getStoreConfig('onestepcheckout/deliverydate/weekend');
@@ -314,7 +314,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * Retrive css block
      * @return html/css
      */
-    public function renderConfigCss()
+    function renderConfigCss()
     {
         return $this->_blockFactory->createBlock('Interactivated\Quotecheckout\Block\Checkout\Config\Css')->toHtml();
     }
@@ -323,7 +323,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * Retrive js block
      * @return html/js
      */
-    public function renderConfigJs()
+    function renderConfigJs()
     {
         return $this->_blockFactory->createBlock('Interactivated\Quotecheckout\Block\Checkout\Config\Js')->toHtml();
     }
@@ -334,7 +334,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param  string $percent
      * @return string
      */
-    public function colorBrightness($hex, $percent)
+    function colorBrightness($hex, $percent)
     {
         $hash = '';
         if (stristr($hex,'#')) {
@@ -380,7 +380,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * Check show address book
      * @return boolean
      */
-    public function showAddressBook()
+    function showAddressBook()
     {
         if ($this->getStoreConfig('onestepcheckout/addfield/addressbook')) {
             return true;
@@ -393,7 +393,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * Check show edit cart link
      * @return boolean
      */
-    public function showEditCartLink()
+    function showEditCartLink()
     {
         if ($this->getStoreConfig('onestepcheckout/addfield/editcartlink')) {
             return true;
@@ -406,7 +406,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * Check show comment
      * @return boolean
      */
-    public function showComment()
+    function showComment()
     {
         if ($this->getStoreConfig('onestepcheckout/addfield/enable_messagetosystem')) {
             return true;
@@ -421,7 +421,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return boolean
      */
-    public function showCouponCode()
+    function showCouponCode()
     {
         if ($this->getStoreConfig('onestepcheckout/addfield/allowcoupon')) {
             return true;
@@ -436,7 +436,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return boolean
      */
-    public function showImageProduct()
+    function showImageProduct()
     {
         if ($this->getStoreConfig('onestepcheckout/addfield/showimageproduct')) {
             return true;
@@ -451,7 +451,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return boolean
      */
-    public function enableGiftMessage()
+    function enableGiftMessage()
     {
         if ($this->getStoreConfig('onestepcheckout/addfield/enable_giftmessage')) {
             return true;
@@ -464,7 +464,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * Get Date Time
      * @return object
      */
-    public function getDateTime()
+    function getDateTime()
     {
         return $this->_date;
     }
@@ -474,7 +474,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param  string $template
      * @return html
      */
-    public function renderOnepageItemAfter($name, $template)
+    function renderOnepageItemAfter($name, $template)
     {
         $layout = $this->_layoutFactory->create();
         $layout->getUpdate()->load('checkout_onepage_review');
@@ -489,7 +489,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return boolean
      */
-    public function isSubscribed()
+    function isSubscribed()
     {
         if (!$this->_customerSession->isLoggedIn()) {
             return true;
@@ -509,7 +509,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @return boolean
      */
-    public function isSubscriberByEmail($email)
+    function isSubscriberByEmail($email)
     {
         $isSubscriber = $this->_subscriber->loadByEmail($email)->isSubscribed();
         if (!$isSubscriber) {
@@ -522,7 +522,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     /**
      * Disable module if Mcore module is disabled
      */
-    public function disableConfig()
+    function disableConfig()
     {
         $this->saveStoreConfig(self::XML_PATH_ENABLE, 0);
 
@@ -556,7 +556,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param string $filter
      * @return array
      */
-    public function filterdata($data, $filter = "true")
+    function filterdata($data, $filter = "true")
     {
         // If filter = true, assign n/a to save data when load ajax
         // If filter = false, assign null to data to load ajax when place order
@@ -667,7 +667,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param $filterdata
      * @param $filter
      */
-    public function filterShowField($filterdata, $filter)
+    function filterShowField($filterdata, $filter)
     {
         if ($this->getStoreConfig('customer/address/prefix_show') != '') {
             if ($filter != "init" && $filter != "true") {

@@ -33,7 +33,7 @@ class Available extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abs
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Directory\Helper\Data $directoryHelper,
         \Magento\Framework\App\Cache\Type\Config $configCacheType,
@@ -67,7 +67,7 @@ class Available extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abs
     /**
      * @return array
      */
-    public function getShippingRates()
+    function getShippingRates()
     {
         if (empty($this->_rates)) {
             $this->getAddress()->collectShippingRates()->save();
@@ -80,7 +80,7 @@ class Available extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abs
     /**
      * @return Address
      */
-    public function getAddress()
+    function getAddress()
     {
         if (empty($this->_address)) {
             $this->_address = $this->getQuote()->getShippingAddress();
@@ -92,7 +92,7 @@ class Available extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abs
      * @param string $carrierCode
      * @return string
      */
-    public function getCarrierName($carrierCode)
+    function getCarrierName($carrierCode)
     {
         if ($name = $this->_scopeConfig->getValue(
             'carriers/' . $carrierCode . '/title',
@@ -107,7 +107,7 @@ class Available extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abs
     /**
      * @return string
      */
-    public function getAddressShippingMethod()
+    function getAddressShippingMethod()
     {
         return $this->getAddress()->getShippingMethod();
     }

@@ -14,7 +14,7 @@ class Info extends \Magento\Sales\Block\Items\AbstractItems
      * @param \Magento\Checkout\Model\Session $checkoutSession
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Cart2Quote\Quotation\Model\Session $checkoutSession,
         array $data = []
@@ -27,7 +27,7 @@ class Info extends \Magento\Sales\Block\Items\AbstractItems
     /**
      * @return array
      */
-    public function getItems()
+    function getItems()
     {
         return $this->_checkoutSession->getQuote()->getAllVisibleItems();
     }
@@ -35,7 +35,7 @@ class Info extends \Magento\Sales\Block\Items\AbstractItems
     /**
      * @return array
      */
-    public function getTotals()
+    function getTotals()
     {
         return $this->_checkoutSession->getQuote()->getTotals();
     }

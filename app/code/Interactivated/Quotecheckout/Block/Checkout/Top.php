@@ -26,7 +26,7 @@ class Top extends \Magento\Framework\View\Element\Template
 	 * @param \Magento\Customer\Model\Session $customerSession
 	 * @param array $data
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Magento\Framework\Registry $coreRegistry,
 		\Magento\Customer\Model\Session $customerSession,
@@ -38,17 +38,17 @@ class Top extends \Magento\Framework\View\Element\Template
 		parent::__construct($context, $data);
 	}
 
-	public function getRegistry()
+	function getRegistry()
     {
     	return $this->_coreRegistry;
     }
 
-    public function getSessionManager()
+    function getSessionManager()
     {
     	return $this->_sessionManager;
     }
 
-    public function getCustomerSession()
+    function getCustomerSession()
     {
     	return $this->_customerSession;
     }

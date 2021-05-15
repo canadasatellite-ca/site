@@ -4,7 +4,7 @@ namespace Interactivated\Quotecheckout\Controller\Index;
 
 class Updateemailmsg extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 {
-	public function execute()
+	function execute()
 	{
 		if (!$this->_objectManager->get('Magento\Customer\Model\Session')->isLoggedIn()) {
             $storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');

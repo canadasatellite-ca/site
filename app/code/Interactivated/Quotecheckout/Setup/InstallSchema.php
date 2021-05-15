@@ -34,7 +34,7 @@ class InstallSchema implements InstallSchemaInterface
 	 * @param \Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection
 	 * @param \Magento\Config\Model\ResourceModel\Config $config
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\Logger\Monolog $logger,
 		\Magento\Directory\Model\ResourceModel\Country\Collection $countryCollection,
 		\Magento\Config\Model\ResourceModel\Config $config
@@ -48,7 +48,7 @@ class InstallSchema implements InstallSchemaInterface
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
 		$setup->startSetup();
 

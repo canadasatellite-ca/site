@@ -11,7 +11,7 @@ class CustomerMessages extends \Magento\Framework\View\Element\Template
 	 * @param \Magento\Framework\Registry $coreRegistry
 	 * @param array $data
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Magento\Framework\Registry $coreRegistry,
 		array $data = []
@@ -20,7 +20,7 @@ class CustomerMessages extends \Magento\Framework\View\Element\Template
 		parent::__construct($context, $data);
 	}
 
-	public function getCurrentOrder()
+	function getCurrentOrder()
 	{
 		return $this->_coreRegistry->registry('current_order');
 	}

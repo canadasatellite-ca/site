@@ -28,7 +28,7 @@ class CustomerComment extends Column
      * @param array $components
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
         OrderFactory $orderFactory,
@@ -47,7 +47,7 @@ class CustomerComment extends Column
      * @param array $dataSource
      * @return array
      */
-    public function prepareDataSource(array $dataSource)
+    function prepareDataSource(array $dataSource)
     {
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as & $item) {
