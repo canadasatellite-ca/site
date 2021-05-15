@@ -19,8 +19,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
 	 */
 	function execute() {
-		$isAjax = (int)$this->getRequest()->getParam('isAjax');
-		if (!$isAjax) {
+		if (!df_request('isAjax')) {
 			return $this->resultRedirectFactory->create()->setPath('noRoute');
 		}
 		$post = $this->getRequest()->getParams();
