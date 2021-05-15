@@ -15,19 +15,18 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 		return $this->_objectManager->get('Interactivated\Quotecheckout\Model\Checkout\Type\Onepage');
 	}
 	/**
-	 * Save checkout information
-	 *
-	 * @return $this
+	 * 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
 	 */
 	function execute() {
-		$isAjax = (int) $this->getRequest()->getParam('isAjax');
+		$isAjax = (int)$this->getRequest()->getParam('isAjax');
 		if (!$isAjax) {
 			return $this->resultRedirectFactory->create()->setPath('noRoute');
 		}
 		$post = $this->getRequest()->getParams();
 		if ($post) {
 			$quote = $this->getOnepage()->getQuote();
-			$html   = [];
+			$html = [];
 			$layout = $this->layoutFactory->create();
 			$update = $layout->getUpdate();
 			$update->load('onestepcheckout_index_save');
@@ -111,19 +110,17 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 				$cart->save();
 				$this->_checkoutSession->setCartWasUpdated(true);
 			}
-			else {
-				if (isset($post['billing']) && isset($post['shipping'])) {
-					if (isset($post['ship_to_same_address']) && $post['ship_to_same_address'] == '1') {
-						$hasAddress = isset($post['billing_address_id']) ? $post['billing_address_id'] : '';
-					}
-					else {
-						$hasAddress = isset($post['shipping_address_id']) ? $post['shipping_address_id'] : '';
-					}
-					if (!$hasAddress) {
-						$cart = $this->_objectManager->get('Cart2Quote\Quotation\Model\QuotationCart');
-						$cart->save();
-						$this->_checkoutSession->setCartWasUpdated(true);
-					}
+			elseif (isset($post['billing']) && isset($post['shipping'])) {
+				if (isset($post['ship_to_same_address']) && $post['ship_to_same_address'] == '1') {
+					$hasAddress = isset($post['billing_address_id']) ? $post['billing_address_id'] : '';
+				}
+				else {
+					$hasAddress = isset($post['shipping_address_id']) ? $post['shipping_address_id'] : '';
+				}
+				if (!$hasAddress) {
+					$cart = $this->_objectManager->get('Cart2Quote\Quotation\Model\QuotationCart');
+					$cart->save();
+					$this->_checkoutSession->setCartWasUpdated(true);
 				}
 			}
 			if (isset($updates->updatepaymenttype)) {
