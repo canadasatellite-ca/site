@@ -4,7 +4,7 @@ namespace Interactivated\Quotecheckout\Block\Checkout\Onepage\Shipping;
 
 class Sortshipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Shipping
 {
-	public function isRequired($addressName)
+	function isRequired($addressName)
 	{
 		$status = $this->_dataHelper->getStoreConfig('onestepcheckout/addfield/'.$addressName);
 		if ($status == '2') {
@@ -14,7 +14,7 @@ class Sortshipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\
 		}
 	}
 
-	public function isStar($addressName)
+	function isStar($addressName)
 	{
 		$status = $this->_dataHelper->getStoreConfig('onestepcheckout/addfield/'.$addressName);
 		if ($status == '2') {
@@ -24,7 +24,7 @@ class Sortshipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\
 		}
 	}
 
-	public function isDisable($name)
+	function isDisable($name)
 	{
 		$status = $this->_dataHelper->getStoreConfig('onestepcheckout/addfield/'.$name);
 		if ($status == '0') {

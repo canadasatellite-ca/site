@@ -4,7 +4,7 @@ namespace Interactivated\Quotecheckout\Controller\Index;
 
 class Updatetimepicker extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 {
-	public function execute()
+	function execute()
 	{
 		$dateIsNow            	= $this->getRequest()->getPost('now');
         $startTime            	= $this->getRequest()->getPost('stime');

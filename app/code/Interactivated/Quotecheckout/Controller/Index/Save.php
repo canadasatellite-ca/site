@@ -10,7 +10,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 
     protected $_htmlUpdatecart = "";
 
-    public function getOnepage()
+    function getOnepage()
     {
         return $this->_objectManager->get('Interactivated\Quotecheckout\Model\Checkout\Type\Onepage');
     }
@@ -19,7 +19,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return $this
      */
-	public function execute()
+	function execute()
 	{
 		$isAjax = (int) $this->getRequest()->getParam('isAjax');
 		if (!$isAjax) {
@@ -506,7 +506,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function getVat()
+    function getVat()
     {
         $vat = $this->getRequest()->getParam('vatnumber');
         if (empty($vat)) {
@@ -542,7 +542,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
         }
     }
 
-    public function getColspanTotal()
+    function getColspanTotal()
     {
         $numcol = 3;
         if ($this->_dataHelper->showImageProduct()) {
@@ -590,7 +590,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function renderCoupon()
+    function renderCoupon()
     {
         $layout = $this->layoutFactory->create();
         $update = $layout->getUpdate();
@@ -607,7 +607,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function renderBillingForm()
+    function renderBillingForm()
     {
         $layout = $this->layoutFactory->create();
         $output = $layout->createBlock('Interactivated\Quotecheckout\Block\Checkout\Onepage\Billing\Sortbilling')
@@ -622,7 +622,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function renderShippingForm()
+    function renderShippingForm()
     {
         $layout = $this->layoutFactory->create();
         $output = $layout->createBlock('Interactivated\Quotecheckout\Block\Checkout\Onepage\Shipping\Sortshipping')
@@ -637,7 +637,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function renderPaymentForm()
+    function renderPaymentForm()
     {
         $layout = $this->layoutFactory->create();
         $output = $layout->createBlock('Interactivated\Quotecheckout\Block\Checkout\Onepage\Payment\Methods')
@@ -652,7 +652,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function renderReview()
+    function renderReview()
     {
         $layout = $this->layoutFactory->create();
         $update = $layout->getUpdate();
@@ -669,7 +669,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
      *
      * @return string
      */
-    public function renderGiftbox()
+    function renderGiftbox()
     {
         $layout = $this->layoutFactory->create();
         $update = $layout->getUpdate();

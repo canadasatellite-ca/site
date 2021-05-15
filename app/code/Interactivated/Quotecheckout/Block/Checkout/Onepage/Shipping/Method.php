@@ -8,7 +8,7 @@ use Magento\Customer\Model\Address\Config as AddressConfig;
 class Method extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\AbstractOnepage
 {
     protected $tmpCheckuotSession;
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Directory\Helper\Data $directoryHelper,
         \Magento\Framework\App\Cache\Type\Config $configCacheType,
@@ -53,7 +53,7 @@ class Method extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abstra
      *
      * @return bool
      */
-    public function isShow()
+    function isShow()
     {
         return !$this->getQuote()->isVirtual();
     }

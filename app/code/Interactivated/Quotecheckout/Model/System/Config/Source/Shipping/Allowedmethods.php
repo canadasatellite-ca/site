@@ -18,7 +18,7 @@ class Allowedmethods implements \Magento\Framework\Option\ArrayInterface
      * @param \Magento\Shipping\Model\Config $shippingConfig
      * @param \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
      */
-	public function __construct(
+	function __construct(
 		\Magento\Shipping\Model\Config $shippingConfig,
 		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig
 	) {
@@ -32,7 +32,7 @@ class Allowedmethods implements \Magento\Framework\Option\ArrayInterface
      *
      * @return array
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         $isActiveOnlyFlag = true;
 		$methods = [

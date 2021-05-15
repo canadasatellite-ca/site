@@ -5,7 +5,7 @@ namespace Interactivated\Quotecheckout\Observer;
 class CustomQuoteProcess implements \Magento\Framework\Event\ObserverInterface{
     protected $request;
     protected $session;
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\RequestInterface $request,
         \Cart2Quote\Quotation\Model\Session $session
     )
@@ -14,7 +14,7 @@ class CustomQuoteProcess implements \Magento\Framework\Event\ObserverInterface{
         $this->session = $session;
     }
 
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         $checkout_session = $observer->getEvent()->getData('checkout_session');
         $name = $this->request->getModuleName();

@@ -7,7 +7,7 @@ class Corner implements \Magento\Framework\Option\ArrayInterface
     const ROUND_CORNER = 1;
     const NOT_CORNER  = 2;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             [

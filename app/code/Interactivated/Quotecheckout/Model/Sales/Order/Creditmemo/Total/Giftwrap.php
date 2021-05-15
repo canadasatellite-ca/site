@@ -10,7 +10,7 @@ class Giftwrap extends \Magento\Sales\Model\Order\Creditmemo\Total\AbstractTotal
      * @param \Magento\Sales\Model\Order\Creditmemo $creditmemo
      * @return $this
      */
-    public function collect(\Magento\Sales\Model\Order\Creditmemo $creditmemo)
+    function collect(\Magento\Sales\Model\Order\Creditmemo $creditmemo)
     {
         $order = $creditmemo->getOrder();
 

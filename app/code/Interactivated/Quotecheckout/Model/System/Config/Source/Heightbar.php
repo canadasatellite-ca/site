@@ -9,7 +9,7 @@ class Heightbar implements \Magento\Framework\Option\ArrayInterface
     const BIGGER  = 3;
     const BIGGEST  = 4;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             [

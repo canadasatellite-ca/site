@@ -7,7 +7,7 @@ class Style implements \Magento\Framework\Option\ArrayInterface
     const STYLE_FLAT  = 2;
     const STYLE_CLASSIC = 3;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             [

@@ -209,7 +209,7 @@ class Mobile_Detect {
 
     }
 
-    public function setHttpHeaders($httpHeaders = null){
+    function setHttpHeaders($httpHeaders = null){
 
         if(!empty($httpHeaders)){
             $this->httpHeaders = $httpHeaders;
@@ -223,7 +223,7 @@ class Mobile_Detect {
 
     }
 
-    public function setUserAgent($userAgent = null){
+    function setUserAgent($userAgent = null){
 
         if(!empty($userAgent)){
             $this->userAgent = $userAgent;
@@ -252,7 +252,7 @@ class Mobile_Detect {
      *
      * This method is used for the magic methods $detect->is*()
      */
-    public function setMobileDetectionRules(){
+    function setMobileDetectionRules(){
         // Merge all rules together.
         $this->mobileDetectionRules = array_merge(
             $this->phoneDevices,
@@ -272,7 +272,7 @@ class Mobile_Detect {
      *
      * @return bool
      */
-    public function setMobileDetectionRulesExtended(){
+    function setMobileDetectionRulesExtended(){
 
         // Merge all rules together.
         $this->mobileDetectionRulesExtended = array_merge(
@@ -288,7 +288,7 @@ class Mobile_Detect {
     /**
      * @return array
      */
-    public function getRules()
+    function getRules()
     {
 
         if($this->detectionType=='extended'){
@@ -305,7 +305,7 @@ class Mobile_Detect {
 * inside isMobile() method.
 * @return boolean
 */
-    public function checkHttpHeadersForMobile(){
+    function checkHttpHeadersForMobile(){
 
         if(
             isset($this->httpHeaders['HTTP_ACCEPT']) &&
@@ -348,7 +348,7 @@ class Mobile_Detect {
      * @param array $arguments
      * @return mixed
      */
-    public function __call($name, $arguments)
+    function __call($name, $arguments)
     {
 
         $this->setDetectionType('mobile');
@@ -410,7 +410,7 @@ class Mobile_Detect {
     * @param null $httpHeaders deprecated
     * @return bool
     */
-    public function isMobile($userAgent = null, $httpHeaders = null) {
+    function isMobile($userAgent = null, $httpHeaders = null) {
 
         if($httpHeaders){ $this->setHttpHeaders($httpHeaders); }
         if($userAgent){ $this->setUserAgent($userAgent); }
@@ -433,7 +433,7 @@ class Mobile_Detect {
      * @param null $httpHeaders deprecated
      * @return bool
     */
-    public function isTablet($userAgent = null, $httpHeaders = null) {
+    function isTablet($userAgent = null, $httpHeaders = null) {
 
         $this->setDetectionType('mobile');
 
@@ -457,7 +457,7 @@ class Mobile_Detect {
      * @param string $httpHeaders deprecated
      * @return bool|int|null
      */
-    public function is($key, $userAgent = null, $httpHeaders = null){
+    function is($key, $userAgent = null, $httpHeaders = null){
 
 
         // Set the UA and HTTP headers only if needed (eg. batch mode).
@@ -470,7 +470,7 @@ class Mobile_Detect {
 
     }
 
-    public function getOperatingSystems(){
+    function getOperatingSystems(){
 
         return $this->operatingSystems;
 

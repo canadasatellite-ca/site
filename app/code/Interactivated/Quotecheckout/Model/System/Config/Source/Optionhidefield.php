@@ -8,7 +8,7 @@ class Optionhidefield implements \Magento\Framework\Option\ArrayInterface
     const STATUS_REQUIRED   = 2;
     const STATUS_HIDE       = 0;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             self::STATUS_OPTIONAL => __('Optional'),

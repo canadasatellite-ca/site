@@ -9,7 +9,7 @@ class Customermessages extends \Magento\Framework\View\Element\Template
 	 */
 	protected $_coreRegistry;
 
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Element\Template\Context $context,
 		\Magento\Framework\Registry $coreRegistry,
 		array $data = []
@@ -23,7 +23,7 @@ class Customermessages extends \Magento\Framework\View\Element\Template
 	 * 
 	 * @return \Magento\Sales\Model\Order
 	 */
-	public function getOrderInformation()
+	function getOrderInformation()
 	{
 		return $this->_coreRegistry->registry('current_order');
 	}

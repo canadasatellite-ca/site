@@ -27,14 +27,14 @@ class Index extends \Magento\Checkout\Controller\Index\Index
     /**
      * Define properties for methods
      */
-    public function defineProperties()
+    function defineProperties()
     {
         $this->_dataHelper      = $this->_objectManager->get('Interactivated\Quotecheckout\Helper\Data');
         $this->_checkoutSession = $this->_objectManager->get('Cart2Quote\Quotation\Model\Session');
         $this->_sessionManager  = $this->_objectManager->get('Magento\Framework\Session\SessionManagerInterface');
     }
 
-    public function getOnepage()
+    function getOnepage()
     {
         return $this->_objectManager->get('Interactivated\Quotecheckout\Model\Checkout\Type\Onepage');
     }
@@ -44,7 +44,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
      *
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    function execute()
     {
         // Define properties for methods
         $this->defineProperties();
@@ -116,7 +116,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
      *
      * @return int
      */
-    public function checkChangeStyle()
+    function checkChangeStyle()
     {
         $changeStyle = 0;
         $this->_sessionManager->unsOs();
@@ -156,7 +156,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         return $changeStyle;
     }
 
-    public function getGeoip()
+    function getGeoip()
     {
         if ($this->_dataHelper->getStoreConfig('onestepcheckout/general/enable_geoip')) {
             try {
@@ -244,7 +244,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         }
     }
 
-    public function _initAction($resultPage)
+    function _initAction($resultPage)
     {
         // Get checkout quote
         $quote = $this->_checkoutSession->getQuote();
@@ -286,7 +286,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         return true;
     }
 
-    public function initAddressInfo($quote)
+    function initAddressInfo($quote)
     {
         $quoteAddress = $quote->getBillingAddress();
         $countryid    = $quoteAddress->getCountryId();
@@ -413,7 +413,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         }
     }
 
-    public function initPaymentMethod($quote)
+    function initPaymentMethod($quote)
     {
         $listmethod = [];
         $store      = $quote ? $quote->getStoreId() : null;
@@ -447,7 +447,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         }
     }
 
-    public function initShippingMethod($quote)
+    function initShippingMethod($quote)
     {
         $listMethod = [];
         $addresses  = $quote->getShippingAddress();
@@ -483,7 +483,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
      * @param  string $method
      * @return boolean
      */
-    public function _canUseMethod($method, $quote)
+    function _canUseMethod($method, $quote)
     {
         if($quote == null) {
             $quote = $this->getQuote();
@@ -512,7 +512,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         return true;
     }
 
-    public function saveBilling($data, $customerAddressId, $quote)
+    function saveBilling($data, $customerAddressId, $quote)
     {
         if (empty($data)) {
             return [
@@ -546,7 +546,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         }
     }
 
-    public function saveShipping($data, $customerAddressId, $quote)
+    function saveShipping($data, $customerAddressId, $quote)
     {
         if (empty($data)) {
             return [
@@ -578,7 +578,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
     }
 
 
-    public function dispatch(\Magento\Framework\App\RequestInterface $request)
+    function dispatch(\Magento\Framework\App\RequestInterface $request)
     {
         $this->_request = $request;
         $result = $this->_preDispatchValidateCustomer();
@@ -598,7 +598,7 @@ class Index extends \Magento\Checkout\Controller\Index\Index
         //return parent::dispatch($request);
         return $this::parentDispatch($request);
     }
-    public function parentDispatch(\Magento\Framework\App\RequestInterface $request)
+    function parentDispatch(\Magento\Framework\App\RequestInterface $request)
     {
         $this->_request = $request;
         $profilerKey = 'CONTROLLER_ACTION:' . $request->getFullActionName();

@@ -100,7 +100,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      * @param array $data
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Directory\Helper\Data $directoryHelper,
         \Magento\Framework\App\Cache\Type\Config $configCacheType,
@@ -134,7 +134,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      * @param string $path
      * @return string|null
      */
-    public function getConfig($path)
+    function getConfig($path)
     {
         return $this->_scopeConfig->getValue($path, \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
@@ -157,7 +157,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      *
      * @return \Magento\Checkout\Model\Session
      */
-    public function getCheckout()
+    function getCheckout()
     {
         return $this->_checkoutSession;
     }
@@ -167,7 +167,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      *
      * @return Quote
      */
-    public function getQuote()
+    function getQuote()
     {
         if (empty($this->_quote)) {
             $this->_quote = $this->getCheckout()->getQuote();
@@ -178,7 +178,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
     /**
      * @return bool
      */
-    public function isCustomerLoggedIn()
+    function isCustomerLoggedIn()
     {
         return $this->httpContext->getValue(\Magento\Customer\Model\Context::CONTEXT_AUTH);
     }
@@ -186,7 +186,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
     /**
      * @return Collection
      */
-    public function getCountryCollection()
+    function getCountryCollection()
     {
         if (!$this->_countryCollection) {
             $this->_countryCollection = $this->_countryCollectionFactory->create()->loadByStore();
@@ -197,7 +197,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
     /**
      * @return RegionCollection
      */
-    public function getRegionCollection()
+    function getRegionCollection()
     {
         if (!$this->_regionCollection) {
             $this->_regionCollection = $this->_regionCollectionFactory->create()->addCountryFilter(
@@ -210,7 +210,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
     /**
      * @return int
      */
-    public function customerHasAddresses()
+    function customerHasAddresses()
     {
         try {
             return count($this->_getCustomer()->getAddresses());
@@ -223,7 +223,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      * @param string $type
      * @return string
      */
-    public function getAddressesHtmlSelect($type)
+    function getAddressesHtmlSelect($type)
     {
         if ($this->isCustomerLoggedIn()) {
             $options = [];
@@ -275,7 +275,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      * @param string $type
      * @return string
      */
-    public function getCountryHtmlSelect($type)
+    function getCountryHtmlSelect($type)
     {
         $countryId = $this->getAddress()->getCountryId();
         if ($countryId === null) {
@@ -303,7 +303,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      * @param string $type
      * @return string
      */
-    public function getRegionHtmlSelect($type)
+    function getRegionHtmlSelect($type)
     {
         $select = $this->getLayout()->createBlock(
             'Magento\Framework\View\Element\Html\Select'
@@ -327,7 +327,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
     /**
      * @return mixed
      */
-    public function getCountryOptions()
+    function getCountryOptions()
     {
         $options = false;
 //        $cacheId = 'DIRECTORY_COUNTRY_SELECT_STORE_' . $this->_storeManager->getStore()->getCode();
@@ -357,7 +357,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      *
      * @return bool
      */
-    public function isShow()
+    function isShow()
     {
         return true;
     }
@@ -368,7 +368,7 @@ abstract class AbstractOnepage extends \Magento\Framework\View\Element\Template
      * @param \Magento\Quote\Model\Quote\Address\Rate $rate
      * @return string
      */
-    public function getShippingPriceHtml(\Magento\Quote\Model\Quote\Address\Rate $rate)
+    function getShippingPriceHtml(\Magento\Quote\Model\Quote\Address\Rate $rate)
     {
         /** @var \Magento\Checkout\Block\Shipping\Price $block */
         $block = $this->getLayout()->getBlock('checkout.shipping.price');

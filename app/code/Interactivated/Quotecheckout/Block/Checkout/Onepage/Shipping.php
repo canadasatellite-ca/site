@@ -57,7 +57,7 @@ class Shipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abst
      * @param \Magento\Framework\Session\SessionManagerInterface $sessionManager
      * @param array $data
      */
-	public function __construct(
+	function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Directory\Helper\Data $directoryHelper,
         \Magento\Framework\App\Cache\Type\Config $configCacheType,
@@ -119,7 +119,7 @@ class Shipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abst
      *
      * @return string
      */
-    public function getMethod()
+    function getMethod()
     {
         return $this->getQuote()->getCheckoutMethod();
     }
@@ -129,7 +129,7 @@ class Shipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abst
      *
      * @return \Magento\Quote\Model\Quote\Address
      */
-    public function getAddress()
+    function getAddress()
     {
         if ($this->_address === null) {
             if ($this->isCustomerLoggedIn()) {
@@ -147,12 +147,12 @@ class Shipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abst
      *
      * @return bool
      */
-    public function isShow()
+    function isShow()
     {
         return !$this->getQuote()->isVirtual();
     }
 
-	public function getAddressesHtmlSelect($type)
+	function getAddressesHtmlSelect($type)
     {
         if ($this->isCustomerLoggedIn()) {
             $options = [];
@@ -190,7 +190,7 @@ class Shipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abst
         return '';
     }
 
- 	public function getCountryHtmlSelect($type)
+ 	function getCountryHtmlSelect($type)
     {
     	if($this->_sessionManager->getCountryId()) {
     		$countryId = $this->_sessionManager->getCountryId();
@@ -223,7 +223,7 @@ class Shipping extends \Interactivated\Quotecheckout\Block\Checkout\Onepage\Abst
      * Retrive session manager object
      * @return object
      */
-    public function getSessionManager()
+    function getSessionManager()
     {
         return $this->_sessionManager;
     }

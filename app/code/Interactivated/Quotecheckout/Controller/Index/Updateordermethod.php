@@ -15,7 +15,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
     protected $quoteProposalSender;
     protected $quoteSession;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Customer\Model\Session $customerSession,
         CustomerRepositoryInterface $customerRepository,
@@ -60,7 +60,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
             $resultJsonFactory);
     }
 
-    public function execute()
+    function execute()
     {
         $guest = false;
         $this->defineProperties();
@@ -424,7 +424,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
      * @param  string $type
      * @param  array $data
      */
-    public function saveAddress($type, $data)
+    function saveAddress($type, $data)
     {
         $addressId = $this->getRequest()->getPost($type . '_address_id');
 
@@ -467,7 +467,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
      * @param  string $type
      * @return int|string
      */
-    public function getDefaultAddress($type)
+    function getDefaultAddress($type)
     {
         $customer = $this->_customerSession->getCustomer();
         if ($type == "billing") {
@@ -481,7 +481,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
         return $addressId;
     }
 
-    public function saveSubscriber($mail)
+    function saveSubscriber($mail)
     {
         if ($mail) {
             $email = (string)$mail;
@@ -532,7 +532,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
      *
      * @param array $billingData
      */
-    public function setAccountInfoSession($billingData)
+    function setAccountInfoSession($billingData)
     {
         if (!$this->getRequest()->getParam('dob')) {
             $dob = '';

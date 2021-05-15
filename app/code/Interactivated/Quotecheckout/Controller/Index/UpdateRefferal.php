@@ -4,7 +4,7 @@ namespace Interactivated\Quotecheckout\Controller\Index;
 
 class UpdateRefferal extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
 {
-	public function execute()
+	function execute()
 	{
         /**
          * TODO: Check code

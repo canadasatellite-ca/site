@@ -8,7 +8,7 @@ class Subscribenewletter implements \Magento\Framework\Option\ArrayInterface
     const STATUS_ENABLE_UNCHECKED = 1;
     const STATUS_DISABLE = 0;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             self::STATUS_ENABLE_CHECKED => __('Enable & Checked'),
