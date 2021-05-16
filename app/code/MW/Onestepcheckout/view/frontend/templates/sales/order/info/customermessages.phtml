@@ -1,9 +1,0 @@
-<?php
-$order = $block->getOrderInformation();
-if ($order) :
-?>
-	<div class="box box-customer-comment" style="clear: both">
-	    <h4><?php echo __('My Comment for this order') ?></h4>
-	    <span><?php echo $order->getMwCustomercommentInfo(); ?></span>
-	</div>
-<?php endif; ?>
