@@ -346,7 +346,6 @@ return [
         'LitExtension_CustomerPassword' => 1,
         'Magento_PaypalReCaptcha' => 1,
         'MSP_TwoFactorAuth' => 1,
-        'MW_Onestepcheckout' => 1,
         'MageWorx_Downloads' => 1,
         'MagePal_Core' => 1,
         'MagePal_GmailSmtpApp' => 1,
