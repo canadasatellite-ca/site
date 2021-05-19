@@ -1,12 +1,6 @@
 <?php
 namespace Interactivated\Quotecheckout\Controller\Index;
 class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
-	private $_notshiptype = 0;
-
-	private $_colspan = 5;
-
-	private $_htmlUpdatecart = "";
-
 	function getOnepage() {
 		return $this->_objectManager->get('Interactivated\Quotecheckout\Model\Checkout\Type\Onepage');
 	}
@@ -636,4 +630,10 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 
 		return $output;
 	}
+
+	private $_notshiptype = 0;
+
+	private $_colspan = 5;
+
+	private $_htmlUpdatecart = "";
 }
