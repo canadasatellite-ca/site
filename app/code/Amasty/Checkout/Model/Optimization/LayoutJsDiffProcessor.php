@@ -205,7 +205,11 @@ class LayoutJsDiffProcessor
         $parentPath = $layoutWalker->parseArrayPath($path);
         $moveKey = array_pop($parentPath);
         $parentPath = implode('.', $parentPath);
-        $layoutValue = $layoutWalker->getValue($parentPath);
+		# 2021-05-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «Invalid argument supplied for foreach()
+		# in app/code/Amasty/Checkout/Model/Optimization/LayoutJsDiffProcessor.php on line 211»:
+		# https://github.com/canadasatellite-ca/site/issues/120
+        $layoutValue = df_eta($layoutWalker->getValue($parentPath));
         $movedArray = [];
         $currentPosition = 0;
         foreach ($layoutValue as $key => $childValue) {
