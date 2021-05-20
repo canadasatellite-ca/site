@@ -217,7 +217,11 @@ class LayoutJsDiffProcessor
                 $movedArray[$key] = $childValue;
             }
             if ($valueProperties[self::KEY_MOVE_TO_POSITION] === $currentPosition++) {
-                $movedArray[$moveKey] = $layoutValue[$moveKey];
+				# 2021-05-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# «Undefined index: dataScope
+				# in app/code/Amasty/Checkout/Model/Optimization/LayoutJsDiffProcessor.php on line 228»:
+				# https://github.com/canadasatellite-ca/site/issues/121
+                $movedArray[$moveKey] = dfa($layoutValue, $moveKey);
             }
         }
         $layoutWalker->setValue($parentPath, $movedArray);
