@@ -52,7 +52,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb|null $resource
      * @param OptionBaseHelper $helper
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
@@ -80,7 +80,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return $this
      */
-    public function addOptionName()
+    function addOptionName()
     {
         $this->getSelect()
             ->joinLeft(
@@ -96,7 +96,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return $this
      */
-    public function addValueName()
+    function addValueName()
     {
         $this->getSelect()
             ->joinLeft(
@@ -112,7 +112,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return $this
      */
-    public function addProductSku()
+    function addProductSku()
     {
         $this->getSelect()
             ->joinLeft(
@@ -133,7 +133,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return $this
      */
-    public function addProductName()
+    function addProductName()
     {
         $this->getSelect()
             ->joinLeft(

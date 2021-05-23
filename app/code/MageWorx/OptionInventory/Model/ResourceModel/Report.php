@@ -24,7 +24,7 @@ class Report extends \Magento\Framework\Model\ResourceModel\Db\VersionControl\Ab
      * @param RelationComposite $entityRelationComposite
      * @param null $connectionName
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         Snapshot $entitySnapshot,
         RelationComposite $entityRelationComposite,

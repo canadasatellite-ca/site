@@ -47,7 +47,7 @@ class SubtractQuoteOptionValueInventoryObserver implements ObserverInterface
      * @param StockManagement $stockManagement
      * @param OptionValuesQty $optionValuesQty
      */
-    public function __construct(
+    function __construct(
         Validator $validator,
         StockProvider $stockProvider,
         StockManagement $stockManagement,
@@ -63,7 +63,7 @@ class SubtractQuoteOptionValueInventoryObserver implements ObserverInterface
      * @param EventObserver $observer
      * @return $this
      */
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         /** @var \Magento\Quote\Model\Quote $quote */
         $quote = $observer->getEvent()->getQuote();

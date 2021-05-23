@@ -25,7 +25,7 @@ class Update extends Action
      * @param \Magento\Framework\App\Action\Context $context
      * @param \MageWorx\OptionInventory\Model\StockProvider $stockProvider
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \MageWorx\OptionInventory\Model\StockProvider $stockProvider
     ) {
@@ -36,7 +36,7 @@ class Update extends Action
     /**
      * @return mixed
      */
-    public function execute()
+    function execute()
     {
         $this->getRequest()->getParams();
         $options = json_decode($this->getRequest()->getPost('opConfig'), true);

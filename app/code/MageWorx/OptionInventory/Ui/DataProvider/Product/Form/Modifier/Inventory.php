@@ -26,7 +26,7 @@ class Inventory extends AbstractModifier implements \MageWorx\OptionBase\Ui\Data
     /**
      * @param ArrayManager $arrayManager
      */
-    public function __construct(
+    function __construct(
         ArrayManager $arrayManager
     ) {
         $this->arrayManager = $arrayManager;
@@ -37,7 +37,7 @@ class Inventory extends AbstractModifier implements \MageWorx\OptionBase\Ui\Data
      *
      * @return int
      */
-    public function getSortOrder()
+    function getSortOrder()
     {
         return 30;
     }
@@ -45,7 +45,7 @@ class Inventory extends AbstractModifier implements \MageWorx\OptionBase\Ui\Data
     /**
      * {@inheritdoc}
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }
@@ -53,7 +53,7 @@ class Inventory extends AbstractModifier implements \MageWorx\OptionBase\Ui\Data
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $this->meta = $meta;
 
@@ -138,7 +138,7 @@ class Inventory extends AbstractModifier implements \MageWorx\OptionBase\Ui\Data
      *
      * @return bool
      */
-    public function isProductScopeOnly()
+    function isProductScopeOnly()
     {
         return false;
     }

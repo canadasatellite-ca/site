@@ -49,7 +49,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      * @param \Magento\Framework\DB\Adapter\AdapterInterface|null $connection
      * @param AbstractDb|null $resource
      */
-    public function __construct(
+    function __construct(
         EntityFactoryInterface $entityFactory,
         LoggerInterface $logger,
         FetchStrategyInterface $fetchStrategy,
@@ -90,7 +90,7 @@ class Collection extends ReportCollection implements SearchResultInterface
     /**
      * @return \Magento\Framework\Search\AggregationInterface
      */
-    public function getAggregations()
+    function getAggregations()
     {
         return $this->aggregations;
     }
@@ -99,7 +99,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      * @param \Magento\Framework\Search\AggregationInterface $aggregations
      * @return $this
      */
-    public function setAggregations($aggregations)
+    function setAggregations($aggregations)
     {
         $this->aggregations = $aggregations;
     }
@@ -113,7 +113,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      * @param int $offset
      * @return array
      */
-    public function getAllIds($limit = null, $offset = null)
+    function getAllIds($limit = null, $offset = null)
     {
         return $this->getConnection()->fetchCol($this->_getAllIdsSelect($limit, $offset), $this->_bindParams);
     }
@@ -123,7 +123,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      *
      * @return \Magento\Framework\Api\SearchCriteriaInterface|null
      */
-    public function getSearchCriteria()
+    function getSearchCriteria()
     {
         return null;
     }
@@ -135,7 +135,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
+    function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
@@ -145,7 +145,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      *
      * @return int
      */
-    public function getTotalCount()
+    function getTotalCount()
     {
         return $this->getSize();
     }
@@ -157,7 +157,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setTotalCount($totalCount)
+    function setTotalCount($totalCount)
     {
         return $this;
     }
@@ -169,7 +169,7 @@ class Collection extends ReportCollection implements SearchResultInterface
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setItems(array $items = null)
+    function setItems(array $items = null)
     {
         return $this;
     }

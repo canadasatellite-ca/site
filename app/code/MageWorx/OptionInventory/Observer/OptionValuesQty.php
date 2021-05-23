@@ -54,7 +54,7 @@ class OptionValuesQty
      * @param StockRegistryInterface $stockRegistry
      * @param ProductRepositoryInterface $productRepositoryInterface
      */
-    public function __construct(
+    function __construct(
         Validator $validator,
         StockProvider $stockProvider,
         OptionValueCollection $valueCollection,
@@ -75,7 +75,7 @@ class OptionValuesQty
      * @param array $originQuoteValues
      * @return array
      */
-    public function getItemsToCorrect($requestedValues, $originQuoteValues)
+    function getItemsToCorrect($requestedValues, $originQuoteValues)
     {
         $itemsToCorrect = [];
 

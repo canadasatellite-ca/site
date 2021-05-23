@@ -23,7 +23,7 @@ class InstallSchema implements InstallSchemaInterface
      *
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      */
-    public function __construct(
+    function __construct(
         \MageWorx\OptionBase\Model\Installer $optionBaseInstaller
     ) {
         $this->optionBaseInstaller = $optionBaseInstaller;
@@ -33,7 +33,7 @@ class InstallSchema implements InstallSchemaInterface
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $this->optionBaseInstaller->install();
     }

@@ -31,7 +31,7 @@ class InlineEdit extends Action
      * @param Registry $registry
      * @param Context $context
      */
-    public function __construct(
+    function __construct(
         JsonFactory $jsonFactory,
         Registry $registry,
         Context $context
@@ -44,7 +44,7 @@ class InlineEdit extends Action
     /**
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->jsonFactory->create();
