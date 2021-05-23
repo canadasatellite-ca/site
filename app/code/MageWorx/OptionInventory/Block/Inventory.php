@@ -22,7 +22,7 @@ class Inventory extends Template
      * @param EncoderInterface $jsonEncoder
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         EncoderInterface $jsonEncoder,
         array $data = []
@@ -37,7 +37,7 @@ class Inventory extends Template
     /**
      * @return string
      */
-    public function getJsonData()
+    function getJsonData()
     {
         $data = [
             'stock_message_url' => $this->_urlBuilder->getUrl('mageworx_optioninventory/stockmessage/update')

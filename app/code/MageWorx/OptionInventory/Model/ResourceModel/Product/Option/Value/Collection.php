@@ -29,7 +29,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Option\Val
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource
      * @param OptionBaseHelper $helper
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
@@ -67,7 +67,7 @@ class Collection extends \Magento\Catalog\Model\ResourceModel\Product\Option\Val
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function getValuesByOption($optionIds, $storeId = null)
+    function getValuesByOption($optionIds, $storeId = null)
     {
         if (!$storeId) {
             $storeId = 0;

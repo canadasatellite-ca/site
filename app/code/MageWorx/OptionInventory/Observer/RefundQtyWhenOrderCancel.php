@@ -24,7 +24,7 @@ class RefundQtyWhenOrderCancel implements ObserverInterface
      * OrderCancel constructor.
      * @param RefundQty $refundQtyModel
      */
-    public function __construct(
+    function __construct(
         RefundQty $refundQtyModel
     ) {
         $this->refundQtyModel = $refundQtyModel;
@@ -34,7 +34,7 @@ class RefundQtyWhenOrderCancel implements ObserverInterface
      * @param EventObserver $observer
      * @return $this
      */
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         $items = $observer->getEvent()->getOrder()->getAllItems();
 

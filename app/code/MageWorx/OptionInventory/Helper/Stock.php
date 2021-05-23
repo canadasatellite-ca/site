@@ -45,7 +45,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param ProductModel $product
      * @param Context $context
      */
-    public function __construct(
+    function __construct(
         \MageWorx\OptionInventory\Helper\Data $helperData,
         ProductModel $product,
         StockRegistry $stockRegistry,
@@ -64,7 +64,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param \Magento\Catalog\Model\Product\Option\Value $option
      * @return bool
      */
-    public function isOutOfStockOption($option)
+    function isOutOfStockOption($option)
     {
         $manageStock = $option->getManageStock();
         $qty = $option->getQty();
@@ -88,7 +88,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param null|\Magento\Catalog\Model\Product $product
      * @return float|int
      */
-    public function floatingQty($qty, $productId, $product = null)
+    function floatingQty($qty, $productId, $product = null)
     {
         if ($this->isTemplateGroup($productId, $product)) {
             return (float)$qty;
@@ -126,7 +126,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param \DOMElement $elementTitle
      * @param string $stockMessage
      */
-    public function setStockMessage($dom, $elementTitle, $stockMessage = '')
+    function setStockMessage($dom, $elementTitle, $stockMessage = '')
     {
         $elementTitle->nodeValue = htmlentities($elementTitle->nodeValue . $stockMessage);
     }
@@ -137,7 +137,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param \Magento\Catalog\Model\Product\Option\Value $value
      * @return string
      */
-    public function getStockMessage($value, $productId)
+    function getStockMessage($value, $productId)
     {
         $stockMessage = '';
 
@@ -168,7 +168,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @param \DOMElement $element
      */
-    public function disableOutOfStockOption($element)
+    function disableOutOfStockOption($element)
     {
         if ($element) {
             $element->setAttribute('disabled', 'disabled');
@@ -180,7 +180,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      *
      * @param \DOMElement $element
      */
-    public function hideOutOfStockOption($element)
+    function hideOutOfStockOption($element)
     {
         if ($element) {
             $element->parentNode->removeChild($element);
@@ -193,7 +193,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param array $options
      * @return array
      */
-    public function getRequestedValuesId($options)
+    function getRequestedValuesId($options)
     {
         $valuesId = [];
 
@@ -215,7 +215,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
      * @param array $options
      * @return array
      */
-    public function getOptionValuesId($options)
+    function getOptionValuesId($options)
     {
         $optionValuesId = [];
 

@@ -19,7 +19,7 @@ class InstallSchema implements \MageWorx\OptionBase\Api\InstallSchemaInterface
      *
      * @return array
      */
-    public function getData()
+    function getData()
     {
         $dataArray = [
             [
@@ -53,7 +53,7 @@ class InstallSchema implements \MageWorx\OptionBase\Api\InstallSchemaInterface
     /**
      * {@inheritdoc}
      */
-    public function getModuleTablePrefix()
+    function getModuleTablePrefix()
     {
         return '';
     }
@@ -61,7 +61,7 @@ class InstallSchema implements \MageWorx\OptionBase\Api\InstallSchemaInterface
     /**
      * {@inheritdoc}
      */
-    public function getIndexes()
+    function getIndexes()
     {
         return [];
     }
@@ -69,7 +69,7 @@ class InstallSchema implements \MageWorx\OptionBase\Api\InstallSchemaInterface
     /**
      * {@inheritdoc}
      */
-    public function getForeignKeys()
+    function getForeignKeys()
     {
         return [];
     }

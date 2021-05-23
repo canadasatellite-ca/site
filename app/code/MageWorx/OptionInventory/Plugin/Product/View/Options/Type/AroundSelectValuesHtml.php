@@ -37,7 +37,7 @@ class AroundSelectValuesHtml
      * @param \MageWorx\OptionInventory\Helper\Stock $stockHelper
      * @param \Zend\Stdlib\StringWrapper\MbString $mbString
      */
-    public function __construct(
+    function __construct(
         \MageWorx\OptionInventory\Helper\Data $helperData,
         \MageWorx\OptionInventory\Helper\Stock $stockHelper,
         \Zend\Stdlib\StringWrapper\MbString $mbString
@@ -52,7 +52,7 @@ class AroundSelectValuesHtml
      * @param \Closure $proceed
      * @return string
      */
-    public function aroundGetValuesHtml(Select $subject, \Closure $proceed)
+    function aroundGetValuesHtml(Select $subject, \Closure $proceed)
     {
         $isDisabledOutOfStockOptions = $this->helperData->isDisabledOutOfStockOptions();
 

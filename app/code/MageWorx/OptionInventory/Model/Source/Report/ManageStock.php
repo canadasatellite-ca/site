@@ -18,7 +18,7 @@ class ManageStock implements OptionSourceInterface
      *
      * @return array
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             ['value' => 0, 'label' => __('No')],

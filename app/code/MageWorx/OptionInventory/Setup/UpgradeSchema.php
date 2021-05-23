@@ -15,7 +15,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
     /**
      * {@inheritdoc}
      */
-    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         if (version_compare($context->getVersion(), '2.0.1', '<')) {
             $setup->getConnection()->update(

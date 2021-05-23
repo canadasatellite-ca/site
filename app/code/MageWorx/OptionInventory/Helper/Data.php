@@ -33,7 +33,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param int $storeId
      * @return bool
      */
-    public function isDisplayOptionInventoryOnFrontend($storeId = null)
+    function isDisplayOptionInventoryOnFrontend($storeId = null)
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_DISPLAY_OPTION_INVENTORY_ON_FRONTEND,
@@ -48,7 +48,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
      * @param int $storeId
      * @return bool
      */
-    public function isDisplayOutOfStockMessage($storeId = null)
+    function isDisplayOutOfStockMessage($storeId = null)
     {
         return $this->scopeConfig->getValue(
             self::XML_PATH_DISPLAY_OUT_OF_STOCK_MESSAGE,

@@ -58,7 +58,7 @@ class StockProvider
      * @param BaseHelper $baseHelper
      * @param OptionValueCollectionFactory $optionValueCollectionFactory
      */
-    public function __construct(
+    function __construct(
         ObjectManager $objectManager,
         StockHelper $stockHelper,
         DataObjectFactory $dataObjectFactory,
@@ -79,7 +79,7 @@ class StockProvider
      * @param array $requestedData Options array
      * @return array
      */
-    public function getOriginData($requestedData)
+    function getOriginData($requestedData)
     {
         $originalData = [];
 
@@ -102,7 +102,7 @@ class StockProvider
      * @param array $cart Option array retrieved from POST
      * @return array
      */
-    public function getRequestedData($items, $cart)
+    function getRequestedData($items, $cart)
     {
         $requestedData = [];
 
@@ -131,7 +131,7 @@ class StockProvider
      * @param array $cart Option array retrieved from POST
      * @return array
      */
-    public function getItemData($item, $cart = [])
+    function getItemData($item, $cart = [])
     {
         $requestedData = [];
 
@@ -233,7 +233,7 @@ class StockProvider
      * @param $options
      * @return mixed
      */
-    public function updateOptionsStockMessage($options)
+    function updateOptionsStockMessage($options)
     {
         $optionModel = $this->objectManager
             ->create('Magento\Catalog\Model\Product\Option');

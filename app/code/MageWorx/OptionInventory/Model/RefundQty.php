@@ -23,7 +23,7 @@ class RefundQty
      *
      * @param ValueCollection $valueCollection
      */
-    public function __construct(
+    function __construct(
         ValueCollection $valueCollection
     ) {
         $this->valueCollection = $valueCollection;
@@ -38,7 +38,7 @@ class RefundQty
      * @param string $qtyFieldName
      * @return $this
      */
-    public function refund($items, $qtyFieldName)
+    function refund($items, $qtyFieldName)
     {
         foreach ($items as $item) {
             $itemData       = $item->getData();
@@ -101,7 +101,7 @@ class RefundQty
      * @param int $orderItemQtyReturned
      * @return int
      */
-    public function getTotalQtyReturned($valueModel, $infoBuyRequest, $orderItemQtyReturned)
+    function getTotalQtyReturned($valueModel, $infoBuyRequest, $orderItemQtyReturned)
     {
         $optionId = $valueModel->getOptionId();
         $valueId  = $valueModel->getOptionTypeId();

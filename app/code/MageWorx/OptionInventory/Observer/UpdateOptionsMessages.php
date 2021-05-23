@@ -26,7 +26,7 @@ class UpdateOptionsMessages implements ObserverInterface
      *
      * @param \MageWorx\OptionInventory\Model\StockProvider $stockProvider
      */
-    public function __construct(
+    function __construct(
         \MageWorx\OptionInventory\Model\StockProvider $stockProvider
     ) {
         $this->stockProvider = $stockProvider;
@@ -36,7 +36,7 @@ class UpdateOptionsMessages implements ObserverInterface
      * @param EventObserver $observer
      * @return mixed
      */
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         $configObj = $observer->getEvent()->getData('configObj');
         $options = $configObj->getData('config');

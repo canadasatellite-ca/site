@@ -42,7 +42,7 @@ class ValidateOptionsInventory implements ObserverInterface
      * @param StockProvider $stockProvider
      * @param RequestInterface $request
      */
-    public function __construct(
+    function __construct(
         Validator $validator,
         StockProvider $stockProvider,
         RequestInterface $request
@@ -55,7 +55,7 @@ class ValidateOptionsInventory implements ObserverInterface
     /**
      * @param EventObserver $observer
      */
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         $item = $observer->getEvent()->getItem();
         if (!$item ||

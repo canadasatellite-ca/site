@@ -16,7 +16,7 @@ class Index extends \Magento\Backend\App\Action
      */
     protected $resultPageFactory;
 
-    public function __construct(
+    function __construct(
         \Magento\Backend\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory
     ) {
@@ -29,7 +29,7 @@ class Index extends \Magento\Backend\App\Action
      *
      * @return \Magento\Backend\Model\View\Result\Page
      */
-    public function execute()
+    function execute()
     {
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultPageFactory->create();

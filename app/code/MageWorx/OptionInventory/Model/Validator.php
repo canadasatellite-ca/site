@@ -32,7 +32,7 @@ class Validator extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\ObjectManagerInterface $objectManager,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -53,7 +53,7 @@ class Validator extends \Magento\Framework\Model\AbstractModel
      * @param array $originData Original Option Values
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function validate($requestedData, $originData)
+    function validate($requestedData, $originData)
     {
         foreach ($requestedData as $requestedValue) {
             $originValue = isset($originData[$requestedValue->getId()]) ? $originData[$requestedValue->getId()] : null;
@@ -146,7 +146,7 @@ class Validator extends \Magento\Framework\Model\AbstractModel
      * @param array $value
      * @return string
      */
-    public function getItemType($value)
+    function getItemType($value)
     {
         $optionType = 'option';
         $productType = 'product';

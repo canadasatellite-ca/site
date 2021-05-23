@@ -34,7 +34,7 @@ class StockManagement extends \Magento\Framework\Model\ResourceModel\Db\Abstract
      * @param \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry
      * @param null $connectionName
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
         $connectionName = null
@@ -50,7 +50,7 @@ class StockManagement extends \Magento\Framework\Model\ResourceModel\Db\Abstract
      * @param string $operator +/-
      * @return void|$this
      */
-    public function correctItemsQty(array $items, $operator)
+    function correctItemsQty(array $items, $operator)
     {
         $options = isset($items['options']) ? $items['options'] : [];
         $products = isset($items['products']) ? $items['products'] : [];

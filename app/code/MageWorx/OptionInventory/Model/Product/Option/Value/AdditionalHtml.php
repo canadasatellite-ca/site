@@ -33,7 +33,7 @@ class AdditionalHtml
      * @param BaseHelper $baseHelper
      * @param StockHelper $stockHelper
      */
-    public function __construct(
+    function __construct(
         Helper $helper,
         StockHelper $stockHelper,
         BaseHelper $baseHelper
@@ -48,7 +48,7 @@ class AdditionalHtml
      * @param Option $option
      * @return void
      */
-    public function getAdditionalHtml($dom, $option)
+    function getAdditionalHtml($dom, $option)
     {
         if ($this->out($dom, $option)) {
             return;

@@ -21,7 +21,7 @@ class ManageStock extends AbstractAttribute implements AttributeInterface
      * @param ResourceConnection $resource
      * @param Helper $helper
      */
-    public function __construct(
+    function __construct(
         ResourceConnection $resource,
         Helper $helper
     ) {
@@ -32,7 +32,7 @@ class ManageStock extends AbstractAttribute implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public function getName()
+    function getName()
     {
         return Helper::KEY_MANAGE_STOCK;
     }
@@ -40,7 +40,7 @@ class ManageStock extends AbstractAttribute implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public function prepareDataForFrontend($object)
+    function prepareDataForFrontend($object)
     {
         return [];
     }
@@ -48,7 +48,7 @@ class ManageStock extends AbstractAttribute implements AttributeInterface
     /**
      * {@inheritdoc}
      */
-    public function importTemplateMageOne($data)
+    function importTemplateMageOne($data)
     {
         return 0;
     }
