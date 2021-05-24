@@ -210,28 +210,22 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
 	}
 
 	/**
+	 * 2021-05-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 1) "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
+	 * 2) «Invalid argument supplied for foreach() in app/code/MageWorx/OptionInventory/Helper/Stock.php on line 222»:
+	 * https://github.com/canadasatellite-ca/site/issues/4
 	 * @used-by \MageWorx\OptionInventory\Model\StockProvider::updateOptionsStockMessage()
 	 * @param array $options
 	 * @return array
 	 */
-	function getOptionValuesId($options) {
+	function getOptionValuesId(array $options) {
 		$optionValuesId = [];
-
-		# 2021-03-18 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-		# «Invalid argument supplied for foreach() in app/code/MageWorx/OptionInventory/Helper/Stock.php on line 222»:
-		# https://github.com/canadasatellite-ca/site/issues/4
-		if (!is_iterable($options)) {
-			df_log_l($this, ['options' => df_type($options)]);
-		}
-		else {
-			foreach ($options as $optionId => $values) {
-				if (!is_array($values)) {
-					$values = [$values => []];
-				}
-				$optionValuesId = array_merge($optionValuesId, array_keys($values));
+		foreach ($options as $optionId => $values) {
+			if (!is_array($values)) {
+				$values = [$values => []];
 			}
+			$optionValuesId = array_merge($optionValuesId, array_keys($values));
 		}
-
 		return $optionValuesId;
 	}
 
