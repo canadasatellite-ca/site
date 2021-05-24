@@ -16,216 +16,216 @@ use Magento\Framework\App\Helper\Context;
 class Stock extends \Magento\Framework\App\Helper\AbstractHelper
 {
 
-    const MANAGE_STOCK_ENABLED = '1';
-    const MANAGE_STOCK_DISABLED = '0';
+	const MANAGE_STOCK_ENABLED = '1';
+	const MANAGE_STOCK_DISABLED = '0';
 
-    /**
-     * Product model
-     *
-     * @var ProductModel
-     */
-    protected $product;
+	/**
+	 * Product model
+	 *
+	 * @var ProductModel
+	 */
+	protected $product;
 
-    /**
-     * @var StockRegistry
-     */
-    protected $stockRegistry;
+	/**
+	 * @var StockRegistry
+	 */
+	protected $stockRegistry;
 
-    /**
-     * OptionInventory Data Helper
-     *
-     * @var Data
-     */
-    protected $helperData;
+	/**
+	 * OptionInventory Data Helper
+	 *
+	 * @var Data
+	 */
+	protected $helperData;
 
-    /**
-     * Stock constructor.
-     *
-     * @param Data $helperData
-     * @param ProductModel $product
-     * @param Context $context
-     */
-    function __construct(
-        \MageWorx\OptionInventory\Helper\Data $helperData,
-        ProductModel $product,
-        StockRegistry $stockRegistry,
-        Context $context
-    ) {
-    
-        $this->helperData = $helperData;
-        $this->product = $product;
-        $this->stockRegistry = $stockRegistry;
-        parent::__construct($context);
-    }
+	/**
+	 * Stock constructor.
+	 *
+	 * @param Data $helperData
+	 * @param ProductModel $product
+	 * @param Context $context
+	 */
+	function __construct(
+		\MageWorx\OptionInventory\Helper\Data $helperData,
+		ProductModel $product,
+		StockRegistry $stockRegistry,
+		Context $context
+	) {
 
-    /**
-     * Check if option value is out of stock
-     *
-     * @param \Magento\Catalog\Model\Product\Option\Value $option
-     * @return bool
-     */
-    function isOutOfStockOption($option)
-    {
-        $manageStock = $option->getManageStock();
-        $qty = $option->getQty();
+		$this->helperData = $helperData;
+		$this->product = $product;
+		$this->stockRegistry = $stockRegistry;
+		parent::__construct($context);
+	}
 
-        if (!$manageStock) {
-            return false;
-        }
+	/**
+	 * Check if option value is out of stock
+	 *
+	 * @param \Magento\Catalog\Model\Product\Option\Value $option
+	 * @return bool
+	 */
+	function isOutOfStockOption($option)
+	{
+		$manageStock = $option->getManageStock();
+		$qty = $option->getQty();
 
-        if ($qty <= 0) {
-            return true;
-        }
+		if (!$manageStock) {
+			return false;
+		}
 
-        return false;
-    }
+		if ($qty <= 0) {
+			return true;
+		}
 
-    /**
-     * Floating option value qty
-     *
-     * @param int|float $qty
-     * @param int $productId
-     * @param null|\Magento\Catalog\Model\Product $product
-     * @return float|int
-     */
-    function floatingQty($qty, $productId, $product = null)
-    {
-        if ($this->isTemplateGroup($productId, $product)) {
-            return (float)$qty;
-        }
+		return false;
+	}
 
-        if ($product) {
-            $this->product = $product;
-        } elseif (!$this->product) {
-            $this->product->load($productId);
-        }
+	/**
+	 * Floating option value qty
+	 *
+	 * @param int|float $qty
+	 * @param int $productId
+	 * @param null|\Magento\Catalog\Model\Product $product
+	 * @return float|int
+	 */
+	function floatingQty($qty, $productId, $product = null)
+	{
+		if ($this->isTemplateGroup($productId, $product)) {
+			return (float)$qty;
+		}
 
-        $stockData = $this->product->getStockData();
+		if ($product) {
+			$this->product = $product;
+		} elseif (!$this->product) {
+			$this->product->load($productId);
+		}
 
-        if ($stockData) {
-            $isQtyDecimal = is_array($stockData)
-                ? (bool)$stockData['is_qty_decimal']
-                : (bool)$stockData->getIsQtyDecimal();
-        } else {
-            $stockData = $this->stockRegistry->getStockItem(
-                $this->product->getId(),
-                $this->product->getStore()->getWebsiteId()
-            );
-            $this->product->setStockData($stockData);
+		$stockData = $this->product->getStockData();
 
-            $isQtyDecimal = (bool)$stockData->getIsQtyDecimal();
-        }
+		if ($stockData) {
+			$isQtyDecimal = is_array($stockData)
+				? (bool)$stockData['is_qty_decimal']
+				: (bool)$stockData->getIsQtyDecimal();
+		} else {
+			$stockData = $this->stockRegistry->getStockItem(
+				$this->product->getId(),
+				$this->product->getStore()->getWebsiteId()
+			);
+			$this->product->setStockData($stockData);
 
-        return $isQtyDecimal ? (float)$qty : (int)$qty;
-    }
+			$isQtyDecimal = (bool)$stockData->getIsQtyDecimal();
+		}
 
-    /**
-     * Set stock message to xpath element
-     *
-     * @param \DOMDocument $dom
-     * @param \DOMElement $elementTitle
-     * @param string $stockMessage
-     */
-    function setStockMessage($dom, $elementTitle, $stockMessage = '')
-    {
-        $elementTitle->nodeValue = htmlentities($elementTitle->nodeValue . $stockMessage);
-    }
+		return $isQtyDecimal ? (float)$qty : (int)$qty;
+	}
 
-    /**
-     * Retrieve stock message
-     *
-     * @param \Magento\Catalog\Model\Product\Option\Value $value
-     * @return string
-     */
-    function getStockMessage($value, $productId)
-    {
-        $stockMessage = '';
+	/**
+	 * Set stock message to xpath element
+	 *
+	 * @param \DOMDocument $dom
+	 * @param \DOMElement $elementTitle
+	 * @param string $stockMessage
+	 */
+	function setStockMessage($dom, $elementTitle, $stockMessage = '')
+	{
+		$elementTitle->nodeValue = htmlentities($elementTitle->nodeValue . $stockMessage);
+	}
 
-        $isDisplayOptionInventory = $this->helperData->isDisplayOptionInventoryOnFrontend();
-        $isDisplayOutOfStockMessage = $this->helperData->isDisplayOutOfStockMessage();
+	/**
+	 * Retrieve stock message
+	 *
+	 * @param \Magento\Catalog\Model\Product\Option\Value $value
+	 * @return string
+	 */
+	function getStockMessage($value, $productId)
+	{
+		$stockMessage = '';
 
-        $valueManageStock = $value->getManageStock();
-        if (!$valueManageStock) {
-            return $stockMessage;
-        }
+		$isDisplayOptionInventory = $this->helperData->isDisplayOptionInventoryOnFrontend();
+		$isDisplayOutOfStockMessage = $this->helperData->isDisplayOutOfStockMessage();
 
-        $valueQty = $this->floatingQty($value->getQty(), $productId);
-        $inventoryMessage = '(' . $valueQty . ')';
-        $outOfStockMessage = '(' . __('Out Of Stock') . ')';
+		$valueManageStock = $value->getManageStock();
+		if (!$valueManageStock) {
+			return $stockMessage;
+		}
 
-        if ($isDisplayOutOfStockMessage) {
-            $stockMessage .= !$this->isOutOfStockOption($value) && $isDisplayOptionInventory ? $inventoryMessage : '';
-            $stockMessage .= $this->isOutOfStockOption($value) ? $outOfStockMessage : '';
-        } else {
-            $stockMessage .= $isDisplayOptionInventory ? $inventoryMessage : '';
-        }
+		$valueQty = $this->floatingQty($value->getQty(), $productId);
+		$inventoryMessage = '(' . $valueQty . ')';
+		$outOfStockMessage = '(' . __('Out Of Stock') . ')';
 
-        return $stockMessage;
-    }
+		if ($isDisplayOutOfStockMessage) {
+			$stockMessage .= !$this->isOutOfStockOption($value) && $isDisplayOptionInventory ? $inventoryMessage : '';
+			$stockMessage .= $this->isOutOfStockOption($value) ? $outOfStockMessage : '';
+		} else {
+			$stockMessage .= $isDisplayOptionInventory ? $inventoryMessage : '';
+		}
 
-    /**
-     * Disable option value
-     *
-     * @param \DOMElement $element
-     */
-    function disableOutOfStockOption($element)
-    {
-        if ($element) {
-            $element->setAttribute('disabled', 'disabled');
-        }
-    }
+		return $stockMessage;
+	}
 
-    /**
-     * Hide option value
-     *
-     * @param \DOMElement $element
-     */
-    function hideOutOfStockOption($element)
-    {
-        if ($element) {
-            $element->parentNode->removeChild($element);
-        }
-    }
+	/**
+	 * Disable option value
+	 *
+	 * @param \DOMElement $element
+	 */
+	function disableOutOfStockOption($element)
+	{
+		if ($element) {
+			$element->setAttribute('disabled', 'disabled');
+		}
+	}
 
-    /**
-     * Retrieve options values id from requested data
-     *
-     * @param array $options
-     * @return array
-     */
-    function getRequestedValuesId($options)
-    {
-        $valuesId = [];
+	/**
+	 * Hide option value
+	 *
+	 * @param \DOMElement $element
+	 */
+	function hideOutOfStockOption($element)
+	{
+		if ($element) {
+			$element->parentNode->removeChild($element);
+		}
+	}
 
-        array_walk_recursive(
-            $options,
-            function ($value, $key) use (&$valuesId) {
-                if ($value) {
-                    $valuesId[] = $value;
-                }
-            }
-        );
+	/**
+	 * Retrieve options values id from requested data
+	 *
+	 * @param array $options
+	 * @return array
+	 */
+	function getRequestedValuesId($options)
+	{
+		$valuesId = [];
 
-        return $valuesId;
-    }
+		array_walk_recursive(
+			$options,
+			function ($value, $key) use (&$valuesId) {
+				if ($value) {
+					$valuesId[] = $value;
+				}
+			}
+		);
 
-    /**
-     * Retrieve options values id from product options
-     *
-     * @param array $options
-     * @return array
-     */
-    function getOptionValuesId($options)
-    {
-        $optionValuesId = [];
+		return $valuesId;
+	}
 
-        # 2021-03-18 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	/**
+	 * Retrieve options values id from product options
+	 *
+	 * @param array $options
+	 * @return array
+	 */
+	function getOptionValuesId($options)
+	{
+		$optionValuesId = [];
+
+		# 2021-03-18 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# «Invalid argument supplied for foreach() in app/code/MageWorx/OptionInventory/Helper/Stock.php on line 222»:
 		# https://github.com/canadasatellite-ca/site/issues/4
-        if (!is_iterable($options)) {
+		if (!is_iterable($options)) {
 			df_log_l($this, ['options' => df_type($options)]);
 		}
-        else {
+		else {
 			foreach ($options as $optionId => $values) {
 				if (!is_array($values)) {
 					$values = [$values => []];
@@ -234,19 +234,19 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
 			}
 		}
 
-        return $optionValuesId;
-    }
+		return $optionValuesId;
+	}
 
-    /**
-     * If product is null and productId is null
-     * then it's template group
-     *
-     * @param null|int $productId
-     * @param null|\Magento\Catalog\Model\Product $product
-     * @return bool
-     */
-    protected function isTemplateGroup($productId, $product)
-    {
-        return !$productId && !$product;
-    }
+	/**
+	 * If product is null and productId is null
+	 * then it's template group
+	 *
+	 * @param null|int $productId
+	 * @param null|\Magento\Catalog\Model\Product $product
+	 * @return bool
+	 */
+	protected function isTemplateGroup($productId, $product)
+	{
+		return !$productId && !$product;
+	}
 }
