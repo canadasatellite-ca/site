@@ -36,13 +36,10 @@ class Update extends Action
     /**
      * @return mixed
      */
-    function execute()
-    {
+    function execute() {
         $this->getRequest()->getParams();
         $options = json_decode($this->getRequest()->getPost('opConfig'), true);
-
         $options = $this->stockProvider->updateOptionsStockMessage($options);
-
         return $this->getResponse()->setBody(\Zend_Json::encode(['result' => $options]));
     }
 }
