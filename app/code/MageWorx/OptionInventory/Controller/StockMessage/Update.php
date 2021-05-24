@@ -1,19 +1,7 @@
 <?php
-/**
- * Copyright © MageWorx. All rights reserved.
- * See LICENSE.txt for license details.
- */
-
 namespace MageWorx\OptionInventory\Controller\StockMessage;
-
 use Magento\Framework\App\Action\Action;
-
-/**
- * Class Update.
- * This controller updates options stock message on the product page
- */
-class Update extends Action
-{
+class Update extends Action {
     /**
      * @var \MageWorx\OptionInventory\Model\StockProvider|null
      */
@@ -39,9 +27,8 @@ class Update extends Action
 	 * @used-by \Magento\Framework\App\Action\Action::dispatch()
      */
     function execute() {
-        $this->getRequest()->getParams();
-        $options = json_decode($this->getRequest()->getPost('opConfig'), true);
-        $options = $this->stockProvider->updateOptionsStockMessage($options);
-        $this->getResponse()->setBody(\Zend_Json::encode(['result' => $options]));
+        df_response()->setBody(df_json_encode([
+        	'result' => $this->stockProvider->updateOptionsStockMessage(df_json_decode(df_request('opConfig')))
+		]));
     }
 }
