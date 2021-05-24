@@ -34,12 +34,14 @@ class Update extends Action
     }
 
     /**
-     * @return mixed
+	 * 2021-05-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
+	 * @used-by \Magento\Framework\App\Action\Action::dispatch()
      */
     function execute() {
         $this->getRequest()->getParams();
         $options = json_decode($this->getRequest()->getPost('opConfig'), true);
         $options = $this->stockProvider->updateOptionsStockMessage($options);
-        return $this->getResponse()->setBody(\Zend_Json::encode(['result' => $options]));
+        $this->getResponse()->setBody(\Zend_Json::encode(['result' => $options]));
     }
 }
