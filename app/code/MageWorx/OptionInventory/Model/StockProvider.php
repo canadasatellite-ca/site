@@ -233,6 +233,8 @@ class StockProvider
 	 * 2) "«array_keys() expects parameter 1 to be array, null given
 	 * in app/code/MageWorx/OptionInventory/Model/StockProvider.php on line 253»":
 	 * https://github.com/canadasatellite-ca/site/issues/125
+	 * @used-by \MageWorx\OptionInventory\Controller\StockMessage\Update::execute()
+	 * @used-by \MageWorx\OptionInventory\Observer\UpdateOptionsMessages::execute()
 	 * @param $options
 	 * @return mixed
 	 */

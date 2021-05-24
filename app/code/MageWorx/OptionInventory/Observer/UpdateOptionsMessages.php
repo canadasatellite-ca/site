@@ -16,35 +16,35 @@ use \Magento\Quote\Model\Quote\Item as QuoteItem;
  */
 class UpdateOptionsMessages implements ObserverInterface
 {
-    /**
-     * @var \MageWorx\OptionInventory\Model\StockProvider|null
-     */
-    protected $stockProvider = null;
+	/**
+	 * @var \MageWorx\OptionInventory\Model\StockProvider|null
+	 */
+	protected $stockProvider = null;
 
-    /**
-     * UpdateOptionsMessages constructor.
-     *
-     * @param \MageWorx\OptionInventory\Model\StockProvider $stockProvider
-     */
-    function __construct(
-        \MageWorx\OptionInventory\Model\StockProvider $stockProvider
-    ) {
-        $this->stockProvider = $stockProvider;
-    }
+	/**
+	 * UpdateOptionsMessages constructor.
+	 *
+	 * @param \MageWorx\OptionInventory\Model\StockProvider $stockProvider
+	 */
+	function __construct(
+		\MageWorx\OptionInventory\Model\StockProvider $stockProvider
+	) {
+		$this->stockProvider = $stockProvider;
+	}
 
-    /**
-     * @param EventObserver $observer
-     * @return mixed
-     */
-    function execute(EventObserver $observer)
-    {
-        $configObj = $observer->getEvent()->getData('configObj');
-        $options = $configObj->getData('config');
+	/**
+	 * @param EventObserver $observer
+	 * @return mixed
+	 */
+	function execute(EventObserver $observer)
+	{
+		$configObj = $observer->getEvent()->getData('configObj');
+		$options = $configObj->getData('config');
 
-        $options = $this->stockProvider->updateOptionsStockMessage($options);
+		$options = $this->stockProvider->updateOptionsStockMessage($options);
 
-        $configObj->setData('config', $options);
+		$configObj->setData('config', $options);
 
-        return $configObj;
-    }
+		return $configObj;
+	}
 }
