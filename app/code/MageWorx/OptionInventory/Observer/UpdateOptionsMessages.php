@@ -36,15 +36,11 @@ class UpdateOptionsMessages implements ObserverInterface
 	 * @param EventObserver $observer
 	 * @return mixed
 	 */
-	function execute(EventObserver $observer)
-	{
+	function execute(EventObserver $observer) {
 		$configObj = $observer->getEvent()->getData('configObj');
 		$options = $configObj->getData('config');
-
 		$options = $this->stockProvider->updateOptionsStockMessage($options);
-
 		$configObj->setData('config', $options);
-
 		return $configObj;
 	}
 }
