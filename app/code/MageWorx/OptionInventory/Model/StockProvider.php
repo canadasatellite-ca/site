@@ -228,12 +228,15 @@ class StockProvider
 	}
 
 	/**
-	 * This method updates options stock message
-	 *
+	 * 2021-05-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 1) "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
+	 * 2) "«array_keys() expects parameter 1 to be array, null given
+	 * in app/code/MageWorx/OptionInventory/Model/StockProvider.php on line 253»":
+	 * https://github.com/canadasatellite-ca/site/issues/125
 	 * @param $options
 	 * @return mixed
 	 */
-	function updateOptionsStockMessage($options) {
+	function updateOptionsStockMessage(array $options) {
 		$optionModel = $this->objectManager
 			->create('Magento\Catalog\Model\Product\Option');
 
