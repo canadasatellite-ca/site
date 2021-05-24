@@ -210,13 +210,11 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
 	}
 
 	/**
-	 * Retrieve options values id from product options
-	 *
+	 * @used-by \MageWorx\OptionInventory\Model\StockProvider::updateOptionsStockMessage()
 	 * @param array $options
 	 * @return array
 	 */
-	function getOptionValuesId($options)
-	{
+	function getOptionValuesId($options) {
 		$optionValuesId = [];
 
 		# 2021-03-18 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro

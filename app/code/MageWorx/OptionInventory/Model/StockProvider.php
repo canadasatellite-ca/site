@@ -233,8 +233,7 @@ class StockProvider
 	 * @param $options
 	 * @return mixed
 	 */
-	function updateOptionsStockMessage($options)
-	{
+	function updateOptionsStockMessage($options) {
 		$optionModel = $this->objectManager
 			->create('Magento\Catalog\Model\Product\Option');
 
