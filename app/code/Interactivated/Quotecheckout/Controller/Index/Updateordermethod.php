@@ -272,7 +272,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		$result = new \Magento\Framework\DataObject();
 		try {
 			if (!$quote->getCustomerId() && !$guest) {
-				$this->customerManagement->populateCustomerInfo($quote);
+				df_quote_customer_m()->populateCustomerInfo($quote);
 			}
 			$quote->setIsActive(false);
 			$quoteModel = $this->quoteFactory->create();
