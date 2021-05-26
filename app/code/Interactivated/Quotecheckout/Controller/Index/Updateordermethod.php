@@ -266,7 +266,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 			}
 			$this->getOnepage()->getQuote()->collectTotals();
 		}
-
 		$result = new \Magento\Framework\DataObject();
 		try {
 			if (!$quote->getCustomerId() && !$guest) {
@@ -342,10 +341,30 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 	}
 
 	/**
-	 * @param  string $type
-	 * @param  array $data
+	 * @used-by execute()
+	 * @used-by saveAddress()
+	 * @param string $type
+	 * @return int|string
 	 */
-	function saveAddress($type, $data) {
+	private function getDefaultAddress($type) {
+		$customer = $this->_customerSession->getCustomer();
+		if ($type == "billing") {
+			$address = $customer->getDefaultBillingAddress();
+			$addressId = $address->getEntityId();
+		}
+		else {
+			$address = $customer->getDefaultShippingAddress();
+			$addressId = $address->getEntityId();
+		}
+		return $addressId;
+	}
+
+	/**
+	 * @used-by execute()
+	 * @param string $type
+	 * @param array $data
+	 */
+	private function saveAddress($type, $data) {
 		$addressId = $this->getRequest()->getPost($type . '_address_id');
 		if (isset($data['save_in_address_book']) && $data['save_in_address_book'] == 1) {
 			if ($addressId == "" && !$this->_dataHelper->getStoreConfig('onestepcheckout/addfield/addressbook')) {
@@ -377,23 +396,10 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 	}
 
 	/**
-	 * @param  string $type
-	 * @return int|string
+	 * @used-by execute()
+	 * @param $mail
 	 */
-	function getDefaultAddress($type) {
-		$customer = $this->_customerSession->getCustomer();
-		if ($type == "billing") {
-			$address = $customer->getDefaultBillingAddress();
-			$addressId = $address->getEntityId();
-		}
-		else {
-			$address = $customer->getDefaultShippingAddress();
-			$addressId = $address->getEntityId();
-		}
-		return $addressId;
-	}
-
-	function saveSubscriber($mail) {
+	private function saveSubscriber($mail) {
 		if ($mail) {
 			$email = (string)$mail;
 			try {
@@ -438,9 +444,19 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 	}
 
 	/**
+	 * @used-by execute()
+	 * @param \Cart2Quote\Quotation\Model\Quote $quotation
+	 * @return void
+	 */
+	private function sendEmailToSalesRep(\Cart2Quote\Quotation\Model\Quote $quotation) {
+		$this->sender->send($quotation, false, true);
+	}
+
+	/**
+	 * @used-by execute()
 	 * @param array $billingData
 	 */
-	function setAccountInfoSession($billingData) {
+	private function setAccountInfoSession($billingData) {
 		if (!$this->getRequest()->getParam('dob')) {
 			$dob = '';
 		}
@@ -477,21 +493,5 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		}
 		$accountInfo = [$dob, $gender, $taxvat, $suffix, $prefix, $middlename, $firstname, $lastname];
 		$this->_sessionManager->setAccountInfor($accountInfo);
-	}
-
-	/**
-	 * @param \Cart2Quote\Quotation\Model\Quote $quotation
-	 * @return void
-	 */
-	private function sendEmailToCustomer(\Cart2Quote\Quotation\Model\Quote $quotation) {
-		$this->sender->send($quotation);
-	}
-
-	/**
-	 * @param \Cart2Quote\Quotation\Model\Quote $quotation
-	 * @return void
-	 */
-	private function sendEmailToSalesRep(\Cart2Quote\Quotation\Model\Quote $quotation) {
-		$this->sender->send($quotation, false, true);
 	}
 }
