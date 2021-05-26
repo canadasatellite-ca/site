@@ -220,7 +220,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
 	 */
 	function getOptionValuesId(array $options) {
 		$optionValuesId = [];
-		foreach ($options as $optionId => $values) {
+		foreach ($options as $values) {
 			if (!is_array($values)) {
 				$values = [$values => []];
 			}

@@ -24,11 +24,14 @@ class Update extends Action {
 
     /**
 	 * 2021-05-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
+	 * 1) "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
+	 * 2) «array_keys() expects parameter 1 to be array, null given
+	 * in app/code/MageWorx/OptionInventory/Model/StockProvider.php on line 253»:
+	 * https://github.com/canadasatellite-ca/site/issues/125
 	 * @used-by \Magento\Framework\App\Action\Action::dispatch()
 	 * @return Json
      */
-    function execute() {return Json::i([
+    function execute() {return !df_request_o()->isPost() ? df_400() : Json::i([
     	'result' => $this->stockProvider->updateOptionsStockMessage(df_json_decode(df_request('opConfig')))
 	]);}
 }
