@@ -1,20 +1,15 @@
 <?php
-
 namespace Interactivated\Quotecheckout\Controller\Index;
-
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Newsletter\Model\Subscriber;
-
-class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage
-{
+class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	protected $quoteFactory;
 	protected $customerManagement;
 	protected $sender;
 	protected $helper;
 	protected $quoteProposalSender;
 	protected $quoteSession;
-
 	function __construct(
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Customer\Model\Session $customerSession,
@@ -36,8 +31,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		\Cart2Quote\Quotation\Helper\Data $helper,
 		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender,
 		\Cart2Quote\Quotation\Model\Session $quoteSession
-	)
-	{
+	) {
 		$this->quoteSession = $quoteSession;
 		$this->quoteProposalSender = $quoteProposalSender;
 		$this->helper = $helper;
@@ -57,39 +51,25 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 			$resultPageFactory,
 			$resultLayoutFactory,
 			$resultRawFactory,
-			$resultJsonFactory);
+			$resultJsonFactory
+		);
 	}
 
-	function execute()
-	{
+	function execute() {
 		$guest = false;
 		$this->defineProperties();
-
 		// Validate checkout
 		$checkoutHelper = $this->_objectManager->get('Magento\Checkout\Helper\Data');
 		if (!$checkoutHelper->canOnepageCheckout()) {
-			echo json_encode(
-				[
-					'error' => 0,
-					'msg' => '',
-					'redirect' => $this->_url->getUrl('quotation/quote')
-				]
-			);
+			echo json_encode(['error' => 0, 'msg' => '', 'redirect' => $this->_url->getUrl('quotation/quote')]);
 			exit;
 		}
 		// Validate checkout
 		$quote = $this->getOnepage()->getQuote();
 		if (!$quote->hasItems() || $quote->getHasError() || !$quote->validateMinimumAmount()) {
-			echo json_encode(
-				[
-					'error' => 0,
-					'msg' => '',
-					'redirect' => $this->_url->getUrl('quotation/quote')
-				]
-			);
+			echo json_encode(['error' => 0, 'msg' => '', 'redirect' => $this->_url->getUrl('quotation/quote')]);
 			exit;
 		}
-
 		$isLoggedIn = $this->_customerSession->isLoggedIn();
 		if (!$isLoggedIn) {
 			if (isset($_POST['register_new_account'])) {
@@ -98,12 +78,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 					// If checkbox register_new_account checked or exist downloadable product, create new account
 					$this->getOnepage()->saveCheckoutMethod('register');
 					$storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');
-
 					// Preparing data for new customer
-					$customer = $this->_objectManager->get(
-						'Magento\Customer\Model\CustomerFactory'
-					)->create();
-
+					$customer = $this->_objectManager->get('Magento\Customer\Model\CustomerFactory')->create();
 					$customer->setWebsiteId($storeManager->getWebsite()->getId())
 						->setEmail(isset($_POST['billing']['email']) ? $_POST['billing']['email'] : '')
 						->setPrefix(isset($_POST['billing']['prefix']) ? $_POST['billing']['prefix'] : '')
@@ -115,31 +91,30 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 						->setTaxvat(isset($_POST['billing']['taxvat']) ? $_POST['billing']['taxvat'] : '')
 						->setGender(isset($_POST['billing']['gender']) ? $_POST['billing']['gender'] : '')
 						->setPassword(isset($_POST['billing']['customer_password']) ? $_POST['billing']['customer_password'] : '');
-
 					// Set customer information to quote
-					$quote->setCustomer($customer->getDataModel())
-						->setPasswordHash($customer->getPasswordHash());
-				} else {
+					$quote->setCustomer($customer->getDataModel())->setPasswordHash($customer->getPasswordHash());
+				}
+				else {
 					$this->getOnepage()->saveCheckoutMethod('guest');
 				}
-			} else {
+			}
+			else {
 				// Fix for persistent
-				if ($this->getCheckout()->getPersistentRegister()
-					&& $this->getCheckout()->getPersistentRegister() == "register"
+				if (
+					$this->getCheckout()->getPersistentRegister() && $this->getCheckout()->getPersistentRegister() == "register"
 				) {
 					$this->getOnepage()->saveCheckoutMethod('register');
-				} else {
+				}
+				else {
 					if (!$this->_dataHelper->getStoreConfig('onestepcheckout/general/allowguestcheckout')
 						|| !$this->_dataHelper->getStoreConfig('checkout/options/guest_checkout')
 						|| $this->_dataHelper->haveProductDownloadable()
 					) {
 						$storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');
-
 						// Preparing data for new customer
 						$customer = $this->_objectManager->get(
 							'Magento\Customer\Model\CustomerFactory'
 						)->create();
-
 						$guest = false;
 						$email = isset($_POST['billing']['email']) ? $_POST['billing']['email'] : '';
 						if ($email) {
@@ -152,25 +127,24 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 								if (!$customer1->getPasswordHash()) {
 									$customer->setEntityId($customer1->getEntityId());
 									$this->_customerSession->setCustomerId($customer1->getEntityId());
-								} else {
+								}
+								else {
 									$password = isset($_POST['billing']['customer_password']) ? $_POST['billing']['customer_password'] : '';
 									$accountManagement = $this->_objectManager->get('Magento\Customer\Api\AccountManagementInterface');
-
 									$customer2 = $accountManagement->authenticate($email, $password);
 									/*$this->_customerSession->setCustomerDataAsLoggedIn($customer2);
 									$this->_customerSession->regenerateId();*/
 									//$customer->setEntityId($customer1->getEntityId());
-
 									$guest = true;
 								}
 							}
 						}
 						if (!$guest) {
 							$this->getOnepage()->saveCheckoutMethod('register');
-						} else {
+						}
+						else {
 							$this->getOnepage()->saveCheckoutMethod('guest');
 						}
-
 						$customer->setWebsiteId($storeManager->getWebsite()->getId())
 							->setEmail(isset($_POST['billing']['email']) ? $_POST['billing']['email'] : '')
 							->setPrefix(isset($_POST['billing']['prefix']) ? $_POST['billing']['prefix'] : '')
@@ -185,29 +159,24 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 # @todo "«empty password in vendor/magento/framework/Encryption/Encryptor.php on line 591»
 # on a quotecheckout/index/updateordermethod request": https://github.com/canadasatellite-ca/site/issues/127
 							->setPassword(isset($_POST['billing']['customer_password']) ? $_POST['billing']['customer_password'] : '');
-
 						// Set customer information to quote
-						$quote->setCustomer($customer->getDataModel())
-							->setPasswordHash($customer->getPasswordHash());
-					} else {
+						$quote->setCustomer($customer->getDataModel())->setPasswordHash($customer->getPasswordHash());
+					}
+					else {
 						$this->getOnepage()->saveCheckoutMethod('guest');
 					}
 				}
 			}
 		}
-
-
 		// Save billing address
 		if ($this->getRequest()->isPost()) {
 			$billingData = $this->_dataHelper->filterdata(
 				$this->getRequest()->getPost('billing', []),
 				false
 			);
-
 			if ($isLoggedIn) {
 				$this->saveAddress('billing', $billingData);
 			}
-
 			$customerAddressId = $this->getRequest()->getPost('billing_address_id', false);
 			if ($this->getRequest()->getPost('billing_address_id') != ""
 				&& (!isset($billingData['save_in_address_book'])
@@ -215,14 +184,12 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 			) {
 				$customerAddressId = "";
 			}
-
 			if ($isLoggedIn
 				&& (isset($billingData['save_in_address_book']) && $billingData['save_in_address_book'] == 1)
 				&& !$this->_dataHelper->getStoreConfig('onestepcheckout/addfield/addressbook')
 			) {
 				$customerAddressId = $this->getDefaultAddress('billing');
 			}
-
 			if (isset($billingData['email'])) {
 				$billingData['email'] = trim($billingData['email']);
 				if ($this->_dataHelper->isSubscriberByEmail($billingData['email'])) {
@@ -238,7 +205,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 					}
 				}
 			}
-
 			$address = $this->_objectManager->get('Magento\Quote\Model\Quote\Address');
 			if ($customerAddressId) {
 				$addressData = $this->_objectManager->get('Magento\Customer\Api\AddressRepositoryInterface')
@@ -246,10 +212,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 					->__toArray();
 				$billingData = array_merge($billingData, $addressData);
 			}
-
 			$address->setData($billingData);
 			$this->getOnepage()->getQuote()->setBillingAddress($address);
-
 			if (isset($billingData['save_into_account'])
 				&& intval($billingData['save_into_account']) == 1
 				&& $isLoggedIn
@@ -257,7 +221,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$this->setAccountInfoSession($billingData);
 			}
 		}
-
 		// Save shipping address
 		$isclick = $this->getRequest()->getPost('ship_to_same_address');
 		$ship = "billing";
@@ -275,43 +238,32 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 			// Change address if user change infomation
 			// Reassign customeraddressid and save to shipping
 			$customeraddressid = $this->getRequest()->getPost($ship . '_address_id', false);
-
 			// If user chage shipping, billing infomation but not save to database
 			if ($isclick || ($this->getRequest()->getPost('shipping_address_id') != ""
 					&& (!isset($shippingData['save_in_address_book']) || (isset($shippingData['save_in_address_book']) && $shippingData['save_in_address_book'] == 0)))
 			) {
 				$customeraddressid = "";
 			}
-
 			if (!$isclick && $isLoggedIn
 				&& (isset($shippingData['save_in_address_book']) && $shippingData['save_in_address_book'] == 1)
 				&& !$this->_dataHelper->getStoreConfig('onestepcheckout/addfield/addressbook')
 			) {
 				$customeraddressid = $this->getDefaultAddress('shipping');
 			}
-
 			$this->getOnepage()->saveShipping($shippingData, $customeraddressid);
 		}
 		if ($customer_note = $this->getRequest()->getPost('onestepcheckout_comments')) {
-			$quote->setCustomerNote(
-				$customer_note
-			);
+			$quote->setCustomerNote($customer_note);
 		}
-
-
-		// Save shipping method
 		if ($this->getRequest()->isPost()) {
 			$shippingMethodData = $this->getRequest()->getPost('shipping_method', '');
 			$resultSaveShippingMethod = $this->getOnepage()->saveShippingMethod($shippingMethodData);
 			if (!$resultSaveShippingMethod) {
 				$eventManager = $this->_objectManager->get('Magento\Framework\Event\ManagerInterface');
-				$eventManager->dispatch(
-					'checkout_controller_onepage_save_shipping_method',
-					[
-						'request' => $this->getRequest(),
-						'quote' => $this->getOnepage()->getQuote()
-					]
-				);
+				$eventManager->dispatch('checkout_controller_onepage_save_shipping_method', [
+					'request' => $this->getRequest(),
+					'quote' => $this->getOnepage()->getQuote()
+				]);
 			}
 			$this->getOnepage()->getQuote()->collectTotals();
 		}
@@ -324,10 +276,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 			$quote->setIsActive(false);
 			$quoteModel = $this->quoteFactory->create();
 			$quotation = $quoteModel->create($quote)->load($quote->getId());
-
-
 			$isAutoProposalEnabled = $this->helper->isAutoConfirmProposalEnabled();
-			$sendConfirmation = true;
 			$qtyBreak = false;
 			$price = true;
 			$totalItems = 0;
@@ -346,109 +295,72 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$isAutoProposalEnabled = false;
 			}
 			if ($isAutoProposalEnabled) {
-
-				//$this->sendEmailToCustomer($quotation);
-				//$this->sendEmailToSalesRep($quotation);
-
 				$quotation->setProposalSent((new \DateTime())->getTimestamp());
 				$quotation->setState(\Cart2Quote\Quotation\Model\Quote\Status::STATE_PENDING)
 					->setStatus(\Cart2Quote\Quotation\Model\Quote\Status::STATUS_AUTO_PROPOSAL_SENT);
 				$this->quoteProposalSender->send($quotation);
 				$quotation->save();
-			} else {
-				//$this->sendEmailToCustomer($quotation);
+			}
+			else {
 				$this->sendEmailToSalesRep($quotation);
 			}
-
 			if (true || $this->getRequest()->getParam('clear_quote', false)) {
 				$this->quoteSession->fullSessionClear();
 				$this->quoteSession->updateLastQuote($quotation);
 			}
-
-			//$this->result->setData('last_quote_id', $quotation->getId());
-
-
-			//$this->getOnepage()->saveOrder();
 			$redirectUrl = $this->getOnepage()->getCheckout()->getRedirectUrl();
 			$result->setData('success', true);
 			$result->setData('error', false);
-		} catch (\Exception $e) {
-			$data = [
-				'error' => 1,
-				'msg' => $e->getMessage(),
-			];
+		}
+		catch (\Exception $e) {
+			$data = ['error' => 1, 'msg' => $e->getMessage(),];
 			$reloadcheckoutpage = $quote->getData('reloadcheckoutpage');
 			if ($reloadcheckoutpage) {
 				$data['redirect'] = $this->_url->getUrl('checkout');
 			}
-			echo json_encode(
-				$data
-			);
+			echo json_encode($data);
 			exit;
 		}
-
 		if (isset($redirectUrl)) {
 			$result->setData('redirect', $redirectUrl);
 		}
-		$this->_eventManager->dispatch(
-			'checkout_controller_onepage_saveOrder',
-			[
-				'result' => $result,
-				'action' => $this
-			]
-		);
-
+		$this->_eventManager->dispatch('checkout_controller_onepage_saveOrder', ['result' => $result, 'action' => $this]);
 		if (isset($redirectUrl)) {
-			echo json_encode(
-				[
-					'error' => 0,
-					'msg' => '',
-					'redirect' => $redirectUrl
-				]
-			);
-			exit;
-		}
-		//$this->getOnepage()->getQuote()->save();
-		echo json_encode(
-			[
+			echo json_encode([
 				'error' => 0,
 				'msg' => '',
-				'redirect' => $this->_url->getUrl('quotation/quote/success', array('id' => $quote->getId()))
-			]
-		);
+				'redirect' => $redirectUrl
+			]);
+			exit;
+		}
+		echo json_encode([
+			'error' => 0,
+			'msg' => '',
+			'redirect' => $this->_url->getUrl('quotation/quote/success', array('id' => $quote->getId()))
+		]);
 		exit;
-
 		return;
 	}
 
 	/**
-	 * Save billing and shipping address
-	 *
 	 * @param  string $type
 	 * @param  array $data
 	 */
-	function saveAddress($type, $data)
-	{
+	function saveAddress($type, $data) {
 		$addressId = $this->getRequest()->getPost($type . '_address_id');
-
 		if (isset($data['save_in_address_book']) && $data['save_in_address_book'] == 1) {
 			if ($addressId == "" && !$this->_dataHelper->getStoreConfig('onestepcheckout/addfield/addressbook')) {
 				$addressId = $this->getDefaultAddress($type);
 			}
-
 			if ($addressId != "") {
-				// Save data
 				$customer = $this->_customerSession->getCustomer();
 				$addressModel = $this->_objectManager->get('Magento\Customer\Model\Address');
-
 				$existsAddress = $customer->getAddressById($addressId);
 				if ($existsAddress->getId() && $existsAddress->getCustomerId() == $customer->getId()) {
 					$addressModel->setId($existsAddress->getId());
 				}
-
 				$addressForm = $this->_objectManager->get('Magento\Customer\Model\Form');
 				$addressData = $this->getRequest()->getPost($type, []);
-
 				try {
 					$addressForm->setFormCode('customer_address_edit')->setEntity($addressModel);
 					$addressForm->validateData($addressData);
@@ -457,7 +369,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 						->setIsDefaultBilling($this->getRequest()->getParam('default_billing', false))
 						->setIsDefaultShipping($this->getRequest()->getParam('default_shipping', false));
 					$addressModel->save();
-				} catch (\Magento\Framework\Exception\LocalizedException $e) {
+				}
+				catch (\Magento\Framework\Exception\LocalizedException $e) {
 					$this->_objectManager->get('Magento\Framework\Logger\Monolog')->critical($e);
 				}
 			}
@@ -465,35 +378,29 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 	}
 
 	/**
-	 * Retrive default billing or shipping address ID
-	 *
 	 * @param  string $type
 	 * @return int|string
 	 */
-	function getDefaultAddress($type)
-	{
+	function getDefaultAddress($type) {
 		$customer = $this->_customerSession->getCustomer();
 		if ($type == "billing") {
 			$address = $customer->getDefaultBillingAddress();
 			$addressId = $address->getEntityId();
-		} else {
+		}
+		else {
 			$address = $customer->getDefaultShippingAddress();
 			$addressId = $address->getEntityId();
 		}
-
 		return $addressId;
 	}
 
-	function saveSubscriber($mail)
-	{
+	function saveSubscriber($mail) {
 		if ($mail) {
 			$email = (string)$mail;
-
 			try {
 				if (!\Zend_Validate::is($email, 'EmailAddress')) {
 					throw new \Exception(__('Please enter a valid email address.'));
 				}
-
 				if ($this->_dataHelper->getStoreConfig(Subscriber::XML_PATH_ALLOW_GUEST_SUBSCRIBE_FLAG) != 1
 					&& !$this->_customerSession->isLoggedIn()
 				) {
@@ -502,7 +409,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 						$this->_url->getUrl('customer/account/create/')
 					));
 				}
-
 				$storeManager = $this->_objectManager->get('Magento\Store\Model\StoreManagerInterface');
 				$ownerId = $this->_objectManager->get('Magento\Customer\Model\CustomerFactory')->create()
 					->setWebsiteId($storeManager->getWebsite()->getId())
@@ -511,97 +417,82 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				if ($ownerId !== null && $ownerId != $this->_customerSession->getId()) {
 					throw new \Exception(__('This email address is already assigned to another user.'));
 				}
-
 				$status = $this->_objectManager->get(
 					'Magento\Newsletter\Model\SubscriberFactory'
 				)->create()->subscribe($email);
 				if ($status == Subscriber::STATUS_NOT_ACTIVE) {
 					$this->messageManager->addSuccess(__('The confirmation request has been sent.'));
-				} else {
+				}
+				else {
 					$this->messageManager->addSuccess(__('Thank you for your subscription.'));
 				}
-			} catch (\Magento\Framework\Exception\LocalizedException $e) {
+			}
+			catch (\Magento\Framework\Exception\LocalizedException $e) {
 				$this->messageManager->addError(
 					__('There was a problem with the subscription: %1', $e->getMessage())
 				);
-			} catch (\Exception $e) {
+			}
+			catch (\Exception $e) {
 				$this->messageManager->addError(__('Something went wrong with the subscription.'));
 			}
 		}
 	}
 
 	/**
-	 * Set account information to session
-	 *
 	 * @param array $billingData
 	 */
-	function setAccountInfoSession($billingData)
-	{
+	function setAccountInfoSession($billingData) {
 		if (!$this->getRequest()->getParam('dob')) {
 			$dob = '';
-		} else {
+		}
+		else {
 			$dob = $this->getRequest()->getParam('dob');
 		}
-
 		$gender = "";
 		if (isset($billingData['gender'])) {
 			$gender = $billingData['gender'];
 		}
-
 		$taxvat = "";
 		if (isset($billingData['taxvat'])) {
 			$taxvat = $billingData['taxvat'];
 		}
-
 		$suffix = "";
 		if (isset($billingData['suffix'])) {
 			$suffix = $billingData['suffix'];
 		}
-
 		$prefix = "";
 		if (isset($billingData['prefix'])) {
 			$prefix = $billingData['prefix'];
 		}
-
 		$middlename = "";
 		if (isset($billingData['middlename'])) {
 			$middlename = $billingData['middlename'];
 		}
-
 		$firstname = "";
 		if (isset($billingData['firstname'])) {
 			$firstname = $billingData['firstname'];
 		}
-
 		$lastname = "";
 		if (isset($billingData['lastname'])) {
 			$lastname = $billingData['lastname'];
 		}
-
 		$accountInfo = [$dob, $gender, $taxvat, $suffix, $prefix, $middlename, $firstname, $lastname];
 		$this->_sessionManager->setAccountInfor($accountInfo);
 	}
 
-
 	/**
-	 * Send the quote email to the customer.
-	 *
 	 * @param \Cart2Quote\Quotation\Model\Quote $quotation
 	 * @return void
 	 */
-	private function sendEmailToCustomer(\Cart2Quote\Quotation\Model\Quote $quotation)
-	{
+	private function sendEmailToCustomer(\Cart2Quote\Quotation\Model\Quote $quotation) {
 		$this->sender->send($quotation);
 	}
 
 	/**
-	 * Send the quote email to the salesrep.
-	 *
 	 * @param \Cart2Quote\Quotation\Model\Quote $quotation
 	 * @return void
 	 */
-	private function sendEmailToSalesRep(\Cart2Quote\Quotation\Model\Quote $quotation)
-	{
+	private function sendEmailToSalesRep(\Cart2Quote\Quotation\Model\Quote $quotation) {
 		$this->sender->send($quotation, false, true);
 	}
 }
