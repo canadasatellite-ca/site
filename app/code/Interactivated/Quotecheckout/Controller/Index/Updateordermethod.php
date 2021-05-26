@@ -1,5 +1,6 @@
 <?php
 namespace Interactivated\Quotecheckout\Controller\Index;
+use Cart2Quote\Quotation\Model\Session as QuotationSession;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Newsletter\Model\Subscriber;
@@ -304,8 +305,9 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$this->sendEmailToSalesRep($quotation);
 			}
 			if (true || $this->getRequest()->getParam('clear_quote', false)) {
-				$this->quoteSession->fullSessionClear();
-				$this->quoteSession->updateLastQuote($quotation);
+				$qs = df_o(QuotationSession::class); /** @var QuotationSession $qs */
+				$qs->fullSessionClear();
+				$qs->updateLastQuote($quotation);
 			}
 			$redirectUrl = $this->getOnepage()->getCheckout()->getRedirectUrl();
 			$result->setData('success', true);
