@@ -57,12 +57,15 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		);
 	}
 
+	/**
+	 * 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the Interactivated_Quotecheckout module": https://github.com/canadasatellite-ca/site/issues/116
+	 * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
+	 */
 	function execute() {
 		$guest = false;
 		$this->defineProperties();
-		// Validate checkout
-		$checkoutHelper = $this->_objectManager->get('Magento\Checkout\Helper\Data');
-		if (!$checkoutHelper->canOnepageCheckout()) {
+		if (!df_checkout_h()->canOnepageCheckout()) {
 			echo json_encode(['error' => 0, 'msg' => '', 'redirect' => $this->_url->getUrl('quotation/quote')]);
 			exit;
 		}
