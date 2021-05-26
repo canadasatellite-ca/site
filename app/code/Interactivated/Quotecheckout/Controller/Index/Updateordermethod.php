@@ -3,6 +3,8 @@ namespace Interactivated\Quotecheckout\Controller\Index;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Newsletter\Model\Subscriber;
+# 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "Refactor the Interactivated_Quotecheckout module": https://github.com/canadasatellite-ca/site/issues/116
 class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	protected $quoteFactory;
 	protected $customerManagement;
@@ -131,10 +133,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 								else {
 									$password = isset($_POST['billing']['customer_password']) ? $_POST['billing']['customer_password'] : '';
 									$accountManagement = $this->_objectManager->get('Magento\Customer\Api\AccountManagementInterface');
-									$customer2 = $accountManagement->authenticate($email, $password);
-									/*$this->_customerSession->setCustomerDataAsLoggedIn($customer2);
-									$this->_customerSession->regenerateId();*/
-									//$customer->setEntityId($customer1->getEntityId());
+									$accountManagement->authenticate($email, $password);
 									$guest = true;
 								}
 							}
