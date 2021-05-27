@@ -28,7 +28,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		\Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
 		\Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
 		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-		\Cart2Quote\Quotation\Model\QuoteFactory $quoteFactory,
 		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender $sender,
 		\Cart2Quote\Quotation\Helper\Data $helper,
 		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender
@@ -36,7 +35,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		$this->quoteProposalSender = $quoteProposalSender;
 		$this->helper = $helper;
 		$this->sender = $sender;
-		$this->quoteFactory = $quoteFactory;
 		parent::__construct($context,
 			$customerSession,
 			$customerRepository,
