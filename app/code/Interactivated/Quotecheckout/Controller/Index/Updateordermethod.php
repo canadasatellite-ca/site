@@ -1,6 +1,7 @@
 <?php
 namespace Interactivated\Quotecheckout\Controller\Index;
 use Cart2Quote\Quotation\Model\Quote as CQuote;
+use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender as CSender;
 use Cart2Quote\Quotation\Model\Session as CSession;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
@@ -28,13 +29,11 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		\Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
 		\Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
 		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender $sender,
 		\Cart2Quote\Quotation\Helper\Data $helper,
 		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender
 	) {
 		$this->quoteProposalSender = $quoteProposalSender;
 		$this->helper = $helper;
-		$this->sender = $sender;
 		parent::__construct($context,
 			$customerSession,
 			$customerRepository,
@@ -298,7 +297,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$quotation->save();
 			}
 			else {
-				$this->sendEmailToSalesRep($quotation);
+				$cSender = df_o(CSender::class); /** @var CSender $cSender */
+				$cSender->send($quotation, false);
 			}
 			if (true || $this->getRequest()->getParam('clear_quote', false)) {
 				$qs = df_o(CSession::class); /** @var CSession $qs */
@@ -440,15 +440,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$this->messageManager->addError(__('Something went wrong with the subscription.'));
 			}
 		}
-	}
-
-	/**
-	 * @used-by execute()
-	 * @param \Cart2Quote\Quotation\Model\Quote $quotation
-	 * @return void
-	 */
-	private function sendEmailToSalesRep(\Cart2Quote\Quotation\Model\Quote $quotation) {
-		$this->sender->send($quotation, false, true);
 	}
 
 	/**

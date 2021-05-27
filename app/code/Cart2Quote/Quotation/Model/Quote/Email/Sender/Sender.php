@@ -118,7 +118,7 @@ class Sender extends \Cart2Quote\Quotation\Model\Quote\Email\AbstractSender impl
      * - - if $forceSyncMode parameter is set to TRUE
      * - Otherwise, email will be sent later during running of
      * - corresponding cron job.
-     *
+     * @used-by \Interactivated\Quotecheckout\Controller\Index\Updateordermethod::execute()
      * @param \Cart2Quote\Quotation\Model\Quote $quote
      * @param bool $forceSyncMode
      * @return bool
