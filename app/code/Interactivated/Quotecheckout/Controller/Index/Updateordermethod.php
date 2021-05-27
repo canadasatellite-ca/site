@@ -1,5 +1,6 @@
 <?php
 namespace Interactivated\Quotecheckout\Controller\Index;
+use Cart2Quote\Quotation\Helper\Data as CHelper;
 use Cart2Quote\Quotation\Model\Quote as CQuote;
 use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender as CSender;
 use Cart2Quote\Quotation\Model\Session as CSession;
@@ -29,11 +30,9 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		\Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
 		\Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
 		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-		\Cart2Quote\Quotation\Helper\Data $helper,
 		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender
 	) {
 		$this->quoteProposalSender = $quoteProposalSender;
-		$this->helper = $helper;
 		parent::__construct($context,
 			$customerSession,
 			$customerRepository,
@@ -271,7 +270,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 			$quote->setIsActive(false);
 			$cQuote = df_new_om(CQuote::class); /** @var CQuote $cQuote */
 			$quotation = $cQuote->create($quote)->load($quote->getId());
-			$isAutoProposalEnabled = $this->helper->isAutoConfirmProposalEnabled();
+			$cHelper = df_o(CHelper::class); /** @var CHelper $cHelper */
+			$isAutoProposalEnabled = $cHelper->isAutoConfirmProposalEnabled();
 			$qtyBreak = false;
 			$price = true;
 			$totalItems = 0;

@@ -324,8 +324,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * Check auto confirm proposal is turned on
-     *
+     * @used-by \Interactivated\Quotecheckout\Controller\Index\Updateordermethod::execute()
      * @return boolean
      */
     public function isAutoConfirmProposalEnabled()
