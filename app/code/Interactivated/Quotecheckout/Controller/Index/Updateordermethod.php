@@ -1,6 +1,7 @@
 <?php
 namespace Interactivated\Quotecheckout\Controller\Index;
-use Cart2Quote\Quotation\Model\Session as CQSession;
+use Cart2Quote\Quotation\Model\Quote as CQuote;
+use Cart2Quote\Quotation\Model\Session as CSession;
 use Magento\Customer\Api\AccountManagementInterface;
 use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Newsletter\Model\Subscriber;
@@ -271,8 +272,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				df_quote_customer_m()->populateCustomerInfo($quote);
 			}
 			$quote->setIsActive(false);
-			$quoteModel = $this->quoteFactory->create();
-			$quotation = $quoteModel->create($quote)->load($quote->getId());
+			$cQuote = df_new_om(CQuote::class); /** @var CQuote $cQuote */
+			$quotation = $cQuote->create($quote)->load($quote->getId());
 			$isAutoProposalEnabled = $this->helper->isAutoConfirmProposalEnabled();
 			$qtyBreak = false;
 			$price = true;
@@ -302,7 +303,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$this->sendEmailToSalesRep($quotation);
 			}
 			if (true || $this->getRequest()->getParam('clear_quote', false)) {
-				$qs = df_o(CQSession::class); /** @var CQSession $qs */
+				$qs = df_o(CSession::class); /** @var CSession $qs */
 				$qs->fullSessionClear();
 				$qs->updateLastQuote($quotation);
 			}
