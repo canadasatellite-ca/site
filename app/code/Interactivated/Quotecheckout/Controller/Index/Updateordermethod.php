@@ -12,7 +12,6 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 	protected $sender;
 	protected $helper;
 	protected $quoteProposalSender;
-	protected $quoteSession;
 	function __construct(
 		\Magento\Framework\App\Action\Context $context,
 		\Magento\Customer\Model\Session $customerSession,
@@ -31,10 +30,8 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 		\Cart2Quote\Quotation\Model\QuoteFactory $quoteFactory,
 		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender $sender,
 		\Cart2Quote\Quotation\Helper\Data $helper,
-		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender,
-		\Cart2Quote\Quotation\Model\Session $quoteSession
+		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender
 	) {
-		$this->quoteSession = $quoteSession;
 		$this->quoteProposalSender = $quoteProposalSender;
 		$this->helper = $helper;
 		$this->sender = $sender;
