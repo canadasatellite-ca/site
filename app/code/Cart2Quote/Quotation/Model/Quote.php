@@ -934,8 +934,7 @@ class Quote extends \Magento\Quote\Model\Quote implements
     }
 
     /**
-     * Create
-     *
+     * @used-by \Interactivated\Quotecheckout\Controller\Index\Updateordermethod::execute()
      * @param \Magento\Quote\Model\Quote $quote
      * @return $this
      */
