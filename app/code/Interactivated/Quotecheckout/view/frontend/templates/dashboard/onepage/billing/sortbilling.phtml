@@ -1,8 +1,10 @@
 <?php
+use Interactivated\Quotecheckout\Block\Checkout\Onepage\Billing\Sortbilling as B;
+/** @var B $block */ $b = $block; /** @var B $b */
 $_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
-$_dob = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob');
-$_gender = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender');
-$_taxvat = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat');
+$_dob = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob');
+$_gender = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender');
+$_taxvat = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat');
 
 $name = '';
 $company = '';
@@ -19,7 +21,7 @@ $gender = '';
 $taxvat = '';
 
 if ($_dob->isEnabled()) {
-	$dob = $_dob->setDate($block->getQuote()->getCustomerDob())
+	$dob = $_dob->setDate($b->getQuote()->getCustomerDob())
 		->setTemplate('MW_Onestepcheckout::customer/widget/dob.phtml')
 		->setFieldIdFormat('billing:%s')
 		->setFieldNameFormat('billing[%s]')
@@ -27,7 +29,7 @@ if ($_dob->isEnabled()) {
 }
 if ($_gender->isEnabled()) {
 	$gender = '<div class="field">';
-	$gender .= $_gender->setGender($block->getQuote()->getCustomerGender())
+	$gender .= $_gender->setGender($b->getQuote()->getCustomerGender())
 		->setTemplate('MW_Onestepcheckout::customer/widget/gender.phtml')
 		->setFieldIdFormat('billing:%s')
 		->setFieldNameFormat('billing[%s]')
@@ -36,7 +38,7 @@ if ($_gender->isEnabled()) {
 }
 if ($_taxvat->isEnabled()) {
 	$taxvat = '<div class="field" id="mw_osc_taxvat">';
-	$taxvat .= $_taxvat->setTaxvat($block->getQuote()->getCustomerTaxvat())
+	$taxvat .= $_taxvat->setTaxvat($b->getQuote()->getCustomerTaxvat())
 		->setTemplate('MW_Onestepcheckout::customer/widget/taxvat.phtml')
 		->setFieldIdFormat('billing:%s')
 		->setFieldNameFormat('billing[%s]')
@@ -44,28 +46,28 @@ if ($_taxvat->isEnabled()) {
 	$taxvat .= '</div>';
 }
 
-$name = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
+$name = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
 	->setTemplate('Interactivated_Quotecheckout::customer/widget/name.phtml')
-	->setObject($block->getAddress())
+	->setObject($b->getAddress())
 	->setFieldIdFormat('billing:%s')
 	->setFieldNameFormat('billing[%s]')
 	->toHtml();
 
 $company = '<div class="field">
-		<label for="billing:company"><em>' . $block->isStar('company') . '</em>' . __('Company') . '</label>
+		<label for="billing:company"><em>' . $b->isStar('company') . '</em>' . __('Company') . '</label>
 		<div class="input-box">
-			<input type="text" id="billing:company" name="billing[company]" value="' . $block->escapeHtml($block->getAddress()->getCompany()) . '" title="' . __('Company') . '" class="input-text inputtext ' . $block->isRequired('company') . '" />
+			<input type="text" id="billing:company" name="billing[company]" value="' . $b->escapeHtml($b->getAddress()->getCompany()) . '" title="' . __('Company') . '" class="input-text inputtext ' . $b->isRequired('company') . '" />
 		</div>
 	</div>';
 
 $email = '<div class="field">
 		<label for="billing:email"><em>*</em>' . __('Email Address') . '</label>
 		<div class="input-box">
-			<input type="text" name="billing[email]" id="billing:email" value="' . $block->escapeHtml($block->getCustomerSession()->getCustomer()->getEmail()) . '" title="' . __('Email Address') . '" ' . ($block->isCustomerLoggedIn() == true ? 'readonly="true"' : '') . ' class="input-text inputtext validate-email required-entry" />
+			<input type="text" name="billing[email]" id="billing:email" value="' . $b->escapeHtml($b->getCustomerSession()->getCustomer()->getEmail()) . '" title="' . __('Email Address') . '" ' . ($b->isCustomerLoggedIn() == true ? 'readonly="true"' : '') . ' class="input-text inputtext validate-email required-entry" />
 		</div>
 	</div>';
 $password = $password_conf = '';
-if (!$block->isCustomerLoggedIn()):
+if (!$b->isCustomerLoggedIn()):
 	$createAccountConfig = (int) $_dataHelper->getStoreConfig('onestepcheckout/general/create_account');
 	if ($createAccountConfig == 1) {
 		$attributes = 'style="display:block;"';
@@ -90,7 +92,7 @@ if (!$block->isCustomerLoggedIn()):
 	';
 endif;
 
-$streetValues = $block->getAddress()->getStreet();
+$streetValues = $b->getAddress()->getStreet();
 $val_street_1 = $streetValues[0];
 if ($val_street_1 == 'n/a') {
 	$val_street_1 = '';
@@ -98,9 +100,9 @@ if ($val_street_1 == 'n/a') {
 $street = '<div>
 	<ul>
 		<li class="wide">
-			<label for="billing:street1"><em>' . $block->isStar('street') . '</em>' . __('Address') . '</label>
+			<label for="billing:street1"><em>' . $b->isStar('street') . '</em>' . __('Address') . '</label>
 			<div class="input-box">
-				<input type="text" title="' . __('Street Address') . '" name="billing[street][]" id="billing:street1" value="' . $block->escapeHtml($val_street_1) . '" class="input-text inputtext  ' . $block->isRequired('street') . '" />
+				<input type="text" title="' . __('Street Address') . '" name="billing[street][]" id="billing:street1" value="' . $b->escapeHtml($val_street_1) . '" class="input-text inputtext  ' . $b->isRequired('street') . '" />
 			</div>
 		</li>';
 
@@ -116,7 +118,7 @@ for ($_i = 2, $_n = $this->helper('Magento\Customer\Helper\Address')->getStreetL
 
 	$street = $street . '<li class="wide">
 							<div class="input-box">
-								<input type="text" title="' . __('Street Address %1', $_i) . '" name="billing[street][]" id="billing:street' . $_i . '" value="' . $block->escapeHtml($temp_address) . '" class="input-text inputtext" />
+								<input type="text" title="' . __('Street Address %1', $_i) . '" name="billing[street][]" id="billing:street' . $_i . '" value="' . $b->escapeHtml($temp_address) . '" class="input-text inputtext" />
 							</div>
 						</li>';
 }
@@ -128,27 +130,27 @@ if ($_addressHelper->isVatAttributeVisible()) {
 	$vat_id = '<li class="wide" id="osc_shipping_vat_id">
 		<label for="billing:vat_id">'.__('VAT Number').'</label>
 		<div class="input-box">
-			<input type="text" id="billing:vat_id" name="billing[vat_id]" value="'.$block->escapeHtml($block->getAddress()->getVatId()).'" title="'.__('VAT Number').'" class="input-text '.$_addressHelper->getAttributeValidationClass('vat_id').'" />
+			<input type="text" id="billing:vat_id" name="billing[vat_id]" value="'.$b->escapeHtml($b->getAddress()->getVatId()).'" title="'.__('VAT Number').'" class="input-text '.$_addressHelper->getAttributeValidationClass('vat_id').'" />
 		</div>
 	</li>';
 }
 
-$cityval = $block->getAddress()->getCity();
+$cityval = $b->getAddress()->getCity();
 if ($cityval == 'n/a') {
 	$cityval = '';
 }
 $city = '<div class="field">
-		<label for="billing:city"><em>' . $block->isStar('city') . '</em>' . __('City') . '</label>
+		<label for="billing:city"><em>' . $b->isStar('city') . '</em>' . __('City') . '</label>
 		<div class="input-box">
-			<input type="text" title="' . __('City') . '" name="billing[city]" value="' . $block->escapeHtml($cityval) . '" class="input-text inputtext  ' . $block->isRequired('city') . '" id="billing:city" />
+			<input type="text" title="' . __('City') . '" name="billing[city]" value="' . $b->escapeHtml($cityval) . '" class="input-text inputtext  ' . $b->isRequired('city') . '" id="billing:city" />
 		</div>
 	</div>';
 
-$region = $block->getAddress()->getRegion();
+$region = $b->getAddress()->getRegion();
 $regionidval = (isset($region['region_id'])) ? $region['region_id'] : '';
 $regionval = (isset($region['region'])) ? $region['region'] : '';
 $state = '<div class="field">
-		<label for="billing:region_id"><em>' . $block->isStar('state') . '</em>' . __('Province / State') . '</label>
+		<label for="billing:region_id"><em>' . $b->isStar('state') . '</em>' . __('Province / State') . '</label>
 		<div class="input-box billing_region_class">
 			<select id="billing:region_id" name="billing[region_id]" title="' . __('Province / State') . '" ' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/state") == 1) ? 'class="validate-select" ' : ' ') . 'style="display:none;">
 				<option value="">' . __('Please select region, state or province') . '</option>
@@ -164,40 +166,40 @@ $state = '<div class="field">
 				});
 			</script>
 
-			<input type="text" id="billing:region" name="billing[region]" value="' . $block->escapeHtml($regionval) . '"  title="' . __('Province / State') . '" class="input-text inputtext  ' . $block->isRequired('state') . '" style="display:none;" />
+			<input type="text" id="billing:region" name="billing[region]" value="' . $b->escapeHtml($regionval) . '"  title="' . __('Province / State') . '" class="input-text inputtext  ' . $b->isRequired('state') . '" style="display:none;" />
 		</div>
 	</div>';
 
-$postcodeval = $block->getAddress()->getPostcode();
+$postcodeval = $b->getAddress()->getPostcode();
 if ($postcodeval == '.') {
 	$postcodeval = '';
 }
 $zipcode = '<div class="field" id="field_zipcode">
-		<label for="billing:postcode"><em>' . $block->isStar('zip') . '</em>' . __('Postal / ZIP Code') . '</label>
+		<label for="billing:postcode"><em>' . $b->isStar('zip') . '</em>' . __('Postal / ZIP Code') . '</label>
 		<div class="input-box">
-			<input type="text" title="' . __('Zip/Postal Code') . '" name="billing[postcode]" id="billing:postcode" value="' . $block->escapeHtml($postcodeval) . '" class="input-text inputtext validate-zip-international canadian-postcode ' . $block->isRequired('zip') . '" />
+			<input type="text" title="' . __('Zip/Postal Code') . '" name="billing[postcode]" id="billing:postcode" value="' . $b->escapeHtml($postcodeval) . '" class="input-text inputtext validate-zip-international canadian-postcode ' . $b->isRequired('zip') . '" />
 		</div>
 	</div>';
 
 
 $country = '<div class="field" id="field_country"' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/country") == 0) ? 'style="display:none"' : '') . '>
-		<label for="billing:country_id"><em>' . $block->isStar('country') . '</em>' . __('Country') . '</label>
+		<label for="billing:country_id"><em>' . $b->isStar('country') . '</em>' . __('Country') . '</label>
 		<div class="input-box">
-			' . $block->getCountryHtmlSelect('billing') . '
+			' . $b->getCountryHtmlSelect('billing') . '
 		</div>
 	</div>	';
 
 $telephone = '<div class="field">
-		<label for="billing:telephone"><em>' . $block->isStar('telephone') . '</em>' . __('Phone') . '</label>
+		<label for="billing:telephone"><em>' . $b->isStar('telephone') . '</em>' . __('Phone') . '</label>
 		<div class="input-box">
-			<input style="width: 100%;" type="text" name="billing[telephone]" value="' . $block->escapeHtml($block->getAddress()->getTelephone()) . '" title="' . __('Phone') . '" class="input-text inputtext  ' . $block->isRequired('telephone') . '" id="billing:telephone" />
+			<input style="width: 100%;" type="text" name="billing[telephone]" value="' . $b->escapeHtml($b->getAddress()->getTelephone()) . '" title="' . __('Phone') . '" class="input-text inputtext  ' . $b->isRequired('telephone') . '" id="billing:telephone" />
 		</div>
 	</div>';
 
 $fax = '<div class="field">
-		<label for="billing:fax"><em>' . $block->isStar('fax') . '</em>' . __('Fax') . '</label>
+		<label for="billing:fax"><em>' . $b->isStar('fax') . '</em>' . __('Fax') . '</label>
 		<div class="input-box">
-			<input type="text" name="billing[fax]" value="' . $block->escapeHtml($block->getAddress()->getFax()) . '" title="' . __('Fax') . '" class="input-text inputtext  ' . $block->isRequired('fax') . '" id="billing:fax" />
+			<input type="text" name="billing[fax]" value="' . $b->escapeHtml($b->getAddress()->getFax()) . '" title="' . __('Fax') . '" class="input-text inputtext  ' . $b->isRequired('fax') . '" id="billing:fax" />
 		</div>
 	</div>';
 
@@ -227,7 +229,7 @@ foreach ($typeAddress as $nametype) {
 		$notdisable[] = 'password';
 		$notdisable[] = 'password_conf';
 	} else {
-		if (!$block->isDisable($nametype)) {
+		if (!$b->isDisable($nametype)) {
 			$notdisable[] = $nametype;
 		}
 	}
@@ -268,38 +270,38 @@ $nameinputs = [
 	'taxvat' => $taxvat,
 	'vat_id' => $vat_id
 ];
-foreach ($nameinputs as $nameadd => $blockitem) {
+foreach ($nameinputs as $nameadd => $bitem) {
 	if (!in_array($nameadd, $notdisable)) {
 		continue;
 	}
 
 	if (!in_array($_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
 		if ($nameadd == 'dob') {
-			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
+			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
 		} else {
 			$res = '';
 			if(isset($billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)])){
 				$res = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)];
 			}
-			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $blockitem . '</div>';
+			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $bitem . '</div>';
 		}
 	}else if ($nameadd == 'vat_id'){
-		$billingBlock[1] = $blockitem;
+		$billingBlock[1] = $bitem;
 	} else {
-		$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
+		$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
 	}
 }
 
 $str = '';//'<div class="clear"></div><li class="fields">' . $name . '</li>';
-foreach ($billingBlock as $blockitem) {
-	if ($blockitem == "") {
+foreach ($billingBlock as $bitem) {
+	if ($bitem == "") {
 		continue;
 	}
 
-	if ($blockitem == 'dob') {
-		$str = $str . '<div class="clear"></div><li class="fields"><div class="field">' . $blockitem . '</div></li>';
+	if ($bitem == 'dob') {
+		$str = $str . '<div class="clear"></div><li class="fields"><div class="field">' . $bitem . '</div></li>';
 	} else {
-		$str = $str . '<div class="clear"></div><li class="fields">' . $blockitem . '</li>';
+		$str = $str . '<div class="clear"></div><li class="fields">' . $bitem . '</li>';
 	}
 }
 
@@ -308,7 +310,7 @@ if (!$_dataHelper->getStoreConfig("onestepcheckout/addfield/country")) {
 	$str = $str . '<div class="clear"></div><li class="fields">' . $country . '</li>';
 }
 
-if ($block->isDisable('state')) {
+if ($b->isDisable('state')) {
 	$str = $str . '<div style="display:none;"><select id="billing:region_id" name="billing[region_id]"></select>
 	<input type="text" id="billing:region" name="billing[region]" style="display:none;" /></div>
 	';
@@ -321,12 +323,12 @@ echo $str;
 	{
 		"#billing\\:country_id": {
 			"regionUpdater": {
-				"optionalRegionAllowed": <?php echo($block->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
+				"optionalRegionAllowed": <?php echo($b->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
 				"regionListId": "#billing\\:region_id",
 				"regionInputId": "#billing\\:region",
 				"postcodeId": "#billing\\:postcode",
 				"regionJson": <?php echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>,
-				"defaultRegion": "<?php echo $block->getAddress()->getRegionId() ?>",
+				"defaultRegion": "<?php echo $b->getAddress()->getRegionId() ?>",
 				"countriesWithOptionalZip": <?php echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?>
 			}
 		}
@@ -340,7 +342,7 @@ echo $str;
 		'Magento_Customer/js/action/check-email-availability',
 		'mage/url',
 	], function($,customer,checkEmailAvailability,url){
-		url.setBaseUrl('<?php echo $block->getBaseUrl();?>');
+		url.setBaseUrl('<?php echo $b->getBaseUrl();?>');
 		var casatEmailCheck = {
 			email: false,
 			emailFocused: false,
