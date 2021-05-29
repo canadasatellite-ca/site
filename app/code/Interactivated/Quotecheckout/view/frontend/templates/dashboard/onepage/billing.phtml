@@ -50,7 +50,7 @@ use Interactivated\Quotecheckout\Block\Checkout\Onepage\Billing as B;
 						<label for="billing:save_in_address_book"><?php echo __('Save in address book') ?></label>
 					</li>
 
-					<?php if($_dataHelper->getStoreConfig('onestepcheckout/general/save_into_account')): ?>
+					<?php if(df_cfg('onestepcheckout/general/save_into_account')): ?>
 						<li>
 							<input type="checkbox" name="billing[save_into_account]" value="0" title="<?php echo __('Save as account information') ?>" id="billing:save_into_account"  class="checkbox" />
 							<label for="billing:save_into_account"><?php echo __('Update account information') ?></label>
