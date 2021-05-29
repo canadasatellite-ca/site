@@ -1,8 +1,10 @@
 <?php
+use Interactivated\Quotecheckout\Block\Checkout\Onepage\Shipping\Sortshipping as B;
+/** @var B $block */ $b = $block; /** @var B $b */
 $_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
-$_dob = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob');
-$_gender = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender');
-$_taxvat = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat');
+$_dob = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob');
+$_gender = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender');
+$_taxvat = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat');
 
 $name = '';
 $company = '';
@@ -14,21 +16,21 @@ $zipcode = '';
 $country = '';
 $telephone = '';
 $fax = '';
-$name = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
+$name = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
 	->setTemplate('Interactivated_Quotecheckout::customer/widget/name.phtml')
-	->setObject($block->getAddress())
+	->setObject($b->getAddress())
 	->setFieldIdFormat('shipping:%s')
 	->setFieldNameFormat('shipping[%s]')
 	->toHtml();
 
 $company = '<div class="field">
-		<label for="shipping:company" class=""><em>' . $block->isStar('company') . '</em>' . __('Company') . '</label>
+		<label for="shipping:company" class=""><em>' . $b->isStar('company') . '</em>' . __('Company') . '</label>
 		<div class="input-box">
-			<input type="text" id="shipping:company" name="shipping[company]" value="' . $block->escapeHtml($block->getAddress()->getCompany()) . '" title="' . __('Company') . '" class="input-text inputtext ' . $block->isRequired('company') . '" />
+			<input type="text" id="shipping:company" name="shipping[company]" value="' . $b->escapeHtml($b->getAddress()->getCompany()) . '" title="' . __('Company') . '" class="input-text inputtext ' . $b->isRequired('company') . '" />
 		</div>
 	</div>';
 
-$streetValues = $block->getAddress()->getStreet();
+$streetValues = $b->getAddress()->getStreet();
 $val_street_1 = $streetValues[0];
 if ($val_street_1 == 'n/a') {
 	$val_street_1 = '';
@@ -36,9 +38,9 @@ if ($val_street_1 == 'n/a') {
 $street = '<div>
 	<ul>
 		<li class="wide">
-			<label for="shipping:street1" class=""><em>' . $block->isStar('street') . '</em>' . __('Address') . '</label>
+			<label for="shipping:street1" class=""><em>' . $b->isStar('street') . '</em>' . __('Address') . '</label>
 			<div class="input-box">
-				<input type="text" title="' . __('Street Address') . '" name="shipping[street][]" id="shipping:street1" value="' . $block->escapeHtml($val_street_1) . '" class="input-text inputtext  ' . $block->isRequired('street') . '" />
+				<input type="text" title="' . __('Street Address') . '" name="shipping[street][]" id="shipping:street1" value="' . $b->escapeHtml($val_street_1) . '" class="input-text inputtext  ' . $b->isRequired('street') . '" />
 			</div>
 		</li>';
 for ($_i = 2, $_n = $this->helper('Magento\Customer\Helper\Address')->getStreetLines(); $_i <= $_n; $_i++) {
@@ -53,7 +55,7 @@ for ($_i = 2, $_n = $this->helper('Magento\Customer\Helper\Address')->getStreetL
 
 	$street = $street . '<li class="wide">
 							<div class="input-box">
-								<input type="text" title="' . __('Street Address %1', $_i) . '" name="shipping[street][]" id="shipping:street' . $_i . '" value="' . $block->escapeHtml($temp_address) . '" class="input-text inputtext" />
+								<input type="text" title="' . __('Street Address %1', $_i) . '" name="shipping[street][]" id="shipping:street' . $_i . '" value="' . $b->escapeHtml($temp_address) . '" class="input-text inputtext" />
 							</div>
 						</li>';
 }
@@ -66,26 +68,26 @@ if ($_addressHelper->isVatAttributeVisible()){
 	<li class="wide" id="osc_shipping_vat_id">
 		<label for="shipping:vat_id">'.__('VAT Number').'</label>
 		<div class="input-box">
-			<input type="text" id="shipping:vat_id" name="shipping[vat_id]" value="'.$block->escapeHtml($block->getAddress()->getVatId()).'" title="'.__('VAT Number').'" class="input-text '.$_addressHelper->getAttributeValidationClass('vat_id').'" />
+			<input type="text" id="shipping:vat_id" name="shipping[vat_id]" value="'.$b->escapeHtml($b->getAddress()->getVatId()).'" title="'.__('VAT Number').'" class="input-text '.$_addressHelper->getAttributeValidationClass('vat_id').'" />
 		</div>
 	</li>
 	';
 }
 
-$cityval = $block->getAddress()->getCity();
+$cityval = $b->getAddress()->getCity();
 $city = '<div class="field">
-		<label for="shipping:city" class=""><em>' . $block->isStar('city') . '</em>' . __('City') . '</label>
+		<label for="shipping:city" class=""><em>' . $b->isStar('city') . '</em>' . __('City') . '</label>
 		<div class="input-box">
-			<input type="text" title="' . __('City') . '" name="shipping[city]" value="' . $block->escapeHtml($cityval) . '" class="input-text inputtext  ' . $block->isRequired('city') . '" id="shipping:city" />
+			<input type="text" title="' . __('City') . '" name="shipping[city]" value="' . $b->escapeHtml($cityval) . '" class="input-text inputtext  ' . $b->isRequired('city') . '" id="shipping:city" />
 		</div>
 	</div>';
 
 
-$region = $block->getAddress()->getRegion();
+$region = $b->getAddress()->getRegion();
 $regionidval = (isset($region['region_id'])) ? $region['region_id'] : '';
 $regionval = (isset($region['region'])) ? $region['region'] : '';
 $state = '<div class="field">
-		<label for="shipping:region_id" class=""><em>' . $block->isStar('state') . '</em>' . __('Province / State') . '</label>
+		<label for="shipping:region_id" class=""><em>' . $b->isStar('state') . '</em>' . __('Province / State') . '</label>
 		<div class="input-box shipping_region_class">
 			<select id="shipping:region_id"  name="shipping[region_id]" title="' . __('Province / State') . '" ' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/state") == 1) ? 'class="validate-select shipping_region_clas "' : ' ') . ' style="display:none;">
 				<option value="">' . __('Please select region, state or province') . '</option>
@@ -101,36 +103,36 @@ $state = '<div class="field">
 				});
 			</script>
 
-			<input type="text" id="shipping:region" name="shipping[region]" value="' . $block->escapeHtml($regionval) . '"  title="' . __('Province / State') . '" class="input-text inputtext  ' . $block->isRequired('state') . '" style="display:none;" />
+			<input type="text" id="shipping:region" name="shipping[region]" value="' . $b->escapeHtml($regionval) . '"  title="' . __('Province / State') . '" class="input-text inputtext  ' . $b->isRequired('state') . '" style="display:none;" />
 		</div>
 	</div>';
 
-$postcodeval = $block->getAddress()->getPostcode();
+$postcodeval = $b->getAddress()->getPostcode();
 $zipcode = '<div class="field">
-		<label for="shipping:postcode" class=""><em>' . $block->isStar('zip') . '</em>' . __('Postal / ZIP Code') . '</label>
+		<label for="shipping:postcode" class=""><em>' . $b->isStar('zip') . '</em>' . __('Postal / ZIP Code') . '</label>
 		<div class="input-box">
-			<input type="text" title="' . __('Zip/Postal Code') . '" name="shipping[postcode]" id="shipping:postcode" value="' . $block->escapeHtml($postcodeval) . '" class="input-text inputtext validate-zip-international  ' . $block->isRequired('zip') . '" />
+			<input type="text" title="' . __('Zip/Postal Code') . '" name="shipping[postcode]" id="shipping:postcode" value="' . $b->escapeHtml($postcodeval) . '" class="input-text inputtext validate-zip-international  ' . $b->isRequired('zip') . '" />
 		</div>
 	</div>';
 
 $country = '<div class="field" ' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/country") == 0) ? "style=\"display:none\"" : "") . '>
-		<label for="shipping:country_id" class=""><em>' . $block->isStar('country') . '</em>' . __('Country') . '</label>
+		<label for="shipping:country_id" class=""><em>' . $b->isStar('country') . '</em>' . __('Country') . '</label>
 		<div class="input-box">
-			' . $block->getCountryHtmlSelect('shipping') . '
+			' . $b->getCountryHtmlSelect('shipping') . '
 		</div>
 	</div>';
 
 $telephone = '<div class="field">
-		<label for="shipping:telephone" class=""><em>' . $block->isStar('telephone') . '</em>' . __('Phone') . '</label>
+		<label for="shipping:telephone" class=""><em>' . $b->isStar('telephone') . '</em>' . __('Phone') . '</label>
 		<div class="input-box">
-			<input type="text" name="shipping[telephone]" value="' . $block->escapeHtml($block->getAddress()->getTelephone()) . '" title="' . __('Phone') . '" class="input-text inputtext  ' . $block->isRequired('telephone') . '" id="shipping:telephone" />
+			<input type="text" name="shipping[telephone]" value="' . $b->escapeHtml($b->getAddress()->getTelephone()) . '" title="' . __('Phone') . '" class="input-text inputtext  ' . $b->isRequired('telephone') . '" id="shipping:telephone" />
 		</div>
 	</div>';
 
 $fax = '<div class="field">
-		<label for="shipping:fax" class=""><em>' . $block->isStar('fax') . '</em>' . __('Fax') . '</label>
+		<label for="shipping:fax" class=""><em>' . $b->isStar('fax') . '</em>' . __('Fax') . '</label>
 		<div class="input-box">
-			<input type="text" name="shipping[fax]" value="' . $block->escapeHtml($block->getAddress()->getFax()) . '" title="' . __('Fax') . '" class="input-text inputtext  ' . $block->isRequired('fax') . '" id="shipping:fax" />
+			<input type="text" name="shipping[fax]" value="' . $b->escapeHtml($b->getAddress()->getFax()) . '" title="' . __('Fax') . '" class="input-text inputtext  ' . $b->isRequired('fax') . '" id="shipping:fax" />
 		</div>
 	</div>';
 
@@ -141,7 +143,7 @@ $temp = [];
 $notdisable = [];
 $filter = [];
 foreach ($type_address as $nametype) {
-	if (!$block->isDisable($nametype)) {
+	if (!$b->isDisable($nametype)) {
 		$notdisable[] = $nametype;
 	}
 }
@@ -174,7 +176,7 @@ $nameinputs = [
 	'fax' => $fax,
 	'vat_id' =>  $vat_id
 ];
-foreach ($nameinputs as $nameadd => $blockitem) {
+foreach ($nameinputs as $nameadd => $bitem) {
 	if (!in_array($nameadd, $notdisable)) {
 		// If input is disable in configuration
 		continue;
@@ -185,27 +187,27 @@ foreach ($nameinputs as $nameadd => $blockitem) {
 		if(isset($shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)])){
 			$res = $shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)];
 		}
-		$shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $blockitem . '</div>';
+		$shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $bitem . '</div>';
 	}else if($nameadd == 'vat_id'){
-		$shippingBlock[1] = $blockitem;
+		$shippingBlock[1] = $bitem;
 	} else {
-		$shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
+		$shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
 	}
 }
 
 $str = '';// '<li>' . $name . '</li>';
-foreach ($shippingBlock as $blockitem) {
-	if ($blockitem == "") {
+foreach ($shippingBlock as $bitem) {
+	if ($bitem == "") {
 		continue;
 	}
 
-	$str = $str . '<div class="clear"></div><li class="fields">' . $blockitem . '</li>';
+	$str = $str . '<div class="clear"></div><li class="fields">' . $bitem . '</li>';
 }
 if (!$_dataHelper->getStoreConfig("onestepcheckout/addfield/country")) {
 	$str = $str . '<div class="clear"></div><li class="fields">' . $country . '</li>';
 }
 
-if ($block->isDisable('state')) {
+if ($b->isDisable('state')) {
 	$str = $str . '<div style="display:none;"><select id="shipping:region_id" name="shipping[region_id]"></select>
 	<input type="text" id="shipping:region" name="shipping[region]"  style="display:none;" /></div>
 	';
@@ -217,12 +219,12 @@ echo $str;
 	{
 		"#shipping\\:country_id": {
 			"regionUpdater": {
-				"optionalRegionAllowed": <?php echo($block->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
+				"optionalRegionAllowed": <?php echo($b->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
 				"regionListId": "#shipping\\:region_id",
 				"regionInputId": "#shipping\\:region",
 				"postcodeId": "#shipping\\:postcode",
 				"regionJson": <?php echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>,
-				"defaultRegion": "<?php echo $block->getAddress()->getRegionId() ?>",
+				"defaultRegion": "<?php echo $b->getAddress()->getRegionId() ?>",
 				"countriesWithOptionalZip": <?php echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?>
 			}
 		}
