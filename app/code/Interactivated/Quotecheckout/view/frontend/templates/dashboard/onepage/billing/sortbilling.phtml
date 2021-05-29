@@ -19,81 +19,81 @@ $gender = '';
 $taxvat = '';
 
 if ($_dob->isEnabled()) {
-    $dob = $_dob->setDate($block->getQuote()->getCustomerDob())
-        ->setTemplate('MW_Onestepcheckout::customer/widget/dob.phtml')
-        ->setFieldIdFormat('billing:%s')
-        ->setFieldNameFormat('billing[%s]')
-        ->toHtml();
+	$dob = $_dob->setDate($block->getQuote()->getCustomerDob())
+		->setTemplate('MW_Onestepcheckout::customer/widget/dob.phtml')
+		->setFieldIdFormat('billing:%s')
+		->setFieldNameFormat('billing[%s]')
+		->toHtml();
 }
 if ($_gender->isEnabled()) {
-    $gender = '<div class="field">';
-    $gender .= $_gender->setGender($block->getQuote()->getCustomerGender())
-        ->setTemplate('MW_Onestepcheckout::customer/widget/gender.phtml')
-        ->setFieldIdFormat('billing:%s')
-        ->setFieldNameFormat('billing[%s]')
-        ->toHtml();
-    $gender .= '</div>';
+	$gender = '<div class="field">';
+	$gender .= $_gender->setGender($block->getQuote()->getCustomerGender())
+		->setTemplate('MW_Onestepcheckout::customer/widget/gender.phtml')
+		->setFieldIdFormat('billing:%s')
+		->setFieldNameFormat('billing[%s]')
+		->toHtml();
+	$gender .= '</div>';
 }
 if ($_taxvat->isEnabled()) {
-    $taxvat = '<div class="field" id="mw_osc_taxvat">';
-    $taxvat .= $_taxvat->setTaxvat($block->getQuote()->getCustomerTaxvat())
-        ->setTemplate('MW_Onestepcheckout::customer/widget/taxvat.phtml')
-        ->setFieldIdFormat('billing:%s')
-        ->setFieldNameFormat('billing[%s]')
-        ->toHtml();
-    $taxvat .= '</div>';
+	$taxvat = '<div class="field" id="mw_osc_taxvat">';
+	$taxvat .= $_taxvat->setTaxvat($block->getQuote()->getCustomerTaxvat())
+		->setTemplate('MW_Onestepcheckout::customer/widget/taxvat.phtml')
+		->setFieldIdFormat('billing:%s')
+		->setFieldNameFormat('billing[%s]')
+		->toHtml();
+	$taxvat .= '</div>';
 }
 
 $name = $block->getLayout()->createBlock('Magento\Customer\Block\Widget\Name')
-    ->setTemplate('Interactivated_Quotecheckout::customer/widget/name.phtml')
-    ->setObject($block->getAddress())
-    ->setFieldIdFormat('billing:%s')
-    ->setFieldNameFormat('billing[%s]')
-    ->toHtml();
+	->setTemplate('Interactivated_Quotecheckout::customer/widget/name.phtml')
+	->setObject($block->getAddress())
+	->setFieldIdFormat('billing:%s')
+	->setFieldNameFormat('billing[%s]')
+	->toHtml();
 
 $company = '<div class="field">
-        <label for="billing:company"><em>' . $block->isStar('company') . '</em>' . __('Company') . '</label>
+		<label for="billing:company"><em>' . $block->isStar('company') . '</em>' . __('Company') . '</label>
 		<div class="input-box">
 			<input type="text" id="billing:company" name="billing[company]" value="' . $block->escapeHtml($block->getAddress()->getCompany()) . '" title="' . __('Company') . '" class="input-text inputtext ' . $block->isRequired('company') . '" />
 		</div>
-    </div>';
+	</div>';
 
 $email = '<div class="field">
-        <label for="billing:email"><em>*</em>' . __('Email Address') . '</label>
-    	<div class="input-box">
-    		<input type="text" name="billing[email]" id="billing:email" value="' . $block->escapeHtml($block->getCustomerSession()->getCustomer()->getEmail()) . '" title="' . __('Email Address') . '" ' . ($block->isCustomerLoggedIn() == true ? 'readonly="true"' : '') . ' class="input-text inputtext validate-email required-entry" />
-    	</div>
-    </div>';
+		<label for="billing:email"><em>*</em>' . __('Email Address') . '</label>
+		<div class="input-box">
+			<input type="text" name="billing[email]" id="billing:email" value="' . $block->escapeHtml($block->getCustomerSession()->getCustomer()->getEmail()) . '" title="' . __('Email Address') . '" ' . ($block->isCustomerLoggedIn() == true ? 'readonly="true"' : '') . ' class="input-text inputtext validate-email required-entry" />
+		</div>
+	</div>';
 $password = $password_conf = '';
 if (!$block->isCustomerLoggedIn()):
-    $createAccountConfig = (int) $_dataHelper->getStoreConfig('onestepcheckout/general/create_account');
-    if ($createAccountConfig == 1) {
-        $attributes = 'style="display:block;"';
-    } else {
-        $attributes = 'style="display:none;"';
-    }
-    $password = '
-        <div class="field" id="register-customer-password" '. $attributes .'>
-            <label for="billing:customer_password" class="required"><em>*</em>'. __('Password') .'</label>
-            <div class="input-box">
-                <input type="password" name="billing[customer_password]" id="billing:customer_password" title="'.__('Password').'" class="input-text inputtext required-entry validate-password" />
-            </div>
-        </div>
-    ';
-    $password_conf = '
-        <div class="field"  id="register-customer-password-conf" '. $attributes .'>
-            <label for="billing:confirm_password" class="required"><em>*</em>'.__('Confirm Password').'</label>
-            <div class="input-box">
-                <input type="password" name="billing[confirm_password]" title="'.__('Confirm Password').'" id="billing:confirm_password" class="input-text inputtext required-entry validate-cpassword" />
-            </div>
-        </div>
-    ';
+	$createAccountConfig = (int) $_dataHelper->getStoreConfig('onestepcheckout/general/create_account');
+	if ($createAccountConfig == 1) {
+		$attributes = 'style="display:block;"';
+	} else {
+		$attributes = 'style="display:none;"';
+	}
+	$password = '
+		<div class="field" id="register-customer-password" '. $attributes .'>
+			<label for="billing:customer_password" class="required"><em>*</em>'. __('Password') .'</label>
+			<div class="input-box">
+				<input type="password" name="billing[customer_password]" id="billing:customer_password" title="'.__('Password').'" class="input-text inputtext required-entry validate-password" />
+			</div>
+		</div>
+	';
+	$password_conf = '
+		<div class="field"  id="register-customer-password-conf" '. $attributes .'>
+			<label for="billing:confirm_password" class="required"><em>*</em>'.__('Confirm Password').'</label>
+			<div class="input-box">
+				<input type="password" name="billing[confirm_password]" title="'.__('Confirm Password').'" id="billing:confirm_password" class="input-text inputtext required-entry validate-cpassword" />
+			</div>
+		</div>
+	';
 endif;
 
 $streetValues = $block->getAddress()->getStreet();
 $val_street_1 = $streetValues[0];
 if ($val_street_1 == 'n/a') {
-    $val_street_1 = '';
+	$val_street_1 = '';
 }
 $street = '<div>
 	<ul>
@@ -105,16 +105,16 @@ $street = '<div>
 		</li>';
 
 for ($_i = 2, $_n = $this->helper('Magento\Customer\Helper\Address')->getStreetLines(); $_i <= $_n; $_i++) {
-    if (isset($streetValues[$_i - 1])) {
-        $temp_address = $streetValues[$_i - 1];
-        if($temp_address =='n/a') {
-            $temp_address = '';
-        }
-    } else {
-        $temp_address = '';
-    }
+	if (isset($streetValues[$_i - 1])) {
+		$temp_address = $streetValues[$_i - 1];
+		if($temp_address =='n/a') {
+			$temp_address = '';
+		}
+	} else {
+		$temp_address = '';
+	}
 
-    $street = $street . '<li class="wide">
+	$street = $street . '<li class="wide">
 							<div class="input-box">
 								<input type="text" title="' . __('Street Address %1', $_i) . '" name="billing[street][]" id="billing:street' . $_i . '" value="' . $block->escapeHtml($temp_address) . '" class="input-text inputtext" />
 							</div>
@@ -125,17 +125,17 @@ $street = $street . '</ul></div>';
 $vat_id = '';
 $_addressHelper = $this->helper('Magento\Customer\Helper\Address');
 if ($_addressHelper->isVatAttributeVisible()) {
-    $vat_id = '<li class="wide" id="osc_shipping_vat_id">
-        <label for="billing:vat_id">'.__('VAT Number').'</label>
-        <div class="input-box">
-            <input type="text" id="billing:vat_id" name="billing[vat_id]" value="'.$block->escapeHtml($block->getAddress()->getVatId()).'" title="'.__('VAT Number').'" class="input-text '.$_addressHelper->getAttributeValidationClass('vat_id').'" />
-        </div>
-    </li>';
+	$vat_id = '<li class="wide" id="osc_shipping_vat_id">
+		<label for="billing:vat_id">'.__('VAT Number').'</label>
+		<div class="input-box">
+			<input type="text" id="billing:vat_id" name="billing[vat_id]" value="'.$block->escapeHtml($block->getAddress()->getVatId()).'" title="'.__('VAT Number').'" class="input-text '.$_addressHelper->getAttributeValidationClass('vat_id').'" />
+		</div>
+	</li>';
 }
 
 $cityval = $block->getAddress()->getCity();
 if ($cityval == 'n/a') {
-    $cityval = '';
+	$cityval = '';
 }
 $city = '<div class="field">
 		<label for="billing:city"><em>' . $block->isStar('city') . '</em>' . __('City') . '</label>
@@ -155,13 +155,13 @@ $state = '<div class="field">
 			</select>
 
 			<script type="text/javascript">
-                require([
-                    "jquery"
-                ], function($) {
-                    //<![CDATA[
-                        $("#billing:region_id").attr("defaultValue",  "' . $regionidval . '");
-                    //]]>
-                });
+				require([
+					"jquery"
+				], function($) {
+					//<![CDATA[
+						$("#billing:region_id").attr("defaultValue",  "' . $regionidval . '");
+					//]]>
+				});
 			</script>
 
 			<input type="text" id="billing:region" name="billing[region]" value="' . $block->escapeHtml($regionval) . '"  title="' . __('Province / State') . '" class="input-text inputtext  ' . $block->isRequired('state') . '" style="display:none;" />
@@ -170,7 +170,7 @@ $state = '<div class="field">
 
 $postcodeval = $block->getAddress()->getPostcode();
 if ($postcodeval == '.') {
-    $postcodeval = '';
+	$postcodeval = '';
 }
 $zipcode = '<div class="field" id="field_zipcode">
 		<label for="billing:postcode"><em>' . $block->isStar('zip') . '</em>' . __('Postal / ZIP Code') . '</label>
@@ -199,22 +199,22 @@ $fax = '<div class="field">
 		<div class="input-box">
 			<input type="text" name="billing[fax]" value="' . $block->escapeHtml($block->getAddress()->getFax()) . '" title="' . __('Fax') . '" class="input-text inputtext  ' . $block->isRequired('fax') . '" id="billing:fax" />
 		</div>
-    </div>';
+	</div>';
 
 $typeAddress = [
-    'company',
-    'email',
-    'street',
-    'city',
-    'state',
-    'zip',
-    'country',
-    'telephone',
-    'fax',
-    'dob',
-    'gender',
-    'taxvat',
-    'vat_id'
+	'company',
+	'email',
+	'street',
+	'city',
+	'state',
+	'zip',
+	'country',
+	'telephone',
+	'fax',
+	'dob',
+	'gender',
+	'taxvat',
+	'vat_id'
 ];
 $billingBlock = ["", "", "", "", "", "", "", "", "", "", "", "",""];
 $temp = [];
@@ -222,94 +222,94 @@ $notdisable = ['name'];
 $filter = [];
 
 foreach ($typeAddress as $nametype) {
-    if ($nametype == 'email') {
-        $notdisable[] = 'email';
-        $notdisable[] = 'password';
-        $notdisable[] = 'password_conf';
-    } else {
-        if (!$block->isDisable($nametype)) {
-            $notdisable[] = $nametype;
-        }
-    }
+	if ($nametype == 'email') {
+		$notdisable[] = 'email';
+		$notdisable[] = 'password';
+		$notdisable[] = 'password_conf';
+	} else {
+		if (!$block->isDisable($nametype)) {
+			$notdisable[] = $nametype;
+		}
+	}
 }
 foreach ($notdisable as $namevalid) {
-    if ($namevalid == 'vat_id') {
-        $filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_city') + 1;
-    } else {
-        $filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $namevalid);
-    }
+	if ($namevalid == 'vat_id') {
+		$filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_city') + 1;
+	} else {
+		$filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $namevalid);
+	}
 }
 
 for ($i = 0; $i < count($filter); $i++) {
-    for ($j = $i + 1; $j < count($filter); $j++) {
-        if ($filter[$i] == $filter[$j]) {
-            $temp[] = $filter[$i];
-            break;
-        }
-    }
+	for ($j = $i + 1; $j < count($filter); $j++) {
+		if ($filter[$i] == $filter[$j]) {
+			$temp[] = $filter[$i];
+			break;
+		}
+	}
 }
 $temp[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_name');
 
 $nameinputs = [
-    'name'=> $name,
-    'company' => $company,
-    'email' => $email,
-    'password' => $password,
-    'password_conf' => $password_conf,
-    'street' => $street,
-    'city' => $city,
-    'state' => $state,
-    'zip' => $zipcode,
-    'country' => $country,
-    'telephone' => $telephone,
-    'fax' => $fax,
-    'dob' => $dob,
-    'gender' => $gender,
-    'taxvat' => $taxvat,
-    'vat_id' => $vat_id
+	'name'=> $name,
+	'company' => $company,
+	'email' => $email,
+	'password' => $password,
+	'password_conf' => $password_conf,
+	'street' => $street,
+	'city' => $city,
+	'state' => $state,
+	'zip' => $zipcode,
+	'country' => $country,
+	'telephone' => $telephone,
+	'fax' => $fax,
+	'dob' => $dob,
+	'gender' => $gender,
+	'taxvat' => $taxvat,
+	'vat_id' => $vat_id
 ];
 foreach ($nameinputs as $nameadd => $blockitem) {
-    if (!in_array($nameadd, $notdisable)) {
-        continue;
-    }
+	if (!in_array($nameadd, $notdisable)) {
+		continue;
+	}
 
-    if (!in_array($_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
-        if ($nameadd == 'dob') {
-            $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
-        } else {
-            $res = '';
-            if(isset($billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)])){
-                $res = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)];
-            }
-            $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $blockitem . '</div>';
-        }
-    }else if ($nameadd == 'vat_id'){
-        $billingBlock[1] = $blockitem;
-    } else {
-        $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
-    }
+	if (!in_array($_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
+		if ($nameadd == 'dob') {
+			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
+		} else {
+			$res = '';
+			if(isset($billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)])){
+				$res = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)];
+			}
+			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $blockitem . '</div>';
+		}
+	}else if ($nameadd == 'vat_id'){
+		$billingBlock[1] = $blockitem;
+	} else {
+		$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $blockitem;
+	}
 }
 
 $str = '';//'<div class="clear"></div><li class="fields">' . $name . '</li>';
 foreach ($billingBlock as $blockitem) {
-    if ($blockitem == "") {
-        continue;
-    }
+	if ($blockitem == "") {
+		continue;
+	}
 
-    if ($blockitem == 'dob') {
-        $str = $str . '<div class="clear"></div><li class="fields"><div class="field">' . $blockitem . '</div></li>';
-    } else {
-        $str = $str . '<div class="clear"></div><li class="fields">' . $blockitem . '</li>';
-    }
+	if ($blockitem == 'dob') {
+		$str = $str . '<div class="clear"></div><li class="fields"><div class="field">' . $blockitem . '</div></li>';
+	} else {
+		$str = $str . '<div class="clear"></div><li class="fields">' . $blockitem . '</li>';
+	}
 }
 
 // Add country but hidden when disable contry
 if (!$_dataHelper->getStoreConfig("onestepcheckout/addfield/country")) {
-    $str = $str . '<div class="clear"></div><li class="fields">' . $country . '</li>';
+	$str = $str . '<div class="clear"></div><li class="fields">' . $country . '</li>';
 }
 
 if ($block->isDisable('state')) {
-    $str = $str . '<div style="display:none;"><select id="billing:region_id" name="billing[region_id]"></select>
+	$str = $str . '<div style="display:none;"><select id="billing:region_id" name="billing[region_id]"></select>
 	<input type="text" id="billing:region" name="billing[region]" style="display:none;" /></div>
 	';
 }
@@ -318,67 +318,67 @@ echo $str;
 ?>
 
 <script type="text/x-magento-init">
-    {
-        "#billing\\:country_id": {
-            "regionUpdater": {
-                "optionalRegionAllowed": <?php echo($block->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
-                "regionListId": "#billing\\:region_id",
-                "regionInputId": "#billing\\:region",
-                "postcodeId": "#billing\\:postcode",
-                "regionJson": <?php echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>,
-                "defaultRegion": "<?php echo $block->getAddress()->getRegionId() ?>",
-                "countriesWithOptionalZip": <?php echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?>
-            }
-        }
-    }
+	{
+		"#billing\\:country_id": {
+			"regionUpdater": {
+				"optionalRegionAllowed": <?php echo($block->getConfig('general/region/display_all') ? 'true' : 'false'); ?>,
+				"regionListId": "#billing\\:region_id",
+				"regionInputId": "#billing\\:region",
+				"postcodeId": "#billing\\:postcode",
+				"regionJson": <?php echo $this->helper('Magento\Directory\Helper\Data')->getRegionJson() ?>,
+				"defaultRegion": "<?php echo $block->getAddress()->getRegionId() ?>",
+				"countriesWithOptionalZip": <?php echo $this->helper('Magento\Directory\Helper\Data')->getCountriesWithOptionalZip(true) ?>
+			}
+		}
+	}
 </script>
 <script type="text/javascript">
 //<![CDATA[
-    require([
-        'jquery',
-        'Magento_Customer/js/model/customer',
-        'Magento_Customer/js/action/check-email-availability',
-        'mage/url',
-    ], function($,customer,checkEmailAvailability,url){
-        url.setBaseUrl('<?php echo $block->getBaseUrl();?>');
-        var casatEmailCheck = {
-            email: false,
-            emailFocused: false,
-            isLoading: false,
-            isPasswordVisible: false,
-            checkDelay: 2000,
-            checkRequest: null,
-            isEmailCheckComplete: null,
-            isCustomerLoggedIn: customer.isLoggedIn,
-            emailCheckTimeout: 0,
-            validateRequest: function () {
-                if (this.checkRequest != null && $.inArray(this.checkRequest.readyState, [1, 2, 3])) {
-                    this.checkRequest.abort();
-                    this.checkRequest = null;
-                }
-            },
-            checkEmailAvailability: function () {
-                var self = this;
-                this.validateRequest();
-                this.isEmailCheckComplete = $.Deferred();
-                this.isLoading = true;
-                this.checkRequest = checkEmailAvailability(this.isEmailCheckComplete, this.email);
+	require([
+		'jquery',
+		'Magento_Customer/js/model/customer',
+		'Magento_Customer/js/action/check-email-availability',
+		'mage/url',
+	], function($,customer,checkEmailAvailability,url){
+		url.setBaseUrl('<?php echo $block->getBaseUrl();?>');
+		var casatEmailCheck = {
+			email: false,
+			emailFocused: false,
+			isLoading: false,
+			isPasswordVisible: false,
+			checkDelay: 2000,
+			checkRequest: null,
+			isEmailCheckComplete: null,
+			isCustomerLoggedIn: customer.isLoggedIn,
+			emailCheckTimeout: 0,
+			validateRequest: function () {
+				if (this.checkRequest != null && $.inArray(this.checkRequest.readyState, [1, 2, 3])) {
+					this.checkRequest.abort();
+					this.checkRequest = null;
+				}
+			},
+			checkEmailAvailability: function () {
+				var self = this;
+				this.validateRequest();
+				this.isEmailCheckComplete = $.Deferred();
+				this.isLoading = true;
+				this.checkRequest = checkEmailAvailability(this.isEmailCheckComplete, this.email);
 
-                $.when(this.isEmailCheckComplete).done(function () {
-                    self.isPasswordVisible = false;
-                }).fail(function () {
-                    self.isPasswordVisible = true;
-                    $('#mw-login-email').val(self.email);
-                    $('#loginbox').trigger('click');
-                }).always(function () {
-                    self.isLoading = false;
-                });
-            },
-        };
-        $('#mw_onstepcheckout_billing_form input[id="billing\:email"]').on('change',function(){
-            casatEmailCheck.email = $(this).val();
-            casatEmailCheck.checkEmailAvailability();
-        });
-    });
+				$.when(this.isEmailCheckComplete).done(function () {
+					self.isPasswordVisible = false;
+				}).fail(function () {
+					self.isPasswordVisible = true;
+					$('#mw-login-email').val(self.email);
+					$('#loginbox').trigger('click');
+				}).always(function () {
+					self.isLoading = false;
+				});
+			},
+		};
+		$('#mw_onstepcheckout_billing_form input[id="billing\:email"]').on('change',function(){
+			casatEmailCheck.email = $(this).val();
+			casatEmailCheck.checkEmailAvailability();
+		});
+	});
 //]]>
 </script>
