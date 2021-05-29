@@ -1,7 +1,6 @@
 <?php
 use Interactivated\Quotecheckout\Block\Checkout\Onepage\Billing\Sortbilling as B;
 /** @var B $block */ $b = $block; /** @var B $b */
-$_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
 $_dob = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob');
 $_gender = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender');
 $_taxvat = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat');
@@ -68,7 +67,7 @@ $email = '<div class="field">
 	</div>';
 $password = $password_conf = '';
 if (!$b->isCustomerLoggedIn()):
-	$createAccountConfig = (int) $_dataHelper->getStoreConfig('onestepcheckout/general/create_account');
+	$createAccountConfig = (int)df_cfg('onestepcheckout/general/create_account');
 	if ($createAccountConfig == 1) {
 		$attributes = 'style="display:block;"';
 	} else {
@@ -152,7 +151,7 @@ $regionval = (isset($region['region'])) ? $region['region'] : '';
 $state = '<div class="field">
 		<label for="billing:region_id"><em>' . $b->isStar('state') . '</em>' . __('Province / State') . '</label>
 		<div class="input-box billing_region_class">
-			<select id="billing:region_id" name="billing[region_id]" title="' . __('Province / State') . '" ' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/state") == 1) ? 'class="validate-select" ' : ' ') . 'style="display:none;">
+			<select id="billing:region_id" name="billing[region_id]" title="' . __('Province / State') . '" ' . ((df_cfg("onestepcheckout/addfield/state") == 1) ? 'class="validate-select" ' : ' ') . 'style="display:none;">
 				<option value="">' . __('Please select region, state or province') . '</option>
 			</select>
 
@@ -182,7 +181,7 @@ $zipcode = '<div class="field" id="field_zipcode">
 	</div>';
 
 
-$country = '<div class="field" id="field_country"' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/country") == 0) ? 'style="display:none"' : '') . '>
+$country = '<div class="field" id="field_country"' . ((df_cfg("onestepcheckout/addfield/country") == 0) ? 'style="display:none"' : '') . '>
 		<label for="billing:country_id"><em>' . $b->isStar('country') . '</em>' . __('Country') . '</label>
 		<div class="input-box">
 			' . $b->getCountryHtmlSelect('billing') . '
@@ -236,9 +235,9 @@ foreach ($typeAddress as $nametype) {
 }
 foreach ($notdisable as $namevalid) {
 	if ($namevalid == 'vat_id') {
-		$filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_city') + 1;
+		$filter[] = df_cfg('onestepcheckout/options_sort/sort_city') + 1;
 	} else {
-		$filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $namevalid);
+		$filter[] = df_cfg('onestepcheckout/options_sort/sort_' . $namevalid);
 	}
 }
 
@@ -250,7 +249,7 @@ for ($i = 0; $i < count($filter); $i++) {
 		}
 	}
 }
-$temp[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_name');
+$temp[] = df_cfg('onestepcheckout/options_sort/sort_name');
 
 $nameinputs = [
 	'name'=> $name,
@@ -275,20 +274,20 @@ foreach ($nameinputs as $nameadd => $bitem) {
 		continue;
 	}
 
-	if (!in_array($_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
+	if (!in_array(df_cfg('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
 		if ($nameadd == 'dob') {
-			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
+			$billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
 		} else {
 			$res = '';
-			if(isset($billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)])){
-				$res = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)];
+			if(isset($billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)])){
+				$res = $billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)];
 			}
-			$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $bitem . '</div>';
+			$billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $bitem . '</div>';
 		}
 	}else if ($nameadd == 'vat_id'){
 		$billingBlock[1] = $bitem;
 	} else {
-		$billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
+		$billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] = $billingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
 	}
 }
 
@@ -306,7 +305,7 @@ foreach ($billingBlock as $bitem) {
 }
 
 // Add country but hidden when disable contry
-if (!$_dataHelper->getStoreConfig("onestepcheckout/addfield/country")) {
+if (!df_cfg("onestepcheckout/addfield/country")) {
 	$str = $str . '<div class="clear"></div><li class="fields">' . $country . '</li>';
 }
 
