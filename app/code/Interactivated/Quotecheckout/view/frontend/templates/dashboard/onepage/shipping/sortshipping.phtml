@@ -1,7 +1,6 @@
 <?php
 use Interactivated\Quotecheckout\Block\Checkout\Onepage\Shipping\Sortshipping as B;
 /** @var B $block */ $b = $block; /** @var B $b */
-$_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
 $_dob = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Dob');
 $_gender = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Gender');
 $_taxvat = $b->getLayout()->createBlock('Magento\Customer\Block\Widget\Taxvat');
@@ -89,7 +88,7 @@ $regionval = (isset($region['region'])) ? $region['region'] : '';
 $state = '<div class="field">
 		<label for="shipping:region_id" class=""><em>' . $b->isStar('state') . '</em>' . __('Province / State') . '</label>
 		<div class="input-box shipping_region_class">
-			<select id="shipping:region_id"  name="shipping[region_id]" title="' . __('Province / State') . '" ' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/state") == 1) ? 'class="validate-select shipping_region_clas "' : ' ') . ' style="display:none;">
+			<select id="shipping:region_id"  name="shipping[region_id]" title="' . __('Province / State') . '" ' . ((df_cfg("onestepcheckout/addfield/state") == 1) ? 'class="validate-select shipping_region_clas "' : ' ') . ' style="display:none;">
 				<option value="">' . __('Please select region, state or province') . '</option>
 			</select>
 
@@ -115,7 +114,7 @@ $zipcode = '<div class="field">
 		</div>
 	</div>';
 
-$country = '<div class="field" ' . (($_dataHelper->getStoreConfig("onestepcheckout/addfield/country") == 0) ? "style=\"display:none\"" : "") . '>
+$country = '<div class="field" ' . ((df_cfg("onestepcheckout/addfield/country") == 0) ? "style=\"display:none\"" : "") . '>
 		<label for="shipping:country_id" class=""><em>' . $b->isStar('country') . '</em>' . __('Country') . '</label>
 		<div class="input-box">
 			' . $b->getCountryHtmlSelect('shipping') . '
@@ -149,9 +148,9 @@ foreach ($type_address as $nametype) {
 }
 foreach ($notdisable as $namevalid) {
 	if ($namevalid == 'vat_id') {
-		$filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_city') + 1;
+		$filter[] = df_cfg('onestepcheckout/options_sort/sort_city') + 1;
 	} else {
-		$filter[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $namevalid);
+		$filter[] = df_cfg('onestepcheckout/options_sort/sort_' . $namevalid);
 	}
 }
 for ($i = 0; $i < count($filter); $i++) {
@@ -162,7 +161,7 @@ for ($i = 0; $i < count($filter); $i++) {
 		}
 	}
 }
-$temp[] = $_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_name');
+$temp[] = df_cfg('onestepcheckout/options_sort/sort_name');
 
 $nameinputs = [
 	'name'=> $name,
@@ -182,16 +181,16 @@ foreach ($nameinputs as $nameadd => $bitem) {
 		continue;
 	}
 
-	if (!in_array($_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
+	if (!in_array(df_cfg('onestepcheckout/options_sort/sort_' . $nameadd), $temp)) {
 		$res = '';
-		if(isset($shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)])){
-			$res = $shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)];
+		if(isset($shippingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)])){
+			$res = $shippingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)];
 		}
-		$shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $bitem . '</div>';
+		$shippingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] = '<div class="widthfull">' . $res . $bitem . '</div>';
 	}else if($nameadd == 'vat_id'){
 		$shippingBlock[1] = $bitem;
 	} else {
-		$shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] = $shippingBlock[$_dataHelper->getStoreConfig('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
+		$shippingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] = $shippingBlock[df_cfg('onestepcheckout/options_sort/sort_' . $nameadd)] . $bitem;
 	}
 }
 
@@ -203,7 +202,7 @@ foreach ($shippingBlock as $bitem) {
 
 	$str = $str . '<div class="clear"></div><li class="fields">' . $bitem . '</li>';
 }
-if (!$_dataHelper->getStoreConfig("onestepcheckout/addfield/country")) {
+if (!df_cfg("onestepcheckout/addfield/country")) {
 	$str = $str . '<div class="clear"></div><li class="fields">' . $country . '</li>';
 }
 
