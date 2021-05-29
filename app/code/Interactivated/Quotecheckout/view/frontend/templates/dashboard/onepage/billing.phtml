@@ -2,23 +2,23 @@
 	$_dataHelper = $this->helper('MW\Onestepcheckout\Helper\Data');
 	$_persistentSession = $this->helper('Magento\Persistent\Helper\Session');
 
-    $registerParam = $block->getRequest()->getParam('register');
-    if ($registerParam || $registerParam === '') :
+	$registerParam = $block->getRequest()->getParam('register');
+	if ($registerParam || $registerParam === '') :
 ?>
-    <script type="text/javascript">
-    	require([
-    		'jquery'
-    	], function($) {
-    		//<![CDATA[
-    			$(document).ready(function() {
-    				if ($('#login:register')) {
-		                $('#login:register').checked = true;
-		                checkout.setMethod();
-		            }
-    			});
-		    //]]>
-    	});
-    </script>
+	<script type="text/javascript">
+		require([
+			'jquery'
+		], function($) {
+			//<![CDATA[
+				$(document).ready(function() {
+					if ($('#login:register')) {
+						$('#login:register').checked = true;
+						checkout.setMethod();
+					}
+				});
+			//]]>
+		});
+	</script>
 <?php endif; ?>
 
 <div id="co-billing-form">
@@ -87,8 +87,8 @@
 									$attributes = 'value="0"';
 								}
 							?>
-						    <input type="checkbox" name="register_new_account" <?php echo $attributes ?> title="<?php echo __('register new account') ?>" id="register_new_account" class="checkbox">
-						    <label for="register_new_account" style="float:none;"><?php echo __('Create an account for later use') ?></label>
+							<input type="checkbox" name="register_new_account" <?php echo $attributes ?> title="<?php echo __('register new account') ?>" id="register_new_account" class="checkbox">
+							<label for="register_new_account" style="float:none;"><?php echo __('Create an account for later use') ?></label>
 						</li>
 
 						<?php
