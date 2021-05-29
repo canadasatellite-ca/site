@@ -65,7 +65,7 @@ use Interactivated\Quotecheckout\Block\Checkout\Onepage\Billing as B;
 		</li>
 
 		<li style="margin-top:-7px; clear: both">
-			<?php if (df_cfg()->getStoreConfig('onestepcheckout/general/allowshippingotheraddress')) : ?>
+			<?php if (df_cfg('onestepcheckout/general/allowshippingotheraddress')) : ?>
 				<?php if (!$_dataHelper->onlyProductDownloadable()) : ?>
 					<input type="checkbox" name="ship_to_same_address"  value="1" title="<?php echo __('ship to same address') ?>" id="ship_to_same_address" class="checkbox" checked="checked"> <label for="ship_to_same_address" style="float:none;"><?php echo __('Ship to same address') ?></label>
 				<?php else: ?>
