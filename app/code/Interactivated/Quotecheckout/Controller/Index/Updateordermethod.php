@@ -2,54 +2,13 @@
 namespace Interactivated\Quotecheckout\Controller\Index;
 use Cart2Quote\Quotation\Helper\Data as CHelper;
 use Cart2Quote\Quotation\Model\Quote as CQuote;
-use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender as CSender;
+use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender;
+use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender;
 use Cart2Quote\Quotation\Model\Session as CSession;
-use Magento\Customer\Api\AccountManagementInterface;
-use Magento\Customer\Api\CustomerRepositoryInterface;
 use Magento\Newsletter\Model\Subscriber;
 # 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the Interactivated_Quotecheckout module": https://github.com/canadasatellite-ca/site/issues/116
 class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
-	protected $quoteFactory;
-	protected $customerManagement;
-	protected $sender;
-	protected $helper;
-	protected $quoteProposalSender;
-	function __construct(
-		\Magento\Framework\App\Action\Context $context,
-		\Magento\Customer\Model\Session $customerSession,
-		CustomerRepositoryInterface $customerRepository,
-		AccountManagementInterface $accountManagement,
-		\Magento\Framework\Registry $coreRegistry,
-		\Magento\Framework\Translate\InlineInterface $translateInline,
-		\Magento\Framework\Data\Form\FormKey\Validator $formKeyValidator,
-		\Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
-		\Magento\Framework\View\LayoutFactory $layoutFactory,
-		\Magento\Quote\Api\CartRepositoryInterface $quoteRepository,
-		\Magento\Framework\View\Result\PageFactory $resultPageFactory,
-		\Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
-		\Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
-		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
-		\Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender $quoteProposalSender
-	) {
-		$this->quoteProposalSender = $quoteProposalSender;
-		parent::__construct($context,
-			$customerSession,
-			$customerRepository,
-			$accountManagement,
-			$coreRegistry,
-			$translateInline,
-			$formKeyValidator,
-			$scopeConfig,
-			$layoutFactory,
-			$quoteRepository,
-			$resultPageFactory,
-			$resultLayoutFactory,
-			$resultRawFactory,
-			$resultJsonFactory
-		);
-	}
-
 	/**
 	 * 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the Interactivated_Quotecheckout module": https://github.com/canadasatellite-ca/site/issues/116
@@ -293,12 +252,13 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 				$quotation->setProposalSent((new \DateTime())->getTimestamp());
 				$quotation->setState(\Cart2Quote\Quotation\Model\Quote\Status::STATE_PENDING)
 					->setStatus(\Cart2Quote\Quotation\Model\Quote\Status::STATUS_AUTO_PROPOSAL_SENT);
-				$this->quoteProposalSender->send($quotation);
+				$qProposalSender = df_o(QuoteProposalSender::class); /** @var QuoteProposalSender $qProposalSender */
+				$qProposalSender->send($quotation);
 				$quotation->save();
 			}
 			else {
-				$cSender = df_o(CSender::class); /** @var CSender $cSender */
-				$cSender->send($quotation, false);
+				$qRequestSender = df_o(QuoteRequestSender::class); /** @var QuoteRequestSender $qRequestSender */
+				$qRequestSender->send($quotation, false);
 			}
 			if (true || $this->getRequest()->getParam('clear_quote', false)) {
 				$qs = df_o(CSession::class); /** @var CSession $qs */
