@@ -61,7 +61,7 @@ class ReviewConfigDataProvider extends ConfigDataProvider
      */
     private $reviewFormAgreementsConfig;
 
-    public function __construct(
+    function __construct(
         ArrayManager $arrayManager,
         Config $config,
         HttpContext $httpContext,
@@ -93,7 +93,7 @@ class ReviewConfigDataProvider extends ConfigDataProvider
     /**
      * {@inheritdoc}
      */
-    public function process($jsLayout, $productId = null, $storeId = null)
+    function process($jsLayout, $productId = null, $storeId = null)
     {
         $reviewFormProviderPath = 'components/awArReviewConfigProvider';
         $jsLayout = $this->arrayManager->merge(

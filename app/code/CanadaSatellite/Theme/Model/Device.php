@@ -29,7 +29,7 @@ class Device extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getOrderNumber()
+    function getOrderNumber()
     {
         return $this->getPropertyOrDefault('ordernumber', '');
     }
@@ -37,7 +37,7 @@ class Device extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getImei()
+    function getImei()
     {
         return $this->getPropertyOrDefault('new_name', '');
     }
@@ -45,7 +45,7 @@ class Device extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getProduct()
+    function getProduct()
     {
         return $this->getPropertyOrDefault('productname', '');
     }
@@ -53,7 +53,7 @@ class Device extends \Magento\Framework\Model\AbstractModel
     /**
      * @return int|null unix timestamp
      */
-    public function getSaleDate()
+    function getSaleDate()
     {
         return isset($this->_data['new_saledate']) ? strtotime($this->_data['new_saledate']) : null;
     }

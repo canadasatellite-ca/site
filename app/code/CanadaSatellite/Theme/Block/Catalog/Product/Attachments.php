@@ -41,7 +41,7 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
      * @param AttachmentProduct $attachmentProduct
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Framework\Registry $registry,
@@ -60,7 +60,7 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
         $this->setTabTitle();
     }
 
-    public function getPdfUrl()
+    function getPdfUrl()
     {
         $orderId = $this->getRequest()->getParam('order_id');
         if (!$orderId) {
@@ -73,7 +73,7 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
      * @param boolean $isUseCustomerGroupFilter
      * @return \MageWorx\Downloads\Model\ResourceModel\Attachment\Collection
      */
-    public function getAttachmentCollection($isUseCustomerGroupFilter = true)
+    function getAttachmentCollection($isUseCustomerGroupFilter = true)
     {
         $id = $this->getProductId();
         if (!$id) {
@@ -103,7 +103,7 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
      *
      * @return array
      */
-    public function getAttachments()
+    function getAttachments()
     {
         $this->attachments = [];
         if ($this->helperData->isHideFiles()) {
@@ -136,13 +136,13 @@ class Attachments extends  \CanadaSatellite\Theme\Block\Catalog\AttachmentContai
      *
      * @return null|int
      */
-    public function getProductId()
+    function getProductId()
     {
         $product = $this->coreRegistry->registry('product');
         return $product ? $product->getId() : null;
     }
 
-    public function getLimitQtyLinks($storeId = null)
+    function getLimitQtyLinks($storeId = null)
     {
         return $this->scopeConfig->getValue(self::LIMIT_QTY_LINKS,ScopeInterface::SCOPE_STORE, $storeId);
     }

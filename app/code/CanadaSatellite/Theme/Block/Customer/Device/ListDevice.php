@@ -63,7 +63,7 @@ class ListDevice extends \Magento\Customer\Block\Account\Dashboard
      * @param \Magento\Framework\Registry $registry
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Newsletter\Model\SubscriberFactory $subscriberFactory,
@@ -96,7 +96,7 @@ class ListDevice extends \Magento\Customer\Block\Account\Dashboard
      *
      * @return string
      */
-    public function getToolbarHtml()
+    function getToolbarHtml()
     {
         return $this->getChildHtml('toolbar');
     }
@@ -126,7 +126,7 @@ class ListDevice extends \Magento\Customer\Block\Account\Dashboard
      *
      * @return bool|\CanadaSatellite\Theme\Model\ResourceModel\Device\Collection
      */
-    public function getDevices()
+    function getDevices()
     {
         if (!($customerId = $this->currentCustomer->getCustomerId())) {
             return false;
@@ -144,7 +144,7 @@ class ListDevice extends \Magento\Customer\Block\Account\Dashboard
      * @param string $date
      * @return string
      */
-    public function dateFormat($date)
+    function dateFormat($date)
     {
         return $this->formatDate($date, \IntlDateFormatter::SHORT);
     }
@@ -153,7 +153,7 @@ class ListDevice extends \Magento\Customer\Block\Account\Dashboard
      * @param $name
      * @return mixed
      */
-    public function getProductByName($name)
+    function getProductByName($name)
     {
         try{
             return $this->_productFactory->create()->loadByAttribute('name', $name);
@@ -166,7 +166,7 @@ class ListDevice extends \Magento\Customer\Block\Account\Dashboard
     /**
      * @return \Magento\Framework\Registry
      */
-    public function getRegistry()
+    function getRegistry()
     {
         return $this->coreRegistry;
     }

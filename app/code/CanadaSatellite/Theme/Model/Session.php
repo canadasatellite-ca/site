@@ -18,7 +18,7 @@ class Session extends \Magento\Checkout\Model\Session
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function getQuote()
+    function getQuote()
     {
         $this->_eventManager->dispatch('custom_quote_process', ['checkout_session' => $this]);
 

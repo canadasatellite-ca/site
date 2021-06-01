@@ -30,7 +30,7 @@ class AroundGetFinalPrice
      * @param Helper $helper
      * @param AdvancedPricingPrice $advancedPricingPrice
      */
-    public function __construct(
+    function __construct(
         ManagerInterface $eventManager,
         AdvancedPricingPrice $advancedPricingPrice,
         Helper $helper
@@ -47,7 +47,7 @@ class AroundGetFinalPrice
      * @param null $qty
      * @return mixed
      */
-    public function aroundGetFinalPrice($subject, $proceed, $qty, $product)
+    function aroundGetFinalPrice($subject, $proceed, $qty, $product)
     {
         //magento recalculates prices
         $result = $proceed($qty, $product);

@@ -9,7 +9,7 @@ class Vault extends \Magento\Customer\Block\Account\SortLink
 
     protected $_vault;
 
-    public function __construct(
+    function __construct(
         \Magedelight\Firstdata\Block\Customer\Cards\Listing $customerCards,
         \Magento\Vault\Block\Customer\CreditCards $vault,
         \Magento\Framework\View\Element\Template\Context $context,

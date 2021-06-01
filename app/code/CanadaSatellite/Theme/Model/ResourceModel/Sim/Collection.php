@@ -30,7 +30,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param \Magento\Framework\DB\Adapter\AdapterInterface $connection
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
@@ -59,7 +59,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param int $magentoCustomerId
      * @return \CanadaSatellite\Theme\Model\ResourceModel\Sim\Collection
      */
-    public function addCustomerFilter($magentoCustomerId)
+    function addCustomerFilter($magentoCustomerId)
     {
         $this->_magentoCustomerId = $magentoCustomerId;
         return $this;
@@ -72,7 +72,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param int $sorting
      * @return Collection
      */
-    public function addSimSorting($field, $sorting)
+    function addSimSorting($field, $sorting)
     {
         $this->_simField = $field;
         $this->_simSorting = $sorting;
@@ -85,7 +85,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param $filter
      * @return Collection
      */
-    public function addSimFilter($filter)
+    function addSimFilter($filter)
     {
         $this->_simFilter = $filter;
         return $this;
@@ -99,7 +99,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param   bool $logQuery
      * @return  $this
      */
-    public function loadWithFilter($printQuery = false, $logQuery = false)
+    function loadWithFilter($printQuery = false, $logQuery = false)
     {
         $this->_beforeLoad();
         //$this->printLogQuery($printQuery, $logQuery);

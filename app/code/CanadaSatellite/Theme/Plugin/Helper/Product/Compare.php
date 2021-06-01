@@ -39,7 +39,7 @@ class Compare
      */
     protected $_request;
 
-    public function __construct(
+    function __construct(
         UrlInterface $urlBuilder,
         ProductFactory $productFactory,
         PostHelper $postHelper,
@@ -52,7 +52,7 @@ class Compare
         $this->_request = $requestInterface;
     }
 
-    public function aroundGetListUrl(ParentCompare $subject, callable $proceed)
+    function aroundGetListUrl(ParentCompare $subject, callable $proceed)
     {
         $itemIds = [];
         foreach ($subject->getItemCollection() as $item) {
@@ -95,7 +95,7 @@ class Compare
      * @param \Magento\Catalog\Model\Product $product
      * @return string
      */
-    public function afterGetPostDataRemove(ParentCompare $subject, $result, $product)
+    function afterGetPostDataRemove(ParentCompare $subject, $result, $product)
     {
         $productIds = $this->_request->getParam('items');
         $ids = explode(',', $productIds);
@@ -112,7 +112,7 @@ class Compare
         return $this->postHelper->getPostData($subject->getRemoveUrl(), $data);
     }
 
-    public function getIdVsSkuArray($ids = [], $skus = []) {
+    function getIdVsSkuArray($ids = [], $skus = []) {
 
         if ($this->_idVsSku === null) {
             $idsArray = [];

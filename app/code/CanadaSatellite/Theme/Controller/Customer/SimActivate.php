@@ -57,7 +57,7 @@ class SimActivate extends \Magento\Framework\App\Action\Action
      */
     protected $_logger;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Customer\Model\Session $customerSession,
@@ -96,7 +96,7 @@ class SimActivate extends \Magento\Framework\App\Action\Action
         return $this->_customerSession;
     }
 
-    public function dispatch(RequestInterface $request)
+    function dispatch(RequestInterface $request)
     {
         if (!$this->_getSession()->authenticate()) {
             $this->_actionFlag->set('', 'no-dispatch', true);
@@ -104,7 +104,7 @@ class SimActivate extends \Magento\Framework\App\Action\Action
 
         return parent::dispatch($request);
     }
-    public function execute()
+    function execute()
     {
         try {      
             $simIds = $this->_request->getParam('sims');

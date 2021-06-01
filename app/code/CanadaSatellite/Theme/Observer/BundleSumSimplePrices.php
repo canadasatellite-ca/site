@@ -34,7 +34,7 @@ class BundleSumSimplePrices implements ObserverInterface
      */
     protected $coreRegistry;
 
-    public function __construct(
+    function __construct(
         ManagerInterface $eventManager,
         ProductFactory $productFactory,
         BundleFactory $bundleFactory,
@@ -46,7 +46,7 @@ class BundleSumSimplePrices implements ObserverInterface
         $this->coreRegistry = $coreRegistry;
     }
 
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         $product = $observer->getEvent()->getProduct();
         if ($product->getTypeId() == 'bundle') {

@@ -21,7 +21,7 @@ class History extends ParentHistory
      */
     private $config;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Stdlib\DateTime\DateTime $date,

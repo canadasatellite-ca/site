@@ -20,7 +20,7 @@ class ProductListItem extends ParentProductList
 
     private $storeConfig;
 
-    public function __construct(
+    function __construct(
         Context $context,
         ProductFactory $productFactory,
         CollectionFactory $productCollectionFactory,
@@ -43,13 +43,13 @@ class ProductListItem extends ParentProductList
             $data);
     }
 
-    public function setRule($rule)
+    function setRule($rule)
     {
         $this->rule = $rule;
         return parent::setRule($rule);
     }
 
-    public function _toHtml()
+    function _toHtml()
     {
         $identifier = $this->_getCacheIdentifier();
         $content = $this->cache->load($identifier);

@@ -4,7 +4,7 @@ namespace CanadaSatellite\Theme\Model\Mail;
 
 class EmailMessage extends \Magento\Framework\Mail\EmailMessage
 {
-    public function setPartsToBody()
+    function setPartsToBody()
     {
         $resultParts = [];
         foreach ($this->parts as $part) {

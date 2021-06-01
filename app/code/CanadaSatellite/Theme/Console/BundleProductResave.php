@@ -31,7 +31,7 @@ class BundleProductResave extends Command
 
     const BUNDLE_PRODUCT_ID = 'Id';
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\State $appState,
         CollectionFactory $productCollectionFactory,
         ProductFactory $productFactory,

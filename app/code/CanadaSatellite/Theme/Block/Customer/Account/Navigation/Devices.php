@@ -7,7 +7,7 @@ class Devices extends \Magento\Customer\Block\Account\SortLink
 
     protected $_devices;
 
-    public function __construct(
+    function __construct(
         \CanadaSatellite\Theme\Block\Customer\Device\ListDevice $devices,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\DefaultPathInterface $defaultPath,

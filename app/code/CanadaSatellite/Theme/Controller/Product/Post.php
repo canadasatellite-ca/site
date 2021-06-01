@@ -13,7 +13,7 @@ class Post extends ProductPost
      *
      * @return \Magento\Framework\Controller\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);

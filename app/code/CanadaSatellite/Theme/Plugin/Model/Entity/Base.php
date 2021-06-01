@@ -27,7 +27,7 @@ class Base
      * @param OptionAttributes $optionAttributes
      */
 
-    public function __construct(
+    function __construct(
         OptionValueAttributes $optionValueAttributes,
         OptionAttributes $optionAttributes
     ){
@@ -42,7 +42,7 @@ class Base
      * @return array
      */
 
-    public function aroundGetOptionsAsArray(
+    function aroundGetOptionsAsArray(
         ParentBase $subject,
         callable $proceed,
         $object

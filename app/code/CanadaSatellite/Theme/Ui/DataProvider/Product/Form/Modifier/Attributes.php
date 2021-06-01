@@ -6,12 +6,12 @@ use Magento\Catalog\Ui\DataProvider\Product\Form\Modifier\AbstractModifier;
 
 class Attributes extends AbstractModifier
 {
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }
 
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $meta = $this->addValidationToWeightAttribute($meta);
 

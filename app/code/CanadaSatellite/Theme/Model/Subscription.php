@@ -44,7 +44,7 @@ class Subscription extends ParentSubscription
 
     private $registry;
 
-    public function __construct(
+    function __construct(
         Data $helper,
         Json $serialize,
         SubscriptionService $service,
@@ -87,7 +87,7 @@ class Subscription extends ParentSubscription
         return $this->productCollection->getItemById($parentId);
     }
 
-    public function isSubscriptionProduct($product)
+    function isSubscriptionProduct($product)
     {
         $parentId = $this->getBundleParentId($product);
         if ($parentId) {

@@ -52,7 +52,7 @@ class MergeService
      * @param State $state
      * @param MobileDetect $helper
      */
-    public function __construct(
+    function __construct(
         ObjectManagerInterface $objectManager,
         ConfigInterface $config,
         Filesystem $filesystem,
@@ -66,7 +66,7 @@ class MergeService
         $this->_helper = $helper;
     }
 
-    public function aroundGetMergedAssets(MagentoMergeService $subject, callable $proceed, array $assets, $contentType)
+    function aroundGetMergedAssets(MagentoMergeService $subject, callable $proceed, array $assets, $contentType)
     {
         $isCss = $contentType == 'css';
         $isJs = $contentType == 'js';

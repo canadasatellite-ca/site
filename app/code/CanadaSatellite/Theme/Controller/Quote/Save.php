@@ -11,7 +11,7 @@ class Save extends ParentSave
      *
      * @return $this
      */
-    public function execute()
+    function execute()
     {
         $isAjax = (int) $this->getRequest()->getParam('isAjax');
         if (!$isAjax) {

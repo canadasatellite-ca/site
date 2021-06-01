@@ -123,7 +123,7 @@ class Export
      *
      * @return boolean
      */
-    public function __construct(
+    function __construct(
         \Magento\Sales\Model\ResourceModel\Order\CollectionFactory $order,
         \Magento\Framework\App\Config\ScopeConfigInterface $scopeConfig,
         \Magento\Directory\Model\CountryFactory $countryFactory,
@@ -177,7 +177,7 @@ class Export
      *
      * @return boolean
      */
-    public function process($request, $storeId)
+    function process($request, $storeId)
     {
         try {
             header('Content-Type: text/xml');

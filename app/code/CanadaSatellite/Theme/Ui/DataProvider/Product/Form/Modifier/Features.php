@@ -13,7 +13,7 @@ use MageWorx\OptionFeatures\Ui\DataProvider\Product\Form\Modifier\Features as Pa
 
 class Features extends ParentFeatures
 {
-    public function __construct(
+    function __construct(
         ArrayManager $arrayManager,
         StoreManagerInterface $storeManager,
         LocatorInterface $locator,
@@ -33,7 +33,7 @@ class Features extends ParentFeatures
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $this->meta = $meta;
 

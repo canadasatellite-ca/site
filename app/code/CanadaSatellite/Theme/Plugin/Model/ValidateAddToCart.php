@@ -22,7 +22,7 @@ class ValidateAddToCart
      * @param ValidationResolver $validationResolver
      * @param BaseHelper $baseHelper
      */
-    public function __construct(
+    function __construct(
         ValidationResolver $validationResolver,
         BaseHelper $baseHelper
     ) {
@@ -37,7 +37,7 @@ class ValidateAddToCart
      * @param array $values
      * @return array
      */
-    public function beforeValidateUserValue(DefaultType $subject, $values)
+    function beforeValidateUserValue(DefaultType $subject, $values)
     {
         $option = $subject->getOption();
 

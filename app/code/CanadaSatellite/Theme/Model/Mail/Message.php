@@ -32,7 +32,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      *
      * @param string $charset
      */
-    public function __construct($charset = 'utf-8')
+    function __construct($charset = 'utf-8')
     {
         $this->zendMessage = new \Zend\Mail\Message();
         $this->zendMessage->setEncoding($charset);
@@ -45,7 +45,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      * @see \Magento\Framework\Mail\Message::setBodyText
      * @see \Magento\Framework\Mail\Message::setBodyHtml
      */
-    public function setMessageType($type)
+    function setMessageType($type)
     {
         $this->messageType = $type;
         return $this;
@@ -54,7 +54,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function setSubject($subject)
+    function setSubject($subject)
     {
         $this->zendMessage->setSubject($subject);
         return $this;
@@ -63,7 +63,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function getSubject()
+    function getSubject()
     {
         return $this->zendMessage->getSubject();
     }
@@ -71,7 +71,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function getBody()
+    function getBody()
     {
         return $this->zendMessage->getBody();
     }
@@ -83,7 +83,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      * setFromAddress() function sets both from address and from name.
      * @see setFromAddress()
      */
-    public function setFrom($fromAddress)
+    function setFrom($fromAddress)
     {
         $this->setFromAddress($fromAddress, null);
         return $this;
@@ -92,7 +92,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function setFromAddress($fromAddress, $fromName = null)
+    function setFromAddress($fromAddress, $fromName = null)
     {
         $this->zendMessage->setFrom($fromAddress, $fromName);
         return $this;
@@ -101,7 +101,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function addTo($toAddress)
+    function addTo($toAddress)
     {
         $this->zendMessage->addTo($toAddress);
         return $this;
@@ -110,7 +110,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function addCc($ccAddress)
+    function addCc($ccAddress)
     {
         $this->zendMessage->addCc($ccAddress);
         return $this;
@@ -119,7 +119,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function addBcc($bccAddress)
+    function addBcc($bccAddress)
     {
         $this->zendMessage->addBcc($bccAddress);
         return $this;
@@ -128,7 +128,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function setReplyTo($replyToAddress)
+    function setReplyTo($replyToAddress)
     {
         $this->zendMessage->setReplyTo($replyToAddress);
         return $this;
@@ -137,7 +137,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
     /**
      * @inheritdoc
      */
-    public function getRawMessage()
+    function getRawMessage()
     {
         return $this->zendMessage->toString();
     }
@@ -147,7 +147,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      * @param string $content
      * @return $this
      */
-    public function setBodyText($content)
+    function setBodyText($content)
     {
         $textPart = new MimePart();
 
@@ -168,7 +168,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      * @param string $content
      * @return $this
      */
-    public function setBodyHtml($content)
+    function setBodyHtml($content)
     {
         $htmlPart = new MimePart();
 
@@ -191,7 +191,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      * @param string $fileType
      * @return $this
      */
-    public function setBodyAttachment($filePath, $fileName, $fileType)
+    function setBodyAttachment($filePath, $fileName, $fileType)
     {
         $attachmentPart = new MimePart(fopen($filePath, 'r'));
 
@@ -211,7 +211,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      *
      * @return $this
      */
-    public function setPartsToBody()
+    function setPartsToBody()
     {
         $resultParts = [];
         foreach ($this->parts as $part) {
@@ -237,7 +237,7 @@ class Message extends \Magento\Framework\Mail\Message implements \Magento\Framew
      * @param $body
      * @return $this|\Magento\Framework\Mail\Message
      */
-    public function setBody($body)
+    function setBody($body)
     {
         $this->setBodyHtml($body);
         return $this;

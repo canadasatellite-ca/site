@@ -16,13 +16,13 @@ class QuoteFixExtension implements ObserverInterface
      */
     private $_eventManager;
 
-    public function __construct(
+    function __construct(
         ManagerInterface $eventManager
     ) {
         $this->_eventManager = $eventManager;
     }
 
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         if ($observer->getEvent()->getQuoteAddress()->getExtensionPhone()) {
             $extensionPhone = $observer->getEvent()->getQuoteAddress()->getExtensionPhone();

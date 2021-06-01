@@ -10,7 +10,7 @@ class QuoteAddress
 
     protected $_state;
 
-    public function __construct(
+    function __construct(
         \Magento\Shipping\Model\CarrierFactoryInterface $carrierFactory,
         \Magento\Framework\App\State $state
     ){
@@ -18,7 +18,7 @@ class QuoteAddress
         $this->_state = $state;
     }
 
-    public function aroundGetGroupedAllShippingRates(Address $subject, callable $proceed)
+    function aroundGetGroupedAllShippingRates(Address $subject, callable $proceed)
     {
         $rates = [];
         $areaCode = $this->_state->getAreaCode();

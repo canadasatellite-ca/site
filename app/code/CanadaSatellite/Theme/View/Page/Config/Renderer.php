@@ -10,7 +10,7 @@ class Renderer extends MagentoRenderer
 {
     protected $_helper;
 
-    public function __construct(
+    function __construct(
         Config $pageConfig,
         \Magento\Framework\View\Asset\MergeService $assetMergeService,
         \Magento\Framework\UrlInterface $urlBuilder,

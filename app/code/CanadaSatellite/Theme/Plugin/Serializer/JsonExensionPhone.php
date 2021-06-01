@@ -6,7 +6,7 @@ use Magento\Framework\Serialize\Serializer\Json;
 
 class JsonExensionPhone {
 
-    public function aroundUnserialize(Json $subject, callable $proceed, $string) {
+    function aroundUnserialize(Json $subject, callable $proceed, $string) {
 
         $result = json_decode($string, true);
         json_decode($string, true) ? $error = false : $error = true;

@@ -48,7 +48,7 @@ class CreatePost extends AccountCreatePost
      */
     private $cookieMetadataManager;
 
-    public function __construct(
+    function __construct(
         Context $context,
         Session $customerSession,
         ScopeConfigInterface $scopeConfig,
@@ -96,7 +96,7 @@ class CreatePost extends AccountCreatePost
         );
     }
     /*
-    public function __construct(
+    function __construct(
         Context $context,
         Session $customerSession,
         ScopeConfigInterface $scopeConfig,
@@ -182,7 +182,7 @@ class CreatePost extends AccountCreatePost
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute()
+    function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Redirect $resultRedirect */
         $resultRedirect = $this->resultRedirectFactory->create();

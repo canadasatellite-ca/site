@@ -13,7 +13,7 @@ class SortOrder extends Source
      *
      * @return array Format: array(array('value' => '<value>', 'label' => '<label>'), ...)
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             [

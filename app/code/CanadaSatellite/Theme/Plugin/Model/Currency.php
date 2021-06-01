@@ -33,7 +33,7 @@ class Currency {
      * @param StoreManagerInterface $storeManager
      * @param PriceCurrencyInterface $priceCurrency
      */
-    public function __construct(
+    function __construct(
         CollectionFactory $collectionFactory,
         StoreManagerInterface $storeManager,
         PriceCurrencyInterface $priceCurrency
@@ -50,7 +50,7 @@ class Currency {
      * @return mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function afterSaveRates(ModelCurrency $subject, $result, $rates) {
+    function afterSaveRates(ModelCurrency $subject, $result, $rates) {
         /**
          * @var $collection Collection
          */
@@ -84,7 +84,7 @@ class Currency {
      * @param $priceKey
      * @return bool|float|int|mixed
      */
-    public function getPrice($product, $priceKey) {
+    function getPrice($product, $priceKey) {
         if ($price = $product->getData($priceKey)) {
             $price = str_replace(',', '', $price);
             $rate = $this->_priceCurrency->convert(1000000, null, 'USD');

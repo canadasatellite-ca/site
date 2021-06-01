@@ -7,7 +7,7 @@ use Magento\Customer\Api\AddressMetadataInterface;
 class Edit extends \Magento\Customer\Block\Address\Edit
 {
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Directory\Helper\Data $directoryHelper,
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
@@ -25,7 +25,7 @@ class Edit extends \Magento\Customer\Block\Address\Edit
         parent::__construct($context, $directoryHelper, $jsonEncoder, $configCacheType, $regionCollectionFactory, $countryCollectionFactory, $customerSession, $addressRepository, $addressDataFactory, $currentCustomer, $dataObjectHelper, $data, $addressMetadata);
     }
 
-    public function getCountryHtmlSelect($defValue = null, $name = 'country_id', $id = 'country', $title = 'Country')
+    function getCountryHtmlSelect($defValue = null, $name = 'country_id', $id = 'country', $title = 'Country')
     {
         \Magento\Framework\Profiler::start('TEST: ' . __METHOD__, ['group' => 'TEST', 'method' => __METHOD__]);
         if ($defValue === null) {
@@ -54,7 +54,7 @@ class Edit extends \Magento\Customer\Block\Address\Edit
         return $html;
     }
 
-    public function getRegionHtmlSelect()
+    function getRegionHtmlSelect()
     {
         \Magento\Framework\Profiler::start('TEST: ' . __METHOD__, ['group' => 'TEST', 'method' => __METHOD__]);
         $options = $this->getRegionCollection()->toOptionArray();

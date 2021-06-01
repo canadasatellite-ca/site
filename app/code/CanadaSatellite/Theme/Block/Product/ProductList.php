@@ -16,7 +16,7 @@ class ProductList extends ParentProductList
 
     private $storeConfig;
 
-    public function __construct(
+    function __construct(
         Context $context,
         ProductFactory $productFactory,
         CollectionFactory $productCollectionFactory,
@@ -37,12 +37,12 @@ class ProductList extends ParentProductList
             $data);
     }
 
-    public function getCacheLifetime()
+    function getCacheLifetime()
     {
         return 86400;
     }
 
-    public function getCacheKeyInfo()
+    function getCacheKeyInfo()
     {
         $cacheKeyInfo = parent::getCacheKeyInfo();
         $cacheKeyInfo['ruleId'] = (is_array($this->getRule())) ? $this->getRule()['rule_id'] : '0';
@@ -54,7 +54,7 @@ class ProductList extends ParentProductList
         return $cacheKeyInfo;
     }
 
-    public function showItem($_item) {
+    function showItem($_item) {
         $html = $this->getLayout()
             ->createBlock('CanadaSatellite\Theme\Block\Product\ProductListItem')
             ->setTemplate('CanadaSatellite_Theme::product/list/item.phtml')

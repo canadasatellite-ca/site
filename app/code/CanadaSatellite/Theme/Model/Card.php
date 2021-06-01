@@ -21,18 +21,18 @@ class Card extends \Magento\Framework\Model\AbstractModel
         $this->_init('CanadaSatellite\Theme\Model\ResourceModel\Card');
     }
 
-    public function getId()
+    function getId()
     {
     	return $this->_data['new_sundriesid'];
     }
 
-    public function getLastFourDigits()
+    function getLastFourDigits()
     {
     	$cardNumber = trim($this->_data['new_name']);
     	return substr($cardNumber, -4);
     }
 
-    public function getCardholderName()
+    function getCardholderName()
     {
         if (!isset($this->_data['new_cardholdername'])) {
             return '';
@@ -40,7 +40,7 @@ class Card extends \Magento\Framework\Model\AbstractModel
         return $this->_data['new_cardholdername'];
     }
 
-    public function getCardType()
+    function getCardType()
     {
         if (!isset($this->_data['new_cardtype'])) {
             return '';
@@ -49,12 +49,12 @@ class Card extends \Magento\Framework\Model\AbstractModel
         return $this->_data['new_cardtype'];
     }
 
-    public function getCardNumber()
+    function getCardNumber()
     {
         return $this->_data['new_name'];
     }
 
-    public function getCardTypeLabel()
+    function getCardTypeLabel()
     {
         if (!isset($this->_data['new_cardtype@OData.Community.Display.V1.FormattedValue'])) {
             return '';
@@ -63,7 +63,7 @@ class Card extends \Magento\Framework\Model\AbstractModel
         return $this->_data['new_cardtype@OData.Community.Display.V1.FormattedValue'];
     }
 
-    public function belongsToCustomer($customerId)
+    function belongsToCustomer($customerId)
     {
         if (empty($customerId)) {
             return false;

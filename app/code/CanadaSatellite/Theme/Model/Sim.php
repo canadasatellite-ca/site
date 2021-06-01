@@ -29,7 +29,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getNetworkStatus()
+    function getNetworkStatus()
     {
         return $this->getPropertyOrEmptyString('cs_simstatus@OData.Community.Display.V1.FormattedValue');
     }
@@ -37,7 +37,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getSubStatus()
+    function getSubStatus()
     {
         return $this->getPropertyOrEmptyString('new_substatus@OData.Community.Display.V1.FormattedValue');
     }
@@ -45,7 +45,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getNickname()
+    function getNickname()
     {
         return $this->getPropertyOrEmptyString('new_nickname');
     }
@@ -53,7 +53,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getSimNumber()
+    function getSimNumber()
     {
         return $this->getPropertyOrEmptyString('cs_number');
     }
@@ -61,7 +61,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getNetwork()
+    function getNetwork()
     {
         return $this->getPropertyOrEmptyString('cs_network@OData.Community.Display.V1.FormattedValue');
     }
@@ -69,7 +69,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getType()
+    function getType()
     {
         return $this->getPropertyOrEmptyString('cs_type@OData.Community.Display.V1.FormattedValue');
     }
@@ -77,7 +77,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getService()
+    function getService()
     {
         return $this->getPropertyOrEmptyString('cs_service@OData.Community.Display.V1.FormattedValue');
     }
@@ -85,7 +85,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getPlan()
+    function getPlan()
     {
         return $this->getPropertyOrEmptyString('cs_plan@OData.Community.Display.V1.FormattedValue');
     }
@@ -93,7 +93,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getCurrentMinutes()
+    function getCurrentMinutes()
     {
         return $this->getPropertyOrEmptyString('cs_currentminutes');
     }
@@ -101,7 +101,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getSatelliteNumber()
+    function getSatelliteNumber()
     {
         return $this->getPropertyOrEmptyString('cs_satellitenumber');
     }
@@ -109,7 +109,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getDataNumber()
+    function getDataNumber()
     {
         return $this->getPropertyOrEmptyString('cs_data');
     }
@@ -117,7 +117,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return int|null unix timestamp
      */
-    public function getActivationDate()
+    function getActivationDate()
     {
         return isset($this->_data['cs_activationdate']) ? strtotime($this->_data['cs_activationdate']) : null;
     }
@@ -125,7 +125,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return int|null unix timestamp
      */
-    public function getExpiryDate()
+    function getExpiryDate()
     {
         return isset($this->_data['cs_expirydate']) ? strtotime($this->_data['cs_expirydate']) : null;
     }
@@ -133,12 +133,12 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return string
      */
-    public function getQuickNote()
+    function getQuickNote()
     {
         return $this->getPropertyOrEmptyString('new_quicknote');
     }
 
-    public function isHijacked()
+    function isHijacked()
     {
         if (!isset($this->_data['new_substatus'])) {
             return false;
@@ -149,7 +149,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
             $this->_data['new_substatus'] == '100000009'; // HIJACKED
     }
 
-    public function isAutoRecharged()
+    function isAutoRecharged()
     {
         if (!isset($this->_data['new_substatus'])) {
             return false;
@@ -160,7 +160,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
             $this->_data['new_substatus'] == '100000014'; // AUTO-RECHARGE - PAID
     }
 
-    public function isIssued()
+    function isIssued()
     {
         if (!isset($this->_data['cs_simstatus'])) {
             return false;
@@ -169,7 +169,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
         return $this->_data['cs_simstatus'] == '100000000'; // ISSUED
     }
 
-    public function wasRecentlyActivated()
+    function wasRecentlyActivated()
     {
         if (!isset($this->_data['activationrequests_count'])) {
             return false;
@@ -181,7 +181,7 @@ class Sim extends \Magento\Framework\Model\AbstractModel
     /**
      * @return int 0 if not set
      */
-    public function getMagentoCustomerId()
+    function getMagentoCustomerId()
     {
         return intval($this->_data['magento_customer_id'] ?: 0);
     }

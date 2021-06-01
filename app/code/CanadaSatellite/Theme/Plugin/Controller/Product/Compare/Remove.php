@@ -20,7 +20,7 @@ class Remove
      */
     protected $_storeManager;
 
-    public function __construct(
+    function __construct(
         RedirectFactory $resultRedirectFactory,
         StoreManagerInterface $storeManager
     ) {
@@ -28,7 +28,7 @@ class Remove
         $this->_storeManager = $storeManager;
     }
 
-    public function afterExecute(CompareRemove $subject, $result)
+    function afterExecute(CompareRemove $subject, $result)
     {
         $redirectPath = $subject->getRequest()->getPost('urlWithoutItem');
 

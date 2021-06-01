@@ -28,7 +28,7 @@ class Router implements \Magento\Framework\App\RouterInterface
      * Router constructor.
      * @param ActionFactory $actionFactory
      */
-    public function __construct(
+    function __construct(
         ActionFactory $actionFactory,
         ProductFactory $productFactory
     ) {
@@ -42,7 +42,7 @@ class Router implements \Magento\Framework\App\RouterInterface
      * @param \Magento\Framework\App\RequestInterface $request
      * @return \Magento\Framework\App\ActionInterface|null
      */
-    public function match(RequestInterface $request)
+    function match(RequestInterface $request)
     {
         $identifier = trim($request->getPathInfo(), '/');
         $identifierArray = explode ('/', $identifier);

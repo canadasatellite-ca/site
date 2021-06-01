@@ -11,7 +11,7 @@ class Viewsim extends \Magedelight\Firstdata\Controller\Firstdata
         return $this->_customerSession;
     }
 
-    public function dispatch(RequestInterface $request)
+    function dispatch(RequestInterface $request)
     {
         if (!$this->_getSession()->authenticate()) {
             $this->_actionFlag->set('', 'no-dispatch', true);
@@ -19,7 +19,7 @@ class Viewsim extends \Magedelight\Firstdata\Controller\Firstdata
 
         return parent::dispatch($request);
     }
-    public function execute()
+    function execute()
     {
         $resultPage = $this->resultPageFactory->create();
 

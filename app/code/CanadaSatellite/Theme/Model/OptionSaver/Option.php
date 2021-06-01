@@ -34,7 +34,7 @@ class Option extends OptionSaverOption
      * @param string|null $connectionName
      */
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \Magento\Directory\Model\CurrencyFactory $currencyFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,

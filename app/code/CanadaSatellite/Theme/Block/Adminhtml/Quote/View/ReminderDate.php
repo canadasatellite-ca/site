@@ -13,7 +13,7 @@ class ReminderDate
      * Check reminder date active status
      * @return string
      */
-    public function afterIsActiveReminderDate(VendorReminderDate $subject, $result)
+    function afterIsActiveReminderDate(VendorReminderDate $subject, $result)
     {
         return '';
     }

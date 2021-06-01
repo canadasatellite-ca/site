@@ -25,7 +25,7 @@ class AbstractBlock {
      * @param MobileDetect $mobileDetect
      * @param StoreManagerInterface $storeManager
      */
-    public function __construct(
+    function __construct(
         MobileDetect $mobileDetect,
         StoreManagerInterface $storeManager
 )
@@ -39,7 +39,7 @@ class AbstractBlock {
      * @param callable $proceed
      * @return array
      */
-    public function aroundGetCacheKeyInfo(MagentoAbstractBlock $subject, callable $proceed)
+    function aroundGetCacheKeyInfo(MagentoAbstractBlock $subject, callable $proceed)
     {
         $result = $proceed();
         $result[] = $this->_helper->getDeviceParam();

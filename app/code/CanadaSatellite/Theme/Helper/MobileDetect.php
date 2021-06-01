@@ -655,7 +655,7 @@ class MobileDetect extends AbstractHelper
      * @param string $userAgent Inject the User-Agent header. If null, will use HTTP_USER_AGENT
      *                          from the $headers array instead.
      */
-    public function __construct(
+    function __construct(
         array $headers = null,
         $userAgent = null
     ) {
@@ -680,7 +680,7 @@ class MobileDetect extends AbstractHelper
      * @param array $httpHeaders The headers to set. If null, then using PHP's _SERVER to extract
      *                           the headers. The default null is left for backwards compatibility.
      */
-    public function setHttpHeaders($httpHeaders = null)
+    function setHttpHeaders($httpHeaders = null)
     {
         // use global _SERVER if $httpHeaders aren't defined
         if (!is_array($httpHeaders) || !count($httpHeaders)) {
@@ -703,7 +703,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return array
      */
-    public function getHttpHeaders()
+    function getHttpHeaders()
     {
         return $this->httpHeaders;
     }
@@ -717,7 +717,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return string|null The value of the header.
      */
-    public function getHttpHeader($header)
+    function getHttpHeader($header)
     {
         // are we using PHP-flavored headers?
         if (strpos($header, '_') === false) {
@@ -734,7 +734,7 @@ class MobileDetect extends AbstractHelper
         }
         return null;
     }
-    public function getMobileHeaders()
+    function getMobileHeaders()
     {
         return self::$mobileHeaders;
     }
@@ -744,7 +744,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return array List of HTTP headers.
      */
-    public function getUaHttpHeaders()
+    function getUaHttpHeaders()
     {
         return self::$uaHttpHeaders;
     }
@@ -756,7 +756,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return  boolean If there were CloudFront headers to be set
      */
-    public function setCfHeaders($cfHeaders = null) {
+    function setCfHeaders($cfHeaders = null) {
         // use global _SERVER if $cfHeaders aren't defined
         if (!is_array($cfHeaders) || !count($cfHeaders)) {
             $cfHeaders = $_SERVER;
@@ -779,7 +779,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return array
      */
-    public function getCfHeaders()
+    function getCfHeaders()
     {
         return $this->cloudfrontHeaders;
     }
@@ -799,7 +799,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return string|null
      */
-    public function setUserAgent($userAgent = null)
+    function setUserAgent($userAgent = null)
     {
         // Invalidate cache due to #375
         $this->cache = array();
@@ -826,7 +826,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return string|null The user agent if it's set.
      */
-    public function getUserAgent()
+    function getUserAgent()
     {
         return $this->userAgent;
     }
@@ -839,7 +839,7 @@ class MobileDetect extends AbstractHelper
      * @param string $type The type. Must be a self::DETECTION_TYPE_* constant. The default
      *                     parameter is null which will default to self::DETECTION_TYPE_MOBILE.
      */
-    public function setDetectionType($type = null)
+    function setDetectionType($type = null)
     {
         if ($type === null) {
             $type = self::DETECTION_TYPE_MOBILE;
@@ -849,11 +849,11 @@ class MobileDetect extends AbstractHelper
         }
         $this->detectionType = $type;
     }
-    public function getMatchingRegex()
+    function getMatchingRegex()
     {
         return $this->matchingRegex;
     }
-    public function getMatchesArray()
+    function getMatchesArray()
     {
         return $this->matchesArray;
     }
@@ -932,7 +932,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return array All the rules + extended.
      */
-    public function getMobileDetectionRulesExtended()
+    function getMobileDetectionRulesExtended()
     {
         static $rules;
         if (!$rules) {
@@ -954,7 +954,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return array
      */
-    public function getRules()
+    function getRules()
     {
         if ($this->detectionType == self::DETECTION_TYPE_EXTENDED) {
             return self::getMobileDetectionRulesExtended();
@@ -978,7 +978,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return bool
      */
-    public function checkHttpHeadersForMobile()
+    function checkHttpHeadersForMobile()
     {
         foreach ($this->getMobileHeaders() as $mobileHeader => $matchType) {
             if (isset($this->httpHeaders[$mobileHeader])) {
@@ -1005,7 +1005,7 @@ class MobileDetect extends AbstractHelper
      * @return mixed
      * @throws BadMethodCallException when the method doesn't exist and doesn't start with 'is'
      */
-    public function __call($name, $arguments)
+    function __call($name, $arguments)
     {
         // make sure the name starts with 'is', otherwise
         if (substr($name, 0, 2) !== 'is') {
@@ -1066,7 +1066,7 @@ class MobileDetect extends AbstractHelper
      * @param  null $httpHeaders deprecated
      * @return bool
      */
-    public function isMobile($userAgent = null, $httpHeaders = null)
+    function isMobile($userAgent = null, $httpHeaders = null)
     {
         if ($httpHeaders) {
             $this->setHttpHeaders($httpHeaders);
@@ -1096,7 +1096,7 @@ class MobileDetect extends AbstractHelper
      * @param  array  $httpHeaders deprecated
      * @return bool
      */
-    public function isTablet($userAgent = null, $httpHeaders = null)
+    function isTablet($userAgent = null, $httpHeaders = null)
     {
         // Check specifically for cloudfront headers if the useragent === 'Amazon CloudFront'
         if ($this->getUserAgent() === 'Amazon CloudFront') {
@@ -1123,7 +1123,7 @@ class MobileDetect extends AbstractHelper
      * @param  string        $httpHeaders deprecated
      * @return bool|int|null
      */
-    public function is($key, $userAgent = null, $httpHeaders = null)
+    function is($key, $userAgent = null, $httpHeaders = null)
     {
         // Set the UA and HTTP headers only if needed (eg. batch mode).
         if ($httpHeaders) {
@@ -1150,7 +1150,7 @@ class MobileDetect extends AbstractHelper
      *
      * @todo: search in the HTTP headers too.
      */
-    public function match($regex, $userAgent = null)
+    function match($regex, $userAgent = null)
     {
         $match = (bool) preg_match(sprintf('#%s#is', $regex), (false === empty($userAgent) ? $userAgent : $this->userAgent), $matches);
         // If positive match is found, store the results for debug.
@@ -1178,7 +1178,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return float
      */
-    public function prepareVersionNo($ver)
+    function prepareVersionNo($ver)
     {
         $ver = str_replace(array('_', ' ', '/'), '.', $ver);
         $arrVer = explode('.', $ver, 2);
@@ -1200,7 +1200,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return string|float The version of the property we are trying to extract.
      */
-    public function version($propertyName, $type = self::VERSION_TYPE_STRING)
+    function version($propertyName, $type = self::VERSION_TYPE_STRING)
     {
         if (empty($propertyName)) {
             return false;
@@ -1232,7 +1232,7 @@ class MobileDetect extends AbstractHelper
      *
      * @return string One of the self::MOBILE_GRADE_* constants.
      */
-    public function mobileGrade()
+    function mobileGrade()
     {
         $isMobile = $this->isMobile();
         if (
@@ -1325,7 +1325,7 @@ class MobileDetect extends AbstractHelper
         return self::MOBILE_GRADE_C;
     }
 
-    public function getDeviceParam() {
+    function getDeviceParam() {
         if (null !== $this->isMobileDetect) {
             return $this->isMobileDetect;
         }
@@ -1342,7 +1342,7 @@ class MobileDetect extends AbstractHelper
         return $deviceParam;
     }
 
-    public function setForcedDeviceParam($value)
+    function setForcedDeviceParam($value)
     {
         $this->isMobileDetect = $value;
     }

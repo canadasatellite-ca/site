@@ -36,7 +36,7 @@ class AroundOptionsHtml
      * @param MbString $mbString
      * @param AdditionalHtmlData $additionalHtmlData
      */
-    public function __construct(
+    function __construct(
         MbString $mbString,
         AdditionalHtmlData $additionalHtmlData
 
@@ -51,7 +51,7 @@ class AroundOptionsHtml
      * @param \Closure $proceed
      * @return string
      */
-    public function aroundGetOptionHtml(Options $subject, \Closure $proceed, Option $option)
+    function aroundGetOptionHtml(Options $subject, \Closure $proceed, Option $option)
     {
         $result                  = $proceed($option);
         $dom                     = new \DOMDocument();

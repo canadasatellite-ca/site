@@ -7,7 +7,7 @@ class Quote extends \Magento\Customer\Block\Account\SortLink
 
     protected $_quotes;
 
-    public function __construct(
+    function __construct(
         \Cart2Quote\Quotation\Block\Quote\History $quotes,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\DefaultPathInterface $defaultPath,

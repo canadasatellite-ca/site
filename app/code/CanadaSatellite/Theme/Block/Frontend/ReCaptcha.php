@@ -62,7 +62,7 @@ class ReCaptcha extends \MageSuper\Faq\Block\Faq\Faqlist
      * @param LayoutSettings $layoutSettings
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Template\Context $context,
         DecoderInterface $decoder,
         \Magento\Customer\Model\Session $customerSession,
@@ -94,7 +94,7 @@ class ReCaptcha extends \MageSuper\Faq\Block\Faq\Faqlist
      * Get public reCaptcha key
      * @return string
      */
-    public function getPublicKey()
+    function getPublicKey()
     {
         return $this->config->getPublicKey();
     }
@@ -102,7 +102,7 @@ class ReCaptcha extends \MageSuper\Faq\Block\Faq\Faqlist
     /**
      * @inheritdoc
      */
-    public function getJsLayout()
+    function getJsLayout()
     {
         $layout = $this->decoder->decode(parent::getJsLayout());
         $layout['components']['msp-recaptcha']['settings'] = $this->layoutSettings->getCaptchaSettings();

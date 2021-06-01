@@ -17,7 +17,7 @@ use Psr\Log\LoggerInterface as Logger;
 class ApplyAttributesOnProduct extends \MageWorx\OptionBase\Observer\ApplyAttributesOnProduct
 {
 
-    public function __construct(
+    function __construct(
         OptionValueCollection $optionValueCollection,
         ProductAttributes $productAttributes,
         OptionAttributes $optionAttributes,
