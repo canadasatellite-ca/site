@@ -7,7 +7,7 @@ class AccountComposer
 	private $mapper;
 	private $addressBuilder;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsMapper $mapper,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\AddressBuilder $addressBuilder
 	) {
@@ -18,7 +18,7 @@ class AccountComposer
 	/**
 	 * @param $customer Customer envelope.
 	 */
-	public function compose($customer)
+	function compose($customer)
 	{
 		$customerId = $customer->getId();
 		$firstName = $customer->getFirstname();

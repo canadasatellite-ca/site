@@ -10,7 +10,7 @@ class OrderItemEnvelopeFactory
 	private $orderItemUtils;
 
 
-	public function __construct(
+	function __construct(
 		\Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
 		\CanadaSatellite\DynamicsIntegration\Envelope\ProductEnvelopeFactory $productFactory,
 		\CanadaSatellite\DynamicsIntegration\Utils\ConverterUtils $converterUtils,
@@ -24,7 +24,7 @@ class OrderItemEnvelopeFactory
 		$this->logger = $logger;
 	}
 
-	public function create($item, $cost)
+	function create($item, $cost)
 	{
 		$data = array();
 

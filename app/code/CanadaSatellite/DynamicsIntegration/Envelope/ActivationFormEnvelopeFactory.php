@@ -8,7 +8,7 @@ class ActivationFormEnvelopeFactory
 	private $orderEnvelopeFactory;
 	private $customerEnvelopeFactory;
 
-	public function __construct(
+	function __construct(
 		\Magento\Sales\Model\OrderFactory $orderModelFactory,
 		\CanadaSatellite\DynamicsIntegration\Envelope\OrderEnvelopeFactory $orderEnvelopeFactory,
 		\CanadaSatellite\DynamicsIntegration\Envelope\CustomerEnvelopeFactory $customerEnvelopeFactory,
@@ -20,7 +20,7 @@ class ActivationFormEnvelopeFactory
 		$this->logger = $logger;
 	}
 
-	public function create($activationForm, $customer = null)
+	function create($activationForm, $customer = null)
 	{
 		$data = array();
 

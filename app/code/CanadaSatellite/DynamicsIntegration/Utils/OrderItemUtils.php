@@ -9,7 +9,7 @@ class OrderItemUtils
 	private $productUtils;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\Magento\Catalog\Api\ProductCustomOptionRepositoryInterface $customOptionsRepository,
 		\CanadaSatellite\DynamicsIntegration\Utils\CurrencyUtils $currencyUtils,
 		\CanadaSatellite\DynamicsIntegration\Utils\ProductUtils $productUtils,
@@ -21,7 +21,7 @@ class OrderItemUtils
 		$this->logger = $logger;
 	}
 
-	public function getItemBaseCost($item)
+	function getItemBaseCost($item)
 	{
 		$this->logger->info("[OrderItemUtils::getItemBaseCost] Enter");
 		$baseCost = $item->getBaseCost();
@@ -42,7 +42,7 @@ class OrderItemUtils
 		return $baseCost;
 	}
 
-	public function getItemOptionPrice($item, $optionId, $optionValueId)
+	function getItemOptionPrice($item, $optionId, $optionValueId)
 	{
 		$this->logger->info("[OrderItemUtils::getItemOptionPrice] Enter");
 
@@ -73,7 +73,7 @@ class OrderItemUtils
 		return $valuePrice;
 	}
 
-	public function getItemOptionCost($item, $optionId, $optionValueId)
+	function getItemOptionCost($item, $optionId, $optionValueId)
 	{
 		$this->logger->info("[OrderItemUtils::getItemOptionCost] Enter");
 

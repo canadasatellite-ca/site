@@ -4,7 +4,7 @@ namespace CanadaSatellite\DynamicsIntegration\Event;
 
 class EventFactory
 {
-	public function createCustomerSavedEvent($customerId, $customerEnvelope)
+	function createCustomerSavedEvent($customerId, $customerEnvelope)
 	{
 		return array(
 			'kind' => 'CustomerSaved',
@@ -13,7 +13,7 @@ class EventFactory
 		);
 	}
 
-	public function createCustomerDeletedEvent($customerId, $email)
+	function createCustomerDeletedEvent($customerId, $email)
 	{
 		return array(
 			'kind' => 'CustomerDeleted',
@@ -22,7 +22,7 @@ class EventFactory
 		);
 	}
 
-	public function createOrderSavedEvent($orderId, $orderEnvelope)
+	function createOrderSavedEvent($orderId, $orderEnvelope)
 	{
 		return array(
 			'kind' => 'OrderSaved',
@@ -31,7 +31,7 @@ class EventFactory
 		);
 	}
 
-	public function createOrderNoteCreatedEvent($orderId, $orderNote)
+	function createOrderNoteCreatedEvent($orderId, $orderNote)
 	{
 		return array(
 			'kind' => 'OrderNoteAdded',
@@ -40,7 +40,7 @@ class EventFactory
 		);
 	}
 
-	public function createProductSavedEvent($productId, $sku, $productEnvelope)
+	function createProductSavedEvent($productId, $sku, $productEnvelope)
 	{
 		return array(
 			'kind' => 'ProductSaved',
@@ -50,7 +50,7 @@ class EventFactory
 		);
 	}
 
-	public function createProductDeletedEvent($productId, $sku)
+	function createProductDeletedEvent($productId, $sku)
 	{
 		return array(
 			'kind' => 'ProductDeleted',
@@ -59,7 +59,7 @@ class EventFactory
 		);
 	}
 
-	public function createActivationFormSavedEvent($activationFormId, $activationFormEnvelope)
+	function createActivationFormSavedEvent($activationFormId, $activationFormEnvelope)
 	{
 		return array(
 			'kind' => 'ActivationFormSaved',

@@ -9,7 +9,7 @@ class ConverterUtils
 	 * @param string|null $value
 	 * @return float
 	 */
-	public function toFloat($value)
+	function toFloat($value)
 	{
 		if ($value === null) {
 			return null;

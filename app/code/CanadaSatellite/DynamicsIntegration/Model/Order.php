@@ -17,7 +17,7 @@ class Order
 	private $shippedAt;
 	private $shippingAmount;
 
-	public function __construct(
+	function __construct(
 		$id,
 		$billingAddress,
 		$shippingAddress,
@@ -45,27 +45,27 @@ class Order
 		$this->shippingAmount = $shippingAmount;
 	}
 
-	public function getId()
+	function getId()
 	{
 		return $this->id;
 	}
 
-	public function getBillingAddress()
+	function getBillingAddress()
 	{
 		return $this->billingAddress;
 	}
 
-	public function getShippingAddress()
+	function getShippingAddress()
 	{
 		return $this->shippingAddress;
 	}
 
-	public function getCustomer()
+	function getCustomer()
 	{
 		return $this->customer;
 	}
 
-	public function getCustomerId()
+	function getCustomerId()
 	{
 		if ($this->customer === null) {
 			return null;
@@ -74,17 +74,17 @@ class Order
 		return $this->getCustomer()->getId();
 	}
 
-	public function getCreatedAt()
+	function getCreatedAt()
 	{
 		return $this->createdAt;
 	}
 
-	public function getIncrementId()
+	function getIncrementId()
 	{
 		return $this->incrementId;
 	}
 
-	public function getCurrency()
+	function getCurrency()
 	{
 		if (empty($this->currency)) {
 			return 'CAD';
@@ -93,27 +93,27 @@ class Order
 		return $this->currency;
 	}
 
-	public function getStatus()
+	function getStatus()
 	{
 		return $this->status;
 	}
 
-	public function getItems()
+	function getItems()
 	{
 		return $this->items;
 	}
 
-	public function getCustomerEmail()
+	function getCustomerEmail()
 	{
 		return $this->email;
 	}
 
-	public function getShippedAt()
+	function getShippedAt()
 	{
 		return $this->shippedAt;
 	}
 
-	public function getShippingAmount()
+	function getShippingAmount()
 	{
 		return $this->shippingAmount;
 	}

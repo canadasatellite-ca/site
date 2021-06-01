@@ -17,7 +17,7 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 	private $orderNoteProcessor;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Model\CustomerFactory $customerFactory,
 		\CanadaSatellite\DynamicsIntegration\Updater\CustomerUpdater $customerUpdater,
 		\CanadaSatellite\DynamicsIntegration\Model\OrderFactory $orderFactory,
@@ -46,7 +46,7 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 		$this->logger = $logger;
 	}
 
-	public function consume($batch, $client)
+	function consume($batch, $client)
 	{
 		$this->dump("Got message!", $batch);
 

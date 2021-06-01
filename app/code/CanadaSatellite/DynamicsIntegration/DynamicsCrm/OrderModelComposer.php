@@ -15,7 +15,7 @@ class OrderModelComposer {
 	private $restApi;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CurrencyHelper $currencyHelper,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderStatusHelper $orderStatusHelper,
@@ -36,7 +36,7 @@ class OrderModelComposer {
 	/**
 	 * @return array OrderModel.
 	 */
-	public function compose($order, $insert = false, $accountId = null, $customerId = null) {
+	function compose($order, $insert = false, $accountId = null, $customerId = null) {
 		$this->logger->info("Composing order");
 
 		$createdAt = $order->getCreatedAt();

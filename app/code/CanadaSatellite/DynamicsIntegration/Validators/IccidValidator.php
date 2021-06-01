@@ -6,11 +6,11 @@ namespace CanadaSatellite\DynamicsIntegration\Validators;
 class IccidValidator {
 	private $checkAlgorithm;
 
-	public function __construct(\CanadaSatellite\DynamicsIntegration\Validators\Algorithms\LuhnChecksumAlgorithm $checkAlgorithm) {
+	function __construct(\CanadaSatellite\DynamicsIntegration\Validators\Algorithms\LuhnChecksumAlgorithm $checkAlgorithm) {
 		$this->checkAlgorithm = $checkAlgorithm;
 	}
 
-	public function validateIccid($number) {
+	function validateIccid($number) {
 		return $this->checkAlgorithm->checkSum($number);
 	}
 }

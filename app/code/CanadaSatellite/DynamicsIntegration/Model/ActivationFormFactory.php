@@ -7,7 +7,7 @@ class ActivationFormFactory
 	private $orderFactory;
 	private $customerFactory;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Model\OrderFactory $orderFactory,
 		\CanadaSatellite\DynamicsIntegration\Model\CustomerFactory $customerFactory
 	) {
@@ -16,7 +16,7 @@ class ActivationFormFactory
 	}
 
 
-	public function fromEnvelope($envelope)
+	function fromEnvelope($envelope)
 	{
 		if ($envelope === null) {
 			return null;

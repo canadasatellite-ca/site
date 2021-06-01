@@ -12,7 +12,7 @@ class ProductUtils
 	private $converterUtils;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\Magento\Framework\Url $frontUrlModel,
 		\Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
 		\Magento\CatalogInventory\Api\StockRegistryInterface $stockRegistry,
@@ -30,7 +30,7 @@ class ProductUtils
 		$this->logger = $logger;
 	}
 
-	public function getVendorCurrency($product)
+	function getVendorCurrency($product)
 	{
 		$this->logger->info("[getVendorCurrency] Enter");
 		$vendorCurrency = $this->eavUtils->getDropdownAttributeValue($product, 'vendor_currency');
@@ -44,7 +44,7 @@ class ProductUtils
  		return $vendorCurrency;
 	}
 
-	public function getQty($product)
+	function getQty($product)
 	{
 		$productId = $product->getId();
 		$stock = $this->stockRegistry->getStockItem($productId);
@@ -56,7 +56,7 @@ class ProductUtils
 		return $stock->getQty();
 	}
 
-	public function getUrl($product)
+	function getUrl($product)
 	{
         $routeParams = ['_nosid' => true];
 
@@ -69,7 +69,7 @@ class ProductUtils
  	 * @param Magento\Catalog\Api\Data\ProductInterface $product
  	 * @return float|null Price in CAD. 
  	 */
- 	public function getPrice($product)
+ 	function getPrice($product)
  	{
  		$this->logger->info("[getPrice] -> Enter");
 
@@ -125,7 +125,7 @@ class ProductUtils
  		}
  	}
 
- 	public function getPriceUsd($product)
+ 	function getPriceUsd($product)
  	{
  		$this->logger->info("[getPriceUsd] -> Enter");
 
@@ -151,7 +151,7 @@ class ProductUtils
  		return null;
  	}
 
- 	public function getSpecialPrice($product) {
+ 	function getSpecialPrice($product) {
  		$this->logger->info("[getSpecialPrice] Enter");
  		$specialPrice = $this->doGetSpecialPrice($product);
  		$specialPriceUsd = $this->getSpecialPriceUsd($product);
@@ -179,7 +179,7 @@ class ProductUtils
  		return $specialPrice;
  	}
 
- 	public function getSpecialPriceUsd($product) {
+ 	function getSpecialPriceUsd($product) {
  		$vendorCurrency = $this->eavUtils->getDropdownAttributeValue($product, 'vendor_currency');
  		$this->logger->info("[getSpecialPriceUsd] Vendor currency is: $vendorCurrency. Introspect: " . gettype($vendorCurrency));
  		if ($vendorCurrency !== 'USD') {
@@ -207,7 +207,7 @@ class ProductUtils
 		return $specialPriceUsd;
  	}
 
- 	public function getCost($product) {
+ 	function getCost($product) {
  		// As is without currency conversion.
  		if ($product->getTypeId() === 'bundle') {
  			$this->logger->info("[ProductUtils::getCost] Calculating bundle product cost");

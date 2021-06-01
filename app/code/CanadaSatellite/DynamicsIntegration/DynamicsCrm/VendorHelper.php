@@ -7,7 +7,7 @@ class VendorHelper
 	private $restApi;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -19,7 +19,7 @@ class VendorHelper
 	 * @param string $vendor
 	 * @return string Dynamics account id
 	 */
-	public function getOrCreateVendorAccount($vendor)
+	function getOrCreateVendorAccount($vendor)
 	{
 		$id = $this->findVendorAccount($vendor);
 		if ($id === null) {

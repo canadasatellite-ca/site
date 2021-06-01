@@ -4,7 +4,7 @@ namespace CanadaSatellite\DynamicsIntegration\Model;
 
 class ProductFactory
 {
-	public function fromEnvelope($envelope)
+	function fromEnvelope($envelope)
 	{
 		if ($envelope === null) {
 			return null;

@@ -26,7 +26,7 @@ class ImportOrderCommand extends Command
 	const ARGUMENT_FROM_ORDER_ID = 'from_order_id';
 	const ARGUMENT_TO_ORDER_ID = 'to_order_id';
 
-	public function __construct(
+	function __construct(
 		\Magento\Framework\App\State $appState,
 		\Magento\Sales\Model\OrderFactory $orderFactory,
 		\Magento\Sales\Api\OrderRepositoryInterface $orderRepository,

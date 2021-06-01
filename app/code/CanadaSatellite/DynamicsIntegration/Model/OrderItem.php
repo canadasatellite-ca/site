@@ -17,7 +17,7 @@ class OrderItem
 
 	private $cost;
 
-	public function __construct(
+	function __construct(
 		$sku,
 		$product,
 		$price,
@@ -45,52 +45,52 @@ class OrderItem
 		$this->cost = $cost;
 	}
 
-	public function getSku()
+	function getSku()
 	{
 		return $this->sku;
 	}
 
-	public function getProduct()
+	function getProduct()
 	{
 		return $this->product;
 	}
 
-	public function getPrice()
+	function getPrice()
 	{
 		return $this->price;
 	}
 
-	public function getQty()
+	function getQty()
 	{
 		return $this->qty;
 	}
 
-	public function getTax()
+	function getTax()
 	{
 		return $this->tax;
 	}
 
-	public function getDiscount()
+	function getDiscount()
 	{
 		return $this->discount;
 	}
 
-	public function getTotal()
+	function getTotal()
 	{
 		return $this->total;
 	}
 
-	public function getOptionsPrice()
+	function getOptionsPrice()
 	{
 		return $this->optionsPrice;
 	}
 
-	public function getOptionsCost()
+	function getOptionsCost()
 	{
 		return $this->optionsCost;
 	}
 
-	public function getCost()
+	function getCost()
 	{
 		// In base currency, CAD.
 		return $this->cost;

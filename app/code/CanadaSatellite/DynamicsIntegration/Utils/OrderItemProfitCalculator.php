@@ -10,7 +10,7 @@ class OrderItemProfitCalculator
 	private $costPerUnit;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger,
 		$item
 	) {
@@ -24,7 +24,7 @@ class OrderItemProfitCalculator
 		$this->logger = $logger;
 	}
 
-	public function calculateMargin()
+	function calculateMargin()
 	{
 		$profit = $this->calculateProfit();
 		$this->logger->info("[OrderItemProfitCalculator::calculateMargin] Order item profit $profit");
@@ -47,7 +47,7 @@ class OrderItemProfitCalculator
 		return $margin;
 	}
 
-	public function calculateProfit()
+	function calculateProfit()
 	{
 		$priceTotal = $this->getPriceTotal();
 		$this->logger->info("[OrderItemProfitCalculator::calculateProfit] Order item total price $priceTotal");

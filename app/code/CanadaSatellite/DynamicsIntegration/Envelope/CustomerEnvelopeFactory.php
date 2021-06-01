@@ -9,7 +9,7 @@ class CustomerEnvelopeFactory
 	private $customerUtils;
 	private $addressFactory;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Utils\AddressUtils $addressUtils,
 		\CanadaSatellite\DynamicsIntegration\Utils\EavUtils $eavUtils,
 		\CanadaSatellite\DynamicsIntegration\Utils\CustomerUtils $customerUtils,
@@ -25,7 +25,7 @@ class CustomerEnvelopeFactory
 	 * @param \Magento\Customer\Api\Data\CustomerInterface $customer
 	 * @return array
 	 */
-	public function create($customer)
+	function create($customer)
 	{
 		$data = array();
 

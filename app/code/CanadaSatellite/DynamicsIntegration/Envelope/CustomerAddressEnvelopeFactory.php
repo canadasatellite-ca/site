@@ -6,7 +6,7 @@ class CustomerAddressEnvelopeFactory
 {
 	private $addressUtils;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Utils\AddressUtils $addressUtils,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -14,7 +14,7 @@ class CustomerAddressEnvelopeFactory
 		$this->logger = $logger;
 	}
 
-	public function create($address)
+	function create($address)
 	{
 		$data = array();
 		if ($address === null) {

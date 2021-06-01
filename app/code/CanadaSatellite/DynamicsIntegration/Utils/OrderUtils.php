@@ -7,7 +7,7 @@ class OrderUtils
 	private $orderItemUtils;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Utils\OrderItemUtils $orderItemUtils,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -15,7 +15,7 @@ class OrderUtils
 		$this->logger = $logger;
 	}
 
-	public function getCreatedAt($order) {
+	function getCreatedAt($order) {
 		$createdAt = $order->getCreatedAt();
 		if ($createdAt === null) {
 			return null;
@@ -32,7 +32,7 @@ class OrderUtils
 		return $date->format('Y-m-d\TH:i:s\Z');
 	}
 
-	public function getShipmentDate($order) {
+	function getShipmentDate($order) {
 		$shipmentDateUtc = null;
 		foreach ($order->getShipmentsCollection() as $shipment) {
 			// Take first.
@@ -46,7 +46,7 @@ class OrderUtils
 		return (new \DateTime($shipmentDateUtc))->format("Y-m-d\TH:i:s\Z");
 	}
 
-	public function calculateVisibleItemsCosts($order)
+	function calculateVisibleItemsCosts($order)
 	{
 		// Item quote id => item aggregate cost over all children. 
 		// Cart may have multiple items with same SKU under unclear conditions, so SKU is not reliable enough as unique identifier.
@@ -113,7 +113,7 @@ class OrderUtils
 	/**
 	 $costs - pre-calculated costs array for visible items.
 	 */
-	public function getVisibleItemBaseCost($item, $costs)
+	function getVisibleItemBaseCost($item, $costs)
 	{
 		$quoteId = $item->getQuoteItemId();
 

@@ -15,7 +15,7 @@ class DynamicsCrm {
 	private $restApi;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CustomerHelper $customerHelper,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductModelComposer $productComposer,
@@ -38,7 +38,7 @@ class DynamicsCrm {
 	/**
 	* @return string Dynamics product id.
 	*/ 
-	public function createOrUpdateProduct($sku, $product) {
+	function createOrUpdateProduct($sku, $product) {
 		$crmProduct = $this->productComposer->compose($product);
 
 		$productId = $this->restApi->findProductIdBySku($sku);	
@@ -101,7 +101,7 @@ class DynamicsCrm {
 		return $productId;
 	}
 
-	public function deleteProduct($sku) {
+	function deleteProduct($sku) {
 		$productId = $this->restApi->findProductIdBySku($sku);
 
 		if ($productId === false) {
@@ -114,7 +114,7 @@ class DynamicsCrm {
 	/**
 	* @return Order id.
 	*/
-	public function createOrUpdateOrder($order) {
+	function createOrUpdateOrder($order) {
 		$this->logger->info("[createOrUpdateOrder] -> Enter");
 
 		$orderId = $order->getIncrementId();
@@ -143,7 +143,7 @@ class DynamicsCrm {
 		return $crmId;
 	}
 
-	public function getOrder($orderId) {
+	function getOrder($orderId) {
 		$this->logger->info("[getOrder] Enter");
 		
 		$crmOrderId = $this->restApi->findOrderByNumber($orderId);
@@ -162,7 +162,7 @@ class DynamicsCrm {
 	* @param $note string
 	* @throws Exception
 	*/
-	public function createOrderNote($orderId, $note)
+	function createOrderNote($orderId, $note)
 	{
 		$this->logger->info("[createOrderNote] Enter");
 
@@ -180,7 +180,7 @@ class DynamicsCrm {
 	 * @param CanadaSatellite\DynamicsIntegration\Model\ActivationForm 
 	 * @return ActivationRequest entity id in Dynamics
 	 */
-	public function createOrUpdateActivationRequest($request)
+	function createOrUpdateActivationRequest($request)
 	{
 		$this->logger->info("[createOrUpdateActivationRequest] Enter");
 
@@ -281,7 +281,7 @@ class DynamicsCrm {
 		return $crmId;
 	}
 
-	public function createSim($sim) {
+	function createSim($sim) {
 		$this->logger->info("Start compose SIM model from #".$sim->getSimNumber());
 		$crmSim = $this->simComposer->compose($sim);
 		$this->logger->info("Send request to CRM with new SIM - ".json_encode($crmSim));

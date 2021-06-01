@@ -11,7 +11,7 @@ class OrderEnvelopeFactory
 	private $customerFactory;
 	private $itemFactory;
 
-	public function __construct(
+	function __construct(
 		\Magento\Customer\Model\CustomerFactory $customerModelFactory,
 		\CanadaSatellite\DynamicsIntegration\Utils\OrderUtils $orderUtils,
 		\CanadaSatellite\DynamicsIntegration\Utils\ConverterUtils $converterUtils,
@@ -32,7 +32,7 @@ class OrderEnvelopeFactory
 	/**
 	 * @param \Magento\Sales\Api\Data\OrderInterface $order
 	 */
-	public function create($order)
+	function create($order)
 	{
 		$data = array();
 

@@ -7,7 +7,7 @@ class ProductUpdater {
 	private $crm;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\Magento\Catalog\Api\ProductRepositoryInterface $productRepository,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsCrm $crm,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
@@ -17,13 +17,13 @@ class ProductUpdater {
 		$this->logger = $logger;
 	}
 
-	public function createOrUpdate($product, $sku) {
+	function createOrUpdate($product, $sku) {
 		$this->logger->info("Try to update products in CRM.");
 		$crmId = $this->crm->createOrUpdateProduct($sku, $product);
 		$this->logger->info("Product created/updated in CRM with id $crmId.");
 	}
 
-	public function delete($sku) {		
+	function delete($sku) {		
 		$this->logger->info("Try to delete product in CRM.");
 		$this->crm->deleteProduct($sku);
 		$this->logger->info("Product deleted in CRM.");

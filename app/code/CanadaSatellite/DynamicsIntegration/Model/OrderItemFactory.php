@@ -6,13 +6,13 @@ class OrderItemFactory
 {
 	private $productFactory;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Model\ProductFactory $productFactory
 	) {
 		$this->productFactory = $productFactory;
 	}
 
-	public function fromEnvelope($envelope)
+	function fromEnvelope($envelope)
 	{
 		if ($envelope === null) {
 			return null;

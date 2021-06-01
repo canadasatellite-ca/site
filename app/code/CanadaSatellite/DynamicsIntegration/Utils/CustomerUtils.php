@@ -8,7 +8,7 @@ class CustomerUtils
 	private $groupRepository;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\Magento\Store\Api\WebsiteRepositoryInterface $websiteRepository,
 		\Magento\Customer\Api\GroupRepositoryInterface $groupRepository,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
@@ -18,7 +18,7 @@ class CustomerUtils
 		$this->logger = $logger;
 	}
 
-	public function getSource($customer)
+	function getSource($customer)
 	{
 		$websiteId = $customer->getWebsiteId();
 		if ($websiteId === null) {
@@ -30,7 +30,7 @@ class CustomerUtils
 		return $code;
 	}
 
-	public function getGroup($customer) {
+	function getGroup($customer) {
 		$groupId = $customer->getGroupId();
 		if ($groupId === null) {
 			return null;
@@ -40,7 +40,7 @@ class CustomerUtils
 		return $group->getCode();
 	}
 
-	public function getGender($customer) {
+	function getGender($customer) {
 		$gender = $customer->getGender();
 		if ($gender === null) {
 			return null;
@@ -54,7 +54,7 @@ class CustomerUtils
 		return $gender;
 	}
 
-	public function getBirthDate($customer) {
+	function getBirthDate($customer) {
 		$birthDate = $customer->getDob();
 		if ($birthDate === null) {
 			return null;

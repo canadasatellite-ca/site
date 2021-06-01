@@ -7,7 +7,7 @@ class CountryHelper
 	private $restApi;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -19,7 +19,7 @@ class CountryHelper
 	 * @param string $country
 	 * @return string|null Dynamics id
 	 */
-	public function findCountryByName($country)
+	function findCountryByName($country)
 	{
 		$id = $this->restApi->findCountryByName($country);
 		if ($id === false) {
