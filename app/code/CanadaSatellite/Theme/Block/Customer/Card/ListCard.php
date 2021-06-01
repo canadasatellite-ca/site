@@ -36,7 +36,7 @@ class ListCard extends \Magento\Customer\Block\Account\Dashboard
      * @param \CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Newsletter\Model\SubscriberFactory $subscriberFactory,
@@ -60,7 +60,7 @@ class ListCard extends \Magento\Customer\Block\Account\Dashboard
     }
 
 
-    public function getCustomerCards()
+    function getCustomerCards()
     {
         $customerId = $this->getCustomer()->getCustomerId();
         $result = array();
@@ -72,7 +72,7 @@ class ListCard extends \Magento\Customer\Block\Account\Dashboard
         return $result;
     }
 
-    public function getInfoHtml($card)
+    function getInfoHtml($card)
     {
         $cardholderName = $card->getCardholderName();
         $cardType = $card->getCardTypeLabel();
@@ -81,33 +81,33 @@ class ListCard extends \Magento\Customer\Block\Account\Dashboard
         return $result;
     }
 
-    public function getCustomer()
+    function getCustomer()
     {
         return $this->_currentCustomer;
     }
 
 
-    public function getBackUrl()
+    function getBackUrl()
     {
         return $this->getUrl('casat/customer/viewsim');
     }
     
-    public function getAddCardUrl()
+    function getAddCardUrl()
     {
         return $this->getUrl('casat/customer/card_add');
     }
 
-    public function getEditCardUrl($card)
+    function getEditCardUrl($card)
     {
         return $this->getUrl('casat/customer/card_edit') . 'id/' . $card->getId();
     }
 
-    public function getDeleteCardUrl()
+    function getDeleteCardUrl()
     {
         return $this->getUrl('casat/customer/card_delete');
     }
 
-    public function _prepareLayout()
+    function _prepareLayout()
     {
         return parent::_prepareLayout();
     }

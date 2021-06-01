@@ -36,7 +36,7 @@ class SubmitReview extends Submit
      */
     private $reviewManagement;
 
-    public function __construct(
+    function __construct(
         Context $context,
         FormKeyValidator $formKeyValidator,
         CaptchaFactory $captchaFactory,
@@ -61,7 +61,7 @@ class SubmitReview extends Submit
             $reviewManagement);
     }
 
-    public function execute()
+    function execute()
     {
         if ($this->getRequest()->getParam('success_v3')) {
             $postData = $this->getRequest()->getPostValue();

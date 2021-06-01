@@ -29,7 +29,7 @@ class ProductUpdateCurrency {
      * @param CollectionFactory $collectionFactory
      * @param Currency $currencyModel
      */
-    public function __construct(
+    function __construct(
         CollectionFactory $collectionFactory,
         Currency $currencyModel
     ){
@@ -37,7 +37,7 @@ class ProductUpdateCurrency {
         $this->_currencyModel = $currencyModel;
     }
 
-    public function beforeExecute(Save $subject) {
+    function beforeExecute(Save $subject) {
         $currentIsUsd = $subject->getRequest()->getParams()['product']['usd_is_base_price'];
 
         if (isset($subject->getRequest()->getParams()['product']['current_product_id'])) {
@@ -55,7 +55,7 @@ class ProductUpdateCurrency {
         return null;
     }
 
-    public function afterExecute(Save $subject, $result) {
+    function afterExecute(Save $subject, $result) {
         if ($this->_isCallAfter) {
             $rates = $this->_currencyModel->getConfigAllowCurrencies();
             $currencyRates = [];

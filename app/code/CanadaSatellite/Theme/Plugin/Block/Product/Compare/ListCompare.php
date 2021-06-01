@@ -20,7 +20,7 @@ class ListCompare
      */
     protected $_customerVisitor;
 
-    public function __construct(
+    function __construct(
         ProductFactory $productFactory,
         Visitor $customerVisitor
     ) {
@@ -28,7 +28,7 @@ class ListCompare
         $this->_customerVisitor = $customerVisitor;
     }
 
-    public function afterGetItems(ParentListCompare $subject, $result)
+    function afterGetItems(ParentListCompare $subject, $result)
     {
         if ($this->_customerVisitor->getId() == null || (isset($_SESSION['catalog']['is_incognito']) && $_SESSION['catalog']['is_incognito'] == 1)) {
 

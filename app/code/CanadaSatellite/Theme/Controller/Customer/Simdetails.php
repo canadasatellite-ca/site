@@ -28,7 +28,7 @@ class Simdetails extends \Magedelight\Firstdata\Controller\Firstdata
     protected $_url;
 
 
-    public function __construct(Context $context,
+    function __construct(Context $context,
                                 \Magento\Framework\View\Result\PageFactory $resultPageFactory,
                                 \Magento\Framework\Registry $registry,
                                 \Magento\Customer\Model\Session $customerSession,
@@ -51,7 +51,7 @@ class Simdetails extends \Magedelight\Firstdata\Controller\Firstdata
         return $this->_customerSession;
     }
 
-    public function dispatch(RequestInterface $request)
+    function dispatch(RequestInterface $request)
     {
         if (!$this->_getSession()->authenticate()) {
             $this->_actionFlag->set('', 'no-dispatch', true);
@@ -59,7 +59,7 @@ class Simdetails extends \Magedelight\Firstdata\Controller\Firstdata
 
         return parent::dispatch($request);
     }
-    public function execute()
+    function execute()
     {
         $simId = $this->_request->getParam('id');
         if (!$simId) {

@@ -7,7 +7,7 @@ class Reviews extends \Magento\Customer\Block\Account\SortLink
 
     protected $_reviews;
 
-    public function __construct(
+    function __construct(
         \Magento\Review\Block\Customer\ListCustomer $reviews,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\DefaultPathInterface $defaultPath,

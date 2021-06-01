@@ -22,7 +22,7 @@ class CheckoutTypeOnepageSaveOrderAfterObserver implements ObserverInterface
      * CheckoutTypeOnepageSaveOrderAfterObserver constructor.
      * @param Quote $quoteSession
      */
-    public function __construct(
+    function __construct(
         Quote $quoteSession
     )
     {
@@ -32,7 +32,7 @@ class CheckoutTypeOnepageSaveOrderAfterObserver implements ObserverInterface
     /**
      * @param EventObserver $observer
      */
-    public function execute(EventObserver $observer)
+    function execute(EventObserver $observer)
     {
         $order = $observer->getEvent()->getOrder();
         $paymentMethod = $order->getPayment()->getMethod();

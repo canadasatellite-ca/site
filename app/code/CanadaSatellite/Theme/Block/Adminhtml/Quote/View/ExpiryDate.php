@@ -13,7 +13,7 @@ class ExpiryDate
      * Check expiry date active status
      * @return string
      */
-    public function afterIsActiveExpiryDate(VendorExpiryDate $subject, $result)
+    function afterIsActiveExpiryDate(VendorExpiryDate $subject, $result)
     {
         return '';
     }

@@ -14,7 +14,7 @@ class Sim extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      */
     protected $_restApi;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\ResourceModel\Db\Context $context,
         \CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
         $connectionName = null
@@ -39,18 +39,18 @@ class Sim extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @return string
      * @api
      */
-    public function getMainTable()
+    function getMainTable()
     {
         return '';
     }
 
-    public function save(\Magento\Framework\Model\AbstractModel $object) {
+    function save(\Magento\Framework\Model\AbstractModel $object) {
         // save operations here
         // make sure to update your model with the data!
         throw new \Exception("Not implemented");
     }
 
-    public function load(\Magento\Framework\Model\AbstractModel $object, $value, $field = null) {
+    function load(\Magento\Framework\Model\AbstractModel $object, $value, $field = null) {
         $object->beforeLoad($value, $field);
         if ($field !== null) {
             throw new \Exception("Not implemented");
@@ -73,7 +73,7 @@ class Sim extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         return $this;
     }
 
-    public function delete(\Magento\Framework\Model\AbstractModel $object) {
+    function delete(\Magento\Framework\Model\AbstractModel $object) {
         // delete operations here
         throw new \Exception("Not implemented");
     }

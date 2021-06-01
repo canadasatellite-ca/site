@@ -5,7 +5,7 @@ namespace CanadaSatellite\Theme\Block\Adminhtml\Quote\View\Items\Columns;
 class Name extends \Cart2Quote\Quotation\Block\Adminhtml\Quote\View\Items\Columns\Name
 {
 
-    public function getOrderOptionsFromInfoBuyRequest()
+    function getOrderOptionsFromInfoBuyRequest()
     {
         $date_start = null;
         if ($options = $this->getItem()->getProduct()->getTypeInstance(true)->getOrderOptions($this->getItem()->getProduct())) {

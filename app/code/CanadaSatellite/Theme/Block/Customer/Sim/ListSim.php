@@ -51,7 +51,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * @param \Magento\Customer\Helper\Session\CurrentCustomer $currentCustomer
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Session\SessionManagerInterface $sessionManager,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
@@ -117,12 +117,12 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      *
      * @return string
      */
-    public function getToolbarHtml()
+    function getToolbarHtml()
     {
         return $this->getChildHtml('toolbar');
     }
 
-    public function wasRecentlyActivated($sim)
+    function wasRecentlyActivated($sim)
     {
         $activatedSimsIds = $this->getRequest()->getParam('activated');
         $activated = false;
@@ -139,7 +139,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * @param string $date
      * @return string
      */
-    public function dateFormat($date)
+    function dateFormat($date)
     {
         return $this->formatDate($date, \IntlDateFormatter::SHORT);
     }
@@ -151,7 +151,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      *
      * @return bool|\CanadaSatellite\Theme\Model\ResourceModel\Sim\Collection
      */
-    public function getSims()
+    function getSims()
     {
         if (!($customerId = $this->currentCustomer->getCustomerId())) {
             return false;
@@ -171,7 +171,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      *
      * @param $request
      */
-    public function restoreTableState($request)
+    function restoreTableState($request)
     {
         $field = $request->getParam(SimTableField::RequestParam);
         if($field === null) {
@@ -210,7 +210,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
     /**
      * Reset SIMs filter
      */
-    public function resetSimsFilter()
+    function resetSimsFilter()
     {
         $this->_sessionManager->setFilter(FilterNetworkStatus::None);
     }
@@ -221,7 +221,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * Return current sorting field from session store
      * @return mixed
      */
-    public function getField()
+    function getField()
     {
         return $this->_sessionManager->getField();
     }
@@ -230,7 +230,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * Return current sorting direction from session store
      * @return mixed
      */
-    public function getSorting()
+    function getSorting()
     {
         return $this->_sessionManager->getSorting();
     }
@@ -239,7 +239,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * Return current filter from session store
      * @return mixed
      */
-    public function getFilter()
+    function getFilter()
     {
         return $this->_sessionManager->getFilter();
     }
@@ -250,7 +250,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * @param $field
      * @return mixed
      */
-    public function formatFieldName($field)
+    function formatFieldName($field)
     {
         $fieldName = $this->getFieldName($field);
         $fieldName = $this->escapeHtml(__($fieldName));
@@ -315,7 +315,7 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      * @param $curFilter
      * @return string
      */
-    public function getSelected($curFilter)
+    function getSelected($curFilter)
     {
         return ($curFilter === $this->getFilter()) ? 'selected' : '';
     }
@@ -327,22 +327,22 @@ class ListSim extends \Magento\Customer\Block\Account\Dashboard
      *
      * @return string
      */
-    public function getSimLink()
+    function getSimLink()
     {
         return $this->getUrl('casat/customer/simdetails/');
     }
 
-    public function getCardsUrl()
+    function getCardsUrl()
     {
         return $this->getUrl('casat/customer/card_listing');
     }
 
-    public function getActivateUrl()
+    function getActivateUrl()
     {
         return $this->getUrl('casat/customer/simactivate');
     }
 
-    public function sortingSimsUrl()
+    function sortingSimsUrl()
     {
         return $this->getUrl('casat/customer/viewsim');
     }

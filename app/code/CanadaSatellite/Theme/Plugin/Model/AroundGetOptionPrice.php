@@ -63,7 +63,7 @@ class AroundGetOptionPrice
      * @param PricingHelper $pricingHelper
      * @param AdvancedPricingPrice $advancedPricingPrice
      */
-    public function __construct(
+    function __construct(
         Helper $helper,
         BaseHelper $baseHelper,
         BasePriceHelper $basePriceHelper,
@@ -91,7 +91,7 @@ class AroundGetOptionPrice
      * @param string $optionValue Prepared for cart option value
      * @return string
      */
-    public function aroundGetEditableOptionValue($subject, $proceed, $optionValue)
+    function aroundGetEditableOptionValue($subject, $proceed, $optionValue)
     {
         $option = $subject->getOption();
         $result = '';
@@ -141,7 +141,7 @@ class AroundGetOptionPrice
      * @param float $basePrice For percent price type
      * @return float
      */
-    public function aroundGetOptionPrice($subject, $proceed, $optionValue, $basePrice)
+    function aroundGetOptionPrice($subject, $proceed, $optionValue, $basePrice)
     {
         $option = $subject->getOption();
         $result = 0;

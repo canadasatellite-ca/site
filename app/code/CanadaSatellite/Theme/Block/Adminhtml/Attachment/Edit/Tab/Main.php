@@ -268,7 +268,7 @@ class Main extends \MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main
      *
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Attachment Settings');
     }
@@ -278,7 +278,7 @@ class Main extends \MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main
      *
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -288,7 +288,7 @@ class Main extends \MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main
      *
      * @return boolean
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -298,7 +298,7 @@ class Main extends \MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main
      *
      * @return boolean
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }
@@ -350,7 +350,7 @@ class Main extends \MageWorx\Downloads\Block\Adminhtml\Attachment\Edit\Tab\Main
      *
      * @return \Magento\Framework\Phrase
      */
-    public function getMaxUploadSizeMessage()
+    function getMaxUploadSizeMessage()
     {
         $maxFileSize = $this->fileSize->getMaxFileSizeInMb();
         if ($maxFileSize) {

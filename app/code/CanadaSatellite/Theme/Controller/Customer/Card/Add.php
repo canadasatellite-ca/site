@@ -32,7 +32,7 @@ class Add extends \Magento\Framework\App\Action\Action
      */
     protected $_logger;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Customer\Model\Session $customerSession,
@@ -47,7 +47,7 @@ class Add extends \Magento\Framework\App\Action\Action
         parent::__construct($context);
     }
 
-    public function dispatch(RequestInterface $request)
+    function dispatch(RequestInterface $request)
     {
         if (!$this->_getSession()->authenticate()) {
             $this->_actionFlag->set('', 'no-dispatch', true);
@@ -56,7 +56,7 @@ class Add extends \Magento\Framework\App\Action\Action
         return parent::dispatch($request);
     }
     
-    public function execute()
+    function execute()
     {
         $resultPage = $this->_resultPageFactory->create();
         return $resultPage;

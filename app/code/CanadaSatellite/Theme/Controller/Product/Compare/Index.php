@@ -45,7 +45,7 @@ class Index extends \Magento\Catalog\Controller\Product\Compare\Index
      * @param CheckoutSession $checkoutSession
      * @param Registry $registry
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Catalog\Model\Product\Compare\ItemFactory $compareItemFactory,
         \Magento\Catalog\Model\ResourceModel\Product\Compare\Item\CollectionFactory $itemCollectionFactory,
@@ -79,7 +79,7 @@ class Index extends \Magento\Catalog\Controller\Product\Compare\Index
         $this->_registry = $registry;
     }
 
-    public function execute()
+    function execute()
     {
         $items = $this->getRequest()->getParam('items');
 

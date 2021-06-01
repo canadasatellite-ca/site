@@ -59,7 +59,7 @@ class CommentReview extends AbstractPostAction
      * @param DataObjectHelper $dataObjectHelper
      * @param StoreManagerInterface $storeManager
      */
-    public function __construct(
+    function __construct(
         Context $context,
         FormKeyValidator $formKeyValidator,
         CaptchaFactory $captchaFactory,
@@ -81,7 +81,7 @@ class CommentReview extends AbstractPostAction
     /**
      * {@inheritdoc}
      */
-    public function execute()
+    function execute()
     {
         $params = $this->getRequest()->getParams();
         $success = false;

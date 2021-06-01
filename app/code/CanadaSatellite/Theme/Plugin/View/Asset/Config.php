@@ -30,7 +30,7 @@ class Config
      * @param ScopeConfigInterface $scopeConfig
      * @param State $state
      */
-    public function __construct(
+    function __construct(
         ScopeConfigInterface $scopeConfig,
         State $state,
         Http $request
@@ -41,7 +41,7 @@ class Config
         $this->request = $request;
     }
 
-    public function aroundIsBundlingJsFiles(ParentConfig $subject, callable $proceed)
+    function aroundIsBundlingJsFiles(ParentConfig $subject, callable $proceed)
     {
         if ($this->request->getFullActionName()=='checkout_index_index'){
             return 0;

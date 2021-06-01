@@ -6,13 +6,13 @@ class LayoutProcessor
 {
     private $arrayManager;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\Stdlib\ArrayManager $arrayManager
     ) {
         $this->arrayManager = $arrayManager;
     }
 
-    public function afterProcess(
+    function afterProcess(
         \Onestepcheckout\Iosc\Block\Frontend\LayoutProcessors\LayoutProcessor $subject,
         $jsLayout
     ) {

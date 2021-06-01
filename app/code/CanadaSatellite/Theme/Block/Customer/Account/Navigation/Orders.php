@@ -7,7 +7,7 @@ class Orders extends \Magento\Customer\Block\Account\SortLink
 
     protected $_orders;
 
-    public function __construct(
+    function __construct(
         \Magento\Sales\Block\Order\History $orders,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\DefaultPathInterface $defaultPath,

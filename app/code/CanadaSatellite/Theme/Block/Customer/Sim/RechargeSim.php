@@ -36,7 +36,7 @@ class RechargeSim extends \Magento\Customer\Block\Account\Dashboard
      * @param \CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Customer\Model\Session $customerSession,
         \Magento\Newsletter\Model\SubscriberFactory $subscriberFactory,
@@ -59,7 +59,7 @@ class RechargeSim extends \Magento\Customer\Block\Account\Dashboard
         );
     }
 
-    public function getSim()
+    function getSim()
     {
 
     }
@@ -67,7 +67,7 @@ class RechargeSim extends \Magento\Customer\Block\Account\Dashboard
     /**
      * @return return available cc type
      */
-    public function getCcAvailableTypes()
+    function getCcAvailableTypes()
     {
         return array(
             '100000000' => 'Visa',
@@ -81,7 +81,7 @@ class RechargeSim extends \Magento\Customer\Block\Account\Dashboard
     /**
      * @return cc months
      */
-    public function getCcMonths()
+    function getCcMonths()
     {
         return array(
             '100000000' => '01 - January',
@@ -102,7 +102,7 @@ class RechargeSim extends \Magento\Customer\Block\Account\Dashboard
     /**
      * @return cc Years
      */
-    public function getCcYears()
+    function getCcYears()
     {
         return array(
             //'100000000' => '2014',
@@ -120,17 +120,17 @@ class RechargeSim extends \Magento\Customer\Block\Account\Dashboard
         );
     }
 
-    public function getBackUrl()
+    function getBackUrl()
     {
         return $this->getUrl('casat/customer/simdetails') . 'id/' . $this->getSimId();
     }
     
-    public function getSaveUrl()
+    function getSaveUrl()
     {
         return $this->getUrl('casat/customer/simrecharge') . 'id/' . $this->getSimId();
     }
 
-    public function _prepareLayout()
+    function _prepareLayout()
     {
         return parent::_prepareLayout();
     }

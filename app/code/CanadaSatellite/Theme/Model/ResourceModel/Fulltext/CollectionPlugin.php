@@ -14,7 +14,7 @@ class CollectionPlugin
      * @param string $field
      * @return array
      */
-    public function aroundGetFacetedData(
+    function aroundGetFacetedData(
         Subject $subject,
         Closure $proceed,
         $field

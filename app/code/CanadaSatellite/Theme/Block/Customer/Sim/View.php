@@ -22,7 +22,7 @@ class View extends \Magento\Framework\View\Element\Template
      * @param \Magento\Framework\Registry $coreRegistry
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Catalog\Block\Product\Context $context,
         \Magento\Framework\Registry $coreRegistry,
         array $data = []
@@ -39,7 +39,7 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return \CanadaSatellite\Theme\Model\Sim
      */
-    public function getSimData()
+    function getSimData()
     {
         return $this->_coreRegistry->registry('current_sim');
     }
@@ -49,27 +49,27 @@ class View extends \Magento\Framework\View\Element\Template
      *
      * @return string
      */
-    public function getBackUrl()
+    function getBackUrl()
     {
         return $this->getUrl('casat/customer/viewsim');
     }
 
-    public function getCardsUrl()
+    function getCardsUrl()
     {
         return $this->getUrl('casat/customer/card_listing');
     }
 
-    public function getAutoRechargeUrl($sim)
+    function getAutoRechargeUrl($sim)
     {
         return $this->getUrl('casat/customer/simrecharge') . 'id/' . $sim->getId();
     }
 
-    public function updateNickname($sim)
+    function updateNickname($sim)
     {
         return $this->getUrl('casat/customer/updatenickname') . 'id/' . $sim->getId();
     }
 
-    public function getNoRechargeUrl($sim)
+    function getNoRechargeUrl($sim)
     {
         return $this->getUrl('casat/customer/simnorecharge') . 'id/' . $sim->getId();
     }
@@ -80,7 +80,7 @@ class View extends \Magento\Framework\View\Element\Template
      * @param string $date
      * @return string
      */
-    public function dateFormat($date)
+    function dateFormat($date)
     {
         return $this->formatDate($date, \IntlDateFormatter::LONG);
     }
@@ -91,7 +91,7 @@ class View extends \Magento\Framework\View\Element\Template
      * @param string $date
      * @return string
      */
-    public function timeFormat($date)
+    function timeFormat($date)
     {
         return $this->formatTime($date);
     }

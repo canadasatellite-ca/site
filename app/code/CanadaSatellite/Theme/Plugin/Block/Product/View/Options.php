@@ -37,7 +37,7 @@ class Options
      * @param DecoderInterface $jsonDecoder
      * @param EncoderInterface $jsonEncoder
      */
-    public function __construct(
+    function __construct(
         DecoderInterface $jsonDecoder,
         EncoderInterface $jsonEncoder,
         Currency $currencyModel,
@@ -54,7 +54,7 @@ class Options
      * @param $result
      * @return string
      */
-    public function afterGetJsonConfig(BaseOptions $subject, $result)
+    function afterGetJsonConfig(BaseOptions $subject, $result)
     {
         $config = $this->jsonDecoder->decode($result);
         $frontendCurrency = $this->_storeManager->getStore()->getCurrentCurrency()->getCode();

@@ -44,7 +44,7 @@ class Topmenu
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Catalog\Model\Layer\Resolver $layerResolver
      */
-    public function __construct(
+    function __construct(
         \Magento\Catalog\Helper\Category $catalogCategory,
         \Magento\Catalog\Model\ResourceModel\Category\StateDependentCollectionFactory $categoryCollectionFactory,
         \Magento\Store\Model\StoreManagerInterface $storeManager,
@@ -66,7 +66,7 @@ class Topmenu
      * @return void
      * @SuppressWarnings("PMD.UnusedFormalParameter")
      */
-    public function beforeGetHtml(
+    function beforeGetHtml(
         \Magento\Theme\Block\Html\Topmenu $subject,
         $outermostClass = '',
         $childrenWrapClass = '',
@@ -115,7 +115,7 @@ class Topmenu
      * @param \Magento\Theme\Block\Html\Topmenu $subject
      * @return void
      */
-    public function beforeGetIdentities(\Magento\Theme\Block\Html\Topmenu $subject)
+    function beforeGetIdentities(\Magento\Theme\Block\Html\Topmenu $subject)
     {
         $subject->addIdentity(Category::CACHE_TAG);
         $rootId = $this->storeManager->getStore()->getRootCategoryId();

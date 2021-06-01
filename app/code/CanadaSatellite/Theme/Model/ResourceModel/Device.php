@@ -23,22 +23,22 @@ class Device extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @return string
      * @api
      */
-    public function getMainTable()
+    function getMainTable()
     {
         return '';
     }
 
-    public function save(\Magento\Framework\Model\AbstractModel $object) {
+    function save(\Magento\Framework\Model\AbstractModel $object) {
         // save operations here
         // make sure to update your model with the data!
     }
 
-    public function load(\Magento\Framework\Model\AbstractModel $object, $value, $field = null) {
+    function load(\Magento\Framework\Model\AbstractModel $object, $value, $field = null) {
         // loading operations here
         // make sure to update your model with the data!
     }
 
-    public function delete(\Magento\Framework\Model\AbstractModel $object) {
+    function delete(\Magento\Framework\Model\AbstractModel $object) {
         // delete operations here
     }
 }

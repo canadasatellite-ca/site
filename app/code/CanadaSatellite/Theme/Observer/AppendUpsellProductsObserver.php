@@ -12,7 +12,7 @@ class AppendUpsellProductsObserver extends \Magento\Bundle\Observer\AppendUpsell
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute(\Magento\Framework\Event\Observer $observer)
+    function execute(\Magento\Framework\Event\Observer $observer)
     {
         /* @var $product \Magento\Catalog\Model\Product */
         $product = $observer->getEvent()->getProduct();

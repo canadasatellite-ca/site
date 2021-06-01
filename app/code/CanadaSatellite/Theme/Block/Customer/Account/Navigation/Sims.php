@@ -7,7 +7,7 @@ class Sims extends \Magento\Customer\Block\Account\SortLink
 
     protected $_sims;
 
-    public function __construct(
+    function __construct(
         \CanadaSatellite\Theme\Block\Customer\Sim\ListSim $sims,
         \Magento\Framework\View\Element\Template\Context $context,
         \Magento\Framework\App\DefaultPathInterface $defaultPath,

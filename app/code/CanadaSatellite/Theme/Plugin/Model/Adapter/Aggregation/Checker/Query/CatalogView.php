@@ -25,7 +25,7 @@ class CatalogView
      * @param CategoryRepositoryInterface $categoryRepository
      * @param StoreManagerInterface $storeManager
      */
-    public function __construct(
+    function __construct(
         CategoryRepositoryInterface $categoryRepository,
         StoreManagerInterface $storeManager
     ) {
@@ -33,7 +33,7 @@ class CatalogView
         $this->storeManager = $storeManager;
     }
 
-    public function afterIsApplicable(QuerryCatalogView $subject, $result, Request $request)
+    function afterIsApplicable(QuerryCatalogView $subject, $result, Request $request)
     {
         if (!$result){
             $queryType = $request->getQuery()->getType();

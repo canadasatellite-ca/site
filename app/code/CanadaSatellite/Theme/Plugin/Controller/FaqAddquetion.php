@@ -6,7 +6,7 @@ use Magedelight\Faqs\Controller\Faq\Addquetion;
 
 class FaqAddquetion
 {
-    public function beforeExecute(Addquetion $subject)
+    function beforeExecute(Addquetion $subject)
     {
         /** @var \Magento\Framework\App\Request\Http $request */
         $request = $subject->getRequest();

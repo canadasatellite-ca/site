@@ -20,7 +20,7 @@ class ProductSetCurrency
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
      */
-    public function __construct(
+    function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency)
     {
@@ -36,7 +36,7 @@ class ProductSetCurrency
      * @return bool|float|int|mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function aroundGetData(\Magento\Catalog\Model\Product $product, \Closure $process, $key = '', $index = null)
+    function aroundGetData(\Magento\Catalog\Model\Product $product, \Closure $process, $key = '', $index = null)
     {
         if ($key == 'price' && $product->getTypeId() !== 'bundle') {
             $result = $this->getPrice($product, 'price_usd');
@@ -60,7 +60,7 @@ class ProductSetCurrency
      * @return bool|float|int|mixed
      * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
-    public function aroundGetSpecialPrice(\Magento\Catalog\Model\Product $product, \Closure $process)
+    function aroundGetSpecialPrice(\Magento\Catalog\Model\Product $product, \Closure $process)
     {
         $result = $this->getPrice($product, 'special_price_usd');
         if ($result !== false) {

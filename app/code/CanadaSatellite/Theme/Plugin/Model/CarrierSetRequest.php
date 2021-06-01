@@ -40,7 +40,7 @@ class CarrierSetRequest
         $this->_countryFactory = $countryFactory;
     }
 
-    public function aroundSetRequest(
+    function aroundSetRequest(
         Carrier $subject,
         callable $proceed,
         RateRequest $request

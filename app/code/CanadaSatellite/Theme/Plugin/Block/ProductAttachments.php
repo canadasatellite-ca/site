@@ -35,7 +35,7 @@ class ProductAttachments
      * @param StoreManagerInterface $storeManager
      * @param Context $httpContext
      */
-    public function __construct(
+    function __construct(
         AttachmentProduct $attachmentProduct,
         StoreManagerInterface $storeManager,
         Context $httpContext
@@ -51,7 +51,7 @@ class ProductAttachments
      * @param bool $isUseCustomerGroupFilter
      * @return \MageWorx\Downloads\Model\ResourceModel\Attachment\Collection
      */
-    public function aroundGetAttachmentCollection(
+    function aroundGetAttachmentCollection(
         Attachments $subject,
         callable $proceed,
         $isUseCustomerGroupFilter = true

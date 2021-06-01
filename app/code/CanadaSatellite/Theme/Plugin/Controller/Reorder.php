@@ -48,7 +48,7 @@ class Reorder
      * @param OrderLoaderInterface $orderLoader
      * @param Registry $registry
      */
-    public function __construct(
+    function __construct(
         OrderLoaderInterface $orderLoader,
         Registry $registry,
         RequestInterface $request,
@@ -64,7 +64,7 @@ class Reorder
         $this->_messageManager = $messageManager;
     }
 
-    public function aroundExecute(AbstractReorder $subject, callable $proceed)
+    function aroundExecute(AbstractReorder $subject, callable $proceed)
     {
         $result = $this->orderLoader->load($this->_request);
         if ($result instanceof \Magento\Framework\Controller\ResultInterface) {
@@ -96,7 +96,7 @@ class Reorder
         return $resultRedirect->setPath('checkout/cart');
     }
 
-    public function _getPathRedirectIssuedProduct ($item){
+    function _getPathRedirectIssuedProduct ($item){
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         $product = $objectManager->create('Magento\Catalog\Model\Product')->load($item->getProductId());
         return $product->getProductUrl();

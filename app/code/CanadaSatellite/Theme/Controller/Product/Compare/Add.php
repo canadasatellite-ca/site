@@ -12,7 +12,7 @@ class Add extends \Magento\Catalog\Controller\Product\Compare\Add
 {
     protected $_helperCompare;
 
-    public function __construct(
+    function __construct(
         \Magento\Framework\App\Action\Context $context,
         \Magento\Catalog\Model\Product\Compare\ItemFactory $compareItemFactory,
         \Magento\Catalog\Model\ResourceModel\Product\Compare\Item\CollectionFactory $itemCollectionFactory,
@@ -42,7 +42,7 @@ class Add extends \Magento\Catalog\Controller\Product\Compare\Add
         $this->_helperCompare = $helperCompare;
     }
 
-    public function execute()
+    function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         if (!$this->_formKeyValidator->validate($this->getRequest())) {

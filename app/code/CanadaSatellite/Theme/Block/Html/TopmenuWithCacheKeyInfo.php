@@ -12,7 +12,7 @@ class TopmenuWithCacheKeyInfo extends \Magento\Theme\Block\Html\Topmenu
 
     private $registry;
 
-    public function __construct(
+    function __construct(
         Template\Context $context,
         NodeFactory $nodeFactory,
         TreeFactory $treeFactory,
@@ -23,7 +23,7 @@ class TopmenuWithCacheKeyInfo extends \Magento\Theme\Block\Html\Topmenu
         parent::__construct($context, $nodeFactory, $treeFactory, $data);
     }
 
-    public function getCacheKeyInfo()
+    function getCacheKeyInfo()
     {
         $cacheKeyInfo = parent::getCacheKeyInfo();
         $topCategoryId = $this->getLevel2Category();
@@ -31,7 +31,7 @@ class TopmenuWithCacheKeyInfo extends \Magento\Theme\Block\Html\Topmenu
         return $cacheKeyInfo;
     }
 
-    public function getLevel2Category(){
+    function getLevel2Category(){
         if($this->getCurrentCategory()){
             if($this->getCurrentCategory()->getParentCategories()){
                 foreach ($this->getCurrentCategory()->getParentCategories() as $parent) {
@@ -44,7 +44,7 @@ class TopmenuWithCacheKeyInfo extends \Magento\Theme\Block\Html\Topmenu
         return '5501';
     }
 
-    public function getCurrentCategory()
+    function getCurrentCategory()
     {
         return $this->registry->registry('current_category');
     }

@@ -14,7 +14,7 @@ class NewAction extends SubscriberNewAction
      * @throws \Magento\Framework\Exception\LocalizedException
      * @return void
      */
-    public function execute()
+    function execute()
     {
         if ($this->getRequest()->getParam('success_v3')) {
             if ($this->getRequest()->isPost() && $this->getRequest()->getPost('email')) {

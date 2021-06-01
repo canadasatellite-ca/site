@@ -52,7 +52,7 @@ abstract class AttachmentContainer extends Template
      * @param \MageWorx\Downloads\Model\AttachmentFactory $attachmentFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Data $helperData,
         \Magento\Framework\App\Http\Context $httpContext,
         \Magento\Backend\Block\Template\Context $context,
@@ -87,7 +87,7 @@ abstract class AttachmentContainer extends Template
      * @param array $files
      * @return array
      */
-    public function groupFiles($files)
+    function groupFiles($files)
     {
         $grouped = array();
 
@@ -110,7 +110,7 @@ abstract class AttachmentContainer extends Template
      *
      * @return boolean
      */
-    public function isGroupBySection()
+    function isGroupBySection()
     {
         return $this->helperData->isGroupBySection();
     }
@@ -119,7 +119,7 @@ abstract class AttachmentContainer extends Template
      *
      * @return boolean
      */
-    public function isShowHowToDownloadMessage()
+    function isShowHowToDownloadMessage()
     {
         return $this->isHasNotAllowedLinks && $this->getHowToDownloadMessage();
     }
@@ -128,7 +128,7 @@ abstract class AttachmentContainer extends Template
      *
      * @return string
      */
-    public function getHowToDownloadMessage()
+    function getHowToDownloadMessage()
     {
         return $this->helperData->getHowToDownloadMessage();
     }
@@ -138,7 +138,7 @@ abstract class AttachmentContainer extends Template
      * @param \MageWorx\Downloads\Model\Attachment $attachment
      * @return string
      */
-    public function getAttachmentHtml($attachment)
+    function getAttachmentHtml($attachment)
     {
         $block = $this->getLayout()->createBlock('MageWorx\Downloads\Block\Catalog\Product\Link')
             ->setTemplate('CanadaSatellite_Theme::attachment_link.phtml');
@@ -152,7 +152,7 @@ abstract class AttachmentContainer extends Template
      * @param \MageWorx\Downloads\Model\Attachment $item
      * @return boolean
      */
-    public function isAllowByCount($item)
+    function isAllowByCount($item)
     {
         $limit = $item->getDownloadsLimit();
         if ($limit) {
@@ -179,7 +179,7 @@ abstract class AttachmentContainer extends Template
      *
      * @return array
      */
-    public function getGroupAttachments()
+    function getGroupAttachments()
     {
         $attachments = $this->getAttachments();
         $grouped     = [];

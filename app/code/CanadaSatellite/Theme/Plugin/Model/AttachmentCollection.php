@@ -22,7 +22,7 @@ class AttachmentCollection
         $this->helperData = $helperData;
     }
 
-    public function aroundAddSortOrder(
+    function aroundAddSortOrder(
         Collection $subject,
         callable $proceed,
         $sort = null

@@ -27,7 +27,7 @@ class ProductLink
      */
     protected $storeManager;
 
-    public function __construct(
+    function __construct(
         UrlRewriteFactory $urlRewriteFactory,
         StoreManagerInterface $storeManager,
         UrlRewriteCollectionFactory $urlRewriteCollectionFactory
@@ -37,7 +37,7 @@ class ProductLink
         $this->_urlRewriteCollectionFactory = $urlRewriteCollectionFactory;
     }
 
-    public function aroundGetAttachmentLink(
+    function aroundGetAttachmentLink(
         Link $subject,
         callable $proceed,
         $attachmentId,
@@ -64,7 +64,7 @@ class ProductLink
         return $requestPath;
     }
 
-    public function _saveNewRewriteUrl($targetRoute, $requestRoute, $originalStoreId)
+    function _saveNewRewriteUrl($targetRoute, $requestRoute, $originalStoreId)
     {
         /** @var UrlRewrite $urlRewriteModel */
         $urlRewriteModel = $this->_urlRewriteFactory->create();
@@ -75,7 +75,7 @@ class ProductLink
         $urlRewriteModel->save();
     }
 
-    public function _reformatFileName($fileName)
+    function _reformatFileName($fileName)
     {
         $reformatFileName = strtolower(trim($fileName));
         $reformatFileName = substr ($reformatFileName,5);

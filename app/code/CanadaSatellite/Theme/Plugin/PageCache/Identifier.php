@@ -36,7 +36,7 @@ class Identifier
      * @param \Magento\Framework\App\Http\Context $context
      * @param Json|null $serializer
      */
-    public function __construct(
+    function __construct(
         MobileDetect $mobileDetect,
         \Magento\Framework\App\Request\Http $request,
         \Magento\Framework\App\Http\Context $context,
@@ -53,7 +53,7 @@ class Identifier
      *
      * @return string
      */
-    public function aroundGetValue()
+    function aroundGetValue()
     {
         $data = [
             $this->request->isSecure(),
