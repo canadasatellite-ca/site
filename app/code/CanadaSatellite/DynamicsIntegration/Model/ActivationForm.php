@@ -22,7 +22,7 @@ class ActivationForm
 	private $comments;
 	private $status;
 
-	public function __construct(
+	function __construct(
 		$id,
 		$email,
 		$firstName,
@@ -60,87 +60,87 @@ class ActivationForm
 		$this->status = $status;
 	}
 
-	public function getId()
+	function getId()
 	{
 		return $this->id;
 	}
 
-	public function getEmail()
+	function getEmail()
 	{
 		return $this->email;
 	}
 
-	public function getFirstName()
+	function getFirstName()
 	{
 		return $this->firstName;
 	}
 
-	public function getLastName()
+	function getLastName()
 	{
 		return $this->lastName;
 	}
 
-	public function getCompanyName()
+	function getCompanyName()
 	{
 		return $this->companyName;
 	}
 
-	public function getSimNumber()
+	function getSimNumber()
 	{
 		return $this->simNumber;
 	}
 
-	public function getOrderNumber()
+	function getOrderNumber()
 	{
 		return $this->orderNumber;
 	}
 
-	public function getOrder()
+	function getOrder()
 	{
 		return $this->order;
 	}
 
-	public function getCustomer()
+	function getCustomer()
 	{
 		return $this->customer;
 	}
 
-	public function getNotes()
+	function getNotes()
 	{
 		return $this->notes;
 	}
 
-	public function getDesiredActivationDate()
+	function getDesiredActivationDate()
 	{
 		return $this->desiredActivationDate;
 	}
 
-	public function getCompletedDate()
+	function getCompletedDate()
 	{
 		return $this->completedDate;
 	}
 
-	public function getPhoneNumber()
+	function getPhoneNumber()
 	{
 		return $this->phoneNumber;
 	}
 
-	public function getDataNumber()
+	function getDataNumber()
 	{
 		return $this->dataNumber;
 	}
 
-	public function getExpirationDate()
+	function getExpirationDate()
 	{
 		return $this->expirationDate;
 	}
 
-	public function getComments()
+	function getComments()
 	{
 		return $this->comments;
 	}
 
-	public function getStatus()
+	function getStatus()
 	{
 		return $this->status;
 	}

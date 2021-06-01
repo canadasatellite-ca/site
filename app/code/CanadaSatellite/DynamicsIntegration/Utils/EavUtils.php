@@ -9,7 +9,7 @@ class EavUtils
 	 * @param string $attributeName
 	 * @return string|null
 	 */
-	public function getTextAttributeValue($entity, $attributeName)
+	function getTextAttributeValue($entity, $attributeName)
 	{
  		$attribute = $entity->getCustomAttribute($attributeName);
  		if ($attribute === null) {
@@ -19,7 +19,7 @@ class EavUtils
  		return $attribute->getValue();
  	}
 
- 	public function getDropdownAttributeValue($entity, $attributeName)
+ 	function getDropdownAttributeValue($entity, $attributeName)
  	{
  		$attribute = $entity->getCustomAttribute($attributeName);
  		if ($attribute === null) {
@@ -46,7 +46,7 @@ class EavUtils
  		return $attributeResource->getSource()->getOptionText($option);
  	}
 
- 	public function getDecimalAttributeValue($entity, $attributeName)
+ 	function getDecimalAttributeValue($entity, $attributeName)
  	{
  		$attribute = $entity->getCustomAttribute($attributeName);
  		if ($attribute === null) {
@@ -56,7 +56,7 @@ class EavUtils
  		return $attribute->getValue();
  	}
 
- 	public function getBooleanAttributeValue($entity, $attributeName)
+ 	function getBooleanAttributeValue($entity, $attributeName)
  	{
  		$attribute = $entity->getCustomAttribute($attributeName);
  		if ($attribute === null) {
@@ -67,7 +67,7 @@ class EavUtils
  		return $value === '1';
  	}
 
- 	public function getMultiselectAttributeValue($entity, $attributeName) {
+ 	function getMultiselectAttributeValue($entity, $attributeName) {
  		$attribute = $entity->getCustomAttribute($attributeName);
  		if ($attribute === null) {
  			return null;

@@ -20,7 +20,7 @@ class Sim
 	private $expiryDate;
 	private $quickNote;
 
-	public function __construct(
+	function __construct(
 		$cs_number,
 		$accountId = null,
 		$simStatus = null,
@@ -54,63 +54,63 @@ class Sim
 		$this->quickNote = $quickNote;
 	}
 
-	public function getSimNumber() {
+	function getSimNumber() {
 		return $this->cs_number;
 	}
 
-	public function getAccountId() {
+	function getAccountId() {
 		return $this->accountId;
 	}
 
-	public function getNetworkStatus() {
+	function getNetworkStatus() {
 		return $this->simStatus;
 	}
 
-	public function getSubStatus() {
+	function getSubStatus() {
 		return $this->subStatus;
 	}
 
-	public function getNickname() {
+	function getNickname() {
 		return $this->nickName;
 	}
 
-	public function getNetwork() {
+	function getNetwork() {
 		return $this->network;
 	}
 
-	public function getType() {
+	function getType() {
 		return $this->type;
 	}
 
-	public function getService() {
+	function getService() {
 		return $this->service;
 	}
 
-	public function getPlan() {
+	function getPlan() {
 		return $this->plan;
 	}
 
-	public function getCurrentMinutes() {
+	function getCurrentMinutes() {
 		return $this->currentMinutes;
 	}
 
-	public function getSatelliteNumber() {
+	function getSatelliteNumber() {
 		return $this->satelliteNumber;
 	}
 
-	public function getDataNumber() {
+	function getDataNumber() {
 		return $this->dataNumber;
 	}
 
-	public function getActivationDate() {
+	function getActivationDate() {
 		return $this->activationDate;
 	}
 
-	public function getExpiryDate() {
+	function getExpiryDate() {
 		return $this->expiryDate;
 	}
 
-	public function getQuickNote() {
+	function getQuickNote() {
 		return $this->quickNote;
 	}
 }

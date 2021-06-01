@@ -11,7 +11,7 @@ class CurrencyUtils
 
     private $logger;
 
-    public function __construct(
+    function __construct(
     	\Magento\Directory\Model\CurrencyFactory $currencyFactory,
     	\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
     ) {
@@ -19,7 +19,7 @@ class CurrencyUtils
     	$this->logger = $logger;
     }
 
-	public function convert($from, $to, $value)
+	function convert($from, $to, $value)
 	{
 		if ($from === null) {
 			$from = 'CAD';

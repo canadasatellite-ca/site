@@ -3,11 +3,11 @@
 namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 
 class SimModelComposer {
-	public function __construct() {
+	function __construct() {
 
 	}
 
-	public function compose($sim) {
+	function compose($sim) {
 		$data = array();
 
 		$accountId = $sim->getAccountId();

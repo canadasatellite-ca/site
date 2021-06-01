@@ -6,7 +6,7 @@ class SimUpdater {
 	private $crm;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsCrm $crm,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -14,7 +14,7 @@ class SimUpdater {
 		$this->logger = $logger;
 	}
 
-	public function createSim($sim) {
+	function createSim($sim) {
 		$this->logger->info('Try to create SIM in CRM.');
 		$crmId = $this->crm->createSim($sim);
 		$this->logger->info("SIM created in CRM with id $crmId.");

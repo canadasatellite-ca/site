@@ -12,7 +12,7 @@ class SalesOrderSaveAfterObserver implements ObserverInterface {
 	private $eventFactory;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\Magento\Sales\Api\OrderRepositoryInterface $orderRepository,
 		\CanadaSatellite\SimpleAmqp\Publisher $publisher,
 		\CanadaSatellite\DynamicsIntegration\Config\Config $config,
@@ -28,7 +28,7 @@ class SalesOrderSaveAfterObserver implements ObserverInterface {
 		$this->logger = $logger;
 	}
 
-	public function execute(\Magento\Framework\Event\Observer $observer) {
+	function execute(\Magento\Framework\Event\Observer $observer) {
 		try {
 			$this->logger->info("[SalesOrderSaveAfterObserver] -> start");
 

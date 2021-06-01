@@ -7,7 +7,7 @@ class OrderItemStandardCostCalculator
 	private $item;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger,
 		$item
 	) {
@@ -15,7 +15,7 @@ class OrderItemStandardCostCalculator
 		$this->logger = $logger;
 	}
 
-	public function calculateStandardCost()
+	function calculateStandardCost()
  	{
  		// All calculations for order/items are performed in CAD.
  		$baseCost = $this->getBaseCost();	

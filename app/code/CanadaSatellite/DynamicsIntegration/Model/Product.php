@@ -46,7 +46,7 @@ class Product
 	private $shippingCost;
 	private $currentCost;
 
-	public function __construct(
+	function __construct(
 		$id,
 		$name,
 		$sku,
@@ -124,118 +124,118 @@ class Product
 		$this->specialPriceUsd = $specialPriceUsd;
 	}
 
-	public function getId()
+	function getId()
 	{
 		return $this->id;
 	}
 
-	public function getName()
+	function getName()
 	{
 		return $this->name;
 	}
 
-	public function getSku()
+	function getSku()
 	{
 		return $this->sku;
 	}
 
-	public function getUpc()
+	function getUpc()
 	{
 		return $this->upc;
 	}
 
-	public function getPrice()
+	function getPrice()
 	{
 		return $this->price;
 	}
 
-	public function hasPriceUsd()
+	function hasPriceUsd()
 	{
 		return $this->priceUsd !== null;
 	}
 
-	public function getPriceUsd()
+	function getPriceUsd()
 	{
 		return $this->priceUsd;
 	}
 
-	public function getCost()
+	function getCost()
 	{
 		return $this->cost;
 	}
 
-	public function getWeight()
+	function getWeight()
 	{
 		return $this->weight;
 	}
 
 
-	public function getQty()
+	function getQty()
 	{
 		return $this->qty;
 	}
 
-	public function getUrl()
+	function getUrl()
 	{
 		return $this->url;
 	}
 
-	public function getDescription()
+	function getDescription()
 	{
 		return $this->description;
 	}
 
-	public function getQuoteDescription()
+	function getQuoteDescription()
 	{
 		return $this->quoteDescription;
 	}
 
-	public function getNetwork()
+	function getNetwork()
 	{
 		return $this->network;
 	}
 
-	public function getCategory()
+	function getCategory()
 	{
 		return $this->category;
 	}
 
-	public function getService()
+	function getService()
 	{
 		return $this->service;
 	}
 
-	public function getBrand()
+	function getBrand()
 	{
 		return $this->brand;
 	}
 
-	public function getPartNo()
+	function getPartNo()
 	{
 		return $this->partNo;
 	}
 
-	public function getCountryOfOrigin()
+	function getCountryOfOrigin()
 	{
 		return $this->countryOfOrigin;
 	}
 
-	public function getPriceListPage()
+	function getPriceListPage()
 	{
 		return $this->priceListPage;
 	}
 
-	public function getWarranty()
+	function getWarranty()
 	{
 		return $this->warranty;
 	}
 
-	public function getVendor()
+	function getVendor()
 	{
 		return $this->vendor;
 	}
 
-	public function getVendorCurrency()
+	function getVendorCurrency()
 	{
 		if ($this->vendorCurrency === null) {
 			return 'CAD';
@@ -244,82 +244,82 @@ class Product
 		return $this->vendorCurrency;
 	}
 
-	public function getVendorDescription()
+	function getVendorDescription()
 	{
 		return $this->vendorDescription;
 	}
 
-	public function getVendorPart()
+	function getVendorPart()
 	{
 		return $this->vendorPart;
 	}
 
 
-	public function getMetaTitle()
+	function getMetaTitle()
 	{
 		return $this->metaTitle;
 	}
 
-	public function getMetaDescription()
+	function getMetaDescription()
 	{
 		return $this->metaDescription;
 	}
 
-	public function getMetaKeyword()
+	function getMetaKeyword()
 	{
 		return $this->metaKeyword;
 	}
 
 
-	public function getShippingLength()
+	function getShippingLength()
 	{
 		return $this->shippingLength;
 	}
 
-	public function getShippingWidth()
+	function getShippingWidth()
 	{
 		return $this->shippingWidth;
 	}
 
-	public function getShippingHeight()
+	function getShippingHeight()
 	{
 		return $this->shippingHeight;
 	}
 
-	public function getSpecialPrice()
+	function getSpecialPrice()
 	{
 		return $this->specialPrice;
 	}
 
-	public function getSpecialPriceUsd()
+	function getSpecialPriceUsd()
 	{
 		return $this->specialPriceUsd;
 	}
 
-	public function hasSpecialPriceUsd()
+	function hasSpecialPriceUsd()
 	{
 		return $this->specialPriceUsd !== null;
 	}
 
-	public function getShippingCost()
+	function getShippingCost()
 	{
 		// In base currency, CAD.
 		return $this->shippingCost;
 	}
 
-	public function setShippingCost($shippingCost)
+	function setShippingCost($shippingCost)
 	{
 		// In base currency, CAD.
 		$this->shippingCost = $shippingCost;
 	}
 
-	public function getCurrentCost()
+	function getCurrentCost()
 	{
 		// In base currency, CAD.
 		return $this->currentCost;
 	}
 
-	public function setCurrentCost($currentCost)
+	function setCurrentCost($currentCost)
 	{
 		// In base currency, CAD.
 		$this->currentCost = $currentCost;

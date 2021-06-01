@@ -4,7 +4,7 @@ namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 
 class DynamicsMapper
 {
-	public function mapAccountSource($source)
+	function mapAccountSource($source)
 	{
 		switch ($source) {
 			case 'base':
@@ -34,7 +34,7 @@ class DynamicsMapper
 		}
 	}
 
-	public function mapNetwork($network) 
+	function mapNetwork($network) 
 	{
 		switch (strtolower($network)) {
 			case 'bell tv':
@@ -71,7 +71,7 @@ class DynamicsMapper
 		}
 	}
 
-	public function mapProductCategory($category)
+	function mapProductCategory($category)
 	{
 		switch (strtolower($category)) {
 			case 'satellite phone':
@@ -93,7 +93,7 @@ class DynamicsMapper
 		}
 	}
 
-	public function mapServiceType($service)
+	function mapServiceType($service)
 	{
 		switch (strtolower($service)) {
 			case 'globalstar voice':
@@ -158,7 +158,7 @@ class DynamicsMapper
 		}
 	}
 
-	public function mapCountryOfOrigin($country)
+	function mapCountryOfOrigin($country)
 	{
 		switch(strtolower($country)) {
 			case 'canada':
@@ -171,7 +171,7 @@ class DynamicsMapper
 		}
 	}
 
-	public function mapWarranty($warranty)
+	function mapWarranty($warranty)
 	{
 		switch (strtolower($warranty)) {
 			case '12 months':
@@ -193,7 +193,7 @@ class DynamicsMapper
 		}
 	}
 
-	public function mapDatetime($datetime)
+	function mapDatetime($datetime)
 	{
 		return $datetime->format('Y-m-d\TH:i:s\Z');
 	}

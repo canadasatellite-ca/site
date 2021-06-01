@@ -6,12 +6,12 @@ class CurrencyHelper {
 	private $restApi;
 	private $currencies;
 
-	public function __construct(\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi) {
+	function __construct(\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi) {
 		$this->restApi = $restApi;
 		$this->currencies = array();
 	}
 
-	public function getCurrencyIdByCode($code) {
+	function getCurrencyIdByCode($code) {
 		if (!array_key_exists($code, $this->currencies)) {
 			try {
 				$this->currencies[$code] = $this->restApi->findCurrencyIdByIsoCode($code);

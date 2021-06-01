@@ -3,11 +3,11 @@
 namespace CanadaSatellite\DynamicsIntegration\Validators\Algorithms;
 
 class LuhnChecksumAlgorithm {
-	public function calcCheckDigit($srcNumber) {
+	function calcCheckDigit($srcNumber) {
 
 	}
 
-	public function checkSum($srcNumber) {
+	function checkSum($srcNumber) {
 		$sum = 0;
 		$srcLength = strlen($srcNumber);
 

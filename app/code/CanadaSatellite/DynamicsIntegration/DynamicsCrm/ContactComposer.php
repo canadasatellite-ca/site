@@ -7,7 +7,7 @@ class ContactComposer
 	private $addressBuilder;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\AddressBuilder $addressBuilder,
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -20,7 +20,7 @@ class ContactComposer
 	 * @param string $accountId
 	 * @return array
 	 */
-	public function compose($customer, $accountId = null)
+	function compose($customer, $accountId = null)
 	{
 		$this->logger->info("Enter ContactComposer::compose");
 

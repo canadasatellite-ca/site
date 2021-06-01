@@ -14,7 +14,7 @@ class ProductProfitCalculator
 
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger,
 		$product, 
 		$shippingCost = null,
@@ -34,7 +34,7 @@ class ProductProfitCalculator
 		$this->logger = $logger;
 	}
 
-	public function calculateMargin()
+	function calculateMargin()
  	{
  		$profit = $this->calculateProfit();
  		$price = $this->getPrice();
@@ -50,7 +50,7 @@ class ProductProfitCalculator
 		return ($profit / $price) * 100;
  	}
 
-	public function calculateProfit()
+	function calculateProfit()
 	{
 		$this->logger->info("[ProductProfitCalculator::calculateProfit] Product shipping cost " . $this->shippingCost);
 		$this->logger->info("[ProductProfitCalculator::calculateProfit] Product current cost " . $this->currentCost);
@@ -64,7 +64,7 @@ class ProductProfitCalculator
  		return $price - $currentCost;
  	}
 
- 	public function calculateStandardCost()
+ 	function calculateStandardCost()
  	{
  		$baseCost = $this->getBaseCost();	
  		$shippingCost = $this->getShippingCost();
@@ -74,7 +74,7 @@ class ProductProfitCalculator
  		return $baseCost + $shippingCost + $currencyExchange + $processingFees;
  	}
 
- 	public function calculateCurrencyExchange()
+ 	function calculateCurrencyExchange()
  	{
  		$product = $this->product;
 
@@ -87,7 +87,7 @@ class ProductProfitCalculator
  		return ($baseCost + $shippingCost) * 0.02;
  	}
 
- 	public function calculateProcessingFees()
+ 	function calculateProcessingFees()
  	{
  		$price = $this->getPrice();
 

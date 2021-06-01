@@ -11,7 +11,7 @@ class ProductHelper
 	private $restApi;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductModelComposer $productComposer,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
 		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
@@ -27,7 +27,7 @@ class ProductHelper
 	 * @param string $sku
 	 * @param array() product.
 	 */
-	public function createOrUpdate($product)
+	function createOrUpdate($product)
 	{
 		$this->logger->info("[createOrUpdateProduct] Enter");
 

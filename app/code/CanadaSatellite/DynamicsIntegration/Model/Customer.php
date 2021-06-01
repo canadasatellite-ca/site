@@ -17,7 +17,7 @@ class Customer
 	private $source;
 	private $billingAddress;
 
-	public function __construct(
+	function __construct(
 		$id,
 		$prefix,
 		$firstname,
@@ -45,62 +45,62 @@ class Customer
 		$this->billingAddress = $billingAddress;
 	}
 
-	public function getId()
+	function getId()
 	{
 		return $this->id;
 	}
 
-	public function getPrefix()
+	function getPrefix()
 	{
 		return $this->prefix;
 	}
 
-	public function getFirstname()
+	function getFirstname()
 	{
 		return $this->firstname;
 	}
 
-	public function getMiddlename()
+	function getMiddlename()
 	{
 		return $this->middlename;
 	}
 
-	public function getLastname()
+	function getLastname()
 	{
 		return $this->lastname;
 	}
 
-	public function getEmail()
+	function getEmail()
 	{
 		return $this->email;
 	}
 
-	public function getUrl()
+	function getUrl()
 	{
 		return $this->url;
 	}
 
-	public function getGender()
+	function getGender()
 	{
 		return $this->gender;
 	}
 
-	public function getBirthDate()
+	function getBirthDate()
 	{
 		return $this->birthDate;
 	}
 
-	public function getGroup()
+	function getGroup()
 	{
 		return $this->group;
 	}
 
-	public function getSource()
+	function getSource()
 	{
 		return $this->source;
 	}
 
-	public function getCompany()
+	function getCompany()
 	{
 		if ($this->billingAddress === null) {
 			return null;
@@ -109,7 +109,7 @@ class Customer
 		return $this->billingAddress->getCompany();
 	}
 
-	public function getPhone()
+	function getPhone()
 	{
 		if ($this->billingAddress === null) {
 			return null;
@@ -118,7 +118,7 @@ class Customer
 		return $this->billingAddress->getPhone();
 	}
 
-	public function getFax() 
+	function getFax() 
 	{
 		if ($this->billingAddress === null) {
 			return null;
@@ -127,7 +127,7 @@ class Customer
 		return $this->billingAddress->getFax();
 	}
 
-	public function getBillingAddress()
+	function getBillingAddress()
 	{
 		return $this->billingAddress;
 	}

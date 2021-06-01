@@ -7,13 +7,13 @@ class OrderProfitCalculator
 	private $items;
 	private $logger;
 
-	public function __construct(\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger, $items)
+	function __construct(\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger, $items)
 	{
 		$this->items = $items;
 		$this->logger = $logger;
 	}
 
-	public function calculateMargin()
+	function calculateMargin()
 	{
 		$profit = $this->calculateProfit();
 		$revenue = $this->calculateRevenue();
@@ -31,7 +31,7 @@ class OrderProfitCalculator
 		return ($profit / $revenue) * 100;
 	}
 
-	public function calculateProfit()
+	function calculateProfit()
 	{
 		$this->logger->info("[OrderProfitCalculator::calculateProfit] Enter");
 

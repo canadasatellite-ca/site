@@ -14,7 +14,7 @@ class ProductModelComposer {
 	private $countryHelper;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsMapper $mapper,
 		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CurrencyHelper $currencyHelper,
@@ -35,7 +35,7 @@ class ProductModelComposer {
 	/**
 	 * @param Product model
 	 */
-	public function compose($product) {
+	function compose($product) {
 		$vendorCurrency = $product->getVendorCurrency();
 		$this->logger->info("Product currency: $vendorCurrency");
 
@@ -242,7 +242,7 @@ class ProductModelComposer {
 		return $data;
 	}
 
-	public function composePriceListItem($product, $productId) {
+	function composePriceListItem($product, $productId) {
 		$this->logger->info("[composePriceListItem] -> Enter");
 
 		$vendorCurrency = $product->getVendorCurrency();

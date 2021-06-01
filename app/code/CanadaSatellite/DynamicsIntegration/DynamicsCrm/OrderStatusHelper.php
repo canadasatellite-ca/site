@@ -7,7 +7,7 @@ class OrderStatusHelper
 	private $statuses;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
 		$this->logger = $logger;
@@ -33,7 +33,7 @@ class OrderStatusHelper
 	 * @param string $status
 	 * @return int Dynamics sales order status id
 	 */
-	public function getStatusId($status)
+	function getStatusId($status)
 	{
 		$this->logger->info("Get status for '$status'");
 		if (!array_key_exists($status, $this->statuses)) {

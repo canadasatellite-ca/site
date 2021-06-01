@@ -6,13 +6,13 @@ class CustomerFactory
 {
 	private $addressFactory;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Model\CustomerAddressFactory $addressFactory
 	) {
 		$this->addressFactory = $addressFactory;
 	}
 
-	public function fromEnvelope($envelope)
+	function fromEnvelope($envelope)
 	{
 		if ($envelope === null) {
 			return null;
@@ -34,7 +34,7 @@ class CustomerFactory
 		);
 	}
 
-	public function create($customerId, $email, $firstName, $lastName) 
+	function create($customerId, $email, $firstName, $lastName) 
 	{
 		return new Customer(
 			$customerId,

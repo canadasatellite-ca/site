@@ -9,7 +9,7 @@ class OrderNoteProcessor {
 	private $simValidator;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Model\SimFactory $simFactory,
 		\CanadaSatellite\DynamicsIntegration\Updater\SimUpdater $simUpdater,
 		\CanadaSatellite\DynamicsIntegration\Config\ConfigValuesProvider $configValuesProvider,
@@ -24,7 +24,7 @@ class OrderNoteProcessor {
 	}
 
 	// Creates and activates SIM if it is presented in the note text
-	public function processSimInNote($accountId, $noteText) {
+	function processSimInNote($accountId, $noteText) {
 		// if note contains sim number and looks like the sim creation request
 		$simOrderNoteRegex = $this->configValuesProvider->getSimOrderNoteRegex();
 		if (preg_match($simOrderNoteRegex, $noteText, $matches)) {

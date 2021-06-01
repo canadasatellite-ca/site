@@ -12,7 +12,7 @@ class CustomerAddressSaveAfterObserver implements ObserverInterface {
 	private $eventFactory;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\Magento\Customer\Model\CustomerFactory $customerFactory,
 		\CanadaSatellite\SimpleAmqp\Publisher $publisher,
 		\CanadaSatellite\DynamicsIntegration\Config\Config $config,
@@ -28,7 +28,7 @@ class CustomerAddressSaveAfterObserver implements ObserverInterface {
 		$this->logger = $logger;
 	}
 
-	public function execute(\Magento\Framework\Event\Observer $observer) {
+	function execute(\Magento\Framework\Event\Observer $observer) {
 		try {
 			$this->logger->info("[CustomerAddressSaveAfterObserver] -> start");
 

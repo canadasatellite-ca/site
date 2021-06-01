@@ -11,7 +11,7 @@ class SalesOrderStatusHistorySaveAfterObserver implements \Magento\Framework\Eve
 	private $eventFactory;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\SimpleAmqp\Publisher $publisher,
 		\CanadaSatellite\DynamicsIntegration\Config\Config $config,
 		\CanadaSatellite\DynamicsIntegration\Event\EventFactory $eventFactory,
@@ -28,7 +28,7 @@ class SalesOrderStatusHistorySaveAfterObserver implements \Magento\Framework\Eve
 	* Launches when "sales_order_status_history_save_after" event occures
 	* @param Observer $observer
 	*/
-	public function execute(Observer $observer)
+	function execute(Observer $observer)
 	{
 		try
 		{

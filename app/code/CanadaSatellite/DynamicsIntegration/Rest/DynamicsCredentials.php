@@ -7,21 +7,21 @@ class DynamicsCredentials {
 	private $clientSecret;
 	private $resource;
 
-	public function __construct($clientId, $clientSecret, $resource) {
+	function __construct($clientId, $clientSecret, $resource) {
 		$this->clientId = $clientId;
 		$this->clientSecret = $clientSecret; 
 		$this->resource = $resource;
 	}
 
-	public function getClientId() {
+	function getClientId() {
 		return $this->clientId;
 	}
 
-	public function getClientSecret() {
+	function getClientSecret() {
 		return $this->clientSecret;
 	}
 
-	public function getResource() {
+	function getResource() {
 		return $this->resource;
 	}
 }

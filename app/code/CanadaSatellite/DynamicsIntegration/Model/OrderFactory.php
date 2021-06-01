@@ -8,7 +8,7 @@ class OrderFactory
 	private $customerFactory;
 	private $itemFactory;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Model\OrderAddressFactory $addressFactory,
 		\CanadaSatellite\DynamicsIntegration\Model\CustomerFactory $customerFactory,
 		\CanadaSatellite\DynamicsIntegration\Model\OrderItemFactory $itemFactory
@@ -18,7 +18,7 @@ class OrderFactory
 		$this->itemFactory = $itemFactory;
 	}
 
-	public function fromEnvelope($envelope)
+	function fromEnvelope($envelope)
 	{
 		if ($envelope === null) {
 			return null;

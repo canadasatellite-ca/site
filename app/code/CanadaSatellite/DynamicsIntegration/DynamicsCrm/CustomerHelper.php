@@ -9,7 +9,7 @@ class CustomerHelper {
 	private $restApi;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\AccountComposer $accountComposer,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\ContactComposer $contactComposer,
 		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CurrencyHelper $currencyHelper,
@@ -27,7 +27,7 @@ class CustomerHelper {
 	* @param $customer Customer envelope. (Created in \CanadaSatellite\DynamicsIntegration\Envelope\CustomerEnvelopeFactory)
 	* @return string Dynamics account id
 	*/
-	public function createOrUpdateCustomer($customer)
+	function createOrUpdateCustomer($customer)
 	{
 		$this->logger->info("[createOrUpdateCustomer] Finding customer contact by id/email.");
 		$contact = $this->findCustomerContact($customer);
@@ -49,7 +49,7 @@ class CustomerHelper {
 		return $accountId;
 	}
 
-	public function deleteCustomer($customer)
+	function deleteCustomer($customer)
 	{
 		$customerId = $customer->getId();
 
@@ -94,7 +94,7 @@ class CustomerHelper {
 	* @param string $customerId
 	* @return string|null Dynamics account id
 	*/
-	public function getCustomerAccountId($customer) {
+	function getCustomerAccountId($customer) {
 		$customerId = $customer->getId();
 
 		$contact = $this->findCustomerContact($customer);
@@ -110,7 +110,7 @@ class CustomerHelper {
 		return $contact->parentcustomerid_account->accountid;
 	}
 
-	public function findCustomerAccount($customer)
+	function findCustomerAccount($customer)
 	{
 		$customerId = $customer->getId();
 		$email = $customer->getEmail();

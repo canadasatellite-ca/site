@@ -4,11 +4,11 @@ namespace CanadaSatellite\DynamicsIntegration\Model;
 
 class SimFactory
 {
-	public function __construct() {
+	function __construct() {
 
 	}
 
-	public function create($simNumber, $accountId)	{
+	function create($simNumber, $accountId)	{
 		if ($simNumber === null) {
 			return null;
 		}

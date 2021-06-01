@@ -7,13 +7,13 @@ class PriceListHelper {
 
 	private static $defaultPriceListId = null;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi
 	) {
 		$this->restApi = $restApi;
 	}
 
-	public function getDefaultPriceListId() {
+	function getDefaultPriceListId() {
 		if (self::$defaultPriceListId === null) {
 			self::$defaultPriceListId = $this->restApi->getDefaultPriceListId();
 		}

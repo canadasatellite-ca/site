@@ -10,7 +10,7 @@ class CustomerDeleteAfterObserver implements ObserverInterface {
 	private $eventFactory;
 	private $logger;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\SimpleAmqp\Publisher $publisher,
 		\CanadaSatellite\DynamicsIntegration\Config\Config $config,
 		\CanadaSatellite\DynamicsIntegration\Event\EventFactory $eventFactory,
@@ -22,7 +22,7 @@ class CustomerDeleteAfterObserver implements ObserverInterface {
 		$this->logger = $logger;
 	}
 
-	public function execute(\Magento\Framework\Event\Observer $observer) {
+	function execute(\Magento\Framework\Event\Observer $observer) {
 		try {
 			$this->logger->info("[CustomerDeleteAfterObserver] -> start");
 

@@ -8,7 +8,7 @@ class ProductEnvelopeFactory
 	private $productUtils;
 	private $converterUtils;
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Utils\EavUtils $eavUtils,
 		\CanadaSatellite\DynamicsIntegration\Utils\ProductUtils $productUtils,
 		\CanadaSatellite\DynamicsIntegration\Utils\ConverterUtils $converterUtils,
@@ -23,7 +23,7 @@ class ProductEnvelopeFactory
 	/**
 	 * @param \Magento\Catalog\Api\Data\ProductInterface $product
 	 */
-	public function create($product)
+	function create($product)
 	{
 		$data = array();
 

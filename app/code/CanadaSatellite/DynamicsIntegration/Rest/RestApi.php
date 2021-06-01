@@ -18,7 +18,7 @@ class RestApi {
 
 	const LOGIN_URL = 'https://login.microsoftonline.com/CanSat.onmicrosoft.com/oauth2/token';
 
-	public function __construct(
+	function __construct(
 		\CanadaSatellite\DynamicsIntegration\Rest\DynamicsCredentialsProvider $credentialsProvider, 
 		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
 	) {
@@ -30,7 +30,7 @@ class RestApi {
 	/**
 	* @return string Product id
 	*/ 
-	public function createProduct($crmProduct) {
+	function createProduct($crmProduct) {
 		$this->login();
 
 		$headers = array(
@@ -53,7 +53,7 @@ class RestApi {
 	* @param (string => string)[] $crmProduct
 	* @return void 
 	*/
-	public function updateProduct($productId, $crmProduct) {
+	function updateProduct($productId, $crmProduct) {
 		$this->login();
 
 		$headers = array(
@@ -73,7 +73,7 @@ class RestApi {
 	* @param string $productId
 	* @return void 
 	*/
-	public function deleteProduct($productId) {
+	function deleteProduct($productId) {
 		$this->login();
 
 		$headers = array(
@@ -95,7 +95,7 @@ class RestApi {
 	* @param string Product SKU
 	* @return string|false Product id
 	*/
-	public function findProductIdBySku($sku) {
+	function findProductIdBySku($sku) {
 		$this->login();
 
 		$headers = array(
@@ -118,7 +118,7 @@ class RestApi {
 		return $json->value[0]->productid;
 	}
 
-	public function getProductById($productId) {
+	function getProductById($productId) {
 		$this->login();
 
 		$headers = array(
@@ -139,7 +139,7 @@ class RestApi {
 	 * @param array $crmProductPriceLevel
 	 * @param string $priceListId
 	 */
-	public function createProductPriceLevel($productId, $crmProductPriceLevel) {
+	function createProductPriceLevel($productId, $crmProductPriceLevel) {
 		$this->login();
 
 		$headers = array(
@@ -157,7 +157,7 @@ class RestApi {
 		return $json->productpricelevelid;
 	}
 
-	public function updateProductPriceLevel($productPriceLevelId, $crmProductPriceLevel) {
+	function updateProductPriceLevel($productPriceLevelId, $crmProductPriceLevel) {
 		$this->login();
 
 		$headers = array(
@@ -173,7 +173,7 @@ class RestApi {
 		$json = $this->getResponseJsonIfSuccess($response);
 	}
 
-	public function findProductPriceLevelIdByProductId($productId, $priceListId) {
+	function findProductPriceLevelIdByProductId($productId, $priceListId) {
 		$this->login();
 
 		$headers = array(
@@ -201,7 +201,7 @@ class RestApi {
 	* @param int $accountNumber
 	* @return string Account id
 	*/
-	public function createAccount($crmAccount) {
+	function createAccount($crmAccount) {
 		$this->login();
 
 		$headers = array(
@@ -223,7 +223,7 @@ class RestApi {
 	 * @param string $accountId
 	 * @param array $crmAccount
 	 */
-	public function updateAccount($accountId, $crmAccount) {
+	function updateAccount($accountId, $crmAccount) {
 		$this->login();
 
 		$headers = array(
@@ -243,7 +243,7 @@ class RestApi {
 	* @param string $accountId
 	* @return void
 	*/
-	public function deleteAccount($accountId) {
+	function deleteAccount($accountId) {
 		$this->login();
 
 		$headers = array(
@@ -266,7 +266,7 @@ class RestApi {
 	* @param string $contactId
 	* @return void
 	*/
-	public function setAccountPrimaryContact($accountId, $contactId) {
+	function setAccountPrimaryContact($accountId, $contactId) {
 		$this->login();
 
 		$headers = array(
@@ -290,7 +290,7 @@ class RestApi {
 	* @param string $currencyId
 	* @return void
 	*/
-	public function setAccountCurrency($accountId, $currencyId) {
+	function setAccountCurrency($accountId, $currencyId) {
 		$this->login();
 
 		$headers = array(
@@ -313,7 +313,7 @@ class RestApi {
 	* @param string $company
 	* @return string|false Account id
 	*/
-	public function findAccountIdByCompany($company) {
+	function findAccountIdByCompany($company) {
 		$this->login();
 
 		$headers = array(
@@ -337,7 +337,7 @@ class RestApi {
 		return $json->value[0]->accountid;
 	}
 
-	public function findVendorAccountIdByName($vendor) {
+	function findVendorAccountIdByName($vendor) {
 		$this->login();
 
 		$headers = array(
@@ -367,7 +367,7 @@ class RestApi {
 	 * @param string $email
 	 * @return object|false Account
 	 */
-	public function findAccountByCustomerIdAndEmail($customerId, $email)
+	function findAccountByCustomerIdAndEmail($customerId, $email)
 	{
 		$this->login();
 
@@ -398,7 +398,7 @@ class RestApi {
 	 * @param string $customerId
 	 * @return object|false Account
 	 */
-	public function findAccountByCustomerId($customerId)
+	function findAccountByCustomerId($customerId)
 	{
 		$this->login();
 
@@ -427,7 +427,7 @@ class RestApi {
 	 * @param string $email
 	 * @return object|false Account
 	 */
-	public function findAccountByEmail($email)
+	function findAccountByEmail($email)
 	{
 		$this->login();
 
@@ -456,7 +456,7 @@ class RestApi {
 	 * @param string $accountId
 	 * @return object[] Contacts
 	 */
-	public function findAccountContacts($accountId)
+	function findAccountContacts($accountId)
 	{
 		$this->login();
 
@@ -482,7 +482,7 @@ class RestApi {
 	* @param array $crmContact
 	* @return string Contact id
 	*/
-	public function createContact($crmContact) {
+	function createContact($crmContact) {
 		$this->login();
 
 		$headers = array(
@@ -504,7 +504,7 @@ class RestApi {
 	 * @param string $contactId
 	 * @param array $crmContact
 	 */
-	public function updateContact($contactId, $crmContact) {
+	function updateContact($contactId, $crmContact) {
 		$this->login();
 
 		$headers = array(
@@ -523,7 +523,7 @@ class RestApi {
 	/** 
 	* @param string $contactId
 	*/
-	public function deleteContact($contactId) {
+	function deleteContact($contactId) {
 		$this->login();
 
 		$headers = array(
@@ -546,7 +546,7 @@ class RestApi {
 	* @param string $contactId
 	* @return void
 	*/
-	public function bindContactToAccount($contactId, $accountId) {
+	function bindContactToAccount($contactId, $accountId) {
 		$this->login();
 
 		$headers = array(
@@ -570,7 +570,7 @@ class RestApi {
 	* @param string $email
 	* @return object|false Contact with parent account
 	*/
-	public function findContactByCustomerIdAndEmail($customerId, $email) {
+	function findContactByCustomerIdAndEmail($customerId, $email) {
 		$this->login();
 
 		$headers = array(
@@ -600,7 +600,7 @@ class RestApi {
 	* @param string $customerId
 	* @return object|false Contact with parent account
 	*/
-	public function findContactByCustomerId($customerId) {
+	function findContactByCustomerId($customerId) {
 		$this->login();
 
 		$headers = array(
@@ -629,7 +629,7 @@ class RestApi {
 	* @param string $email
 	* @return object|false Contact with parent account
 	*/
-	public function findContactByEmail($email) {
+	function findContactByEmail($email) {
 		$this->login();
 
 		$headers = array(
@@ -658,7 +658,7 @@ class RestApi {
 	/**
 	* @return string|false Currency id
 	*/
-	public function findCurrencyIdByIsoCode($isoCode) {
+	function findCurrencyIdByIsoCode($isoCode) {
 		$this->login();
 
 		$headers = array(
@@ -684,7 +684,7 @@ class RestApi {
 	/**
 	* @return string|false Default price list id.
 	*/
-	public function getDefaultPriceListId() {
+	function getDefaultPriceListId() {
 		$this->login();
 
 		$headers = array(
@@ -707,7 +707,7 @@ class RestApi {
 	}
 
 
-	public function createOrder($crmOrder) {
+	function createOrder($crmOrder) {
 		$this->login();
 
 		$headers = array(
@@ -733,7 +733,7 @@ class RestApi {
 		return $orderId;
 	}
 
-	public function getOrderById($orderId) {
+	function getOrderById($orderId) {
 		$this->login();
 
 		$headers = array(
@@ -750,7 +750,7 @@ class RestApi {
 		return $json;
 	}
 
-	public function updateOrder($orderId, $crmOrder) {
+	function updateOrder($orderId, $crmOrder) {
 		$this->login();
 
 		$headers = array(
@@ -769,7 +769,7 @@ class RestApi {
 		$json = $this->getResponseJsonIfSuccess($response);
 	}
 
-	public function findOrderByNumber($orderId) {
+	function findOrderByNumber($orderId) {
 		$this->login();
 
 		$headers = array(
@@ -792,7 +792,7 @@ class RestApi {
 		return $json->value[0]->salesorderid;
 	}
 
-	public function createOrderNote($orderId, $note) {
+	function createOrderNote($orderId, $note) {
 		$this->login();
 
 		$headers = array(
@@ -811,7 +811,7 @@ class RestApi {
 		return $json->annotationid;
 	}
 
-	public function findCountryByName($country) {
+	function findCountryByName($country) {
 		$this->login();
 
 		$headers = array(
@@ -835,7 +835,7 @@ class RestApi {
 		return $json->value[0]->new_countryid;
 	}
 
-	public function getCardsByCustomerId($customerId)
+	function getCardsByCustomerId($customerId)
 	{
 		$this->login();
 
@@ -861,7 +861,7 @@ class RestApi {
 		return $json->value;
 	}
 
-	public function getCard($cardId)
+	function getCard($cardId)
 	{
 		$this->login();
 
@@ -888,7 +888,7 @@ class RestApi {
 		return $json;
 	}
 
-	public function createCard($crmCard)
+	function createCard($crmCard)
 	{
 		$this->login();
 
@@ -907,7 +907,7 @@ class RestApi {
 		return $json->new_sundriesid;
 	}
 
-	public function updateCard($cardId, $crmCard)
+	function updateCard($cardId, $crmCard)
 	{
 		$this->login();
 
@@ -924,7 +924,7 @@ class RestApi {
 		$json = $this->getResponseJsonIfSuccess($response);
 	}
 
-	public function deleteCard($cardId)
+	function deleteCard($cardId)
 	{
 		$this->login();
 
@@ -948,7 +948,7 @@ class RestApi {
 	 * @param array $crmSim
 	 * @return string Sim identifier
 	 */
-	public function createSim($crmSim) {
+	function createSim($crmSim) {
 		$this->login();
 
 		$headers = array(
@@ -966,7 +966,7 @@ class RestApi {
 		return $json->cs_simid;
 	}
 
-	public function getSimByNumber($simNumber)
+	function getSimByNumber($simNumber)
 	{
 		$this->login();
 
@@ -996,7 +996,7 @@ class RestApi {
 	 * @param int $magentoCustomerId
 	 * @return array|false
 	 */
-	public function getSimsByCustomerId($magentoCustomerId, $simField, $simSorting, $simFilter)
+	function getSimsByCustomerId($magentoCustomerId, $simField, $simSorting, $simFilter)
 	{
 		$this->login();
 
@@ -1084,7 +1084,7 @@ QUERYXML;
 	 * @param int $magentoCustomerId
 	 * @return array|false
 	 */
-	public function getSimsActivationRequestsCountByCustomerId($magentoCustomerId)
+	function getSimsActivationRequestsCountByCustomerId($magentoCustomerId)
 	{
 		$this->login();
 
@@ -1135,7 +1135,7 @@ QUERYXML;
 	 * @param string $simId
 	 * @return array|false
 	 */
-	public function getSim($simId)
+	function getSim($simId)
 	{
 		$this->login();
 
@@ -1195,7 +1195,7 @@ QUERYXML;
 	 * @param string $simId
 	 * @return array|false
 	 */
-	public function getSimActivationRequestsCount($simId)
+	function getSimActivationRequestsCount($simId)
 	{
 		$this->login();
 
@@ -1240,7 +1240,7 @@ QUERYXML;
 		return $json['value'][0]['activationrequests_count'];
 	}
 
-	public function updateSim($simId, $crmSim)
+	function updateSim($simId, $crmSim)
 	{
 		$this->login();
 
@@ -1261,7 +1261,7 @@ QUERYXML;
 	 * @param int $magentoCustomerId
 	 * @return array|false
 	 */
-	public function getDevicesByCustomerId($magentoCustomerId)
+	function getDevicesByCustomerId($magentoCustomerId)
 	{
 		$this->login();
 
@@ -1309,7 +1309,7 @@ QUERYXML;
 		return $json['value'];
 	}
 
-	public function createOrUpdateActivationRequest($crmActivationRequest) {
+	function createOrUpdateActivationRequest($crmActivationRequest) {
 		$this->login();
 
 		$headers = array(

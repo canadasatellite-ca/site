@@ -13,7 +13,7 @@ class CustomerAddress
 	private $phone;
 	private $fax;
 
-	public function __construct(
+	function __construct(
 		$company,
 		$street,
 		$city,
@@ -33,42 +33,42 @@ class CustomerAddress
 		$this->fax = $fax;
 	}
 
-	public function getCompany()
+	function getCompany()
 	{
 		return $this->company;
 	}
 
-	public function getStreet()
+	function getStreet()
 	{
 		return $this->street;
 	}
 
-	public function getCity()
+	function getCity()
 	{
 		return $this->city;
 	}
 
-	public function getRegion()
+	function getRegion()
 	{
 		return $this->region;
 	}
 
-	public function getPostcode()
+	function getPostcode()
 	{
 		return $this->postcode;
 	}
 
-	public function getCountry()
+	function getCountry()
 	{
 		return $this->country;
 	}
 
-	public function getPhone()
+	function getPhone()
 	{
 		return $this->phone;
 	}
 
-	public function getFax()
+	function getFax()
 	{
 		return $this->fax;
 	}

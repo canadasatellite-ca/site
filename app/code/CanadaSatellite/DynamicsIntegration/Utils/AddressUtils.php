@@ -6,7 +6,7 @@ class AddressUtils
 {
 	private $countryInfo;
 
-	public function __construct(
+	function __construct(
 		\Magento\Directory\Api\CountryInformationAcquirerInterface $countryInfo
 	) {
 		$this->countryInfo = $countryInfo;
@@ -16,7 +16,7 @@ class AddressUtils
 	 * @param \Magento\Customer\Api\Data\CustomerInterface $customer
 	 * @return \Magento\Customer\Api\Data\AddressInterface
 	 */
-	public function getCustomerDefaultBillingAddress($customer)
+	function getCustomerDefaultBillingAddress($customer)
 	{
 		foreach ($customer->getAddresses() as $address) {
 			if ($address->isDefaultBilling()) {
@@ -31,7 +31,7 @@ class AddressUtils
 	 * @param \Magento\Customer\Api\Data\AddressInterface
 	 * @return string|null
 	 */
-	public function getCountryName($address)
+	function getCountryName($address)
 	{
 		$countryId = $address->getCountryId();
 		if ($countryId === null) {

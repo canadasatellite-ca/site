@@ -4,7 +4,7 @@ namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 
 class AddressBuilder
 {	
-	public function buildBillingAddressData($address)
+	function buildBillingAddressData($address)
 	{
 		$data = array();
 
