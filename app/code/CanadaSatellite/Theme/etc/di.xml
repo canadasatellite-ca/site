@@ -179,9 +179,6 @@
                 type="CanadaSatellite\Theme\Plugin\Model\QuoteAddress" />
     </type>
 
-    <preference for="MW\Onestepcheckout\Controller\Index\Save"
-                type="CanadaSatellite\Theme\Controller\Quote\Save" />
-
     <preference for="Auctane\Api\Model\Action\Export"
                 type="CanadaSatellite\Theme\Model\Action\Export" />
 
