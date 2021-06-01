@@ -992,122 +992,122 @@ class RestApi {
 		return $json->value[0];
 	}
 
-    /**
-     * @param int $magentoCustomerId
-     * @return array|false
-     */
-    public function getSimsByCustomerId($magentoCustomerId, $simField, $simSorting, $simFilter)
-    {
-        $this->login();
+	/**
+	 * @param int $magentoCustomerId
+	 * @return array|false
+	 */
+	public function getSimsByCustomerId($magentoCustomerId, $simField, $simSorting, $simFilter)
+	{
+		$this->login();
 
-        $headers = array(
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Accept' => 'application/json',
-            'OData-Max-Version' => '4.0',
-            'OData-Version' => '4.0',
-            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
-        );
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+		);
 
-        $sanitizedMagentoCustomerId = intval($magentoCustomerId);
-        $queryXml = <<<QUERYXML
+		$sanitizedMagentoCustomerId = intval($magentoCustomerId);
+		$queryXml = <<<QUERYXML
 <fetch mapping="logical">
    <entity name="cs_sim"> 
-      <attribute name="cs_simstatus"/>
-      <attribute name="cs_number"/> 
-      <attribute name="new_nickname"/>
-      <attribute name="cs_network"/> 
-      <attribute name="cs_service"/>
-      <attribute name="cs_plan"/>
-      <attribute name="cs_currentminutes"/>
-      <attribute name="cs_satellitenumber"/>
-      <attribute name="cs_expirydate"/>
-      <attribute name="new_substatus"/>
-      <link-entity name="account" to="cs_accountid"> 
-         <filter type="and"> 
-            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
-          </filter> 
-      </link-entity> 
+	  <attribute name="cs_simstatus"/>
+	  <attribute name="cs_number"/> 
+	  <attribute name="new_nickname"/>
+	  <attribute name="cs_network"/> 
+	  <attribute name="cs_service"/>
+	  <attribute name="cs_plan"/>
+	  <attribute name="cs_currentminutes"/>
+	  <attribute name="cs_satellitenumber"/>
+	  <attribute name="cs_expirydate"/>
+	  <attribute name="new_substatus"/>
+	  <link-entity name="account" to="cs_accountid"> 
+		 <filter type="and"> 
+			<condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
+		  </filter> 
+	  </link-entity> 
 QUERYXML;
 
-        $dynamicsField = '';
-        switch ($simField)
-        {
-            case SimTableField::NetworkStatus: $dynamicsField = 'cs_simstatus'; break;
-            case SimTableField::SimSharp: $dynamicsField = 'cs_number'; break;
-            case SimTableField::SatSharp: $dynamicsField = 'cs_satellitenumber'; break;
-            case SimTableField::Network: $dynamicsField = 'cs_network'; break;
-            case SimTableField::Plan: $dynamicsField = 'cs_plan'; break;
-            case SimTableField::CurrentMinutes: $dynamicsField = 'cs_currentminutes'; break;
-            case SimTableField::ExpiryDate: $dynamicsField = 'cs_expirydate'; break;
-            case SimTableField::Nickname: $dynamicsField = 'new_nickname'; break;
-        }
-        if ($dynamicsField !== '') {
-            if ($simSorting === SortingDirection::Descending)
-                $queryXml .= "<order attribute='{$dynamicsField}' descending='true' />";
-            else
-                $queryXml .= "<order attribute='{$dynamicsField}' />";
-        }
+		$dynamicsField = '';
+		switch ($simField)
+		{
+			case SimTableField::NetworkStatus: $dynamicsField = 'cs_simstatus'; break;
+			case SimTableField::SimSharp: $dynamicsField = 'cs_number'; break;
+			case SimTableField::SatSharp: $dynamicsField = 'cs_satellitenumber'; break;
+			case SimTableField::Network: $dynamicsField = 'cs_network'; break;
+			case SimTableField::Plan: $dynamicsField = 'cs_plan'; break;
+			case SimTableField::CurrentMinutes: $dynamicsField = 'cs_currentminutes'; break;
+			case SimTableField::ExpiryDate: $dynamicsField = 'cs_expirydate'; break;
+			case SimTableField::Nickname: $dynamicsField = 'new_nickname'; break;
+		}
+		if ($dynamicsField !== '') {
+			if ($simSorting === SortingDirection::Descending)
+				$queryXml .= "<order attribute='{$dynamicsField}' descending='true' />";
+			else
+				$queryXml .= "<order attribute='{$dynamicsField}' />";
+		}
 
-        $simstatusValue = '';
-        switch($simFilter)
-        {
-            case FilterNetworkStatus::Active: $simstatusValue = '100000001'; break;
-            case FilterNetworkStatus::Issued: $simstatusValue = '100000000'; break;
-            case FilterNetworkStatus::Expired: $simstatusValue = '100000002'; break;
-            case FilterNetworkStatus::Deactivated: $simstatusValue = '100000006'; break;
-        }
-        if ($simstatusValue !== '')
-        {
-            $queryXml .=
-                "<filter type='and'>
-                    <condition attribute='cs_simstatus' operator='eq' value='{$simstatusValue}' />
-                </filter>";
-        }
+		$simstatusValue = '';
+		switch($simFilter)
+		{
+			case FilterNetworkStatus::Active: $simstatusValue = '100000001'; break;
+			case FilterNetworkStatus::Issued: $simstatusValue = '100000000'; break;
+			case FilterNetworkStatus::Expired: $simstatusValue = '100000002'; break;
+			case FilterNetworkStatus::Deactivated: $simstatusValue = '100000006'; break;
+		}
+		if ($simstatusValue !== '')
+		{
+			$queryXml .=
+				"<filter type='and'>
+					<condition attribute='cs_simstatus' operator='eq' value='{$simstatusValue}' />
+				</filter>";
+		}
 
-        $queryXml .= '</entity></fetch>';
+		$queryXml .= '</entity></fetch>';
 
-        $query = array(
-            'fetchXml' => $queryXml
-        );
+		$query = array(
+			'fetchXml' => $queryXml
+		);
 
-        // to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
-        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
-        $json = $this->getResponseJsonIfSuccess($response, true);
+		// to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
+		$response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
+		$json = $this->getResponseJsonIfSuccess($response, true);
 
-        if (!isset($json['value']))
-            return false;
+		if (!isset($json['value']))
+			return false;
 
-        return $json['value'];
-    }
+		return $json['value'];
+	}
 
-    /**
-     * @param int $magentoCustomerId
-     * @return array|false
-     */
-    public function getSimsActivationRequestsCountByCustomerId($magentoCustomerId)
-    {
-        $this->login();
+	/**
+	 * @param int $magentoCustomerId
+	 * @return array|false
+	 */
+	public function getSimsActivationRequestsCountByCustomerId($magentoCustomerId)
+	{
+		$this->login();
 
-        $headers = array(
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Accept' => 'application/json',
-            'OData-Max-Version' => '4.0',
-            'OData-Version' => '4.0',
-            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
-        );
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+		);
 
-        $sanitizedMagentoCustomerId = intval($magentoCustomerId);
-        $queryXml = <<<QUERYXML
+		$sanitizedMagentoCustomerId = intval($magentoCustomerId);
+		$queryXml = <<<QUERYXML
 <fetch mapping="logical" aggregate="true" distinct="true">
    <entity name="cs_sim"> 
-      <attribute name="cs_simid" alias="cs_simid" groupby="true"/> 
-      
-      <link-entity name="account" to="cs_accountid"> 
-         <filter type="and"> 
-            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
-          </filter> 
-      </link-entity> 
-      <link-entity name="cs_activationrequest" from="cs_sim" to="cs_simid" >
+	  <attribute name="cs_simid" alias="cs_simid" groupby="true"/> 
+	  
+	  <link-entity name="account" to="cs_accountid"> 
+		 <filter type="and"> 
+			<condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
+		  </filter> 
+	  </link-entity> 
+	  <link-entity name="cs_activationrequest" from="cs_sim" to="cs_simid" >
 		 <attribute name="cs_emailaddress" alias="activationrequests_count" aggregate="count" />
 		 <filter type="and" >
 			<condition attribute="createdon" operator="last-x-hours" value="72" />
@@ -1116,133 +1116,133 @@ QUERYXML;
    </entity> 
 </fetch>
 QUERYXML;
-        $query = array(
-            'fetchXml' => $queryXml
-        );
+		$query = array(
+			'fetchXml' => $queryXml
+		);
 
-        // to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
-        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
-        $json = $this->getResponseJsonIfSuccess($response, true);
+		// to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
+		$response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
+		$json = $this->getResponseJsonIfSuccess($response, true);
 
-        if (!isset($json['value']))
-            return false;
+		if (!isset($json['value']))
+			return false;
 
-        return $json['value'];
-    }
+		return $json['value'];
+	}
 
-    /**
-     * don't forget to validate accountnumber (to current customer id in Magento) if you get $simId from untrusted browser
-     * @param string $simId
-     * @return array|false
-     */
-    public function getSim($simId)
-    {
-        $this->login();
+	/**
+	 * don't forget to validate accountnumber (to current customer id in Magento) if you get $simId from untrusted browser
+	 * @param string $simId
+	 * @return array|false
+	 */
+	public function getSim($simId)
+	{
+		$this->login();
 
-        $headers = array(
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Accept' => 'application/json',
-            'OData-Max-Version' => '4.0',
-            'OData-Version' => '4.0',
-            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
-        );
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+		);
 
-        $sanitizedSimId = htmlspecialchars($simId);
-        $queryXml = <<<QUERYXML
+		$sanitizedSimId = htmlspecialchars($simId);
+		$queryXml = <<<QUERYXML
 <fetch mapping="logical">
    <entity name="cs_sim"> 
-      <attribute name="cs_simstatus"/>
-      <attribute name="cs_number"/> 
-      <attribute name="new_nickname"/>
-      <attribute name="cs_network"/> 
-      <attribute name="cs_type"/>
-      <attribute name="cs_service"/>
-      <attribute name="cs_plan"/>
-      <attribute name="cs_currentminutes"/>
-      <attribute name="cs_satellitenumber"/>
-      <attribute name="cs_data"/>
-      <attribute name="cs_activationdate"/>
-      <attribute name="cs_expirydate"/>
-      <attribute name="cs_imei"/>
-      <attribute name="new_substatus"/>
-      <attribute name="new_quicknote"/>
-      
-      <link-entity name="account" to="cs_accountid"> 
-          <attribute name="accountnumber" alias="magento_customer_id"/>
-      </link-entity> 
-      <filter type="and"> 
-        <condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" /> 
-      </filter> 
+	  <attribute name="cs_simstatus"/>
+	  <attribute name="cs_number"/> 
+	  <attribute name="new_nickname"/>
+	  <attribute name="cs_network"/> 
+	  <attribute name="cs_type"/>
+	  <attribute name="cs_service"/>
+	  <attribute name="cs_plan"/>
+	  <attribute name="cs_currentminutes"/>
+	  <attribute name="cs_satellitenumber"/>
+	  <attribute name="cs_data"/>
+	  <attribute name="cs_activationdate"/>
+	  <attribute name="cs_expirydate"/>
+	  <attribute name="cs_imei"/>
+	  <attribute name="new_substatus"/>
+	  <attribute name="new_quicknote"/>
+	  
+	  <link-entity name="account" to="cs_accountid"> 
+		  <attribute name="accountnumber" alias="magento_customer_id"/>
+	  </link-entity> 
+	  <filter type="and"> 
+		<condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" /> 
+	  </filter> 
    </entity> 
 </fetch>
 QUERYXML;
-        $query = array(
-            'fetchXml' => $queryXml
-        );
+		$query = array(
+			'fetchXml' => $queryXml
+		);
 
-        // to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
-        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
-        $json = $this->getResponseJsonIfSuccess($response, true);
+		// to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
+		$response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
+		$json = $this->getResponseJsonIfSuccess($response, true);
 
-        if (empty($json['value']))
-            return false;
+		if (empty($json['value']))
+			return false;
 
-        return $json['value'][0];
-    }
+		return $json['value'][0];
+	}
 
-    /**
-     * don't forget to validate accountnumber (to current customer id in Magento) if you get $simId from untrusted browser
-     * @param string $simId
-     * @return array|false
-     */
-    public function getSimActivationRequestsCount($simId)
-    {
-        $this->login();
+	/**
+	 * don't forget to validate accountnumber (to current customer id in Magento) if you get $simId from untrusted browser
+	 * @param string $simId
+	 * @return array|false
+	 */
+	public function getSimActivationRequestsCount($simId)
+	{
+		$this->login();
 
-        $headers = array(
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Accept' => 'application/json',
-            'OData-Max-Version' => '4.0',
-            'OData-Version' => '4.0',
-            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
-        );
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+		);
 
-        $sanitizedSimId = htmlspecialchars($simId);
-        $queryXml = <<<QUERYXML
+		$sanitizedSimId = htmlspecialchars($simId);
+		$queryXml = <<<QUERYXML
 <fetch mapping="logical" aggregate="true">
    <entity name="cs_sim"> 
-      <attribute name="cs_simid" alias="cs_simid" groupby="true"/>
-      
-      <filter type="and"> 
-        <condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" /> 
-      </filter> 
+	  <attribute name="cs_simid" alias="cs_simid" groupby="true"/>
+	  
+	  <filter type="and"> 
+		<condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" /> 
+	  </filter> 
 
-      <link-entity name="cs_activationrequest" from="cs_sim" to="cs_simid" >
-      <attribute name="cs_emailaddress" alias="activationrequests_count" aggregate="count" />
-      	<filter type="and" >
-        	<condition attribute="createdon" operator="last-x-hours" value="72" />
-      	</filter>
-      </link-entity>
+	  <link-entity name="cs_activationrequest" from="cs_sim" to="cs_simid" >
+	  <attribute name="cs_emailaddress" alias="activationrequests_count" aggregate="count" />
+		<filter type="and" >
+			<condition attribute="createdon" operator="last-x-hours" value="72" />
+		</filter>
+	  </link-entity>
    </entity> 
 </fetch>
 QUERYXML;
-        $query = array(
-            'fetchXml' => $queryXml
-        );
+		$query = array(
+			'fetchXml' => $queryXml
+		);
 
-        // to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
-        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
-        $json = $this->getResponseJsonIfSuccess($response, true);
+		// to find out name for api url (cs_sims in this case), see EntitySetName for an entity in XrmToolBox
+		$response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
+		$json = $this->getResponseJsonIfSuccess($response, true);
 
-        if (empty($json['value']))
-            return 0;
+		if (empty($json['value']))
+			return 0;
 
-        return $json['value'][0]['activationrequests_count'];
-    }
+		return $json['value'][0]['activationrequests_count'];
+	}
 
-    public function updateSim($simId, $crmSim)
-    {
-    	$this->login();
+	public function updateSim($simId, $crmSim)
+	{
+		$this->login();
 
 		$headers = array(
 			'Authorization' => 'Bearer ' . $this->accessToken,
@@ -1255,62 +1255,62 @@ QUERYXML;
 
 		$response = $this->sendPatchRequestJson($this->getCrmUrl() . "/api/data/v8.1/cs_sims($simId)", $headers, json_encode($crmSim));
 		$json = $this->getResponseJsonIfSuccess($response);
-    }
+	}
 
-    /**
-     * @param int $magentoCustomerId
-     * @return array|false
-     */
-    public function getDevicesByCustomerId($magentoCustomerId)
-    {
-        $this->login();
+	/**
+	 * @param int $magentoCustomerId
+	 * @return array|false
+	 */
+	public function getDevicesByCustomerId($magentoCustomerId)
+	{
+		$this->login();
 
-        $headers = array(
-            'Authorization' => 'Bearer ' . $this->accessToken,
-            'Accept' => 'application/json',
-            'OData-Max-Version' => '4.0',
-            'OData-Version' => '4.0',
-            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
-        );
+		$headers = array(
+			'Authorization' => 'Bearer ' . $this->accessToken,
+			'Accept' => 'application/json',
+			'OData-Max-Version' => '4.0',
+			'OData-Version' => '4.0',
+			'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+		);
 
-        $sanitizedMagentoCustomerId = intval($magentoCustomerId);
-        $queryXml = <<<QUERYXML
+		$sanitizedMagentoCustomerId = intval($magentoCustomerId);
+		$queryXml = <<<QUERYXML
 <fetch mapping="logical">
    <entity name="new_device"> 
-      <link-entity name="salesorder" to="new_order" link-type="outer">
-          <attribute name="name" alias="ordernumber"/>
-          <order attribute="ordernumber" descending="true"/>       
-      </link-entity> 
-      <attribute name="new_saledate"/>
-      <attribute name="new_name"/>
-      <link-entity name="product" to="new_product" link-type="outer">
-          <attribute name="name" alias="productname"/>
-      </link-entity>
-      <!-- <attribute name="new_serialnumber"/> -->
-      <link-entity name="account" to="new_soldto"> 
-         <filter type="and"> 
-            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
-          </filter> 
-      </link-entity> 
-      <order attribute="new_name"/>       
+	  <link-entity name="salesorder" to="new_order" link-type="outer">
+		  <attribute name="name" alias="ordernumber"/>
+		  <order attribute="ordernumber" descending="true"/>       
+	  </link-entity> 
+	  <attribute name="new_saledate"/>
+	  <attribute name="new_name"/>
+	  <link-entity name="product" to="new_product" link-type="outer">
+		  <attribute name="name" alias="productname"/>
+	  </link-entity>
+	  <!-- <attribute name="new_serialnumber"/> -->
+	  <link-entity name="account" to="new_soldto"> 
+		 <filter type="and"> 
+			<condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
+		  </filter> 
+	  </link-entity> 
+	  <order attribute="new_name"/>       
    </entity> 
 </fetch>
 QUERYXML;
-        $query = array(
-            'fetchXml' => $queryXml
-        );
+		$query = array(
+			'fetchXml' => $queryXml
+		);
 
-        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_devices', $headers, $query);
-        $json = $this->getResponseJsonIfSuccess($response, true);
+		$response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_devices', $headers, $query);
+		$json = $this->getResponseJsonIfSuccess($response, true);
 
-        if (!isset($json['value']))
-            return false;
+		if (!isset($json['value']))
+			return false;
 
-        return $json['value'];
-    }
+		return $json['value'];
+	}
 
-    public function createOrUpdateActivationRequest($crmActivationRequest) {
-    	$this->login();
+	public function createOrUpdateActivationRequest($crmActivationRequest) {
+		$this->login();
 
 		$headers = array(
 			'Authorization' => 'Bearer ' . $this->accessToken,
@@ -1326,9 +1326,9 @@ QUERYXML;
 		$json = $this->getResponseJsonIfSuccess($response);
 
 		return $json->cs_activationrequestid;
-    }
+	}
 
-    private function login() {
+	private function login() {
 		if (isset($this->accessToken) && !$this->isTokenExpired()) {
 			return;
 		}
