@@ -835,8 +835,12 @@ class RestApi {
 		return $json->value[0]->new_countryid;
 	}
 
-	function getCardsByCustomerId($customerId)
-	{
+	/**
+	 * @used-by \CanadaSatellite\Theme\Model\ResourceModel\Card\Collection::loadWithFilter()
+	 * @param $customerId
+	 * @return false
+	 */
+	function getCardsByCustomerId($customerId) {
 		$this->login();
 
 		$headers = array(
@@ -854,11 +858,11 @@ class RestApi {
 
 		$response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_sundrieses', $headers, $query);
 		$json = $this->getResponseJsonIfSuccess($response);
-
-		if (empty($json->value))
-			return false;
-
-		return $json->value;
+		# 2021-06-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «count(): Parameter must be an array or an object that implements Countable
+		# in app/code/CanadaSatellite/Theme/Model/ResourceModel/Card/Collection.php on line 77»:
+		# https://github.com/canadasatellite-ca/site/issues/131
+		return df_eta($json->value);
 	}
 
 	function getCard($cardId)
