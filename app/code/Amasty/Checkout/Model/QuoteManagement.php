@@ -130,7 +130,10 @@ class QuoteManagement implements QuoteManagementInterface
 
             $this->saveInfo(
                 $cartId,
-                $shippingAddressFromData,
+                # 2021-06-03 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+                # Amasty_Checkout: «The Cart includes virtual product(s) only, so a shipping address is not used»:
+				# https://github.com/canadasatellite-ca/site/issues/135
+                !df_tangible($quote) ? null : $shippingAddressFromData,
                 $newCustomerBillingAddress,
                 $selectedPaymentMethod,
                 $quote
