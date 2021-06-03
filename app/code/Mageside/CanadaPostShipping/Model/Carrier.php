@@ -291,22 +291,27 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     protected function _getQuotes()
     {
         $this->_result = $this->_rateFactory->create();
-        $response = $this->_doRatesRequest();
-        if (isset($response['rates'])) {
-            $amount = $this->_rawRequest->getValue();
-            if ($this->getRateClient()->isCoverageEnabled($amount)) {
-                $response = $this->getRateClient()
-                    ->updateRatesWithCoverage($response['rates'], $amount, $this->_rawRequest);
-            }
-        }
-        $preparedGeneral = $this->_prepareRateResponse($response);
-        if (!$preparedGeneral->getError()
-            || $this->_result->getError() && $preparedGeneral->getError()
-            || empty($this->_result->getAllRates())
-        ) {
-            $this->_result->append($preparedGeneral);
-        }
-
+		# 2021-06-03 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# `Mageside_CanadaPostShipping` / ` Interactivated_Quotecheckout`:
+		# «element weight value '0' is not a valid instance of the element type»:
+		# https://github.com/canadasatellite-ca/site/issues/137
+        if (df_float($this->_rawRequest['weight'])) {
+			$response = $this->_doRatesRequest();
+			if (isset($response['rates'])) {
+				$amount = $this->_rawRequest->getValue();
+				if ($this->getRateClient()->isCoverageEnabled($amount)) {
+					$response = $this->getRateClient()
+						->updateRatesWithCoverage($response['rates'], $amount, $this->_rawRequest);
+				}
+			}
+			$preparedGeneral = $this->_prepareRateResponse($response);
+			if (!$preparedGeneral->getError()
+				|| $this->_result->getError() && $preparedGeneral->getError()
+				|| empty($this->_result->getAllRates())
+			) {
+				$this->_result->append($preparedGeneral);
+			}
+		}
         return $this->_result;
     }
 
