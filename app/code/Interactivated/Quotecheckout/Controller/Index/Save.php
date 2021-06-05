@@ -164,7 +164,8 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 		else {
 			try {
 				df_cart()->removeItem($id)->save();
-				$link = $this->getQtyAfterMyCart(df_cart()->getItemsQty());
+				$q = (int)df_cart()->getItemsQty(); /** @var int $q */
+				$link = !$q ? __('My Cart') : __(1 === $q ? 'My Cart (%1 item)' : 'My Cart (%1 items)', $q);
 			}
 			catch (\Exception $e) {
 				$r = ['msg' => __('Cannot remove the item.')];
@@ -182,25 +183,6 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 			}
 		}
 		return $r + ['error' => 1];
-	}
-
-	/**
-	 * 2021-06-05 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
-	 * @used-by _removeproduct()
-	 * @param int $qty
-	 * @return \Magento\Framework\Phrase|string
-	 */
-	private function getQtyAfterMyCart($qty) {
-		if ($qty == 0) {
-			return __("My Cart");
-		} else if ($qty == 1) {
-			return __("My Cart (%1 item)", $qty);
-		} else if ($qty > 1) {
-			return __("My Cart (%1 items)", $qty);
-		}
-
-		return '';
 	}
 
 	/**
