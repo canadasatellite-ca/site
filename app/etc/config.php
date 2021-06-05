@@ -373,7 +373,6 @@ return [
         'Magestore_SupplierSuccess' => 1,
         'Mageants_AlsoBought' => 1,
         'MageSuper_Faq' => 1,
-        'Magedelight_Subscribenow' => 1,
         'Magefan_Community' => 1,
         'Magefan_LoginAsCustomer' => 1,
         'Mageplaza_Core' => 1,
