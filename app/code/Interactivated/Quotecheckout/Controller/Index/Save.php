@@ -151,39 +151,47 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	}
 
 	/**
+	 * 2021-06-05 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
 	 * @used-by execute()
-	 * @return array
+	 * @return array(string => int|string)
 	 */
 	private function _removeproduct() {
-		$id = (int)$this->getRequest()->getParam('id');
-		$hasGiftBox = $this->getRequest()->getParam('hasgiftbox');
-		if ($id) {
-			try {
-				$checkoutCartModel = $this->_objectManager->get('Magento\Checkout\Model\Cart');
-				$checkoutCartModel->removeItem($id)->save();
-				$qty  = $checkoutCartModel->getItemsQty();
-				$link = $this->getQtyAfterMyCart($qty);
-			}
-			catch (\Exception $e) {
-				return ['error' => 1, 'msg' => __('Cannot remove the item.')];
-			}
-		}
-		else {
+		$r = []; /** @var array(string => int|string) $r */
+		if (!($id = (int)df_request('id'))) { /** @var int $id */
 			$link = '';
 		}
-		if (!$this->_getQuote()->getItemsCount()) {
-			return ['error' => 1, 'msg' => __('EMPTY'),];
-		}
-		elseif ($hasGiftBox) {
-			return ['error' => 1, 'html_giftbox' => json_encode($this->renderGiftbox()), 'html_link' => $link, 'msg' => ''];
-		}
 		else {
-			return ['error' => 1, 'html_giftbox' => '', 'html_link' => $link, 'msg' => ''];
+			try {
+				df_cart()->removeItem($id)->save();
+				$link = $this->getQtyAfterMyCart(df_cart()->getItemsQty());
+			}
+			catch (\Exception $e) {
+				$r = ['msg' => __('Cannot remove the item.')];
+			}
 		}
+		if (!$r) {
+			if (!$this->_getQuote()->getItemsCount()) {
+				$r = ['msg' => __('EMPTY')];
+			}
+			elseif (df_request('hasgiftbox')) {
+				$r = ['html_giftbox' => json_encode($this->renderGiftbox()), 'html_link' => $link, 'msg' => ''];
+			}
+			else {
+				$r = ['html_giftbox' => '', 'html_link' => $link, 'msg' => ''];
+			}
+		}
+		return $r + ['error' => 1];
 	}
 
-	protected function getQtyAfterMyCart($qty)
-	{
+	/**
+	 * 2021-06-05 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
+	 * @used-by _removeproduct()
+	 * @param int $qty
+	 * @return \Magento\Framework\Phrase|string
+	 */
+	private function getQtyAfterMyCart($qty) {
 		if ($qty == 0) {
 			return __("My Cart");
 		} else if ($qty == 1) {
@@ -597,6 +605,8 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	}
 
 	/**
+	 * 2021-06-05 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
 	 * @used-by _removeproduct()
 	 * @return string
 	 */
@@ -607,7 +617,6 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 		$layout->generateXml();
 		$layout->generateElements();
 		$output = $layout->getBlock('onestepcheckout.onepage.shipping_method.additional')->toHtml();
-
 		return $output;
 	}
 
