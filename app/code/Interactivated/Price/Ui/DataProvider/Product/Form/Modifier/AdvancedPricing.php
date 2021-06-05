@@ -38,7 +38,7 @@ class AdvancedPricing extends AbstractModifier
      * @param LocatorInterface $locator
      * @param ArrayManager $arrayManager
      */
-    public function __construct(
+    function __construct(
         LocatorInterface $locator,
         ArrayManager $arrayManager
     ) {
@@ -48,7 +48,7 @@ class AdvancedPricing extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         $groupCode = $this->getGroupCodeByField($meta, self::CODE_ADVANCED_PRICING);
         if ($groupCode) {
@@ -71,7 +71,7 @@ class AdvancedPricing extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
         return $data;
     }

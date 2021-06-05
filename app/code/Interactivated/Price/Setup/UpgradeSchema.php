@@ -27,7 +27,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
      *
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      */
-    public function __construct(
+    function __construct(
         WriterInterface $configWriter,
         \Magento\Framework\ObjectManagerInterface $objectmanager,
         CategorySetupFactory $categorySetupFactory
@@ -42,7 +42,7 @@ class UpgradeSchema implements UpgradeSchemaInterface
      * {@inheritdoc}
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    function upgrade(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
         $installer->startSetup();
