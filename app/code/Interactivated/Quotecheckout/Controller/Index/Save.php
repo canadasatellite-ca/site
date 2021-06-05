@@ -615,12 +615,10 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	}
 
 	/**
-	 * Retrive gift message block
-	 *
+	 * @used-by _removeproduct()
 	 * @return string
 	 */
-	function renderGiftbox()
-	{
+	private function renderGiftbox() {
 		$layout = $this->layoutFactory->create();
 		$update = $layout->getUpdate();
 		$update->load('onestepcheckout_index_save');
