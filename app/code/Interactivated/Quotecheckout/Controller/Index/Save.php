@@ -151,52 +151,34 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	}
 
 	/**
-	 * Remove product items
-	 *
+	 * @used-by execute()
 	 * @return array
 	 */
-	protected function _removeproduct()
-	{
-		$id         = (int) $this->getRequest()->getParam('id');
+	private function _removeproduct() {
+		$id = (int)$this->getRequest()->getParam('id');
 		$hasGiftBox = $this->getRequest()->getParam('hasgiftbox');
 		if ($id) {
 			try {
 				$checkoutCartModel = $this->_objectManager->get('Magento\Checkout\Model\Cart');
 				$checkoutCartModel->removeItem($id)->save();
-
 				$qty  = $checkoutCartModel->getItemsQty();
 				$link = $this->getQtyAfterMyCart($qty);
-			} catch (\Exception $e) {
-				return [
-					'error' => 1,
-					'msg'   => __('Cannot remove the item.'),
-				];
 			}
-		} else {
+			catch (\Exception $e) {
+				return ['error' => 1, 'msg' => __('Cannot remove the item.')];
+			}
+		}
+		else {
 			$link = '';
 		}
-
 		if (!$this->_getQuote()->getItemsCount()) {
-			return [
-				'error' => 1,
-				'msg'   => __('EMPTY'),
-			];
-		} else {
-			if ($hasGiftBox) {
-				return [
-					'error'        => 1,
-					'msg'          => '',
-					'html_giftbox' => json_encode($this->renderGiftbox()),
-					'html_link'    => $link,
-				];
-			} else {
-				return [
-					'error'        => 1,
-					'msg'          => '',
-					'html_giftbox' => '',
-					'html_link'    => $link,
-				];
-			}
+			return ['error' => 1, 'msg' => __('EMPTY'),];
+		}
+		elseif ($hasGiftBox) {
+			return ['error' => 1, 'html_giftbox' => json_encode($this->renderGiftbox()), 'html_link' => $link, 'msg' => ''];
+		}
+		else {
+			return ['error' => 1, 'html_giftbox' => '', 'html_link' => $link, 'msg' => ''];
 		}
 	}
 
