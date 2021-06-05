@@ -7,7 +7,7 @@ class Product
     protected $priceCurrency;
     const EXCHANGE_RATE = 1.03;
 
-    public function __construct(
+    function __construct(
         \Magento\Store\Model\StoreManagerInterface $storeManager,
         \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency)
     {
@@ -15,7 +15,7 @@ class Product
         $this->priceCurrency = $priceCurrency;
     }
 
-    public function aroundGetData(\Magento\Catalog\Model\Product $product, \Closure $process, $key = '', $index = null)
+    function aroundGetData(\Magento\Catalog\Model\Product $product, \Closure $process, $key = '', $index = null)
     {
         if ($key == 'price' && $product->getTypeId() !== 'bundle') {
             $result = $this->getPrice($product);
@@ -33,7 +33,7 @@ class Product
         return $price;
     }
 
-    public function aroundGetSpecialPrice(\Magento\Catalog\Model\Product $product, \Closure $process)
+    function aroundGetSpecialPrice(\Magento\Catalog\Model\Product $product, \Closure $process)
     {
         $result = $this->getSpecialPrice($product);
         if ($result !== false) {

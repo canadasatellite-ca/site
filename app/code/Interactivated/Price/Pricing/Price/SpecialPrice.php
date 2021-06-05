@@ -23,7 +23,7 @@ class SpecialPrice extends \Magento\Catalog\Pricing\Price\SpecialPrice implement
      *
      * @return float
      */
-    public function getSpecialPrice()
+    function getSpecialPrice()
     {
         $specialPrice = $this->product->getSpecialPrice();
         if ($specialPrice !== null && $specialPrice !== false && !$this->isPercentageDiscount()) {

@@ -41,7 +41,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
        * @param \Magento\Framework\Stdlib\DateTime\DateTime $dateTime
        * @param \Magedelight\Firstdata\Model\Config $firstdataConfig
        */
-      public function __construct(
+      function __construct(
         \Magento\Framework\App\Helper\Context $context,
         \Magento\Framework\Pricing\PriceCurrencyInterface $priceCurrency
     ) {
@@ -50,7 +50,7 @@ class Data extends \Magento\Framework\App\Helper\AbstractHelper
       }
       
 
-    public function format($price, $currency){
+    function format($price, $currency){
         return $this->priceCurrency->format($price,false,2, null,$currency);
     }
 }

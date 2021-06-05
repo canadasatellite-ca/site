@@ -19,7 +19,7 @@ class RegularPrice extends \Magento\Catalog\Pricing\Price\RegularPrice  implemen
      *
      * @return float|bool
      */
-    public function getValue()
+    function getValue()
     {
         if ($this->value === null) {
             $price = $this->product->getPrice();

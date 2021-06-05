@@ -52,7 +52,7 @@ class Composite extends AbstractModifier
      * @param ProductRepositoryInterface $productRepository
      * @param array $modifiers
      */
-    public function __construct(
+    function __construct(
         LocatorInterface $locator,
         ObjectManagerInterface $objectManager,
         ProductOptionRepositoryInterface $optionsRepository,
@@ -69,7 +69,7 @@ class Composite extends AbstractModifier
     /**
      * {@inheritdoc}
      */
-    public function modifyMeta(array $meta)
+    function modifyMeta(array $meta)
     {
         //if ($this->locator->getProduct()->getTypeId() === Type::TYPE_CODE) {
             foreach ($this->modifiers as $bundleClass) {
@@ -91,7 +91,7 @@ class Composite extends AbstractModifier
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function modifyData(array $data)
+    function modifyData(array $data)
     {
 
         return $data;
