@@ -235,7 +235,6 @@ return [
         'Magento_WishlistAnalytics' => 1,
         'Magento_WishlistGraphQl' => 1,
         'Aheadworks_AdvancedReviews' => 1,
-        'Aitoc_OrdersExportImport' => 1,
         'Amasty_Acart' => 1,
         'Amasty_Base' => 1,
         'Amasty_Geoip' => 1,

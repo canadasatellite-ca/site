@@ -21,10 +21,8 @@ class CustomFix extends Command
 
     public function __construct(
         \Magento\Framework\App\State $state,
-        \Aitoc\OrdersExportImport\Cron\Import $import,
         ProductCollection $productCollection
     ) {
-        $this->import = $import;
         $this->state = $state;
         $this->productCollection = $productCollection;
         parent::__construct();
