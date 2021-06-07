@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+* Magedelight
+ * Copyright (C) 2017 Magedelight <info@magedelight.com>
+ *
+ * @category Magedelight
+ * @package Magedelight_Subscribenow
+ * @copyright Copyright (c) 2017 Mage Delight (http://www.magedelight.com/)
+ * @license http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * @author Magedelight <info@magedelight.com>
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <md_subscribenow>
+            <general>
+                <enabled>0</enabled>
+                <!-- <manage_subscription_interval>a:4:{s:18:"_1462439411170_170";a:3:{s:13:"interval_type";s:3:"day";s:14:"no_of_interval";s:1:"1";s:14:"interval_label";s:13:"Once In A Day";}s:18:"_1462439419782_782";a:3:{s:13:"interval_type";s:4:"week";s:14:"no_of_interval";s:1:"2";s:14:"interval_label";s:13:"Twise In Week";}s:18:"_1462439426603_603";a:3:{s:13:"interval_type";s:5:"month";s:14:"no_of_interval";s:1:"1";s:14:"interval_label";s:13:"Once In Month";}s:18:"_1464416041542_542";a:3:{s:13:"interval_type";s:4:"year";s:14:"no_of_interval";s:1:"6";s:14:"interval_label";s:16:"Six Time in Year";}}</manage_subscription_interval> -->
+                <maximum_payment_failed>5</maximum_payment_failed>
+                <payment_gateway>magedelight_cybersource</payment_gateway>
+                <update_billing_address>1</update_billing_address>
+                <update_shipping_address>1</update_shipping_address>
+                <update_profile_before>5</update_profile_before>
+                <reminder_occurrence_before>6</reminder_occurrence_before>
+            </general>
+            <product_subscription>
+                <maximum_quantity_subscribe>3</maximum_quantity_subscribe>
+                <enabled>0</enabled>                
+                <subscription_list_text>Subscription Product</subscription_list_text>
+                <header_summary_text>Your Subscription Plan as configured below</header_summary_text>
+                <content_summary_text>You are about to subscribe to the items above. They will automatically be reordered pursuing the following scheme</content_summary_text>
+                <free_shipping_subscription>0</free_shipping_subscription>
+                <allow_skip_subscription>0</allow_skip_subscription>
+                <allow_pause_subscription>1</allow_pause_subscription>
+                <allow_cancel_subscription>1</allow_cancel_subscription>                
+            </product_subscription>
+            <email>                
+                <subscription_email_sender>general</subscription_email_sender>
+                <new_subscription_template>md_subscribenow_email_new_subscription_template</new_subscription_template>
+                <subscription_update_template>md_subscribenow_email_subscription_update_template</subscription_update_template>
+                <payment_fail_template>md_subscribenow_email_payment_fail_template</payment_fail_template>
+                <subscription_card_template>md_subscribenow_email_subscription_card_template</subscription_card_template>                
+            </email>
+        </md_subscribenow>
+    </default>
+</config>

@@ -1,0 +1,158 @@
+// /**
+//  * Copyright © 2013-2017 Magento, Inc. All rights reserved.
+//  * See COPYING.txt for license details.
+//  */
+
+//
+//  Common
+//  _____________________________________________
+
+& when (@media-common = true) {
+    .bundle-product-options-subscrbenow {
+        clear: both;
+    }
+    .subscribenow-account-view {
+        .col-1-sub{
+            width: 48%;
+            float: left;
+        }
+        .col-2-sub{
+        width: 48%;
+        float: left;
+        }
+        .sub-info-box-2{
+            margin-top: 4%;
+        }
+        .col2-set{
+            overflow: hidden;
+        }
+        .col2-set.sub-info-box-2 {
+            padding-bottom: 4%;
+        }
+        .block.block-order-details-view{
+            border-bottom: 1px solid #c6c6c6;
+            padding-bottom: 3%;
+            .col-1-sub{
+                display: block;
+                width: 100%;
+                margin-bottom: 10px;
+            }
+        }
+        .back-subscription.go-back{
+            float: right;
+            margin-top: 5px;
+        }
+        .info-table{
+            td.date-picker{
+                position: relative;
+                .lib-icon-font(
+                @icon-calendar,
+                @_icon-font-size: 17px,
+                @_icon-font-color: @header-icons-color,
+                @_icon-font-color-hover: @header-icons-color-hover
+                );
+                &:before{
+                    position: absolute;
+                    right: 15px;
+                    bottom: 15px;
+                } 
+            }
+        }
+    }
+    .account {
+        .toolbar {
+            .pager {
+                .pages {
+                    position: static;
+                    float: right;
+                    text-align: right;
+                    display: inline-block;
+                    width: auto;
+                }
+                .limiter{
+                    display: block;
+                    clear: both;
+                    text-align: center;
+                }
+            }
+        } 
+        .page-title-wrapper{
+            h1.page-title{
+                margin-bottom: 20px;
+                width: 100%;
+            }
+            .block.block-addresses-default {
+                margin-top: 20px; 
+            }
+        }
+    }
+    .catalog-product-view {
+        .bundle-options-container {
+            #md_subscription_content{
+                .product-options-wrapper{
+                    float: none;
+                    width: 100%;
+                    margin-bottom: 0;
+                }
+            }
+        }
+        &.page-product-downloadable {
+            #md_subscription_content{
+                .product-options-wrapper{
+                    float: none;
+                    margin-bottom: 0;
+                }
+            }
+        }
+        
+        #md_subscription_content{
+            .product-options-wrapper {
+                h4{margin-bottom: 0.5rem;}
+                #product-subscription-admin{margin:1rem 0;}
+
+                .field {
+                    #billing_period {
+                        margin-bottom:1rem;
+                    }
+                    .control {
+                        width: 100%;
+                        &.date-picker{
+                            position: relative;
+                            .lib-icon-font(
+                            @icon-calendar,
+                            @_icon-font-size: 2.2rem,
+                            @_icon-font-color: @header-icons-color,
+                            @_icon-font-color-hover: @header-icons-color-hover
+                            );
+                            &:before{
+                                position: absolute;
+                                right: 5px;
+                            }
+                            button.ui-datepicker-trigger{
+                                &:before{
+                                    content: none;
+                                }
+                            }
+                        }
+                    }
+                }
+                #plan-attribute-specs-table {
+                    tr th {
+                        border-right: 1px solid silver;border-bottom: 1px solid silver;
+                    }
+                    margin:1rem 0;
+                    border:1px solid silver;
+                }
+            }
+        }          
+    }
+    
+    .checkout-onepage-success .subscription-success {
+        margin: 3% 0 1.5% 0;
+    }
+}
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m){
+    .account .page-main .page-title-wrapper .order-date{
+        margin: 10px 0 18px;
+    }
+}

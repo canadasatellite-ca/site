@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+ * Magedelight
+ * Copyright (C) 2019 Magedelight <info@magedelight.com>
+ *
+ * Category  Magedelight
+ * Package   Magedelight_Subscribenow
+ * Copyright Copyright (c) 2019 MageDelight (http://www.magedelight.com/)
+ * License   http://opensource.org/licenses/gpl-3.0.html GNU General Public License,version 3 (GPL-3.0)
+ * Author    Magedelight <info@magedelight.com>
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>        	                                
+        <add dependsOnConfig="md_subscribenow/general/enabled" 
+            id="Magedelight_Subscribenow::subscribenow_productsubscription" 
+            title="Product Subscription" 
+            module="Magedelight_Subscribenow" 
+            sortOrder="45" 
+            parent="Magento_Sales::sales_operation" 
+            action="subscribenow/productsubscribers" 
+            resource="Magedelight_Subscribenow::subscribenow_productsubscription"/>
+        
+        <add dependsOnConfig="md_subscribenow/general/enabled" 
+            id="Magedelight_Subscribenow::subscribenow_report" 
+            title="Subscription Report"
+            module="Magedelight_Subscribenow" 
+            sortOrder="90" 
+            parent="Magento_Reports::report" 
+            resource="Magedelight_Subscribenow::subscribenowreport" />
+        
+        <add dependsOnConfig="md_subscribenow/general/enabled" 
+            id="Magedelight_Subscribenow::report_product" 
+            title="Product Subscription report" 
+            module="Magedelight_Subscribenow" 
+            sortOrder="10" 
+            parent="Magedelight_Subscribenow::subscribenow_report" 
+            action="subscribenow/report_product/view" 
+            resource="Magedelight_Subscribenow::subscribenow_product" />
+        
+        <add dependsOnConfig="md_subscribenow/general/enabled" 
+            id="Magedelight_Subscribenow::report_customer"
+            title="Customer Subscription report"
+            module="Magedelight_Subscribenow"
+            sortOrder="20"
+            parent="Magedelight_Subscribenow::subscribenow_report"
+            action="subscribenow/report_customer/view"
+            resource="Magedelight_Subscribenow::subscribenow_customer"/>
+        
+        <add dependsOnConfig="md_subscribenow/general/enabled"
+            id="Magedelight_Subscribenow::report_futureproducts"
+            title="Future Products Subscription report"
+            module="Magedelight_Subscribenow"
+            sortOrder="30"
+            parent="Magedelight_Subscribenow::subscribenow_report"
+            action="subscribenow/report_sales/futureproducts"
+            resource="Magedelight_Subscribenow::subscribenow_futureproducts" />
+    </menu>
+</config>
