@@ -119,8 +119,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 		return $this;
 	}
 
-	function capture(\Magento\Payment\Model\InfoInterface $sp46490f, $spb954c6)
-	{
+	function capture(\Magento\Payment\Model\InfoInterface $sp46490f, $spb954c6) {
 		$sp62e25f = false;
 		if ($sp46490f->getParentTransactionId()) {
 			$sp46490f->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
@@ -140,17 +139,20 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 			$sp46490f->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		} else {
 			if ($res->getResponseReasonText()) {
-				$sp62e25f = $res->getResponseReasonText();
+				$errorMessage = $res->getResponseReasonText();
 			} else {
-				$sp62e25f = __('Error in capturing the payment');
+				$errorMessage = __('Error in capturing the payment');
 			}
 			if (!($o = $sp46490f->getOrder())) {
 				$o = $sp46490f->getQuote();
 			}
-			$o->addStatusToHistory($o->getStatus(), urldecode($sp62e25f) . ' at Beanstream', $sp62e25f . ' from Beanstream');
+			$o->addStatusToHistory(
+				$o->getStatus(), urldecode($errorMessage) . ' at Beanstream', $errorMessage . ' from Beanstream'
+			);
 		}
-		if ($sp62e25f !== false) {
-			self::throwException($sp62e25f);
+		if ($errorMessage !== false) {
+			dfp_report($this, ['request' => $req->getData(), 'response' => $res->getData()]);
+			self::throwException($errorMessage);
 		}
 		return $this;
 	}
