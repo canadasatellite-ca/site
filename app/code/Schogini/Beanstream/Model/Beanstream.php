@@ -1,13 +1,8 @@
 <?php
 namespace Schogini\Beanstream\Model;
-
-use Schogini\Beanstream\Model\BeanstreamException;
-use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Sales\Model\Order;
-use Monolog\Logger;
-use Magento\Quote\Api\Data\CartInterface;
 use Magento\Framework\DataObject;
-
+use Magento\Quote\Api\Data\CartInterface;
+use Magento\Sales\Model\Order as O;
 class Beanstream extends \Magento\Payment\Model\Method\Cc
 {
 	const CODE = 'beanstream';
@@ -147,10 +142,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 			} else {
 				$sp62e25f = __('Error in capturing the payment');
 			}
-			if (!($sp300378 = $sp46490f->getOrder())) {
-				$sp300378 = $sp46490f->getQuote();
+			if (!($o = $sp46490f->getOrder())) {
+				$o = $sp46490f->getQuote();
 			}
-			$sp300378->addStatusToHistory($sp300378->getStatus(), urldecode($sp62e25f) . ' at Beanstream', $sp62e25f . ' from Beanstream');
+			$o->addStatusToHistory($o->getStatus(), urldecode($sp62e25f) . ' at Beanstream', $sp62e25f . ' from Beanstream');
 		}
 		if ($sp62e25f !== false) {
 			self::throwException($sp62e25f);
@@ -239,13 +234,13 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 
 	protected function _buildRequest(\Magento\Payment\Model\InfoInterface $sp46490f)
 	{
-		$sp300378 = $sp46490f->getOrder();
+		$o = $sp46490f->getOrder(); /** @var O $o */
 		$sp3382ae = $this->requestFactory->create();
 		$sp3382ae->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
 		$sp3382ae->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($sp46490f->getAnetTransType())->setXMethod($sp46490f->getAnetTransMethod());
 		if ($sp46490f->getAmount()) {
 			$sp3382ae->setXAmount($sp46490f->getAmount(), 2);
-			$sp3382ae->setXCurrencyCode($sp300378->getBaseCurrencyCode());
+			$sp3382ae->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
 		switch ($sp46490f->getAnetTransType()) {
 			case self::REQUEST_TYPE_CREDIT:
@@ -258,19 +253,19 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 				$sp3382ae->setXAuthCode($sp46490f->getCcAuthCode());
 				break;
 		}
-		if (!empty($sp300378)) {
-			$spcf7599 = $sp300378->getShippingAmount();
-			$spba68ac = $sp300378->getTaxAmount();
-			$sp9dfdb6 = $sp300378->getSubtotal();
-			$sp3382ae->setXInvoiceNum($sp300378->getIncrementId());
-			$sp4ed284 = $sp300378->getBillingAddress();
+		if (!empty($o)) {
+			$spcf7599 = $o->getShippingAmount();
+			$spba68ac = $o->getTaxAmount();
+			$sp9dfdb6 = $o->getSubtotal();
+			$sp3382ae->setXInvoiceNum($o->getIncrementId());
+			$sp4ed284 = $o->getBillingAddress();
 			if (!empty($sp4ed284)) {
 				$sp864f41 = $sp4ed284->getEmail();
 				if (!$sp864f41) {
-					$sp864f41 = $sp300378->getBillingAddress()->getEmail();
+					$sp864f41 = $o->getBillingAddress()->getEmail();
 				}
 				if (!$sp864f41) {
-					$sp864f41 = $sp300378->getCustomerEmail();
+					$sp864f41 = $o->getCustomerEmail();
 				}
 				$sp3382ae->setXFirstName($sp4ed284->getFirstname())
 					->setXLastName($sp4ed284->getLastname())
@@ -283,7 +278,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 					->setXPhone($sp4ed284->getTelephone())
 					->setXFax($sp4ed284->getFax())
 					->setXCustId($sp4ed284->getCustomerId())
-					->setXCustomerIp($sp300378->getRemoteIp())
+					->setXCustomerIp($o->getRemoteIp())
 					->setXCustomerTaxId($sp4ed284->getTaxId())
 					->setXEmail($sp864f41)
 					->setXEmailCustomer($this->getConfigData('email_customer'))
@@ -293,7 +288,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 					$sp3382ae->setXCountry($sp4ed284->getCountryId());
 				}
 			}
-			$sp79f718 = $sp300378->getShippingAddress();
+			$sp79f718 = $o->getShippingAddress();
 			if (!$sp79f718) {
 				$sp79f718 = $sp4ed284;
 			}
