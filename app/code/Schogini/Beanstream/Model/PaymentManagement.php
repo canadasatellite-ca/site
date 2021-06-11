@@ -9,7 +9,10 @@ class PaymentManagement extends \Magento\Checkout\Model\PaymentInformationManage
 	function savePaymentInformationAndPlaceOrder($v, IP $p, IA $a = null) {
 		$this->savePaymentInformation($v, $p, $a);
 		try {$r = $this->cartManagement->placeOrder($v);}
-		catch (\Exception $e) {throw new CNSE(__('Cannot place order: ' . $e->getMessage()), $e);}
+		catch (\Exception $e) {
+			df_log_e($e, $this);
+			throw new CNSE(__('Cannot place order: ' . $e->getMessage()), $e);
+		}
 		return $r;
 	}
 }
