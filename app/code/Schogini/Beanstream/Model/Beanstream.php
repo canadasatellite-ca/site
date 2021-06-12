@@ -120,7 +120,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 	}
 
 	function capture(\Magento\Payment\Model\InfoInterface $sp46490f, $spb954c6) {
-		$sp62e25f = false;
+		$errorMessage = false;
 		if ($sp46490f->getParentTransactionId()) {
 			$sp46490f->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
 		} else {
@@ -282,7 +282,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 					->setXPhone($sp4ed284->getTelephone())
 					->setXFax($sp4ed284->getFax())
 					->setXCustId($sp4ed284->getCustomerId())
-					->setXCustomerIp($o->getRemoteIp())
+# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Ensure that the Customer IP address is being passed in the API request for all transactions»:
+# https://github.com/canadasatellite-ca/site/issues/175
+					->setXCustomerIp(df_visitor_ip())
 					->setXCustomerTaxId($sp4ed284->getTaxId())
 					->setXEmail($sp864f41)
 					->setXEmailCustomer($this->getConfigData('email_customer'))
