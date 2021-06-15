@@ -151,7 +151,6 @@
     <preference for="Cart2Quote\Quotation\Block\Quote\History" type="CanadaSatellite\Theme\Block\Quote\History" />
     <preference for="Magento\Framework\Stdlib\Cookie\PhpCookieManager" type="CanadaSatellite\Theme\Model\Stdlib\Cookie\PhpCookieManager" />
     <preference for="Mageplaza\AutoRelated\Block\Product\ProductList\ProductList" type="CanadaSatellite\Theme\Block\Product\ProductList" />
-    <preference for="Magedelight\Subscribenow\Model\Subscription" type="CanadaSatellite\Theme\Model\Subscription" />
 
     <type name="Magento\Framework\View\Element\AbstractBlock">
         <plugin
