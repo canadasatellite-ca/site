@@ -41,7 +41,11 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
 					$optionText = $attr->getSource()->getOptionText($vendor_currency);
 				}
 				if ($vendor_currency && $optionText !== 'CAD') {
-					$cost = df_currency_convert($cost, $optionText, 'CAD');
+					# 2021-06-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+					# 1) «A non-numeric value encountered in vendor/mage2pro/core/Directory/lib/currency/convert.php on line 73»:
+					# https://github.com/canadasatellite-ca/site/issues/174
+					# 2) $cost could be an empty string here. It causes the error mentioned above.
+					$cost = df_currency_convert((float)$cost, $optionText, 'CAD');
 				}
 				if ($cost == !NULL) {
 					$totalCost += ($cost * $selection_data[0]['selection_qty']);
@@ -59,7 +63,11 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 $optionText = $attr->getSource()->getOptionText($vendor_currency);
             }
             if ($vendor_currency && $optionText !== 'CAD') {
-                $cost = df_currency_convert($cost, $optionText, 'CAD');
+				# 2021-06-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# 1) «A non-numeric value encountered in vendor/mage2pro/core/Directory/lib/currency/convert.php on line 73»:
+				# https://github.com/canadasatellite-ca/site/issues/174
+				# 2) $cost could be an empty string here. It causes the error mentioned above.
+                $cost = df_currency_convert((float)$cost, $optionText, 'CAD');
             }
         }
         if ($cost > 0) {
