@@ -9,7 +9,13 @@
     <head>
         <css src="MageWorx_Downloads::file_uploader.css"/>
     </head>
-<!-- 2021-06-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-«Broken reference: the 'mageworx_downloads.attachment' element cannot be added as child to 'product_tabs',
-because the latter doesn't exist»: https://github.com/canadasatellite-ca/site/issues/179 -->
+    <body>
+        <referenceBlock name="product_tabs">
+            <block class="MageWorx\Downloads\Block\Adminhtml\Catalog\Product\Edit\Tab\Attachment" name="mageworx_downloads.attachment" />
+            <action method="addTab">
+                <argument name="name" xsi:type="string">mageworx_downloads_attachment</argument>
+                <argument name="block" xsi:type="string">mageworx_downloads.attachment</argument>
+            </action>
+        </referenceBlock>
+    </body>
 </page>
