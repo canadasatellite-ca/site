@@ -408,14 +408,5 @@ return [
         'Wyomind_SimpleGoogleShopping' => 1,
         'Xumulus_FastGalleryLoad' => 1,
         'Yotpo_Yotpo' => 0
-    ],
-    'system' => [
-        'default' => [
-            'web' => [
-                'cookie' => [
-                    'cookie_restriction' => '1'
-                ]
-            ]
-        ]
     ]
 ];
