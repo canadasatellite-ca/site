@@ -19,30 +19,23 @@ class EavUtils
 		return $attribute->getValue();
 	}
 
-	function getDropdownAttributeValue($entity, $attributeName)
-	{
+	function getDropdownAttributeValue($entity, $attributeName) {
 		$attribute = $entity->getCustomAttribute($attributeName);
 		if ($attribute === null) {
 			return null;
 		}
-
 		$option = $attribute->getValue();
-
 		$resource = $entity->getResource();
 		if ($resource === null) {
 			return null;
 		}
-
 		$attributeResource = $resource->getAttribute($attributeName);
 		if ($attributeResource === null) {
 			return null;
 		}
-
 		if (!$attributeResource->usesSource()) {
 			return null;
 		}
-
-
 		return $attributeResource->getSource()->getOptionText($option);
 	}
 
