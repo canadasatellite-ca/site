@@ -30,16 +30,19 @@ class ProductUtils
 		$this->logger = $logger;
 	}
 
+	/**
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\OrderItemUtils::getItemBaseCost()
+	 * @param $product
+	 * @return mixed|string|null
+	 */
 	function getVendorCurrency($product) {
 		$this->logger->info("[getVendorCurrency] Enter");
 		$vendorCurrency = $this->eavUtils->getDropdownAttributeValue($product, 'vendor_currency');
 		$this->logger->info("[getVendorCurrency] Vendor currency is: $vendorCurrency. Introspect: " . gettype($vendorCurrency));
-
 		if ($vendorCurrency === null) {
 			$this->logger->info("[getPrice] Vendor currency is not set. Fallback to CAD");
 			$vendorCurrency = 'CAD';
 		}
-
 		return $vendorCurrency;
 	}
 
