@@ -21,23 +21,19 @@ class OrderItemUtils
 		$this->logger = $logger;
 	}
 
-	function getItemBaseCost($item)
-	{
+	function getItemBaseCost($item) {
 		$this->logger->info("[OrderItemUtils::getItemBaseCost] Enter");
 		$baseCost = $item->getBaseCost();
 		$this->logger->info("[OrderItemUtils::getItemBaseCost] Item base cost: $baseCost");
-
 		$product = $item->getProduct();
 		$vendorCurrency = $this->productUtils->getVendorCurrency($product);
 		$this->logger->info("[OrderItemUtils::getItemBaseCost] Vendor currency is: $vendorCurrency");
-
 		if ($vendorCurrency !== 'CAD') {
 			$this->logger->info("[OrderItemUtils::getItemBaseCost] Vendor currency is not CAD. Convert cost to CAD");
 			$costCAD = $this->currencyUtils->convert($vendorCurrency, 'CAD', $baseCost);
 			$this->logger->info("[OrderItemUtils::getItemBaseCost] Item cost in CAD: $costCAD");
 			return $costCAD;
 		}
-
 		$this->logger->info("[OrderItemUtils::getItemBaseCost] Return item cost as is in CAD: $baseCost");
 		return $baseCost;
 	}
