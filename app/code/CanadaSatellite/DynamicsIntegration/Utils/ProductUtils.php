@@ -30,8 +30,7 @@ class ProductUtils
 		$this->logger = $logger;
 	}
 
-	function getVendorCurrency($product)
-	{
+	function getVendorCurrency($product) {
 		$this->logger->info("[getVendorCurrency] Enter");
 		$vendorCurrency = $this->eavUtils->getDropdownAttributeValue($product, 'vendor_currency');
 		$this->logger->info("[getVendorCurrency] Vendor currency is: $vendorCurrency. Introspect: " . gettype($vendorCurrency));
