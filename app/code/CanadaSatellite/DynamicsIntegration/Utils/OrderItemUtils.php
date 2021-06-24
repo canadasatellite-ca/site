@@ -21,6 +21,11 @@ class OrderItemUtils
 		$this->logger = $logger;
 	}
 
+	/**
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\OrderUtils::calculateVisibleItemsCosts()
+	 * @param $item
+	 * @return float|int|mixed
+	 */
 	function getItemBaseCost($item) {
 		$this->logger->info("[OrderItemUtils::getItemBaseCost] Enter");
 		$baseCost = $item->getBaseCost();
