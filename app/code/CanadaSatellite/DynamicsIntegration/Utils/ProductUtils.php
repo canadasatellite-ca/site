@@ -29,20 +29,17 @@ class ProductUtils {
 	}
 
 	/**
+	 * 2021-06-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * «Call to a member function getCustomAttribute() on null
+	 * in app/code/CanadaSatellite/DynamicsIntegration/Utils/EavUtils.php:24»:
+	 * https://github.com/canadasatellite-ca/site/issues/184
 	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\OrderItemUtils::getItemBaseCost()
-	 * @param P $p
-	 * @return mixed|string|null
+	 * @param P|null $p [optional]
+	 * @return string
 	 */
-	function getVendorCurrency(P $p) {
-		$this->logger->info("[getVendorCurrency] Enter");
-		$r = $this->eavUtils->getDropdownAttributeValue($p, 'vendor_currency');
-		$this->logger->info("[getVendorCurrency] Vendor currency is: $r. Introspect: " . gettype($r));
-		if ($r === null) {
-			$this->logger->info("[getPrice] Vendor currency is not set. Fallback to CAD");
-			$r = 'CAD';
-		}
-		return $r;
-	}
+	function getVendorCurrency(P $p = null) {return
+		!$p || !($r = $this->eavUtils->getDropdownAttributeValue($p, 'vendor_currency')) ? 'CAD' : $r
+	;}
 
 	function getQty($product)
 	{
