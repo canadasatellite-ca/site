@@ -21,6 +21,10 @@ class EavUtils
 
 	/**
 	 * @used-by \CanadaSatellite\DynamicsIntegration\Envelope\ProductEnvelopeFactory::create()
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\ProductUtils::getPrice()
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\ProductUtils::getPriceUsd()
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\ProductUtils::getSpecialPriceUsd()
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\ProductUtils::getVendorCurrency()
 	 * @param $entity
 	 * @param $attributeName
 	 * @return mixed|null
