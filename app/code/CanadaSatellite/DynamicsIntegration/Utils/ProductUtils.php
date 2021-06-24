@@ -1,9 +1,7 @@
 <?php
-
 namespace CanadaSatellite\DynamicsIntegration\Utils;
-
-class ProductUtils
-{
+use Magento\Catalog\Model\Product as P;
+class ProductUtils {
 	private $frontUrlModel;
 	private $productRepository;
 	private $stockRegistry;
@@ -32,18 +30,18 @@ class ProductUtils
 
 	/**
 	 * @used-by \CanadaSatellite\DynamicsIntegration\Utils\OrderItemUtils::getItemBaseCost()
-	 * @param $product
+	 * @param P $p
 	 * @return mixed|string|null
 	 */
-	function getVendorCurrency($product) {
+	function getVendorCurrency(P $p) {
 		$this->logger->info("[getVendorCurrency] Enter");
-		$vendorCurrency = $this->eavUtils->getDropdownAttributeValue($product, 'vendor_currency');
-		$this->logger->info("[getVendorCurrency] Vendor currency is: $vendorCurrency. Introspect: " . gettype($vendorCurrency));
-		if ($vendorCurrency === null) {
+		$r = $this->eavUtils->getDropdownAttributeValue($p, 'vendor_currency');
+		$this->logger->info("[getVendorCurrency] Vendor currency is: $r. Introspect: " . gettype($r));
+		if ($r === null) {
 			$this->logger->info("[getPrice] Vendor currency is not set. Fallback to CAD");
-			$vendorCurrency = 'CAD';
+			$r = 'CAD';
 		}
-		return $vendorCurrency;
+		return $r;
 	}
 
 	function getQty($product)
