@@ -19,6 +19,12 @@ class EavUtils
 		return $attribute->getValue();
 	}
 
+	/**
+	 * @used-by \CanadaSatellite\DynamicsIntegration\Envelope\ProductEnvelopeFactory::create()
+	 * @param $entity
+	 * @param $attributeName
+	 * @return mixed|null
+	 */
 	function getDropdownAttributeValue($entity, $attributeName) {
 		$attribute = $entity->getCustomAttribute($attributeName);
 		if ($attribute === null) {
