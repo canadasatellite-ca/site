@@ -1,13 +1,23 @@
 <?php
+use Magento\Catalog\Model\Product as P;
 use Magento\Sales\Block\Order\Item\Renderer\DefaultRenderer as B;
+use Magento\Sales\Model\Order\Item as OI;
 /** @var B $block */ $b = $block; /** @var B $b */
-$i = $b->getItem();
+$i = $b->getItem(); /** @var OI $i */
 ?>
 <tr id="order-item-row-<?= $i->getId() ?>">
 	<td class="col name" data-th="<?= $b->escapeHtml(__('Product Name')) ?>">
-		<a href="<?php echo $b->escapeHtml($i->getProduct()->getProductUrl()) ?>">
-			<strong class="product name product-item-name"><?= $b->escapeHtml($i->getName()) ?></strong>
-		</a>
+<?php
+# 2021-06-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Call to a member function getProductUrl() on null
+# in app/design/frontend/MageSuper/magestylish/Magento_Sales/templates/order/items/renderer/default.phtml:14»:
+# https://github.com/canadasatellite-ca/site/issues/182
+?>
+		<?php if ($p = $i->getProduct()) { /** @var P $p */ ?>
+			<a href="<?php echo $b->escapeHtml($p->getProductUrl()) ?>">
+				<strong class="product name product-item-name"><?= $b->escapeHtml($i->getName()) ?></strong>
+			</a>
+		<?php } ?>
 		<?php if ($_options = $b->getItemOptions()): ?>
 		<dl class="item-options">
 		<?php foreach ($_options as $_option) : ?>
