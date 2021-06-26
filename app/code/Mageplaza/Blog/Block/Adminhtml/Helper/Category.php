@@ -70,7 +70,7 @@ class Category extends \Magento\Framework\Data\Form\Element\Multiselect
      * @param \Magento\Framework\Escaper $escaper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\ResourceModel\Category\CollectionFactory $collectionFactory,
         \Magento\Backend\Helper\Data $backendData,
         \Magento\Framework\View\LayoutInterface $layout,
@@ -95,7 +95,7 @@ class Category extends \Magento\Framework\Data\Form\Element\Multiselect
      *
      * @return bool
      */
-    public function getNoDisplay()
+    function getNoDisplay()
     {
         $isNotAllowed = !$this->authorization->isAllowed('Mageplaza_Blog::category');
         return $this->getData('no_display') || $isNotAllowed;
@@ -106,7 +106,7 @@ class Category extends \Magento\Framework\Data\Form\Element\Multiselect
      *
      * @return array
      */
-    public function getValues()
+    function getValues()
     {
         $collection = $this->getCategoriesCollection();
         $values = $this->getValue();
@@ -127,7 +127,7 @@ class Category extends \Magento\Framework\Data\Form\Element\Multiselect
      *
      * @return \Mageplaza\Blog\Model\ResourceModel\Category\Collection
      */
-	public function getCategoriesCollection()
+	function getCategoriesCollection()
     {
         return $this->collectionFactory->create();
     }
@@ -137,7 +137,7 @@ class Category extends \Magento\Framework\Data\Form\Element\Multiselect
      *
      * @return string
      */
-    public function getAfterElementHtml()
+    function getAfterElementHtml()
     {
         $htmlId = $this->getHtmlId();
         $suggestPlaceholder = __('start typing to search Blog Category');
@@ -172,7 +172,7 @@ HTML;
      *
      * @return array
      */
-	public function getSelectorOptions()
+	function getSelectorOptions()
     {
         return [
             'source' => $this->backendData->getUrl('mageplaza_blog/category/suggestCategories'),

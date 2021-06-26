@@ -51,7 +51,7 @@ abstract class Post extends \Magento\Backend\App\Action
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\PostFactory $postFactory,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Backend\App\Action\Context $context
@@ -68,7 +68,7 @@ abstract class Post extends \Magento\Backend\App\Action
      *
      * @return \Mageplaza\Blog\Model\Post
      */
-	public function initPost()
+	function initPost()
     {
         $postId  = (int) $this->getRequest()->getParam('post_id');
         /** @var \Mageplaza\Blog\Model\Post $post */

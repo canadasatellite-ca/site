@@ -31,7 +31,7 @@ abstract class Author extends \Magento\Backend\App\Action
 
 	public $resultRedirectFactory;
 
-	public function __construct(
+	function __construct(
 		\Mageplaza\Blog\Model\AuthorFactory $authorFactory,
 		\Magento\Framework\Registry $coreRegistry,
 		\Magento\Backend\App\Action\Context $context
@@ -44,7 +44,7 @@ abstract class Author extends \Magento\Backend\App\Action
 	}
 
 
-	public function initAuthor()
+	function initAuthor()
 	{
 		$author    = $this->authorFactory->create();
 		$this->coreRegistry->register('mageplaza_blog_author', $author);

@@ -120,7 +120,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\CategoryFactory $categoryFactory,
         \Mageplaza\Blog\Model\ResourceModel\Post\CollectionFactory $postCollectionFactory,
         \Magento\Framework\Model\Context $context,
@@ -150,7 +150,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getIdentities()
+    function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
@@ -160,7 +160,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getDefaultValues()
+    function getDefaultValues()
     {
         $values = [];
         $values['store_ids'] = '1';
@@ -174,7 +174,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getPathIds()
+    function getPathIds()
     {
         $ids = $this->getData('path_ids');
         if ($ids === null) {
@@ -189,7 +189,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getParentIds()
+    function getParentIds()
     {
         return array_diff($this->getPathIds(), [$this->getId()]);
     }
@@ -203,7 +203,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Exception
      */
-    public function move($parentId, $afterCategoryId)
+    function move($parentId, $afterCategoryId)
     {
         try {
             $parent = $this->categoryFactory->create()->load($parentId);
@@ -262,7 +262,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array|mixed
      */
-    public function getPostsPosition()
+    function getPostsPosition()
     {
         if (!$this->getId()) {
             return [];
@@ -278,7 +278,7 @@ class Category extends \Magento\Framework\Model\AbstractModel
     /**
      * @return \Mageplaza\Blog\Model\ResourceModel\Post\Collection
      */
-    public function getSelectedPostsCollection()
+    function getSelectedPostsCollection()
     {
         if ($this->postCollection === null) {
             $collection = $this->postCollectionFactory->create();

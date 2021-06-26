@@ -24,13 +24,13 @@ use Mageplaza\Blog\Block\Frontend;
 
 class Widget extends Frontend
 {
-    public function getTagList()
+    function getTagList()
     {
 
         return $this->helperData->getTagList();
     }
 
-    public function getTagUrl($tag)
+    function getTagUrl($tag)
     {
         return $this->helperData->getTagUrl($tag);
     }
@@ -39,7 +39,7 @@ class Widget extends Frontend
 	 * get tags size based on num of post
 	 * size = (maxSize * (currentItem - min))/(max - min)
 	 */
-    public function getTagSize($tag)
+    function getTagSize($tag)
 	{
 		$postList = $this->helperData->getPostList();
 		if ($postList && is_array($postList)) {

@@ -59,7 +59,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      *
      * @return \Magento\Framework\DB\Select
      */
-    public function getSelectCountSql()
+    function getSelectCountSql()
     {
         $countSelect = parent::getSelectCountSql();
         $countSelect->reset(\Zend_Db_Select::GROUP);
@@ -82,7 +82,7 @@ class Collection extends \Magento\Framework\Model\ResourceModel\Db\Collection\Ab
      * @param $categoryIds
      * @return $this
      */
-    public function addIdFilter($categoryIds)
+    function addIdFilter($categoryIds)
     {
         if (is_array($categoryIds)) {
             if (empty($categoryIds)) {

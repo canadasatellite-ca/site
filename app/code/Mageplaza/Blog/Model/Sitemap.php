@@ -10,7 +10,7 @@ namespace Mageplaza\Blog\Model;
 class Sitemap extends \Magento\Sitemap\Model\Sitemap{
 	protected $blogDataHelper;
 	protected $router;
-	public function __construct(
+	function __construct(
 		\Mageplaza\Blog\Helper\Data $blogDataHelper,
 		\Magento\Framework\Model\Context $context,
 		\Magento\Framework\Registry $registry, 
@@ -48,7 +48,7 @@ class Sitemap extends \Magento\Sitemap\Model\Sitemap{
 			$data
 			);
 	}
-	public function getBlogPostsSiteMapCollection(){
+	function getBlogPostsSiteMapCollection(){
 		$postCollection=$this->blogDataHelper->postfactory->create()->getCollection();
 		$postSiteMapCollection=[];
 
@@ -74,7 +74,7 @@ class Sitemap extends \Magento\Sitemap\Model\Sitemap{
 		}
 		return $postSiteMapCollection;
 	}
-	public function getBlogCategoriesSiteMapCollection(){
+	function getBlogCategoriesSiteMapCollection(){
 		$categoryCollection=$this->blogDataHelper->categoryfactory->create()->getCollection();
 		$categorySiteMapCollection=[];
 		foreach ($categoryCollection as $item){
@@ -88,7 +88,7 @@ class Sitemap extends \Magento\Sitemap\Model\Sitemap{
 		}
 		return $categorySiteMapCollection;
 	}
-	public function getBlogTagsSiteMapCollection(){
+	function getBlogTagsSiteMapCollection(){
 		$tagCollection=$this->blogDataHelper->tagfactory->create()->getCollection();
 		$tagSiteMapCollection=[];
 		foreach ($tagCollection as $item){
@@ -102,7 +102,7 @@ class Sitemap extends \Magento\Sitemap\Model\Sitemap{
 		}
 		return $tagSiteMapCollection;
 	}
-	public function getBlogTopicsSiteMapCollection(){
+	function getBlogTopicsSiteMapCollection(){
 		$topicCollection=$this->blogDataHelper->topicfactory->create()->getCollection();
 		$topicSiteMapCollection=[];
 		foreach ($topicCollection as $item){
@@ -116,7 +116,7 @@ class Sitemap extends \Magento\Sitemap\Model\Sitemap{
 		}
 		return $topicSiteMapCollection;
 	}
-	public function _initSitemapItems()
+	function _initSitemapItems()
 	{
 		$this->_sitemapItems[] = new \Magento\Framework\DataObject(
 			[

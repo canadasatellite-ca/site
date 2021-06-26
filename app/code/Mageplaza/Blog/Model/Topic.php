@@ -95,7 +95,7 @@ class Topic extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\ResourceModel\Post\CollectionFactory $postCollectionFactory,
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
@@ -123,7 +123,7 @@ class Topic extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getIdentities()
+    function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
@@ -133,7 +133,7 @@ class Topic extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getDefaultValues()
+    function getDefaultValues()
     {
         $values = [];
         $values['enabled'] = '1';
@@ -143,7 +143,7 @@ class Topic extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array|mixed
      */
-    public function getPostsPosition()
+    function getPostsPosition()
     {
         if (!$this->getId()) {
             return [];
@@ -159,7 +159,7 @@ class Topic extends \Magento\Framework\Model\AbstractModel
     /**
      * @return \Mageplaza\Blog\Model\ResourceModel\Post\Collection
      */
-    public function getSelectedPostsCollection()
+    function getSelectedPostsCollection()
     {
         if ($this->postCollection === null) {
             $collection = $this->postCollectionFactory->create();

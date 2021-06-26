@@ -24,7 +24,7 @@ use Magento\Framework\Exception\NotFoundException;
 
 class Rss extends \Magento\Rss\Controller\Feed
 {
-    public function execute()
+    function execute()
     {
 
         $type = 'blog_posts';

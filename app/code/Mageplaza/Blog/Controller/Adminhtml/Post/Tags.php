@@ -38,7 +38,7 @@ class Tags extends \Mageplaza\Blog\Controller\Adminhtml\Post
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
         \Mageplaza\Blog\Model\PostFactory $tagFactory,
         \Magento\Framework\Registry $registry,
@@ -52,7 +52,7 @@ class Tags extends \Mageplaza\Blog\Controller\Adminhtml\Post
     /**
      * @return \Magento\Framework\View\Result\Layout
      */
-    public function execute()
+    function execute()
     {
         $this->initPost();
         $resultLayout = $this->resultLayoutFactory->create();

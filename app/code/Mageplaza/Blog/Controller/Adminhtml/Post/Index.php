@@ -42,7 +42,7 @@ class Index extends \Magento\Backend\App\Action
      * @param \Magento\Framework\View\Result\PageFactory $resultPageFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Backend\App\Action\Context $context
     ) {
@@ -56,7 +56,7 @@ class Index extends \Magento\Backend\App\Action
      *
      * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page
      */
-    public function execute()
+    function execute()
     {
         $this->setPageData();
         return $this->getResultPage();
@@ -66,7 +66,7 @@ class Index extends \Magento\Backend\App\Action
      *
      * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\View\Result\Page
      */
-	public function getResultPage()
+	function getResultPage()
     {
         if ($this->resultPage === null) {
             $this->resultPage = $this->resultPageFactory->create();
@@ -78,7 +78,7 @@ class Index extends \Magento\Backend\App\Action
      *
      * @return $this
      */
-	public function setPageData()
+	function setPageData()
     {
         $resultPage = $this->getResultPage();
         $resultPage->getConfig()->getTitle()->prepend((__('Posts')));

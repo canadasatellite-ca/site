@@ -51,7 +51,7 @@ abstract class Category extends \Magento\Backend\App\Action
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\CategoryFactory $categoryFactory,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Backend\App\Action\Context $context
@@ -68,7 +68,7 @@ abstract class Category extends \Magento\Backend\App\Action
      *
      * @return \Mageplaza\Blog\Model\Category
      */
-	public function initCategory()
+	function initCategory()
     {
         $categoryId  = (int) $this->getRequest()->getParam('category_id');
         /** @var \Mageplaza\Blog\Model\Category $category */

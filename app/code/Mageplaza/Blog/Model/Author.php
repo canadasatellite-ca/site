@@ -19,12 +19,12 @@ class Author extends AbstractModel
 		$this->_init('Mageplaza\Blog\Model\ResourceModel\Author');
 	}
 
-	public function getIdentities()
+	function getIdentities()
 	{
 		return [self::CACHE_TAG . '_' . $this->getId()];
 	}
 
-	public function getDefaultValues()
+	function getDefaultValues()
 	{
 		$values = [];
 

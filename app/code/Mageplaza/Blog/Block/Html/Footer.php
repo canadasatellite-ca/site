@@ -28,7 +28,7 @@ class Footer extends \Magento\Framework\View\Element\Html\Link
     public $helper;
 //	protected $_template = 'Mageplaza_Blog::html\footer.phtml';
 
-    public function __construct(
+    function __construct(
         Context $context,
         Data $helper,
         array $data = []
@@ -38,18 +38,18 @@ class Footer extends \Magento\Framework\View\Element\Html\Link
         parent::__construct($context, $data);
     }
 
-    public function getHref()
+    function getHref()
     {
         return $this->helper->getBlogUrl('');
     }
-	public function getLabel()
+	function getLabel()
 	{
 		if ($this->helper->getBlogConfig('general/name')==""){
 			return __("Blog");
 		}
 		return $this->helper->getBlogConfig('general/name');
 	}
-	public function getHtmlSiteMapUrl()
+	function getHtmlSiteMapUrl()
 	{
 		$moduleRoute = $this->helper->getBlogConfig('general/url_prefix');
 		if ($moduleRoute) {

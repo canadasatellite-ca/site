@@ -11,12 +11,12 @@ use Mageplaza\Blog\Block\Frontend;
 
 class Widget extends Frontend
 {
-	public function getTopicList()
+	function getTopicList()
 	{
 		return $this->helperData->getTopicList();
 	}
 
-	public function getTopicUrl($topic)
+	function getTopicUrl($topic)
 	{
 		return $this->helperData->getTopicUrl($topic);
 	}

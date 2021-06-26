@@ -58,7 +58,7 @@ class Edit extends \Mageplaza\Blog\Controller\Adminhtml\Category
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
 		\Magento\Framework\DataObject $dataObject,
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
@@ -81,7 +81,7 @@ class Edit extends \Mageplaza\Blog\Controller\Adminhtml\Category
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function execute()
+    function execute()
     {
         $parentId = (int)$this->getRequest()->getParam('parent');
         $categoryId = (int)$this->getRequest()->getParam('category_id');

@@ -27,7 +27,7 @@ class Delete extends \Mageplaza\Blog\Controller\Adminhtml\Tag
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('tag_id');

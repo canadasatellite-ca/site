@@ -31,7 +31,7 @@ class InstallSchema implements \Magento\Framework\Setup\InstallSchemaInterface
      * @return void
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
-    public function install(
+    function install(
         \Magento\Framework\Setup\SchemaSetupInterface $setup,
         \Magento\Framework\Setup\ModuleContextInterface $context
     ) {

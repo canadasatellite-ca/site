@@ -55,7 +55,7 @@ class Edit extends \Mageplaza\Blog\Controller\Adminhtml\Author
 	 * @internal param \Magento\Backend\Model\Session $backendSession
 	 * @internal param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\View\Result\PageFactory $resultPageFactory,
 		\Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
 		\Mageplaza\Blog\Model\AuthorFactory $authorFactory,
@@ -84,7 +84,7 @@ class Edit extends \Mageplaza\Blog\Controller\Adminhtml\Author
 	/**
 	 * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\View\Result\Page
 	 */
-	public function execute()
+	function execute()
 	{
 		$user = $this->authSession->getUser();
 		$userFullname = $user->getFirstName(). ' ' . $user->getLastName();

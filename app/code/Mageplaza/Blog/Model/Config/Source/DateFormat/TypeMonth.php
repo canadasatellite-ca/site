@@ -31,7 +31,7 @@ class TypeMonth implements \Magento\Framework\Option\ArrayInterface
 	const LONG_DATE = 2;
 	const DEFAULT_DATE = 1;
 
-	public function toOptionArray()
+	function toOptionArray()
 	{
 		return [
 			['value' => self::DEFAULT_DATE, 'label' => __('mm - yyyy')],
@@ -45,7 +45,7 @@ class TypeMonth implements \Magento\Framework\Option\ArrayInterface
 	 *
 	 * @return array
 	 */
-	public function toArray()
+	function toArray()
 	{
 		return [
 			self::LONG_DATE => __('yyyy - mm'),

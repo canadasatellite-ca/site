@@ -43,7 +43,7 @@ class MassDelete extends \Magento\Backend\App\Action
      * @param \Mageplaza\Blog\Model\ResourceModel\Topic\CollectionFactory $collectionFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Ui\Component\MassAction\Filter $filter,
         \Mageplaza\Blog\Model\ResourceModel\Topic\CollectionFactory $collectionFactory,
         \Magento\Backend\App\Action\Context $context
@@ -59,7 +59,7 @@ class MassDelete extends \Magento\Backend\App\Action
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         $collection = $this->filter->getCollection($this->collectionFactory->create());
         try {

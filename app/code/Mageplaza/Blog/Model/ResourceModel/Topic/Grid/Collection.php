@@ -45,7 +45,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      * @param $connection
      * @param \Magento\Framework\Model\ResourceModel\Db\AbstractDb $resource
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Data\Collection\EntityFactoryInterface $entityFactory,
         \Psr\Log\LoggerInterface $logger,
         \Magento\Framework\Data\Collection\Db\FetchStrategyInterface $fetchStrategy,
@@ -69,7 +69,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
     /**
      * @return \Magento\Framework\Search\AggregationInterface
      */
-    public function getAggregations()
+    function getAggregations()
     {
         return $this->aggregations;
     }
@@ -78,7 +78,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      * @param \Magento\Framework\Search\AggregationInterface $aggregations
      * @return $this
      */
-    public function setAggregations($aggregations)
+    function setAggregations($aggregations)
     {
         $this->aggregations = $aggregations;
     }
@@ -91,7 +91,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      * @param int $offset
      * @return array
      */
-    public function getAllIds($limit = null, $offset = null)
+    function getAllIds($limit = null, $offset = null)
     {
         return $this->getConnection()->fetchCol($this->_getAllIdsSelect($limit, $offset), $this->_bindParams);
     }
@@ -101,7 +101,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      *
      * @return \Magento\Framework\Api\SearchCriteriaInterface|null
      */
-    public function getSearchCriteria()
+    function getSearchCriteria()
     {
         return null;
     }
@@ -113,7 +113,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
+    function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
@@ -123,7 +123,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      *
      * @return int
      */
-    public function getTotalCount()
+    function getTotalCount()
     {
         return $this->getSize();
     }
@@ -135,7 +135,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setTotalCount($totalCount)
+    function setTotalCount($totalCount)
     {
         return $this;
     }
@@ -147,7 +147,7 @@ class Collection extends \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      * @return $this
      * @SuppressWarnings(PHPMD.UnusedFormalParameter)
      */
-    public function setItems(array $items = null)
+    function setItems(array $items = null)
     {
         return $this;
     }

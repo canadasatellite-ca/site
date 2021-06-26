@@ -26,26 +26,26 @@ class View extends Frontend
 {
 	const LOGO = 'mageplaza/blog/logo/';
 
-	public function checkRss()
+	function checkRss()
 	{
 		return $this->helperData->getBlogUrl('post/rss');
 	}
-    public function getTopicUrl($topic)
+    function getTopicUrl($topic)
     {
         return $this->helperData->getTopicUrl($topic);
     }
 
-    public function getTagUrl($tag)
+    function getTagUrl($tag)
     {
         return $this->helperData->getTagUrl($tag);
     }
 
-    public function getCategoryUrl($category)
+    function getCategoryUrl($category)
     {
         return $this->helperData->getCategoryUrl($category);
     }
 
-    public function checkComment()
+    function checkComment()
     {
         if (!$this->helperData->getBlogConfig('general/enabled')) {
             return false;
@@ -55,7 +55,7 @@ class View extends Frontend
         return $comment;
     }
 
-    public function helperComment($code)
+    function helperComment($code)
     {
         return $this->helperData->getBlogConfig('comment/' . $code);
     }
@@ -65,7 +65,7 @@ class View extends Frontend
      * @param $post
      * @return string
      */
-    public function getTagList($post)
+    function getTagList($post)
     {
         $tagCollection = $post->getSelectedTagsCollection();
         $result        = '';
@@ -84,12 +84,12 @@ class View extends Frontend
 	 * @param $image
 	 * get Logo for seo article snippet
 	 */
-    public function getLogoImage($image)
+    function getLogoImage($image)
 	{
 		return $this->helperData->getBaseMediaUrl() . self::LOGO . $image;
 	}
 
-	public function getPageFilter($content)
+	function getPageFilter($content)
 	{
 		return $this->filterProvider->getPageFilter()->filter($content);
 	}

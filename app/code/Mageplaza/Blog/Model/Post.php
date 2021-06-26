@@ -163,7 +163,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
      * @param \Magento\Framework\Data\Collection\AbstractDb $resourceCollection
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\ResourceModel\Tag\CollectionFactory $tagCollectionFactory,
         \Mageplaza\Blog\Model\ResourceModel\Topic\CollectionFactory $topicCollectionFactory,
         \Mageplaza\Blog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
@@ -200,7 +200,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getIdentities()
+    function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
     }
@@ -210,7 +210,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
      *
      * @return array
      */
-    public function getDefaultValues()
+    function getDefaultValues()
     {
         $values                  = [];
         $values['in_rss']        = '1';
@@ -224,7 +224,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array|mixed
      */
-    public function getTagsPosition()
+    function getTagsPosition()
     {
         if (!$this->getId()) {
             return [];
@@ -241,7 +241,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return \Mageplaza\Blog\Model\ResourceModel\Tag\Collection
      */
-    public function getSelectedTagsCollection()
+    function getSelectedTagsCollection()
     {
         if ($this->tagCollection === null) {
             $collection = $this->tagCollectionFactory->create();
@@ -260,7 +260,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array|mixed
      */
-    public function getTopicsPosition()
+    function getTopicsPosition()
     {
         if (!$this->getId()) {
             return [];
@@ -277,7 +277,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return \Mageplaza\Blog\Model\ResourceModel\Topic\Collection
      */
-    public function getSelectedTopicsCollection()
+    function getSelectedTopicsCollection()
     {
         if ($this->topicCollection === null) {
             $collection = $this->topicCollectionFactory->create();
@@ -296,7 +296,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array|mixed
      */
-    public function getCategoriesPosition()
+    function getCategoriesPosition()
     {
         if (!$this->getId()) {
             return [];
@@ -313,7 +313,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return \Mageplaza\Blog\Model\ResourceModel\Category\Collection
      */
-    public function getSelectedCategoriesCollection()
+    function getSelectedCategoriesCollection()
     {
         if ($this->categoryCollection === null) {
             $collection = $this->categoryCollectionFactory->create();
@@ -332,7 +332,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array
      */
-    public function getCategoryIds()
+    function getCategoryIds()
     {
         if (!$this->hasData('category_ids')) {
             $ids = $this->_getResource()->getCategoryIds($this);
@@ -345,7 +345,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
     /**
      * @return array
      */
-    public function getTopicIds()
+    function getTopicIds()
     {
         if (!$this->hasData('topic_ids')) {
             $ids = $this->_getResource()->getTopicIds($this);
@@ -359,7 +359,7 @@ class Post extends \Magento\Framework\Model\AbstractModel
      * get category id string
      * @return mixed
      */
-    public function getTopicSting()
+    function getTopicSting()
     {
         if ($this->getTopicIds()) {
             return implode(',', $this->getTopicIds());

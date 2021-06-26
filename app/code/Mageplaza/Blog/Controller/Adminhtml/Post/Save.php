@@ -64,7 +64,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Post
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\Upload $uploadModel,
         \Mageplaza\Blog\Model\Post\Image $imageModel,
         \Mageplaza\Blog\Model\TrafficFactory $trafficFactory,
@@ -89,7 +89,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Post
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
 		$user = $this->authSession->getUser();
         $data = $this->getRequest()->getPost('post');

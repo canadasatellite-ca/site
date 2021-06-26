@@ -47,7 +47,7 @@ class View extends Action
 	public $likeFactory;
 	public $dateTime;
 
-    public function __construct(
+    function __construct(
 		\Magento\Framework\Json\Helper\Data $jsonHelper,
 		\Mageplaza\Blog\Model\CommentFactory $commentFactory,
 		\Mageplaza\Blog\Model\LikeFactory $likeFactory,
@@ -76,7 +76,7 @@ class View extends Action
         $this->dateTime = $dateTime;
     }
 
-    public function execute()
+    function execute()
     {
         $id=$this->getRequest()->getParam('id');
         if ($id) {
@@ -132,7 +132,7 @@ class View extends Action
     /**
 	 * like comment action
 	 */
-    public function commentActions($action, $user, $data, $model, $cmtId = null)
+    function commentActions($action, $user, $data, $model, $cmtId = null)
 	{
 		try {
 			switch ($action) {
@@ -189,7 +189,7 @@ class View extends Action
 	 * @param $userId
 	 * @param $model
 	 */
-	public function isLikedComment($cmtId, $userId, $model)
+	function isLikedComment($cmtId, $userId, $model)
 	{
 		$liked = $model->load($cmtId, 'comment_id');
 		if ($liked->getEntityId() == $userId) {

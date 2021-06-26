@@ -43,7 +43,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
      * @param \Mageplaza\Blog\Model\TopicFactory $topicFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
         \Mageplaza\Blog\Model\TopicFactory $topicFactory,
         \Magento\Backend\App\Action\Context $context
@@ -57,7 +57,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
     /**
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->jsonFactory->create();
@@ -107,7 +107,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
      * @param string $errorText
      * @return string
      */
-	public function getErrorWithTopicId(\Mageplaza\Blog\Model\Topic $topic, $errorText)
+	function getErrorWithTopicId(\Mageplaza\Blog\Model\Topic $topic, $errorText)
     {
         return '[Topic ID: ' . $topic->getId() . '] ' . $errorText;
     }

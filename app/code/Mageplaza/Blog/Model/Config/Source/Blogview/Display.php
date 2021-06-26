@@ -31,7 +31,7 @@ class Display implements \Magento\Framework\Option\ArrayInterface
     const LIST_VIEW = 1;
     const GRID = 2;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
         	['value' => self::LIST_VIEW, 'label' => __('List View')],
@@ -44,7 +44,7 @@ class Display implements \Magento\Framework\Option\ArrayInterface
      *
      * @return array
      */
-    public function toArray()
+    function toArray()
     {
         return [self::LIST_VIEW => __('List View'), self::GRID => __('Grid View')];
     }

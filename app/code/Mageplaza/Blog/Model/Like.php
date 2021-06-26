@@ -47,7 +47,7 @@ class Like extends \Magento\Framework\Model\AbstractModel
 
 	public $postCollectionFactory;
 
-	public function __construct(
+	function __construct(
 		\Magento\Framework\Model\Context $context,
 		\Magento\Framework\Registry $registry,
 		\Magento\Framework\Model\ResourceModel\AbstractResource $resource = null,
@@ -68,7 +68,7 @@ class Like extends \Magento\Framework\Model\AbstractModel
 		$this->_init('Mageplaza\Blog\Model\ResourceModel\Like');
 	}
 
-	public function getIdentities()
+	function getIdentities()
 	{
 		return [self::CACHE_TAG . '_' . $this->getId()];
 	}

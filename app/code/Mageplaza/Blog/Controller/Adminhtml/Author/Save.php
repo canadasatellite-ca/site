@@ -60,7 +60,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Author
 	 * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
 	 * @param \Magento\Backend\App\Action\Context $context
 	 */
-	public function __construct(
+	function __construct(
 		\Mageplaza\Blog\Model\Upload $uploadModel,
 		\Mageplaza\Blog\Model\Post\Image $imageModel,
 		\Magento\Backend\Helper\Js $jsHelper,
@@ -82,7 +82,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Author
 	 *
 	 * @return \Magento\Backend\Model\View\Result\Redirect
 	 */
-	public function execute()
+	function execute()
 	{
 		$data = $this->getRequest()->getPost('author');
 		$data['updated_at'] = $this->date->date();

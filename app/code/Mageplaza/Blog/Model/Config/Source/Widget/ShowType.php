@@ -24,7 +24,7 @@ class ShowType implements \Magento\Framework\Option\ArrayInterface
 {
 
 
-	public function toOptionArray()
+	function toOptionArray()
 	{
 		return [
 			['value' => 'new', 'label' => __('New')],

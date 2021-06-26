@@ -50,7 +50,7 @@ class Topic extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      */
-    public function __construct(
+    function __construct(
 		\Mageplaza\Blog\Helper\Data $helperData,
         \Magento\Framework\Stdlib\DateTime\DateTime $date,
         \Magento\Framework\Event\ManagerInterface $eventManager,
@@ -79,7 +79,7 @@ class Topic extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param string $id
      * @return string|bool
      */
-    public function getTopicNameById($id)
+    function getTopicNameById($id)
     {
         $adapter = $this->getConnection();
         $select = $adapter->select()
@@ -149,7 +149,7 @@ class Topic extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Topic $topic
      * @return array
      */
-    public function getPostsPosition(\Mageplaza\Blog\Model\Topic $topic)
+    function getPostsPosition(\Mageplaza\Blog\Model\Topic $topic)
     {
         $select = $this->getConnection()->select()->from(
             $this->topicPostTable,
@@ -222,12 +222,12 @@ class Topic extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         }
         return $this;
     }
-    public function generateUrlKey($name, $count)
+    function generateUrlKey($name, $count)
     {
 		return $this->helperData->generateUrlKey($name,$count);
     }
 
-    public function checkUrlKey($url, $id = null)
+    function checkUrlKey($url, $id = null)
     {
         $adapter = $this->getConnection();
         if ($id) {
