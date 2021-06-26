@@ -13,45 +13,45 @@
 -->
 
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" layout="2columns-left"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
-    <head>
-        <css src="css/category.css" after="-"/>
-    </head>
-    <body>
+	  xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+	<head>
+		<css src="css/category.css" after="-"/>
+	</head>
+	<body>
 
-        <move element="category.info.bottom.section" destination="category.products.list"/>
+		<move element="category.info.bottom.section" destination="category.products.list"/>
 
-        <move element="category.image" destination="category.banner.section"/>
+		<move element="category.image" destination="category.banner.section"/>
 
-        <referenceContainer name="paypal.partner.right.logo" remove="true"/>
+		<referenceContainer name="paypal.partner.right.logo" remove="true"/>
 
-        <!--<move element="page.main.title" destination="category.info.section" before="-"/>-->
+		<!--<move element="page.main.title" destination="category.info.section" before="-"/>-->
 
-        <referenceBlock name="page.main.title" remove="true"/>
-        <referenceBlock name="wishlist_sidebar" remove="true"/>
-        <move element="category.description" destination="category.description.section"/>
+		<referenceBlock name="page.main.title" remove="true"/>
+		<referenceBlock name="wishlist_sidebar" remove="true"/>
+		<move element="category.description" destination="category.description.section"/>
 
-        <container name="delete" label="Category Bottom Block" htmlTag="div" htmlClass="catalog-info-section"/>
+		<container name="delete" label="Category Bottom Block" htmlTag="div" htmlClass="catalog-info-section"/>
 
-        <block class="Magento\Catalog\Block\Category\View" name="category.secondary_description"
-               template="Magento_Catalog::category/customattributes/secondary_description.phtml"/>
+		<block class="Magento\Catalog\Block\Category\View" name="category.secondary_description"
+			   template="Magento_Catalog::category/customattributes/secondary_description.phtml"/>
 
-        <move element="category.secondary_description" destination="category.info.section"
-              after="category.description"/>
-        <referenceContainer name="content">
-            <container name="category.banner.section" label="Category Banner Block" htmlTag="div"
-                       htmlClass="catalog-banner-section" before="category.subcategories"/>
-            <container name="category.description.section" label="Category Description Block" htmlTag="div"
-                       htmlClass="catalog-description-section" after="category.subcategories"/>
-            <container name="category.info.section" label="Category info Block" htmlTag="div"
-                       htmlClass="catalog-info-section" after="category.products"/>
+		<move element="category.secondary_description" destination="category.info.section"
+			  after="category.description"/>
+		<referenceContainer name="content">
+			<container name="category.banner.section" label="Category Banner Block" htmlTag="div"
+					   htmlClass="catalog-banner-section" before="category.subcategories"/>
+			<container name="category.description.section" label="Category Description Block" htmlTag="div"
+					   htmlClass="catalog-description-section" after="category.subcategories"/>
+			<container name="category.info.section" label="Category info Block" htmlTag="div"
+					   htmlClass="catalog-info-section" after="category.products"/>
 
-            <block class="Magento\Catalog\Block\Category\View" name="description_below_faq"
-                   template="Magento_Catalog::category/customattributes/description_below_faq.phtml"
-                   after="faq.category.faq"/>
-        </referenceContainer>
+			<block class="Magento\Catalog\Block\Category\View" name="description_below_faq"
+				   template="Magento_Catalog::category/customattributes/description_below_faq.phtml"
+				   after="faq.category.faq"/>
+		</referenceContainer>
 
-    </body>
+	</body>
 
 </page>
 
