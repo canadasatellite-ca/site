@@ -81,12 +81,8 @@ class Router implements \Magento\Framework\App\RouterInterface {
 				$action = 'index';
 				break;
 			case 'author':
-				$author  = $h->getAuthorByParam('url_key', $pathF());
-				$action = 'view';
-				$params = ['id' => $author->getId()];
-				break;
 			case 'month':
-				$author = $h->getAuthorByParam('url_key', $pathF());
+				$author  = $h->getAuthorByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $author->getId()];
 				break;
