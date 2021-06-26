@@ -35,9 +35,11 @@
 
 		<block class="Magento\Catalog\Block\Category\View" name="category.secondary_description"
 			   template="Magento_Catalog::category/customattributes/secondary_description.phtml"/>
-
-		<move element="category.secondary_description" destination="category.info.section"
-			  after="category.description"/>
+<!-- 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+«Broken reference: the 'category.secondary_description' tries to reorder itself towards 'category.description',
+but their parents are different: 'category.info.section' and 'category.description.section' respectively»:
+https://github.com/canadasatellite-ca/site/issues/193 -->
+		<move element="category.secondary_description" destination="category.info.section"/>
 		<referenceContainer name="content">
 			<container name="category.banner.section" label="Category Banner Block" htmlTag="div"
 					   htmlClass="catalog-banner-section" before="category.subcategories"/>
