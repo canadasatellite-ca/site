@@ -3,12 +3,14 @@ namespace Mageplaza\Blog\Controller;
 use Magento\Framework\App\Action\Forward as Forward;
 use Magento\Framework\App\RequestInterface as IRequest;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\App\RouterInterface as IRouter;
 use Magento\Framework\Url;
 use Mageplaza\Blog\Helper\Data as H;
+use Mageplaza\Blog\Model\Tag;
 # 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
-class Router implements \Magento\Framework\App\RouterInterface {
+class Router implements IRouter {
 	/**
 	 * @var \Magento\Framework\App\ActionFactory
 	 */
@@ -22,7 +24,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 
 	/**
 	 * @override
-	 * @see \Magento\Framework\App\RouterInterface::match()
+	 * @see IRouter::match()
 	 * @used-by \Magento\Framework\App\FrontController::dispatch()
 	 * @param IRequest|Http $req
 	 * @return Forward|null
@@ -39,8 +41,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 		if ($h->isEnabled() && df_between($routeSize, 1, 3) && $prefix === array_shift($pathA)) {
 			$req->setModuleName('mpblog')->setAlias(Url::REWRITE_REQUEST_PATH_ALIAS, $path);
 			$params = [];
-			$controller = array_shift($pathA);
-			if (!$controller) {
+			if (!($controller = array_shift($pathA))) { /** @var string $controller */
 				$r = $this->forward($req, 'post', 'index');
 			}
 			else {
@@ -52,49 +53,56 @@ class Router implements \Magento\Framework\App\RouterInterface {
 				 * @return string
 				 */
 				$pathF = function() use(&$pathA) {return urldecode(array_shift($pathA));};
-				switch ($controller) {
-					case 'post':
-						$action = $pathF() ?: 'index';
-						if (!in_array($action, ['index', 'rss'])) {
-							$post = $h->getPostByUrl($action);
+				if ('tag' === $controller) {
+					$tag = $h->getTagByParam('url_key', $pathF()); /** @var Tag $tag */
+					$r = ($id = $tag->getId())
+						? $this->forward($req, $controller, 'view', ['id' => $id])
+						# 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+						# "`Mageplaza_Blog`: `/blog/tag/<tag>/` should be redirected to `/blog` for unexisting tags":
+						# https://github.com/canadasatellite-ca/site/issues/188
+						: df_router_redirect($req, $prefix)
+					;
+				}
+				else {
+					switch ($controller) {
+						case 'post':
+							$action = $pathF() ?: 'index';
+							if (!in_array($action, ['index', 'rss'])) {
+								$post = $h->getPostByUrl($action);
+								$action = 'view';
+								$params = ['id' => $post->getId()];
+							}
+							break;
+						case 'category':
+							$action = $pathF() ?: 'index';
+							if (!in_array($action, ['index', 'rss'])) {
+								$category = $h->getCategoryByParam('url_key', $action);
+								$action = 'view';
+								$params = ['id' => $category->getId()];
+							}
+							break;
+						case 'topic':
+							$topic = $h->getTopicByParam('url_key', $pathF());
+							$action = 'view';
+							$params = ['id' => $topic->getId()];
+							break;
+						case 'sitemap':
+							$action = 'index';
+							break;
+						case 'author':
+						case 'month':
+							$author  = $h->getAuthorByParam('url_key', $pathF());
+							$action = 'view';
+							$params = ['id' => $author->getId()];
+							break;
+						default:
+							$post = $h->getPostByUrl($controller);
+							$controller = 'post';
 							$action = 'view';
 							$params = ['id' => $post->getId()];
-						}
-						break;
-					case 'category':
-						$action = $pathF() ?: 'index';
-						if (!in_array($action, ['index', 'rss'])) {
-							$category = $h->getCategoryByParam('url_key', $action);
-							$action = 'view';
-							$params = ['id' => $category->getId()];
-						}
-						break;
-					case 'tag':
-						$tag = $h->getTagByParam('url_key', $pathF());
-						$action = 'view';
-						$params = ['id' => $tag->getId()];
-						break;
-					case 'topic':
-						$topic = $h->getTopicByParam('url_key', $pathF());
-						$action = 'view';
-						$params = ['id' => $topic->getId()];
-						break;
-					case 'sitemap':
-						$action = 'index';
-						break;
-					case 'author':
-					case 'month':
-						$author  = $h->getAuthorByParam('url_key', $pathF());
-						$action = 'view';
-						$params = ['id' => $author->getId()];
-						break;
-					default:
-						$post = $h->getPostByUrl($controller);
-						$controller = 'post';
-						$action = 'view';
-						$params = ['id' => $post->getId()];
+					}
+					$r = $this->forward($req, $controller, $action, $params);
 				}
-				$r = $this->forward($req, $controller, $action, $params);
 			}
 		}
 		return $r;
