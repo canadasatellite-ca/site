@@ -409,7 +409,9 @@ class Frontend extends Template
 	{
 		$page     = $this->getRequest()->getParam('p');
 		$postList = '';
-		if ($type == null) {
+		# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
+		if (!$type || !$id) {
 			$postList = $this->helperData->getPostList();
 		} elseif ($type == \Mageplaza\Blog\Helper\Data::CATEGORY) {
 			$postList = $this->helperData->getPostList(\Mageplaza\Blog\Helper\Data::CATEGORY, $id);
