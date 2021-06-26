@@ -1,31 +1,6 @@
 <?php
-/**
- * Mageplaza
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Mageplaza.com license that is
- * available through the world-wide-web at this URL:
- * https://www.mageplaza.com/LICENSE.txt
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this extension to newer
- * version in the future.
- *
- * @category    Mageplaza
- * @package     Mageplaza_Blog
- * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
- * @license     https://www.mageplaza.com/LICENSE.txt
- */
 namespace Mageplaza\Blog\Controller;
-
-/**
- * Class Router
- * @package Mageplaza\Blog\Controller
- */
-class Router implements \Magento\Framework\App\RouterInterface
-{
+class Router implements \Magento\Framework\App\RouterInterface {
 	/**
 	 * @var \Magento\Framework\App\ActionFactory
 	 */
@@ -45,11 +20,9 @@ class Router implements \Magento\Framework\App\RouterInterface
 	function __construct(
 		\Magento\Framework\App\ActionFactory $actionFactory,
 		\Mageplaza\Blog\Helper\Data $helper
-	)
-	{
-
+	) {
 		$this->actionFactory = $actionFactory;
-		$this->helper        = $helper;
+		$this->helper = $helper;
 	}
 
 	/**
@@ -58,16 +31,13 @@ class Router implements \Magento\Framework\App\RouterInterface
 	 * @param array $params
 	 * @return \Magento\Framework\App\ActionInterface
 	 */
-	function _forward($controller, $action, $params = [])
-	{
+	function _forward($controller, $action, $params = []) {
 		$this->_request->setControllerName($controller)
 			->setActionName($action)
 			->setPathInfo('/mpblog/' . $controller . '/' . $action);
-
 		foreach ($params as $key => $value) {
 			$this->_request->setParam($key, $value);
 		}
-
 		return $this->actionFactory->create('Magento\Framework\App\Action\Forward');
 	}
 
@@ -77,8 +47,7 @@ class Router implements \Magento\Framework\App\RouterInterface
 	 * @param \Magento\Framework\App\RequestInterface $request
 	 * @return bool
 	 */
-	function match(\Magento\Framework\App\RequestInterface $request)
-	{
+	function match(\Magento\Framework\App\RequestInterface $request) {
 		$identifier = trim($request->getPathInfo(), '/');
 		$routePath  = explode('/', $identifier);
 		$urlPrefix = $this->helper->getBlogConfig('general/url_prefix') ?: \Mageplaza\Blog\Helper\Data::DEFAULT_URL_PREFIX;
@@ -89,14 +58,11 @@ class Router implements \Magento\Framework\App\RouterInterface
 		) {
 			return null;
 		}
-
 		$request->setModuleName('mpblog')
 			->setAlias(\Magento\Framework\Url::REWRITE_REQUEST_PATH_ALIAS, $identifier);
-
 		$this->_request = $request;
 		$params     = [];
 		$controller = array_shift($routePath);
-
 		if (!$controller) {
 			return $this->_forward('post', 'index');
 		}
