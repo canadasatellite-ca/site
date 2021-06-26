@@ -30,13 +30,13 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	function match(IRequest $req) {
 		$r = null; /** @var Forward|null $r */
 		$h = df_o(H::class); /** @var H $h */
-		# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-		# E.g.: «blog/tag/space-force».
+		# 2021-06-26 E.g.: «blog/tag/space-force».
 		$path = trim($req->getPathInfo(), '/'); /** @var string $path */
 		$pathA  = explode('/', $path); /** @var string[] $pathA */
-		$urlPrefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX;
+		# 2021-06-26 E.g.: «blog».
+		$prefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX; /** @var string $prefix */
 		$routeSize  = sizeof($pathA);
-		if ($h->isEnabled() && $routeSize && $routeSize < 4 && $urlPrefix === array_shift($pathA)) {
+		if ($h->isEnabled() && $routeSize && $routeSize < 4 && $prefix === array_shift($pathA)) {
 			$req->setModuleName('mpblog')->setAlias(Url::REWRITE_REQUEST_PATH_ALIAS, $path);
 			$params = [];
 			$controller = array_shift($pathA);
