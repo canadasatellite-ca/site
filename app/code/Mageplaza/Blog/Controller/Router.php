@@ -100,76 +100,60 @@ class Router implements \Magento\Framework\App\RouterInterface
 		if (!$controller) {
 			return $this->_forward('post', 'index');
 		}
-
+		/**
+		 * 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		 * "`Mageplaza_Blog` does not properly handle `/blog/tag/<tag>/` requests for an existing `<tag>`
+		 * if it contains a space (e.g.: `/blog/tag/satellite%20tv/`)":
+		 * https://github.com/canadasatellite-ca/site/issues/189
+		 * @return string
+		 */
+		$pathF = function() use(&$routePath) {return urldecode(array_shift($routePath));};
 		switch ($controller) {
 			case 'post':
-				$path = array_shift($routePath);
-				$action = $path ?: 'index';
-
+				$action = $pathF() ?: 'index';
 				if (!in_array($action, ['index', 'rss'])) {
 					$post = $this->helper->getPostByUrl($action);
-
 					$action = 'view';
 					$params = ['id' => $post->getId()];
 				}
-
 				break;
 			case 'category':
-				$path = array_shift($routePath);
-				$action = $path ?: 'index';
-
+				$action = $pathF() ?: 'index';
 				if (!in_array($action, ['index', 'rss'])) {
 					$category = $this->helper->getCategoryByParam('url_key', $action);
-
 					$action = 'view';
 					$params = ['id' => $category->getId()];
 				}
-
 				break;
 			case 'tag':
-				$path = array_shift($routePath);
-				$tag    = $this->helper->getTagByParam('url_key', $path);
-
+				$tag = $this->helper->getTagByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $tag->getId()];
-
 				break;
 			case 'topic':
-				$path = array_shift($routePath);
-				$topic  = $this->helper->getTopicByParam('url_key', $path);
-
+				$topic = $this->helper->getTopicByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $topic->getId()];
-
 				break;
 			case 'sitemap':
 				$action = 'index';
-
 				break;
 			case 'author':
-				$path = array_shift($routePath);
-				$author  = $this->helper->getAuthorByParam('url_key', $path);
-
+				$author  = $this->helper->getAuthorByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $author->getId()];
-
 				break;
 			case 'month':
-				$path = array_shift($routePath);
-				$author  = $this->helper->getAuthorByParam('url_key', $path);
-
+				$author  = $this->helper->getAuthorByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $author->getId()];
-
 				break;
 			default:
 				$post = $this->helper->getPostByUrl($controller);
-
 				$controller = 'post';
-				$action     = 'view';
-				$params     = ['id' => $post->getId()];
+				$action = 'view';
+				$params = ['id' => $post->getId()];
 		}
-
 		return $this->_forward($controller, $action, $params);
 	}
 }
