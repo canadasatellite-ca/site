@@ -1,25 +1,5 @@
 <?php
-/**
- * Mageplaza
- *
- * NOTICE OF LICENSE
- *
- * This source file is subject to the Mageplaza.com license that is
- * available through the world-wide-web at this URL:
- * https://www.mageplaza.com/LICENSE.txt
- *
- * DISCLAIMER
- *
- * Do not edit or add to this file if you wish to upgrade this extension to newer
- * version in the future.
- *
- * @category    Mageplaza
- * @package     Mageplaza_Blog
- * @copyright   Copyright (c) 2016 Mageplaza (http://www.mageplaza.com/)
- * @license     https://www.mageplaza.com/LICENSE.txt
- */
 namespace Mageplaza\Blog\Helper;
-
 use Mageplaza\Core\Helper\AbstractData as CoreHelper;
 use Magento\Framework\ObjectManagerInterface;
 use Magento\Framework\App\Helper\Context;
@@ -29,9 +9,7 @@ use Mageplaza\Blog\Model\TagFactory;
 use Mageplaza\Blog\Model\TopicFactory;
 use Mageplaza\Blog\Model\AuthorFactory;
 use Magento\Framework\View\Element\Template\Context as TemplateContext;
-
-class Data extends CoreHelper
-{
+class Data extends CoreHelper {
 	const XML_PATH_BLOG = 'blog/';
 	const POST_IMG = 'mageplaza/blog/post/image';
 	const AUTHOR_IMG = 'mageplaza/blog/author/image';
