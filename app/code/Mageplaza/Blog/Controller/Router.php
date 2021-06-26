@@ -31,10 +31,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 		$routePath  = explode('/', $identifier);
 		$urlPrefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX;
 		$routeSize  = sizeof($routePath);
-		if (!$h->isEnabled() ||
-			!$routeSize || ($routeSize > 3) ||
-			(array_shift($routePath) != $urlPrefix)
-		) {
+		if (!$h->isEnabled() || !$routeSize || ($routeSize > 3) || (array_shift($routePath) != $urlPrefix)) {
 			return null;
 		}
 		$req->setModuleName('mpblog')
