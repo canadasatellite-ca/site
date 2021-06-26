@@ -144,7 +144,16 @@ class Data extends CoreHelper
         $categoryModel = $this->categoryfactory->create();
         $tagModel      = $this->tagfactory->create();
         $topicModel    = $this->topicfactory->create();
-        if ($type == null) {
+        # 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# "`Mageplaza_Blog`: «SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax;
+		# check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2,
+		# query was:
+		# 	SELECT COUNT(*)
+		# 		FROM `mageplaza_blog_post` AS `main_table`
+		# 		INNER JOIN `mageplaza_blog_post_tag`
+		#			ON main_table.post_id=mageplaza_blog_post_tag.post_id AND mageplaza_blog_post_tag.tag_id=»":
+		# https://github.com/canadasatellite-ca/site/issues/187
+        if (!$type || !$id) {
 			$list = $posts->getCollection();
         } elseif ($type == self::CATEGORY) {
             $category = $categoryModel->load($id);
