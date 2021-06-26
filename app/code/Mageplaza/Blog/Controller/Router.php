@@ -2,6 +2,7 @@
 namespace Mageplaza\Blog\Controller;
 use Magento\Framework\App\Action\Forward as Forward;
 use Magento\Framework\App\RequestInterface as IRequest;
+use Magento\Framework\App\Request\Http;
 use Mageplaza\Blog\Helper\Data as H;
 # "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
@@ -21,7 +22,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	 * @override
 	 * @see \Magento\Framework\App\RouterInterface::match()
 	 * @used-by \Magento\Framework\App\FrontController::dispatch()
-	 * @param IRequest $req
+	 * @param IRequest|Http $req
 	 * @return bool
 	 */
 	function match(IRequest $req) {
@@ -94,17 +95,17 @@ class Router implements \Magento\Framework\App\RouterInterface {
 
 	/**
 	 * @used-by match()
-	 * @param IRequest $req
+	 * @param IRequest|Http $r
 	 * @param string $c
 	 * @param string $a
 	 * @param array(string => mixed) $p [optional]
 	 * @return Forward
 	 */
-	private function forward(IRequest $req, $c, $a, $p = []) {
-		$req->setControllerName($c)->setActionName($a)->setPathInfo("/mpblog/$c/$a");
-		foreach ($p as $k => $v) {
-			$req->setParam($k, $v);
-		}
+	private function forward(IRequest $r, $c, $a, $p = []) {
+		$r->setActionName($a);
+		$r->setControllerName($c);
+		$r->setParams($p);
+		$r->setPathInfo("/mpblog/$c/$a");
 		return df_action_c_forward();
 	}
 }
