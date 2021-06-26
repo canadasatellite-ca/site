@@ -1,5 +1,6 @@
 <?php
 namespace Mageplaza\Blog\Controller;
+use Magento\Framework\App\RequestInterface as IRequest;
 class Router implements \Magento\Framework\App\RouterInterface {
 	/**
 	 * @var \Magento\Framework\App\ActionFactory
@@ -42,13 +43,14 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	}
 
 	/**
-	 * Validate and Match Cms Page and modify request
-	 *
-	 * @param \Magento\Framework\App\RequestInterface $request
+	 * @override
+	 * @see \Magento\Framework\App\RouterInterface::match()
+	 * @used-by \Magento\Framework\App\FrontController::dispatch()
+	 * @param IRequest $req
 	 * @return bool
 	 */
-	function match(\Magento\Framework\App\RequestInterface $request) {
-		$identifier = trim($request->getPathInfo(), '/');
+	function match(IRequest $req) {
+		$identifier = trim($req->getPathInfo(), '/');
 		$routePath  = explode('/', $identifier);
 		$urlPrefix = $this->helper->getBlogConfig('general/url_prefix') ?: \Mageplaza\Blog\Helper\Data::DEFAULT_URL_PREFIX;
 		$routeSize  = sizeof($routePath);
@@ -58,9 +60,9 @@ class Router implements \Magento\Framework\App\RouterInterface {
 		) {
 			return null;
 		}
-		$request->setModuleName('mpblog')
+		$req->setModuleName('mpblog')
 			->setAlias(\Magento\Framework\Url::REWRITE_REQUEST_PATH_ALIAS, $identifier);
-		$this->_request = $request;
+		$this->_request = $req;
 		$params     = [];
 		$controller = array_shift($routePath);
 		if (!$controller) {
