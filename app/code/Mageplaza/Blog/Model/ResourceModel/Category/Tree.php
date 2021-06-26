@@ -116,7 +116,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param \Magento\Store\Model\StoreManagerInterface $storeManager
      * @param \Magento\Framework\App\ResourceConnection $coreResource
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Event\ManagerInterface $eventManager,
         \Mageplaza\Blog\Model\ResourceModel\Category\CollectionFactory $collectionFactory,
         \Mageplaza\Blog\Model\ResourceModel\Category $categoryResource,
@@ -155,7 +155,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function addCollectionData(
+    function addCollectionData(
         $collection = null,
         $sorted = false,
         $exclude = [],
@@ -211,7 +211,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param mixed $ids
      * @return $this
      */
-    public function addInactiveCategoryIds($ids)
+    function addInactiveCategoryIds($ids)
     {
         if (!is_array($this->inactiveCategoryIds)) {
             $this->initInactiveCategoryIds();
@@ -225,7 +225,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      *
      * @return $this
      */
-    public function initInactiveCategoryIds()
+    function initInactiveCategoryIds()
     {
         $this->inactiveCategoryIds = [];
         $this->eventManager->dispatch('mageplaza_blog_category_tree_init_inactive_category_ids', ['tree' => $this]);
@@ -237,7 +237,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      *
      * @return array
      */
-    public function getInactiveCategoryIds()
+    function getInactiveCategoryIds()
     {
         if (!is_array($this->inactiveCategoryIds)) {
             $this->initInactiveCategoryIds();
@@ -253,7 +253,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param array $allIds
      * @return array
      */
-    public function getDisabledIds($collection, $allIds)
+    function getDisabledIds($collection, $allIds)
     {
     	/* implement this for frontend */
         return [];
@@ -266,7 +266,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param int $storeId
      * @return array
      */
-    public function getInactiveItemIds($collection, $storeId)
+    function getInactiveItemIds($collection, $storeId)
     {
         /* implement this for frontend */
         return [];
@@ -279,7 +279,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @return boolean
      * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
-    public function getItemIsActive($id)
+    function getItemIsActive($id)
     {
         //implement this for frontend
         return false;
@@ -291,7 +291,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param boolean $sorted
      * @return Collection
      */
-    public function getCollection($sorted = false)
+    function getCollection($sorted = false)
     {
         if ($this->collection === null) {
             $this->collection = $this->getDefaultCollection($sorted);
@@ -305,7 +305,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param Collection|array $object
      * @return void
      */
-    public function clean($object)
+    function clean($object)
     {
         if (is_array($object)) {
             foreach ($object as $obj) {
@@ -321,7 +321,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param Collection $collection
      * @return $this
      */
-    public function setCollection($collection)
+    function setCollection($collection)
     {
         if ($this->collection !== null) {
             $this->clean($this->collection);
@@ -336,7 +336,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param boolean $sorted
      * @return Collection
      */
-    public function getDefaultCollection($sorted = false)
+    function getDefaultCollection($sorted = false)
     {
         $collection = $this->collectionFactory->create();
         if ($sorted) {
@@ -359,7 +359,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param mixed $prevNode
      * @return void
      */
-    public function move($category, $newParent, $prevNode = null)
+    function move($category, $newParent, $prevNode = null)
     {
         $this->categoryResource->move($category->getId(), $newParent->getId());
         parent::move($category, $newParent, $prevNode);
@@ -372,7 +372,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      *
      * @return $this
      */
-    public function afterMove()
+    function afterMove()
     {
         $this->cache->clean([\Mageplaza\Blog\Model\Category::CACHE_TAG]);
         return $this;
@@ -387,7 +387,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function loadByIds($ids, $addCollectionData = true)
+    function loadByIds($ids, $addCollectionData = true)
     {
         $levelField = $this->_conn->quoteIdentifier('level');
         $pathField = $this->_conn->quoteIdentifier('path');
@@ -461,7 +461,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param bool $withRootNode
      * @return array
      */
-    public function loadBreadcrumbsArray($path, $addCollectionData = true, $withRootNode = false)
+    function loadBreadcrumbsArray($path, $addCollectionData = true, $withRootNode = false)
     {
         $pathIds = explode('/', $path);
         if (!$withRootNode) {
@@ -492,7 +492,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param array $optionalAttributes
      * @return \Zend_Db_Select
      */
-    public function createCollectionDataSelect($sorted = true)
+    function createCollectionDataSelect($sorted = true)
     {
 
         $select = $this->getDefaultCollection($sorted ? $this->_orderField : false)->getSelect();
@@ -519,7 +519,7 @@ class Tree extends \Magento\Framework\Data\Tree\Dbp
      * @param array $ids
      * @return array
      */
-    public function getExistingCategoryIdsBySpecifiedIds($ids)
+    function getExistingCategoryIdsBySpecifiedIds($ids)
     {
         if (empty($ids)) {
             return [];

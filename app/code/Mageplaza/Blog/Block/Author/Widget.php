@@ -24,7 +24,7 @@ use Mageplaza\Blog\Block\Frontend;
 
 class Widget extends Frontend
 {
-	public function getCurrentAuthor()
+	function getCurrentAuthor()
 	{
 		return $this->getRequest()->getParam('id');
 	}

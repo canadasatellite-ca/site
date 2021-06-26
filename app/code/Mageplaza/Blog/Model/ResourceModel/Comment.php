@@ -43,7 +43,7 @@ class Comment extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 	 * @param \Magento\Framework\Event\ManagerInterface $eventManager
 	 * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\Stdlib\DateTime\DateTime $date,
 		\Magento\Framework\Event\ManagerInterface $eventManager,
 		\Magento\Framework\Model\ResourceModel\Db\Context $context

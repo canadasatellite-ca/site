@@ -26,7 +26,7 @@ class Orderby implements \Magento\Framework\Option\ArrayInterface
     const REVERSE_TIME  = 'reverse_time';
     const TIME  = 'time';
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
         	['value' => self::SOCIAL, 'label' => __('Social')],
@@ -40,12 +40,12 @@ class Orderby implements \Magento\Framework\Option\ArrayInterface
      *
      * @return array
      */
-    public function toArray()
+    function toArray()
     {
         return [self::SOCIAL => __('Social'), self::REVERSE_TIME => __('Reverse time'), self::TIME => __('Time')];
     }
 
-    public function getAllOptions()
+    function getAllOptions()
     {
         return $this->toOptionArray();
     }

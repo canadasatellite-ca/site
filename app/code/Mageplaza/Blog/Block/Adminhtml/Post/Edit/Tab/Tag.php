@@ -53,7 +53,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
      * @param \Magento\Backend\Helper\Data $backendHelper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\ResourceModel\Tag\CollectionFactory $tagCollectionFactory,
         \Magento\Framework\Registry $coreRegistry,
         \Mageplaza\Blog\Model\TagFactory $tagFactory,
@@ -71,7 +71,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * Set grid params
      */
-    public function _construct()
+    function _construct()
     {
         parent::_construct();
         $this->setId('tag_grid');
@@ -188,7 +188,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
 
      * @return array
      */
-    public function getSelectedTags()
+    function getSelectedTags()
     {
         $selected = $this->getPost()->getTagsPosition();
         if (!is_array($selected)) {
@@ -205,7 +205,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
      * @param \Mageplaza\Blog\Model\Tag|\Magento\Framework\Object $item
      * @return string
      */
-    public function getRowUrl($item)
+    function getRowUrl($item)
     {
         return '#';
     }
@@ -215,7 +215,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
      *
      * @return string
      */
-    public function getGridUrl()
+    function getGridUrl()
     {
         return $this->getUrl(
             '*/*/tagsGrid',
@@ -228,7 +228,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return \Mageplaza\Blog\Model\Post
      */
-    public function getPost()
+    function getPost()
     {
         return $this->coreRegistry->registry('mageplaza_blog_post');
     }
@@ -260,7 +260,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Tags');
     }
@@ -268,7 +268,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return bool
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }
@@ -276,7 +276,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -284,7 +284,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return bool
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -292,7 +292,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return string
      */
-    public function getTabUrl()
+    function getTabUrl()
     {
         return $this->getUrl('mageplaza_blog/post/tags', ['_current' => true]);
     }
@@ -300,7 +300,7 @@ class Tag extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magent
     /**
      * @return string
      */
-    public function getTabClass()
+    function getTabClass()
     {
         return 'ajax only';
     }

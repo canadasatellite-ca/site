@@ -62,7 +62,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Category
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Controller\Result\RawFactory $resultRawFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
@@ -84,7 +84,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Category
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         $data = $this->getRequest()->getPost('category');
         if (isset($data['store_ids'])){

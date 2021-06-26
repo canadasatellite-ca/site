@@ -25,7 +25,7 @@ use Mageplaza\Blog\Block\Frontend;
 class Listpost extends Frontend
 {
 
-    public function checkRss()
+    function checkRss()
     {
         return $this->helperData->getBlogUrl('post/rss');
     }

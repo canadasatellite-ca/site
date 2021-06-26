@@ -32,7 +32,7 @@ class Type implements \Magento\Framework\Option\ArrayInterface
     const DEFAULT_COMMENT = 1;
     const DISABLE = 4;
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
         	['value' => self::DEFAULT_COMMENT, 'label' => __('Default Comment')],
@@ -47,7 +47,7 @@ class Type implements \Magento\Framework\Option\ArrayInterface
      *
      * @return array
      */
-    public function toArray()
+    function toArray()
     {
         return [
         	self::DISABLE => __('Disable Completely'),

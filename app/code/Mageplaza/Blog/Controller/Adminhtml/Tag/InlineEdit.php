@@ -43,7 +43,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
      * @param \Mageplaza\Blog\Model\TagFactory $tagFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Controller\Result\JsonFactory $jsonFactory,
         \Mageplaza\Blog\Model\TagFactory $tagFactory,
         \Magento\Backend\App\Action\Context $context
@@ -57,7 +57,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
     /**
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    function execute()
     {
         /** @var \Magento\Framework\Controller\Result\Json $resultJson */
         $resultJson = $this->jsonFactory->create();
@@ -106,7 +106,7 @@ abstract class InlineEdit extends \Magento\Backend\App\Action
      * @param string $errorText
      * @return string
      */
-	public function getErrorWithTagId(\Mageplaza\Blog\Model\Tag $tag, $errorText)
+	function getErrorWithTagId(\Mageplaza\Blog\Model\Tag $tag, $errorText)
     {
         return '[Tag ID: ' . $tag->getId() . '] ' . $errorText;
     }

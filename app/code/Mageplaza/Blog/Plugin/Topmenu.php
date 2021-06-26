@@ -24,14 +24,14 @@ class Topmenu
 {
     public $helper;
 
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Helper\Data $helper
     )
 	{
         $this->helper = $helper;
     }
 
-    public function afterGetHtml(\Magento\Theme\Block\Html\Topmenu $topmenu, $html)
+    function afterGetHtml(\Magento\Theme\Block\Html\Topmenu $topmenu, $html)
     {
     	if ($this->helper->getBlogConfig('general/toplinks') && $this->helper->getBlogConfig('general/enabled')){
 			$blogMenu = $topmenu;

@@ -54,7 +54,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         \Magento\Framework\Registry $registry,
         \Mageplaza\Blog\Model\ResourceModel\Category\Tree $categoryTree,
@@ -136,7 +136,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      *
      * @return string
      */
-    public function getAdditionalButtonsHtml()
+    function getAdditionalButtonsHtml()
     {
         $html = '';
         foreach ($this->additionalButtons as $childName) {
@@ -152,7 +152,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param array $config
      * @return $this
      */
-    public function addAdditionalButton($alias, $config)
+    function addAdditionalButton($alias, $config)
     {
         if (isset($config['name'])) {
             $config['element_name'] = $config['name'];
@@ -176,7 +176,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param string $alias
      * @return $this
      */
-    public function removeAdditionalButton($alias)
+    function removeAdditionalButton($alias)
     {
         if (isset($this->additionalButtons[$alias])) {
             $this->unsetChild($this->additionalButtons[$alias]);
@@ -189,7 +189,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getTabsHtml()
+    function getTabsHtml()
     {
         return $this->getChildHtml('tabs');
     }
@@ -197,7 +197,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return \Magento\Framework\Phrase|string
      */
-    public function getHeader()
+    function getHeader()
     {
         if ($this->getCategoryId()) {
             return $this->getCategoryName();
@@ -215,7 +215,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param array $args
      * @return string
      */
-    public function getDeleteUrl(array $args = [])
+    function getDeleteUrl(array $args = [])
     {
         $params = ['_current' => true];
         $params = array_merge($params, $args);
@@ -228,7 +228,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param array $args
      * @return string
      */
-    public function getRefreshPathUrl(array $args = [])
+    function getRefreshPathUrl(array $args = [])
     {
         $params = ['_current' => true];
         $params = array_merge($params, $args);
@@ -238,7 +238,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return bool
      */
-    public function isAjax()
+    function isAjax()
     {
         return $this->_request->isXmlHttpRequest() || $this->_request->getParam('isAjax');
     }
@@ -248,7 +248,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      *
      * @return int
      */
-    public function getParentCategoryId()
+    function getParentCategoryId()
     {
         return (int)$this->templateContext->getRequest()->getParam('parent');
     }
@@ -258,7 +258,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      *
      * @return int
      */
-    public function getCategoryId()
+    function getCategoryId()
     {
         return (int)$this->templateContext->getRequest()->getParam('category_id');
     }
@@ -270,7 +270,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param array $data
      * @return $this
      */
-    public function addButton($buttonId, array $data)
+    function addButton($buttonId, array $data)
     {
         $childBlockId = $buttonId . '_button';
         $button = $this->getButtonChildBlock($childBlockId);
@@ -286,7 +286,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return bool
      */
-    public function hasToolbarBlock()
+    function hasToolbarBlock()
     {
         return $this->getLayout()->isBlock('page.actions.toolbar');
     }
@@ -298,7 +298,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param null|string $blockClassName
      * @return \Magento\Backend\Block\Widget
      */
-    public function getButtonChildBlock($childId, $blockClassName = null)
+    function getButtonChildBlock($childId, $blockClassName = null)
     {
         if (null === $blockClassName) {
             $blockClassName = 'Magento\Backend\Block\Widget\Button';
@@ -309,7 +309,7 @@ class Form extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getPostsJson()
+    function getPostsJson()
     {
         $posts = $this->getCategory()->getPostsPosition();
         if (!empty($posts)) {

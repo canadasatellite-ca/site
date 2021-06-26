@@ -54,7 +54,7 @@ class NewCategory extends \Magento\Backend\Block\Widget\Form\Generic
 	 * @param \Magento\Framework\Data\FormFactory $formFactory
 	 * @param array $data
 	 */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         \Mageplaza\Blog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
         \Magento\Backend\Block\Template\Context $context,
@@ -155,7 +155,7 @@ class NewCategory extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return array
      */
-    public function getParentCategoryOptions()
+    function getParentCategoryOptions()
     {
         $items = $this->categoryCollectionFactory->create()
             ->addOrder('Category_id', 'ASC')
@@ -175,7 +175,7 @@ class NewCategory extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return string
      */
-    public function getSaveCategoryUrl()
+    function getSaveCategoryUrl()
     {
         return $this->getUrl('mageplaza_blog/category/save');
     }
@@ -185,7 +185,7 @@ class NewCategory extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return string
      */
-    public function getAfterElementHtml()
+    function getAfterElementHtml()
     {
         $widgetOptions = $this->jsonEncoder->encode(
             [

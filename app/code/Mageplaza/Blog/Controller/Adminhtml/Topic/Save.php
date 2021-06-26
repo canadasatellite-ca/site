@@ -46,7 +46,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Topic
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Backend\Helper\Js $jsHelper,
         \Mageplaza\Blog\Model\TopicFactory $topicFactory,
         \Magento\Framework\Registry $registry,
@@ -63,7 +63,7 @@ class Save extends \Mageplaza\Blog\Controller\Adminhtml\Topic
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         $data = $this->getRequest()->getPost('topic');
         $data['store_ids'] = implode(',', $data['store_ids']);

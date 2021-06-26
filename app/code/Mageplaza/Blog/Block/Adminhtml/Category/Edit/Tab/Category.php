@@ -56,7 +56,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic implements \Ma
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Magento\Config\Model\Config\Source\Yesno $booleanOptions,
         \Mageplaza\Blog\Model\Config\Source\MetaRobots $metaRobotsOptions,
@@ -222,7 +222,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic implements \Ma
      *
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Category');
     }
@@ -232,7 +232,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic implements \Ma
      *
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -242,7 +242,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic implements \Ma
      *
      * @return boolean
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -252,7 +252,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic implements \Ma
      *
      * @return boolean
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }

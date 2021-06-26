@@ -28,7 +28,7 @@ class Index extends Action
 {
 	public $resultPageFactory;
 
-	public function __construct(
+	function __construct(
 		Context $context,
 		PageFactory $resultPageFactory
 	) {
@@ -36,7 +36,7 @@ class Index extends Action
 		$this->resultPageFactory = $resultPageFactory;
 	}
 
-	public function execute()
+	function execute()
 	{
 		return $this->resultPageFactory->create();
 	}

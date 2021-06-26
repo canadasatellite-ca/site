@@ -54,7 +54,7 @@ class Data extends CoreHelper
 	public $translitUrl;
 	public $dateTime;
 
-	public function __construct(
+	function __construct(
 		\Magento\Customer\Model\Session $session,
 		\Magento\Customer\Model\Url $url,
 		Context $context,
@@ -89,14 +89,14 @@ class Data extends CoreHelper
 	 * @param null $store
 	 * @return bool
 	 */
-	public function isEnabled($store = null)
+	function isEnabled($store = null)
 	{
 		$isModuleOutputEnabled = $this->isModuleOutputEnabled();
 
 		return $isModuleOutputEnabled && $this->getBlogConfig('general/enabled', $store);
 	}
 
-	public function getBlogConfig($code, $storeId = null)
+	function getBlogConfig($code, $storeId = null)
 	{
 		return $this->getConfigValue(self::XML_PATH_BLOG . $code, $storeId);
 	}
@@ -104,7 +104,7 @@ class Data extends CoreHelper
 	/**
 	 * get sidebar config
 	 */
-	public function getSidebarConfig($code, $storeId = null)
+	function getSidebarConfig($code, $storeId = null)
 	{
 		return $this->getBlogConfig('sidebar/'.$code, $storeId);
 	}
@@ -113,7 +113,7 @@ class Data extends CoreHelper
 	 * @param $code, $storeId = null
 	 * @return mixed
 	 */
-	public function getSeoConfig($code, $storeId = null)
+	function getSeoConfig($code, $storeId = null)
 	{
 		return $this->getBlogConfig('seo/'.$code, $storeId);
 	}
@@ -123,7 +123,7 @@ class Data extends CoreHelper
 	 * @param null $type
 	 * @return mixed
 	 */
-	public function getSelectedPostByMonth($type = null)
+	function getSelectedPostByMonth($type = null)
 	{
 		$month = $this->_getRequest()->getParam('month');
 		return $list = ($month) ? $type->getSelectedPostsCollection()
@@ -133,11 +133,12 @@ class Data extends CoreHelper
 
 	/**
 	 * get post list
+	 * @used-by \Mageplaza\Blog\Block\Frontend::getBlogPagination()
 	 * @param null $type
 	 * @param null $id
 	 * @return array|string
 	 */
-	public function getPostList($type = null, $id = null)
+	function getPostList($type = null, $id = null)
 	{
 		$list          = '';
 		$posts         = $this->postfactory->create();
@@ -185,7 +186,7 @@ class Data extends CoreHelper
 	 * get category list
 	 * @return array|string
 	 */
-	public function getCategoryList()
+	function getCategoryList()
 	{
 		$category = $this->categoryfactory->create();
 		$list     = $category->getCollection()->addFieldToFilter('enabled', 1);
@@ -200,7 +201,7 @@ class Data extends CoreHelper
 	 * get tag list
 	 * @return array|string
 	 */
-	public function getTagList()
+	function getTagList()
 	{
 		$tag  = $this->tagfactory->create();
 		$list = $tag->getCollection()
@@ -216,7 +217,7 @@ class Data extends CoreHelper
 	 * get topic list
 	 * @return array|string
 	 */
-	public function getTopicList()
+	function getTopicList()
 	{
 		$topic  = $this->topicfactory->create();
 		$list = $topic->getCollection()
@@ -233,7 +234,7 @@ class Data extends CoreHelper
 	 * @param $array
 	 * @return array|string
 	 */
-	public function getCategoryCollection($array)
+	function getCategoryCollection($array)
 	{
 		$category = $this->categoryfactory->create();
 		$list     = $category->getCollection()
@@ -251,7 +252,7 @@ class Data extends CoreHelper
 	 * @param $post
 	 * @return string
 	 */
-	public function getUrlByPost($post)
+	function getUrlByPost($post)
 	{
 		$urlKey = '';
 		if ($post->getUrlKey()) {
@@ -275,7 +276,7 @@ class Data extends CoreHelper
 	 * @param $authorId
 	 * @return \Mageplaza\Blog\Model\Author | null
 	 */
-	public function getAuthorByPost($authorId)
+	function getAuthorByPost($authorId)
 	{
 		$author = $this->authorfactory->create();
 		$list = $author->load($authorId);
@@ -287,7 +288,7 @@ class Data extends CoreHelper
 	 * @param $code
 	 * @return string
 	 */
-	public function getBlogUrl($code)
+	function getBlogUrl($code)
 	{
 		$blogUrl = $this->getBlogConfig('general/url_prefix') ?: self::DEFAULT_URL_PREFIX;
 		return $this->_getUrl($blogUrl . '/' . $code);
@@ -298,7 +299,7 @@ class Data extends CoreHelper
 	 * @param $url
 	 * @return \Mageplaza\Blog\Model\Post | null
 	 */
-	public function getPostByUrl($url)
+	function getPostByUrl($url)
 	{
 		$url   = $this->checkSuffix($url);
 		$posts = $this->postfactory->create()->load($url, 'url_key');
@@ -309,7 +310,7 @@ class Data extends CoreHelper
 	 * @param $url
 	 * @return mixed
 	 */
-	public function checkSuffix($url)
+	function checkSuffix($url)
 	{
 		$url_suffix = $this->getBlogConfig('general/url_suffix');
 		if (strpos($url, $url_suffix) !== false) {
@@ -319,7 +320,7 @@ class Data extends CoreHelper
 		return $url;
 	}
 
-//    public function getPostsByTag()
+//    function getPostsByTag()
 //    {
 //        $posts      = $this->postfactory->create();
 //        $collection = $posts->getCollection()->addFieldToFilter('enabled', 1);
@@ -330,7 +331,7 @@ class Data extends CoreHelper
 //        return $result;
 //    }
 
-//    public function getPostsByCategory()
+//    function getPostsByCategory()
 //    {
 //        $collection = true;
 //
@@ -342,7 +343,7 @@ class Data extends CoreHelper
 	 * @param $image
 	 * @return string
 	 */
-	public function getImageUrl($image)
+	function getImageUrl($image)
 	{
 		return $this->getBaseMediaUrl(). self::POST_IMG . $image;
 	}
@@ -351,7 +352,7 @@ class Data extends CoreHelper
 	 * get media url
 	 * @return mixed
 	 */
-	public function getBaseMediaUrl()
+	function getBaseMediaUrl()
 	{
 		return $this->storeManager->getStore()->getBaseUrl(\Magento\Framework\UrlInterface::URL_TYPE_MEDIA);
 	}
@@ -361,7 +362,7 @@ class Data extends CoreHelper
 	 * @param $category
 	 * @return string
 	 */
-	public function getCategoryUrl($category)
+	function getCategoryUrl($category)
 	{
 		$urlPrefix = $this->getBlogConfig('general/url_prefix') ?: self::DEFAULT_URL_PREFIX;
 		return $this->_getUrl($urlPrefix .'/'. self::CATEGORY .'/'. $category->getUrlKey());
@@ -372,7 +373,7 @@ class Data extends CoreHelper
 	 * @param $tag
 	 * @return string
 	 */
-	public function getTagUrl($tag)
+	function getTagUrl($tag)
 	{
 		$urlPrefix = $this->getBlogConfig('general/url_prefix') ?: self::DEFAULT_URL_PREFIX;
 		return $this->_getUrl($urlPrefix .'/'. self::TAG .'/'. $tag->getUrlKey());
@@ -383,7 +384,7 @@ class Data extends CoreHelper
 	 * @param $author
 	 * @return string
 	 */
-	public function getAuthorUrl($author)
+	function getAuthorUrl($author)
 	{
 		$urlPrefix = $this->getBlogConfig('general/url_prefix') ?: self::DEFAULT_URL_PREFIX;
 		return $this->_getUrl($urlPrefix .'/'. self::AUTHOR .'/'. $author->getUrlKey());
@@ -394,7 +395,7 @@ class Data extends CoreHelper
 	 * @param $topic
 	 * @return string
 	 */
-	public function getTopicUrl($topic)
+	function getTopicUrl($topic)
 	{
 		$urlPrefix = $this->getBlogConfig('general/url_prefix') ?: self::DEFAULT_URL_PREFIX;
 		return $this->_getUrl($urlPrefix .'/'. self::TOPIC .'/'. $topic->getUrlKey());
@@ -405,7 +406,7 @@ class Data extends CoreHelper
 	 * @param $month
 	 * @return string
 	 */
-	public function getMonthlyUrl($month)
+	function getMonthlyUrl($month)
 	{
 		$urlPrefix = $this->getBlogConfig('general/url_prefix') ?: self::DEFAULT_URL_PREFIX;
 		return $this->_getUrl($urlPrefix .'/'. self::MONTHLY .'/'. $month);
@@ -416,7 +417,7 @@ class Data extends CoreHelper
 	 * @param $post
 	 * @return null|string
 	 */
-	public function getPostCategoryHtml($post)
+	function getPostCategoryHtml($post)
 	{
 		$categories = $this->getCategoryCollection($post->getCategoryIds());
 		$categoryHtml = [];
@@ -438,7 +439,7 @@ class Data extends CoreHelper
 	 * @param $id
 	 * @return \Mageplaza\Blog\Model\Post | null
 	 */
-	public function getPost($id)
+	function getPost($id)
 	{
 		$post = $this->postfactory->create()->load($id);
 		return $post;
@@ -450,7 +451,7 @@ class Data extends CoreHelper
 	 * @param $param
 	 * @return \Mageplaza\Blog\Model\Category | null
 	 */
-	public function getCategoryByParam($code, $param)
+	function getCategoryByParam($code, $param)
 	{
 		if ($code == 'id') {
 			return $this->categoryfactory->create()->load($param);
@@ -465,7 +466,7 @@ class Data extends CoreHelper
 	 * @param $param
 	 * @return \Mageplaza\Blog\Model\Tag | null
 	 */
-	public function getTagByParam($code, $param)
+	function getTagByParam($code, $param)
 	{
 		if ($code == 'id') {
 			return $this->tagfactory->create()->load($param);
@@ -480,7 +481,7 @@ class Data extends CoreHelper
 	 * @param $param
 	 * @return \Mageplaza\Blog\Model\Author | null
 	 */
-	public function getAuthorByParam($code, $param)
+	function getAuthorByParam($code, $param)
 	{
 		if ($code == 'id') {
 			return $this->authorfactory->create()->load($param);
@@ -495,7 +496,7 @@ class Data extends CoreHelper
 	 * @param $param
 	 * @return \Mageplaza\Blog\Model\Topic | null
 	 */
-	public function getTopicByParam($code, $param)
+	function getTopicByParam($code, $param)
 	{
 		if ($code == 'id') {
 			return $this->topicfactory->create()->load($param);
@@ -505,19 +506,19 @@ class Data extends CoreHelper
 	}
 
 
-//    public function getCategoryByPost($postId)
+//    function getCategoryByPost($postId)
 //    {
 //        $post = $this->postfactory->create()->load($postId);
 //        return $post->getSelectedCategoriesCollection();
 //    }
 
-//    public function getTagsByPost($postId)
+//    function getTagsByPost($postId)
 //    {
 //        $post = $this->postfactory->create()->load($postId);
 //        return $post->getSelectedTagsCollection();
 //    }
 
-//    public function getTopicByPost($postId)
+//    function getTopicByPost($postId)
 //    {
 //        $post = $this->postfactory->create()->load($postId);
 //        return $post->getSelectedTopicsCollection();
@@ -527,7 +528,7 @@ class Data extends CoreHelper
 	 * get most view post
 	 * @return array|string
 	 */
-	public function getMosviewPosts()
+	function getMosviewPosts()
 	{
 		$posts = $this->modelTraffic->getCollection()->addFieldToFilter('enabled', 1);
 		$posts->join(
@@ -548,7 +549,7 @@ class Data extends CoreHelper
 	 * get recent post
 	 * @return array|string
 	 */
-	public function getRecentPost()
+	function getRecentPost()
 	{
 		$posts = $this->postfactory->create()
 			->getCollection()
@@ -569,7 +570,7 @@ class Data extends CoreHelper
 	 * @param null $limit
 	 * @return array|string
 	 */
-	public function filterItems($items, $limit = null)
+	function filterItems($items, $limit = null)
 	{
 		$storeId = $this->store->getStore()->getId();
 		$count = 0;
@@ -596,7 +597,7 @@ class Data extends CoreHelper
 	 * check customer is logged in or not
 	 * @return bool
 	 */
-	public function isLoggedIn()
+	function isLoggedIn()
 	{
 		return $this->customerSession->isLoggedIn();
 	}
@@ -605,7 +606,7 @@ class Data extends CoreHelper
 	 * get login url
 	 * @return string
 	 */
-	public function getLoginUrl()
+	function getLoginUrl()
 	{
 		return $this->loginUrl->getLoginUrl();
 	}
@@ -614,7 +615,7 @@ class Data extends CoreHelper
 	 * get customer data
 	 * @return \Magento\Customer\Api\Data\CustomerInterface
 	 */
-	public function getCustomerData()
+	function getCustomerData()
 	{
 		return $this->customerSession->getCustomerData();
 	}
@@ -625,7 +626,7 @@ class Data extends CoreHelper
 	 * @param $count
 	 * @return string
 	 */
-	public function generateUrlKey($name, $count)
+	function generateUrlKey($name, $count)
 	{
 		$name = $this->strReplace($name);
 		$text = $this->translitUrl->filter($name);
@@ -643,7 +644,7 @@ class Data extends CoreHelper
 	 * @param $str
 	 * @return mixed|string
 	 */
-	public function strReplace($str){
+	function strReplace($str){
 
 		$str = trim(mb_strtolower($str));
 		$str = preg_replace('/(à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ)/', 'a', $str);
@@ -662,7 +663,7 @@ class Data extends CoreHelper
 	 * get posts created_at
 	 * @return array
 	 */
-	public function getPostDate()
+	function getPostDate()
 	{
 		$posts = $this->getPostList();
 		$postDates = array();
@@ -678,7 +679,7 @@ class Data extends CoreHelper
 	 * get date label
 	 * @return array
 	 */
-	public function getDateLabel(){
+	function getDateLabel(){
 		$posts = $this->getPostList();
 		$postDates = array();
 
@@ -695,7 +696,7 @@ class Data extends CoreHelper
 	 * get array of posts's date formated
 	 * @return array
 	 */
-	public function getDateArray(){
+	function getDateArray(){
 		$dateArray = array();
 		foreach ($this->getPostDate() as $postDate){
 			$dateArray[] = date("F Y",$this->dateTime->timestamp($postDate));
@@ -708,7 +709,7 @@ class Data extends CoreHelper
 	 * get count of posts's date
 	 * @return array
 	 */
-	public function getDateArrayCount()
+	function getDateArrayCount()
 	{
 		return $dateArrayCount = array_values(array_count_values($this->getDateArray()));
 	}
@@ -716,7 +717,7 @@ class Data extends CoreHelper
 	/**
 	 * @return array
 	 */
-	public function getDateArrayUnique()
+	function getDateArrayUnique()
 	{
 		return $dateArrayUnique = array_values(array_unique($this->getDateArray()));
 	}
@@ -725,7 +726,7 @@ class Data extends CoreHelper
 	 * get date count
 	 * @return int|mixed
 	 */
-	public function getDateCount()
+	function getDateCount()
 	{
 		$limit = $this->getBlogConfig('monthly_archive/number_records') ?: 5;
 		$dateArrayCount = $this->getDateArrayCount();
@@ -737,7 +738,7 @@ class Data extends CoreHelper
 	 * get author image link
 	 * @return string
 	 */
-	public function getAuthorImageUrl($image)
+	function getAuthorImageUrl($image)
 	{
 		return $this->getBaseMediaUrl(). self::AUTHOR_IMG . $image;
 	}
@@ -747,7 +748,7 @@ class Data extends CoreHelper
 	 * @param $date
 	 * @return false|string
 	 */
-	public function getDateFormat($date, $monthly = false)
+	function getDateFormat($date, $monthly = false)
 	{
 		if ($monthly) {
 			$dateType = $this->getBlogConfig('monthly_archive/date_type_monthly');

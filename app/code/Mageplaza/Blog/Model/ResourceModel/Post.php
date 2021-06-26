@@ -64,7 +64,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Stdlib\DateTime\DateTime $date,
         \Magento\Framework\Event\ManagerInterface $eventManager,
 		\Mageplaza\Blog\Helper\Data $helperData,
@@ -95,7 +95,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param string $id
      * @return string|bool
      */
-    public function getPostNameById($id)
+    function getPostNameById($id)
     {
         $adapter = $this->getConnection();
         $select  = $adapter->select()
@@ -168,7 +168,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return array
      */
-    public function getTagsPosition(\Mageplaza\Blog\Model\Post $post)
+    function getTagsPosition(\Mageplaza\Blog\Model\Post $post)
     {
         $select = $this->getConnection()->select()->from(
             $this->postTagTable,
@@ -186,7 +186,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return $this
      */
-	public function saveTagRelation(\Mageplaza\Blog\Model\Post $post)
+	function saveTagRelation(\Mageplaza\Blog\Model\Post $post)
     {
         $post->setIsChangedTagList(false);
         $id   = $post->getId();
@@ -248,7 +248,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return array
      */
-    public function getTopicsPosition(\Mageplaza\Blog\Model\Post $post)
+    function getTopicsPosition(\Mageplaza\Blog\Model\Post $post)
     {
         $select = $this->getConnection()->select()->from(
             $this->postTopicTable,
@@ -266,7 +266,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return $this
      */
-	public function saveTopicRelation(\Mageplaza\Blog\Model\Post $post)
+	function saveTopicRelation(\Mageplaza\Blog\Model\Post $post)
     {
         $post->setIsChangedTopicList(false);
         $id     = $post->getId();
@@ -328,7 +328,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return array
      */
-	public function saveCategoryRelation(\Mageplaza\Blog\Model\Post $post)
+	function saveCategoryRelation(\Mageplaza\Blog\Model\Post $post)
     {
         $post->setIsChangedCategoryList(false);
         $id         = $post->getId();
@@ -378,7 +378,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return array
      */
-    public function getCategoryIds(\Mageplaza\Blog\Model\Post $post)
+    function getCategoryIds(\Mageplaza\Blog\Model\Post $post)
     {
         $adapter = $this->getConnection();
         $select  = $adapter->select()->from(
@@ -397,7 +397,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Post $post
      * @return array
      */
-    public function getTopicIds(\Mageplaza\Blog\Model\Post $post)
+    function getTopicIds(\Mageplaza\Blog\Model\Post $post)
     {
         $adapter = $this->getConnection();
         $select  = $adapter->select()->from(
@@ -412,7 +412,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         return $adapter->fetchCol($select);
     }
 
-    public function checkUrlKey($url, $id = null)
+    function checkUrlKey($url, $id = null)
     {
         $adapter = $this->getConnection();
         if ($id) {
@@ -432,7 +432,7 @@ class Post extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
 
         return $result;
     }
-	public function generateUrlKey($name, $count){
+	function generateUrlKey($name, $count){
     	$result = $this->helperData->generateUrlKey($name,$count);
     	return $result;
 	}

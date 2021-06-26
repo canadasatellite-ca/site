@@ -34,7 +34,7 @@ class Upload
      *
      * @param \Magento\MediaStorage\Model\File\UploaderFactory $uploaderFactory
      */
-    public function __construct(
+    function __construct(
         \Magento\MediaStorage\Model\File\UploaderFactory $uploaderFactory
     ) {
     
@@ -50,7 +50,7 @@ class Upload
      * @return string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function uploadFileAndGetName($input, $destinationFolder, $data)
+    function uploadFileAndGetName($input, $destinationFolder, $data)
     {
         try {
             if (isset($data[$input]['delete'])) {

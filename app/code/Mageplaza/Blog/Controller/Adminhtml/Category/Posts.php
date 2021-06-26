@@ -38,7 +38,7 @@ class Posts extends \Mageplaza\Blog\Controller\Adminhtml\Category
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Result\LayoutFactory $resultLayoutFactory,
         \Mageplaza\Blog\Model\CategoryFactory $postFactory,
         \Magento\Framework\Registry $registry,
@@ -52,7 +52,7 @@ class Posts extends \Mageplaza\Blog\Controller\Adminhtml\Category
     /**
      * @return \Magento\Framework\View\Result\Layout
      */
-    public function execute()
+    function execute()
     {
         $this->initCategory();
         $resultLayout = $this->resultLayoutFactory->create();

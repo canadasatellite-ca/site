@@ -51,7 +51,7 @@ class Comment extends \Magento\Framework\Model\AbstractModel
 	 */
 	public $postCollectionFactory;
 
-	public function __construct(
+	function __construct(
 		\Mageplaza\Blog\Model\ResourceModel\Post\CollectionFactory $postCollectionFactory,
 		\Magento\Framework\Model\Context $context,
 		\Magento\Framework\Registry $registry,
@@ -74,7 +74,7 @@ class Comment extends \Magento\Framework\Model\AbstractModel
 		$this->_init('Mageplaza\Blog\Model\ResourceModel\Comment');
 	}
 
-	public function getIdentities()
+	function getIdentities()
 	{
 		return [self::CACHE_TAG . '_' . $this->getId()];
 	}

@@ -51,7 +51,7 @@ abstract class Topic extends \Magento\Backend\App\Action
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\TopicFactory $topicFactory,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Backend\App\Action\Context $context
@@ -68,7 +68,7 @@ abstract class Topic extends \Magento\Backend\App\Action
      *
      * @return \Mageplaza\Blog\Model\Topic
      */
-	public function initTopic()
+	function initTopic()
     {
         $topicId  = (int) $this->getRequest()->getParam('topic_id');
         /** @var \Mageplaza\Blog\Model\Topic $topic */

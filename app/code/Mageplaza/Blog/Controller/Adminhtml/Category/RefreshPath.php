@@ -38,7 +38,7 @@ class RefreshPath extends \Mageplaza\Blog\Controller\Adminhtml\Category
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Mageplaza\Blog\Model\CategoryFactory $categoryFactory,
         \Magento\Framework\Registry $coreRegistry,
@@ -54,7 +54,7 @@ class RefreshPath extends \Mageplaza\Blog\Controller\Adminhtml\Category
      *
      * @return \Magento\Framework\Controller\Result\Json
      */
-    public function execute()
+    function execute()
     {
         $categoryId = (int)$this->getRequest()->getParam('category_id');
         if ($categoryId) {

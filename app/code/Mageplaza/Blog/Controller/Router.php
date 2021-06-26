@@ -42,7 +42,7 @@ class Router implements \Magento\Framework\App\RouterInterface
 	 * @param \Magento\Framework\App\ActionFactory $actionFactory
 	 * @param \Mageplaza\Blog\Helper\Data $helper
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\App\ActionFactory $actionFactory,
 		\Mageplaza\Blog\Helper\Data $helper
 	)
@@ -58,7 +58,7 @@ class Router implements \Magento\Framework\App\RouterInterface
 	 * @param array $params
 	 * @return \Magento\Framework\App\ActionInterface
 	 */
-	public function _forward($controller, $action, $params = [])
+	function _forward($controller, $action, $params = [])
 	{
 		$this->_request->setControllerName($controller)
 			->setActionName($action)
@@ -77,7 +77,7 @@ class Router implements \Magento\Framework\App\RouterInterface
 	 * @param \Magento\Framework\App\RequestInterface $request
 	 * @return bool
 	 */
-	public function match(\Magento\Framework\App\RequestInterface $request)
+	function match(\Magento\Framework\App\RequestInterface $request)
 	{
 		$identifier = trim($request->getPathInfo(), '/');
 		$routePath  = explode('/', $identifier);

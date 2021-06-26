@@ -25,27 +25,27 @@ use Mageplaza\Blog\Block\Frontend;
 class Widget extends Frontend
 {
 
-	public function getDateArrayCount()
+	function getDateArrayCount()
 	{
 		return $this->helperData->getDateArrayCount();
 	}
 
-	public function getDateArrayUnique()
+	function getDateArrayUnique()
 	{
 		return $this->helperData->getDateArrayUnique();
 	}
 
-	public function getDateCount()
+	function getDateCount()
 	{
 		return $this->helperData->getDateCount();
 	}
 
-	public function getMonthlyUrl($month)
+	function getMonthlyUrl($month)
 	{
 		return $this->helperData->getMonthlyUrl($month);
 	}
 
-	public function getDateLabel()
+	function getDateLabel()
 	{
 		return $this->helperData->getDateLabel();
 	}

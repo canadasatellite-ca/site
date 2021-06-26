@@ -66,7 +66,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Categories');
     }
@@ -76,7 +76,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -86,7 +86,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return boolean
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -96,7 +96,7 @@ class Category extends \Magento\Backend\Block\Widget\Form\Generic
      *
      * @return boolean
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }

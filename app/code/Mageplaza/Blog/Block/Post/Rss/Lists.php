@@ -60,7 +60,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
      * @param \Magento\Framework\App\Rss\UrlBuilderInterface $rssUrlBuilder
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Mageplaza\Blog\Model\PostFactory $rssModel,
         \Mageplaza\Blog\Helper\Data $helper,
@@ -87,7 +87,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
     /**
      * {@inheritdoc}
      */
-    public function isAllowed()
+    function isAllowed()
     {
         return $this->_scopeConfig->isSetFlag('blog/general/enabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
@@ -95,7 +95,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
     /**
      * {@inheritdoc}
      */
-    public function getRssData()
+    function getRssData()
     {
         $storeModel = $this->storeManager->getStore($this->getStoreId());
         $newUrl     = $this->rssUrlBuilder->getUrl(['store_id' => $this->getStoreId(), 'type' => 'blog_posts']);
@@ -154,7 +154,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
     /**
      * @return int
      */
-    public function getStoreId()
+    function getStoreId()
     {
         $storeId = (int)$this->getRequest()->getParam('store_id');
         if ($storeId == null) {
@@ -167,7 +167,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
     /**
      * {@inheritdoc}
      */
-    public function getCacheLifetime()
+    function getCacheLifetime()
     {
         return 1;
     }
@@ -175,7 +175,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
     /**
      * @return array
      */
-    public function getFeeds()
+    function getFeeds()
     {
         $data = [];
         if ($this->isAllowed()) {
@@ -189,7 +189,7 @@ class Lists extends \Magento\Framework\View\Element\AbstractBlock implements Dat
     /**
      * {@inheritdoc}
      */
-    public function isAuthRequired()
+    function isAuthRequired()
     {
         return false;
     }

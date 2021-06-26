@@ -50,7 +50,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Magento\Framework\Event\ManagerInterface $eventManager
      * @param \Magento\Framework\Model\ResourceModel\Db\Context $context
      */
-    public function __construct(
+    function __construct(
 		\Mageplaza\Blog\Helper\Data $helperData,
         \Magento\Framework\Stdlib\DateTime\DateTime $date,
         \Magento\Framework\Event\ManagerInterface $eventManager,
@@ -79,7 +79,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param string $id
      * @return string|bool
      */
-    public function getCategoryNameById($id)
+    function getCategoryNameById($id)
     {
         $adapter = $this->getConnection();
         $select = $adapter->select()
@@ -215,7 +215,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Category $object
      * @return $this
      */
-	public function savePath($object)
+	function savePath($object)
     {
         if ($object->getId()) {
             $this->getConnection()->update(
@@ -255,7 +255,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Magento\Framework\DataObject $object
      * @return $this
      */
-    public function deleteChildren(\Magento\Framework\DataObject $object)
+    function deleteChildren(\Magento\Framework\DataObject $object)
     {
         $adapter = $this->getConnection();
         $pathField = $adapter->quoteIdentifier('path');
@@ -287,7 +287,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param null $afterCategoryId
      * @return $this
      */
-    public function changeParent(
+    function changeParent(
         \Mageplaza\Blog\Model\Category $category,
         \Mageplaza\Blog\Model\Category $newParent,
         $afterCategoryId = null
@@ -361,7 +361,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param $afterCategoryId
      * @return int
      */
-    public function processPositions(
+    function processPositions(
         \Mageplaza\Blog\Model\Category $category,
         \Mageplaza\Blog\Model\Category $newParent,
         $afterCategoryId
@@ -400,7 +400,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param $categoryId
      * @return string
      */
-    public function getChildrenCount($categoryId)
+    function getChildrenCount($categoryId)
     {
         $select = $this->getConnection()->select()->from(
             $this->getMainTable(),
@@ -416,7 +416,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Category $category
      * @return array
      */
-    public function getPostsPosition(\Mageplaza\Blog\Model\Category $category)
+    function getPostsPosition(\Mageplaza\Blog\Model\Category $category)
     {
         $select = $this->getConnection()->select()->from(
             $this->categoryPostTable,
@@ -433,7 +433,7 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
      * @param \Mageplaza\Blog\Model\Category $category
      * @return $this
      */
-    public function savePostRelation(\Mageplaza\Blog\Model\Category $category)
+    function savePostRelation(\Mageplaza\Blog\Model\Category $category)
     {
         $category->setIsChangedPostList(false);
         $id = $category->getId();
@@ -489,12 +489,12 @@ class Category extends \Magento\Framework\Model\ResourceModel\Db\AbstractDb
         }
         return $this;
     }
-    public function generateUrlKey($name, $count)
+    function generateUrlKey($name, $count)
     {
 		return $this->helperData->generateUrlKey($name,$count);
     }
 
-    public function checkUrlKey($url, $id = null)
+    function checkUrlKey($url, $id = null)
     {
         $adapter = $this->getConnection();
         if ($id) {

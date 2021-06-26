@@ -24,17 +24,17 @@ use Mageplaza\Blog\Block\Frontend;
 
 class Listpost extends Frontend
 {
-	public function getPostList()
+	function getPostList()
 	{
 		return $this->getBlogPagination(\Mageplaza\Blog\Helper\Data::MONTHLY, $this->getCurrentUrl());
 	}
 
-	public function checkRss()
+	function checkRss()
 	{
 		return $this->helperData->getBlogUrl('post/rss');
 	}
 
-	public function getCurrentUrl(){
+	function getCurrentUrl(){
 		$currentUrl = $this->getUrl('*/*/*', ['_current' => true, '_use_rewrite' => true]);
 		$arr = explode('/',$currentUrl);
 		$result = end($arr);

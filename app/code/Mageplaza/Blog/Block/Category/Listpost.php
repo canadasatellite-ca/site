@@ -24,12 +24,12 @@ use Mageplaza\Blog\Block\Frontend;
 
 class Listpost extends Frontend
 {
-    public function getPostList()
+    function getPostList()
     {
         return $this->getBlogPagination(\Mageplaza\Blog\Helper\Data::CATEGORY, $this->getRequest()->getParam('id'));
     }
 
-    public function checkRss()
+    function checkRss()
     {
         $categoryId = $this->getRequest()->getParam('id');
         if (!$categoryId) {

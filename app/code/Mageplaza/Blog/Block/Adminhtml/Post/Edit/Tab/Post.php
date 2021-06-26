@@ -56,7 +56,7 @@ class Post extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Magento\Config\Model\Config\Source\Yesno $booleanOptions,
         \Mageplaza\Blog\Model\Config\Source\MetaRobots $metaRobotsOptions,
@@ -262,7 +262,7 @@ class Post extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
      *
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Post');
     }
@@ -272,7 +272,7 @@ class Post extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
      *
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -282,7 +282,7 @@ class Post extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
      *
      * @return boolean
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -292,7 +292,7 @@ class Post extends \Magento\Backend\Block\Widget\Form\Generic implements \Magent
      *
      * @return boolean
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }

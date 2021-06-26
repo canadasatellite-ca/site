@@ -60,7 +60,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Registry $coreRegistry,
         \Mageplaza\Blog\Model\ResourceModel\Category\Tree $categoryTree,
         \Mageplaza\Blog\Model\CategoryFactory $categoryFactory,
@@ -81,7 +81,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
      *
      * @return \Mageplaza\Blog\Model\Category
      */
-    public function getCategory()
+    function getCategory()
     {
         return $this->coreRegistry->registry('mageplaza_blog_category');
     }
@@ -89,7 +89,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
     /**
      * @return int|string|null
      */
-    public function getCategoryId()
+    function getCategoryId()
     {
         if ($this->getCategory()) {
             return $this->getCategory()->getId();
@@ -100,7 +100,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
-    public function getCategoryName()
+    function getCategoryName()
     {
         return $this->getCategory()->getName();
     }
@@ -108,7 +108,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
     /**
      * @return mixed
      */
-    public function getCategoryPath()
+    function getCategoryPath()
     {
         if ($this->getCategory()) {
             return $this->getCategory()->getPath();
@@ -122,7 +122,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
      * @return Node|mixed
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      */
-    public function getRoot($parentNodeCategory = null, $recursionLevel = 3)
+    function getRoot($parentNodeCategory = null, $recursionLevel = 3)
     {
         if ($parentNodeCategory !== null && $parentNodeCategory->getId()) {
             return $this->getNode($parentNodeCategory, $recursionLevel);
@@ -156,7 +156,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
     /**
      * @return \Mageplaza\Blog\Model\ResourceModel\Category\Collection
      */
-    public function getCategoryCollection()
+    function getCategoryCollection()
     {
         $collection = $this->getData('category_collection');
         if ($collection === null) {
@@ -176,7 +176,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
      * @param array $ids
      * @return mixed
      */
-    public function getRootByIds($ids)
+    function getRootByIds($ids)
     {
         $root = $this->coreRegistry->registry('mageplaza_blog_category_root');
         if (null === $root) {
@@ -201,7 +201,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
      * @param int $recursionLevel
      * @return Node
      */
-    public function getNode($parentNodeCategory, $recursionLevel = 2)
+    function getNode($parentNodeCategory, $recursionLevel = 2)
     {
         $nodeId = $parentNodeCategory->getId();
         $node = $this->categoryTree->loadNode($nodeId);
@@ -222,7 +222,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
      * @param array $args
      * @return string
      */
-    public function getSaveUrl(array $args = [])
+    function getSaveUrl(array $args = [])
     {
         $params = ['_current' => false, '_query' => false];
         $params = array_merge($params, $args);
@@ -232,7 +232,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
     /**
      * @return string
      */
-    public function getEditUrl()
+    function getEditUrl()
     {
         return $this->getUrl(
             'mageplaza_blog/category/edit',
@@ -242,7 +242,7 @@ class AbstractCategory extends \Magento\Backend\Block\Template
     /**
      * @return []
      */
-    public function getRootIds()
+    function getRootIds()
     {
         return [\Mageplaza\Blog\Model\Category::TREE_ROOT_ID];
     }

@@ -27,7 +27,7 @@ class Delete extends \Mageplaza\Blog\Controller\Adminhtml\Topic
      *
      * @return \Magento\Backend\Model\View\Result\Redirect
      */
-    public function execute()
+    function execute()
     {
         $resultRedirect = $this->resultRedirectFactory->create();
         $id = $this->getRequest()->getParam('topic_id');

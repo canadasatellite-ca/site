@@ -48,7 +48,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
      * @param \Magento\Backend\Model\Auth\Session $authSession
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Backend\Block\Template\Context $context,
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
@@ -77,7 +77,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
      *
      * @return \Mageplaza\Blog\Model\Category
      */
-    public function getCategory()
+    function getCategory()
     {
         return $this->coreRegistry->registry('mageplaza_blog_category');
     }

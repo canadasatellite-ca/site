@@ -53,7 +53,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
      * @param \Magento\Backend\Helper\Data $backendHelper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\ResourceModel\Post\CollectionFactory $postCollectionFactory,
         \Magento\Framework\Registry $coreRegistry,
         \Mageplaza\Blog\Model\PostFactory $postFactory,
@@ -71,7 +71,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * Set grid params
      */
-    public function _construct()
+    function _construct()
     {
         parent::_construct();
         $this->setId('post_grid');
@@ -188,7 +188,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
 
      * @return array
      */
-    public function getSelectedPosts()
+    function getSelectedPosts()
     {
         $selected = $this->getCategory()->getPostsPosition();
         if (!is_array($selected)) {
@@ -205,7 +205,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
      * @param \Mageplaza\Blog\Model\Post|\Magento\Framework\Object $item
      * @return string
      */
-    public function getRowUrl($item)
+    function getRowUrl($item)
     {
         return '#';
     }
@@ -215,7 +215,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
      *
      * @return string
      */
-    public function getGridUrl()
+    function getGridUrl()
     {
         return $this->getUrl(
             '*/*/postsGrid',
@@ -228,7 +228,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return \Mageplaza\Blog\Model\Category
      */
-    public function getCategory()
+    function getCategory()
     {
         return $this->coreRegistry->registry('mageplaza_blog_category');
     }
@@ -260,7 +260,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Posts');
     }
@@ -268,7 +268,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return bool
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }
@@ -276,7 +276,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -284,7 +284,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return bool
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -292,7 +292,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return string
      */
-    public function getTabUrl()
+    function getTabUrl()
     {
         return $this->getUrl('mageplaza_blog/category/posts', ['_current' => true]);
     }
@@ -300,7 +300,7 @@ class Post extends \Magento\Backend\Block\Widget\Grid\Extended implements \Magen
     /**
      * @return string
      */
-    public function getTabClass()
+    function getTabClass()
     {
         return 'ajax only';
     }

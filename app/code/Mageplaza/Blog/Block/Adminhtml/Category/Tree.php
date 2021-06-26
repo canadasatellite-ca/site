@@ -67,7 +67,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Json\EncoderInterface $jsonEncoder,
         \Magento\Backend\Model\Auth\Session $backendSession,
         \Magento\Framework\DB\Helper $resourceHelper,
@@ -133,7 +133,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param $namePart
      * @return string
      */
-    public function getSuggestedCategoriesJson($namePart)
+    function getSuggestedCategoriesJson($namePart)
     {
         /* @var $collection \Mageplaza\Blog\Model\ResourceModel\Category\Collection */
         $collection = $this->categoryCollectionFactory->create();
@@ -188,7 +188,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getAddRootButtonHtml()
+    function getAddRootButtonHtml()
     {
         return $this->getChildHtml('add_root_button');
     }
@@ -196,7 +196,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getAddSubButtonHtml()
+    function getAddSubButtonHtml()
     {
         return $this->getChildHtml('add_sub_button');
     }
@@ -204,7 +204,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getExpandButtonHtml()
+    function getExpandButtonHtml()
     {
         return $this->getChildHtml('expand_button');
     }
@@ -212,7 +212,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getCollapseButtonHtml()
+    function getCollapseButtonHtml()
     {
         return $this->getChildHtml('collapse_button');
     }
@@ -221,7 +221,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param bool|null $expanded
      * @return string
      */
-    public function getLoadTreeUrl($expanded = null)
+    function getLoadTreeUrl($expanded = null)
     {
         $params = ['_current' => true, 'id' => null, 'store' => null];
         if (($expanded === null) && $this->backendSession->getMageplazaBlogCategoryIsTreeWasExpanded()
@@ -234,7 +234,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getNodesUrl()
+    function getNodesUrl()
     {
         return $this->getUrl('mageplaza_blog/category/jsonTree');
     }
@@ -242,7 +242,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getSwitchTreeUrl()
+    function getSwitchTreeUrl()
     {
         return $this->getUrl(
             'mageplaza_blog/category/tree',
@@ -254,7 +254,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @return bool
      * @SuppressWarnings(PHPMD.BooleanGetMethodName)
      */
-    public function getIsWasExpanded()
+    function getIsWasExpanded()
     {
         return $this->backendSession->getMageplazaBlogCategoryIsTreeWasExpanded();
     }
@@ -262,7 +262,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
     /**
      * @return string
      */
-    public function getMoveUrl()
+    function getMoveUrl()
     {
         return $this->getUrl('mageplaza_blog/category/move');
     }
@@ -271,7 +271,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param null $parentNodeCategory
      * @return array
      */
-    public function getTree($parentNodeCategory = null)
+    function getTree($parentNodeCategory = null)
     {
         $rootArray = $this->getNodeJson($this->getRoot($parentNodeCategory));
         $tree = isset($rootArray['children']) ? $rootArray['children'] : [];
@@ -282,7 +282,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param mixed $parentNodeCategory
      * @return string
      */
-    public function getTreeJson($parentNodeCategory = null)
+    function getTreeJson($parentNodeCategory = null)
     {
         $rootArray = $this->getNodeJson($this->getRoot($parentNodeCategory));
         $json = $this->jsonEncoder->encode(isset($rootArray['children']) ? $rootArray['children'] : []);
@@ -296,7 +296,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param string $javascriptVarName
      * @return string
      */
-    public function getBreadcrumbsJavascript($path, $javascriptVarName)
+    function getBreadcrumbsJavascript($path, $javascriptVarName)
     {
         if (empty($path)) {
             return '';
@@ -327,7 +327,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
      */
-    public function getNodeJson($node, $level = 0)
+    function getNodeJson($node, $level = 0)
     {
         // create a node from data array
         if (is_array($node)) {
@@ -373,7 +373,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param \Magento\Framework\DataObject $node
      * @return string
      */
-    public function buildNodeName($node)
+    function buildNodeName($node)
     {
         $result = $this->escapeHtml($node->getName());
         return $result;
@@ -383,7 +383,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      * @param Node|array $node
      * @return bool
      */
-    public function isCategoryMoveable($node)
+    function isCategoryMoveable($node)
     {
         $options = new \Magento\Framework\DataObject(['is_moveable' => true, 'category' => $node]);
         $this->_eventManager->dispatch('adminhtml_mageplaza_blog_category_tree_is_moveable', ['options' => $options]);
@@ -411,7 +411,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      *
      * @return boolean
      */
-    public function isClearEdit()
+    function isClearEdit()
     {
         return (bool)$this->getRequest()->getParam('clear');
     }
@@ -421,7 +421,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      *
      * @return boolean
      */
-    public function canAddRootCategory()
+    function canAddRootCategory()
     {
         $options = new \Magento\Framework\DataObject(['is_allow' => true]);
         $this->_eventManager->dispatch(
@@ -437,7 +437,7 @@ class Tree extends \Mageplaza\Blog\Block\Adminhtml\Category\AbstractCategory
      *
      * @return boolean
      */
-    public function canAddChildCategory()
+    function canAddChildCategory()
     {
         $options = new \Magento\Framework\DataObject(['is_allow' => true]);
         $this->_eventManager->dispatch(

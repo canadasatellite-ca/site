@@ -25,12 +25,12 @@ use Mageplaza\Blog\Block\Frontend;
 class Mostview extends Frontend
 {
 
-    public function getMosviewPosts()
+    function getMosviewPosts()
     {
         return $this->helperData->getMosviewPosts();
     }
 
-    public function getRecentPost()
+    function getRecentPost()
     {
         return $this->helperData->getRecentPost();
     }

@@ -42,7 +42,7 @@ class CategorySetup
      * @param \Magento\Framework\Setup\ModuleDataSetupInterface $setup
      * @param \Mageplaza\Blog\Model\CategoryFactory $categoryFactory
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Setup\ModuleDataSetupInterface $setup,
         \Mageplaza\Blog\Model\CategoryFactory $categoryFactory
     ) {
@@ -57,7 +57,7 @@ class CategorySetup
      * @param array $data
      * @return \Mageplaza\Blog\Model\Category
      */
-    public function createCategory($data = [])
+    function createCategory($data = [])
     {
         return $this->categoryFactory->create($data);
     }

@@ -56,7 +56,7 @@ class Topic extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
      * @param \Magento\Framework\Data\FormFactory $formFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Cms\Model\Wysiwyg\Config $wysiwygConfig,
         \Magento\Config\Model\Config\Source\Yesno $booleanOptions,
         \Mageplaza\Blog\Model\Config\Source\MetaRobots $metaRobotsOptions,
@@ -206,7 +206,7 @@ class Topic extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
      *
      * @return string
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Topic');
     }
@@ -216,7 +216,7 @@ class Topic extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
      *
      * @return string
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return $this->getTabLabel();
     }
@@ -226,7 +226,7 @@ class Topic extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
      *
      * @return boolean
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -236,7 +236,7 @@ class Topic extends \Magento\Backend\Block\Widget\Form\Generic implements \Magen
      *
      * @return boolean
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }

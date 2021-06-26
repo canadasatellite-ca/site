@@ -8,7 +8,7 @@ class Search extends Frontend
 	/**
 	 * get search blog's data
 	 */
-	public function getSearchBlogData()
+	function getSearchBlogData()
 	{
 		$result = [];
 		# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro

@@ -34,7 +34,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
      *
      * @param \Mageplaza\Blog\Setup\CategorySetupFactory $categorySetupFactory
      */
-    public function __construct(
+    function __construct(
 		\Magento\Framework\App\State $appState,
         \Mageplaza\Blog\Setup\CategorySetupFactory $categorySetupFactory
     ) {
@@ -44,7 +44,7 @@ class InstallData implements \Magento\Framework\Setup\InstallDataInterface
     /**
      * {@inheritdoc}
      */
-    public function install(\Magento\Framework\Setup\ModuleDataSetupInterface $setup,
+    function install(\Magento\Framework\Setup\ModuleDataSetupInterface $setup,
 							\Magento\Framework\Setup\ModuleContextInterface $context)
     {
     	$contextInstall = $context;

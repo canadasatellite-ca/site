@@ -46,7 +46,7 @@ class CategoriesJson extends \Mageplaza\Blog\Controller\Adminhtml\Category
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Magento\Framework\View\LayoutFactory $layoutFactory,
         \Mageplaza\Blog\Model\CategoryFactory $categoryFactory,
@@ -64,7 +64,7 @@ class CategoriesJson extends \Mageplaza\Blog\Controller\Adminhtml\Category
      *
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    function execute()
     {
         if ($this->getRequest()->getParam('expand_all')) {
             $this->_getSession()->setMageplazaBlogCategoryIsTreeWasExpanded(true);

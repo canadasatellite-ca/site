@@ -51,7 +51,7 @@ abstract class Tag extends \Magento\Backend\App\Action
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\TagFactory $tagFactory,
         \Magento\Framework\Registry $coreRegistry,
         \Magento\Backend\App\Action\Context $context
@@ -68,7 +68,7 @@ abstract class Tag extends \Magento\Backend\App\Action
      *
      * @return \Mageplaza\Blog\Model\Tag
      */
-	public function initTag()
+	function initTag()
     {
         $tagId  = (int) $this->getRequest()->getParam('tag_id');
         /** @var \Mageplaza\Blog\Model\Tag $tag */

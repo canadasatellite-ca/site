@@ -65,7 +65,7 @@ class Frontend extends Template
 	 * @param \Magento\Cms\Model\Template\FilterProvider $filterProvider
 	 * @param array $data
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\Stdlib\DateTime\DateTime $dateTime,
 		\Mageplaza\Blog\Model\CommentFactory $commentFactory,
 		\Mageplaza\Blog\Model\LikeFactory $likeFactory,
@@ -92,7 +92,7 @@ class Frontend extends Template
 	/**
 	 * @return mixed
 	 */
-	public function getCurrentPost()
+	function getCurrentPost()
 	{
 		return $this->helperData->getPost($this->getRequest()->getParam('id'));
 	}
@@ -101,7 +101,7 @@ class Frontend extends Template
 	 * @param $post
 	 * @return string
 	 */
-	public function getUrlByPost($post)
+	function getUrlByPost($post)
 	{
 		return $this->helperData->getUrlByPost($post);
 	}
@@ -110,7 +110,7 @@ class Frontend extends Template
 	 * @param $image
 	 * @return string
 	 */
-	public function getImageUrl($image)
+	function getImageUrl($image)
 	{
 		return $this->helperData->getImageUrl($image);
 	}
@@ -119,7 +119,7 @@ class Frontend extends Template
 	 * @param $createdAt
 	 * @return \DateTime
 	 */
-	public function getCreatedAtStoreDate($createdAt)
+	function getCreatedAtStoreDate($createdAt)
 	{
 		return $this->_localeDate->scopeDate($this->_storeManager->getStore(), $createdAt, true);
 	}
@@ -128,7 +128,7 @@ class Frontend extends Template
 	 * @param $post
 	 * @return null|string
 	 */
-	public function getPostCategoryHtml($post)
+	function getPostCategoryHtml($post)
 	{
 		return $this->helperData->getPostCategoryHtml($post);
 	}
@@ -137,7 +137,7 @@ class Frontend extends Template
 	 * @param $code
 	 * @return mixed
 	 */
-	public function getBlogConfig($code)
+	function getBlogConfig($code)
 	{
 		return $this->helperData->getBlogConfig($code);
 	}
@@ -146,7 +146,7 @@ class Frontend extends Template
 	 * filter post by store
 	 * return true/false
 	 */
-	public function filterPost($post)
+	function filterPost($post)
 	{
 		$storeId     = $this->store->getStore()->getId();
 		$postStoreId = $post->getStoreIds() != null ? explode(',', $post->getStoreIds()) : '-1';
@@ -157,7 +157,7 @@ class Frontend extends Template
 		return false;
 	}
 
-	public function getSeoConfig($code, $storeId = null)
+	function getSeoConfig($code, $storeId = null)
 	{
 		return $this->helperData->getSeoConfig($code, $storeId);
 	}
@@ -320,7 +320,7 @@ class Frontend extends Template
 	 * @param null $post
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	public function applySeoCode($post = null)
+	function applySeoCode($post = null)
 	{
 		$description = $this->getSeoConfig('meta_description');
 		$keywords = $this->getSeoConfig('meta_keywords');
@@ -366,7 +366,7 @@ class Frontend extends Template
 	 * @param null $name
 	 * @return string|void
 	 */
-	public function setPageData($data, $type, $name = null)
+	function setPageData($data, $type, $name = null)
 	{
 		if ($data) {
 			return $this->setDataFromType($data, $type);
@@ -380,7 +380,7 @@ class Frontend extends Template
 	 * @param $type
 	 * @return $this|string|void
 	 */
-	public function setDataFromType($data, $type)
+	function setDataFromType($data, $type)
 	{
 		switch ($type) {
 			case 1:
@@ -405,7 +405,7 @@ class Frontend extends Template
 	 * @param null $id
 	 * @return array|string
 	 */
-	public function getBlogPagination($type = null, $id = null)
+	function getBlogPagination($type = null, $id = null)
 	{
 		$page     = $this->getRequest()->getParam('p');
 		$postList = '';
@@ -451,7 +451,7 @@ class Frontend extends Template
 	 * @param array $array
 	 * @return array
 	 */
-	public function getPostPerPage($page = null, $numOfPage, $limit, $array = array())
+	function getPostPerPage($page = null, $numOfPage, $limit, $array = array())
 	{
 		$results    = array();
 		$firstIndex = 0;
@@ -491,22 +491,22 @@ class Frontend extends Template
 	 * @param $storeId
 	 * @return mixed
 	 */
-	public function getSidebarConfig($code, $storeId = null)
+	function getSidebarConfig($code, $storeId = null)
 	{
 		return $this->helperData->getSidebarConfig($code, $storeId);
 	}
 
-	public function getAuthorByPost($authorId)
+	function getAuthorByPost($authorId)
 	{
 		return $this->helperData->getAuthorByPost($authorId);
 	}
 
-	public function getAuthorUrl($author)
+	function getAuthorUrl($author)
 	{
 		return $this->helperData->getAuthorUrl($author);
 	}
 
-	public function getAuthorImageUrl($image)
+	function getAuthorImageUrl($image)
 	{
 		return $this->helperData->getAuthorImageUrl($image);
 	}
@@ -514,7 +514,7 @@ class Frontend extends Template
 	/**
 	 * check customer is logged in or not
 	 */
-	public function isLoggedIn()
+	function isLoggedIn()
 	{
 		return $this->helperData->isLoggedIn();
 	}
@@ -522,7 +522,7 @@ class Frontend extends Template
 	/**
 	 * get login url
 	 */
-	public function getLoginUrl()
+	function getLoginUrl()
 	{
 		return $this->helperData->getLoginUrl();
 	}
@@ -531,7 +531,7 @@ class Frontend extends Template
 	 * get comments
 	 * @param $postId
 	 */
-	public function getPostComments($postId)
+	function getPostComments($postId)
 	{
 		$result = [];
 		$comments = $this->cmtFactory->create()->getCollection()->addFieldToFilter('post_id', $postId);
@@ -546,7 +546,7 @@ class Frontend extends Template
 	 * @param $comments
 	 * @param $cmtId
 	 */
-	public function getCommentsTree($comments, $cmtId)
+	function getCommentsTree($comments, $cmtId)
 	{
 		$this->commentTree .= '<ul class="default-cmt__content__cmt-content row">';
 		foreach ($comments as $comment) {
@@ -594,7 +594,7 @@ class Frontend extends Template
 	 * get comments tree html
 	 * @return mixed
 	 */
-	public function getCommentsHtml()
+	function getCommentsHtml()
 	{
 		return $this->commentTree;
 	}
@@ -603,7 +603,7 @@ class Frontend extends Template
 	 * get comment user
 	 * @param $userId
 	 */
-	public function getUserComment($userId)
+	function getUserComment($userId)
 	{
 		$user = $this->customerRepository->getById($userId);
 		return $user;
@@ -613,7 +613,7 @@ class Frontend extends Template
 	 * get comment likes
 	 * @param $cmtId
 	 */
-	public function getCommentLikes($cmtId)
+	function getCommentLikes($cmtId)
 	{
 		$likes = $this->likeFactory->create()->getCollection()->addFieldToFilter('comment_id', $cmtId)->getSize();
 		if ($likes) {
@@ -626,7 +626,7 @@ class Frontend extends Template
 	/**
 	 * get default image url
 	 */
-	public function getDefaultImageUrl()
+	function getDefaultImageUrl()
 	{
 		return $this->getViewFileUrl('Mageplaza_Blog::media/images/Mageplaza-logo.png');
 	}
@@ -635,12 +635,12 @@ class Frontend extends Template
 	 * get date formatted
 	 * @param $date
 	 */
-	public function getDateFormat($date, $monthly = false)
+	function getDateFormat($date, $monthly = false)
 	{
 		return $this->helperData->getDateFormat($date, $monthly);
 	}
 
-	public function getMonthParam()
+	function getMonthParam()
 	{
 		return $this->getRequest()->getParam('month');
 	}

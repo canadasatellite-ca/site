@@ -38,7 +38,7 @@ class View extends Action
 	public $session;
 	public $storeManager;
 
-	public function __construct(
+	function __construct(
 		Context $context,
 		StoreManagerInterface $storeManager,
 		HelperBlog $helperBlog,
@@ -56,7 +56,7 @@ class View extends Action
 		$this->session           = $customerSession;
 	}
 
-	public function execute()
+	function execute()
 	{
 		return $this->resultPageFactory->create();
 	}

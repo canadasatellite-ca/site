@@ -25,7 +25,7 @@ class Colorscheme implements \Magento\Framework\Option\ArrayInterface
     const LIGHT = 'light';
     const DARK  = 'dark';
 
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [['value' => self::LIGHT, 'label' => __('Light')], ['value' => self::DARK, 'label' => __('Dark')]];
     }
@@ -35,12 +35,12 @@ class Colorscheme implements \Magento\Framework\Option\ArrayInterface
      *
      * @return array
      */
-    public function toArray()
+    function toArray()
     {
         return [self::LIGHT => __('Light'), self::DARK => __('Dark')];
     }
 
-    public function getAllOptions()
+    function getAllOptions()
     {
         return $this->toOptionArray();
     }

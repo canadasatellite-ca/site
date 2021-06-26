@@ -14,7 +14,7 @@ class Author extends AbstractDb
 	public $helperData;
 	protected $_isPkAutoIncrement = false;
 
-	public function __construct(
+	function __construct(
 		\Mageplaza\Blog\Helper\Data $helperData,
 		\Magento\Framework\Model\ResourceModel\Db\Context $context
 	) {
@@ -60,12 +60,12 @@ class Author extends AbstractDb
 		}
 	}
 
-	public function generateUrlKey($name, $count)
+	function generateUrlKey($name, $count)
 	{
 		return $this->helperData->generateUrlKey($name,$count);
 	}
 
-	public function checkUrlKey($url, $id = null)
+	function checkUrlKey($url, $id = null)
 	{
 		$adapter = $this->getConnection();
 		if ($id) {

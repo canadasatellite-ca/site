@@ -17,7 +17,7 @@ class SideBarLR implements \Magento\Framework\Option\ArrayInterface
 	 *
 	 * @return array
 	 */
-	public function toOptionArray()
+	function toOptionArray()
 	{
 		return [['value' => 1, 'label' => __('Right')], ['value' => 0, 'label' => __('Left')]];
 	}
@@ -27,7 +27,7 @@ class SideBarLR implements \Magento\Framework\Option\ArrayInterface
 	 *
 	 * @return array
 	 */
-	public function toArray()
+	function toArray()
 	{
 		return [0 => __('Left'), 1 => __('Right')];
 	}

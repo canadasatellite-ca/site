@@ -49,7 +49,7 @@ class Image
      * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param \Magento\Framework\Filesystem $fileSystem
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\UrlInterface $urlBuilder,
         \Magento\Framework\Filesystem $fileSystem
     ) {
@@ -63,7 +63,7 @@ class Image
      *
      * @return string
      */
-    public function getBaseUrl()
+    function getBaseUrl()
     {
         return $this->urlBuilder->getBaseUrl(['_type' => \Magento\Framework\UrlInterface::URL_TYPE_MEDIA])
 			.$this->subDir.'/image';
@@ -73,7 +73,7 @@ class Image
      *
      * @return string
      */
-    public function getBaseDir()
+    function getBaseDir()
     {
         return $this->fileSystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::MEDIA)
 			->getAbsolutePath($this->subDir.'/image');

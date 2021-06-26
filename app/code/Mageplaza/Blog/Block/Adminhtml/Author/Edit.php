@@ -36,7 +36,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
 	 * @param \Magento\Backend\Block\Widget\Context $context
 	 * @param array $data
 	 */
-	public function __construct(
+	function __construct(
 		\Magento\Framework\Registry $coreRegistry,
 		\Magento\Backend\Block\Widget\Context $context,
 		array $data = []
@@ -82,7 +82,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
 	 *
 	 * @return string
 	 */
-	public function getHeaderText()
+	function getHeaderText()
 	{
 		/** @var \Mageplaza\Blog\Model\Post $post */
 		$author = $this->coreRegistry->registry('mageplaza_blog_author');

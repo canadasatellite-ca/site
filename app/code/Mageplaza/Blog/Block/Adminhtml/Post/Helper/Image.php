@@ -42,7 +42,7 @@ class Image extends \Magento\Framework\Data\Form\Element\Image
      * @param \Magento\Framework\UrlInterface $urlBuilder
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Mageplaza\Blog\Model\Post\Image $imageModel,
         \Magento\Framework\Data\Form\Element\Factory $factoryElement,
         \Magento\Framework\Data\Form\Element\CollectionFactory $factoryCollection,

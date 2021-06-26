@@ -26,7 +26,7 @@ class Head extends \Magento\Config\Block\System\Config\Form\Field
 {
 
 
-	public function __construct(
+	function __construct(
 		\Magento\Backend\Block\Template\Context $context,
 		array $data = []
 	) {
@@ -50,7 +50,7 @@ class Head extends \Magento\Config\Block\System\Config\Form\Field
 	 * @param  \Magento\Framework\Data\Form\Element\AbstractElement $element
 	 * @return string
 	 */
-	public function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
+	function render(\Magento\Framework\Data\Form\Element\AbstractElement $element)
 	{
 //		$html='<li class="notice-msg">
 //

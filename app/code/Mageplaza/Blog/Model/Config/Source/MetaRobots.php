@@ -32,7 +32,7 @@ class MetaRobots implements \Magento\Framework\Option\ArrayInterface
 	 *
 	 * @return array
 	 */
-	public function toOptionArray()
+	function toOptionArray()
 	{
 		$options = [
 			[
@@ -54,7 +54,7 @@ class MetaRobots implements \Magento\Framework\Option\ArrayInterface
 		];
 		return $options;
 	}
-	public function getOptionArray()
+	function getOptionArray()
 	{
 		return [
 			self::INDEXFOLLOW => 'INDEX,FOLLOW',

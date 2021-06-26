@@ -60,7 +60,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
      * @param \Magento\Framework\App\Rss\UrlBuilderInterface $rssUrlBuilder
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Element\Template\Context $context,
         \Mageplaza\Blog\Model\CategoryFactory $rssModel,
         \Mageplaza\Blog\Helper\Data $helper,
@@ -87,7 +87,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
     /**
      * {@inheritdoc}
      */
-    public function isAllowed()
+    function isAllowed()
     {
         return $this->_scopeConfig->isSetFlag('blog/general/enabled', \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
@@ -95,7 +95,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
     /**
      * {@inheritdoc}
      */
-    public function getRssData()
+    function getRssData()
     {
         $categoryId=$this->getRequest()->getParam('category_id');
         $storeModel = $this->storeManager->getStore($this->getStoreId());
@@ -162,7 +162,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
     /**
      * @return int
      */
-	public function getStoreId()
+	function getStoreId()
     {
         $storeId = (int)$this->getRequest()->getParam('store_id');
         if ($storeId == null) {
@@ -175,7 +175,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
     /**
      * {@inheritdoc}
      */
-    public function getCacheLifetime()
+    function getCacheLifetime()
     {
         return 1;
     }
@@ -183,7 +183,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
     /**
      * @return array
      */
-    public function getFeeds()
+    function getFeeds()
     {
         $data = [];
         if ($this->isAllowed()) {
@@ -197,7 +197,7 @@ class Category extends \Magento\Framework\View\Element\AbstractBlock implements 
     /**
      * {@inheritdoc}
      */
-    public function isAuthRequired()
+    function isAuthRequired()
     {
         return false;
     }

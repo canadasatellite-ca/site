@@ -24,7 +24,7 @@ class Author extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
 {
 	public $systemStore;
 
-	public function __construct(
+	function __construct(
 		\Magento\Store\Model\System\Store $systemStore,
 		\Magento\Backend\Block\Template\Context $context,
 		\Magento\Framework\Registry $registry,
@@ -132,7 +132,7 @@ class Author extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
 	 *
 	 * @return string
 	 */
-	public function getTabLabel()
+	function getTabLabel()
 	{
 		return __('Author Info');
 	}
@@ -142,7 +142,7 @@ class Author extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
 	 *
 	 * @return string
 	 */
-	public function getTabTitle()
+	function getTabTitle()
 	{
 		return $this->getTabLabel();
 	}
@@ -152,7 +152,7 @@ class Author extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
 	 *
 	 * @return boolean
 	 */
-	public function canShowTab()
+	function canShowTab()
 	{
 		return true;
 	}
@@ -162,7 +162,7 @@ class Author extends \Magento\Backend\Block\Widget\Form\Generic implements \Mage
 	 *
 	 * @return boolean
 	 */
-	public function isHidden()
+	function isHidden()
 	{
 		return false;
 	}

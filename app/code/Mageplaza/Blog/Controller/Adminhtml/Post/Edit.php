@@ -54,7 +54,7 @@ class Edit extends \Mageplaza\Blog\Controller\Adminhtml\Post
      * @param \Magento\Backend\Model\View\Result\RedirectFactory $resultRedirectFactory
      * @param \Magento\Backend\App\Action\Context $context
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\View\Result\PageFactory $resultPageFactory,
         \Magento\Framework\Controller\Result\JsonFactory $resultJsonFactory,
         \Mageplaza\Blog\Model\PostFactory $postFactory,
@@ -81,7 +81,7 @@ class Edit extends \Mageplaza\Blog\Controller\Adminhtml\Post
     /**
      * @return \Magento\Backend\Model\View\Result\Page|\Magento\Backend\Model\View\Result\Redirect|\Magento\Framework\View\Result\Page
      */
-    public function execute()
+    function execute()
     {
         $id = $this->getRequest()->getParam('post_id');
         /** @var \Mageplaza\Blog\Model\Post $post */
