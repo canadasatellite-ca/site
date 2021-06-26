@@ -2,6 +2,8 @@
 namespace Mageplaza\Blog\Controller;
 use Magento\Framework\App\RequestInterface as IRequest;
 use Mageplaza\Blog\Helper\Data as H;
+# "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Router implements \Magento\Framework\App\RouterInterface {
 	/**
 	 * @var \Magento\Framework\App\ActionFactory
@@ -15,22 +17,6 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	 * @param H $helper
 	 */
 	function __construct(\Magento\Framework\App\ActionFactory $actionFactory) {$this->actionFactory = $actionFactory;}
-
-	/**
-	 * @param $controller
-	 * @param $action
-	 * @param array $params
-	 * @return \Magento\Framework\App\ActionInterface
-	 */
-	function _forward($controller, $action, $params = []) {
-		$this->_request->setControllerName($controller)
-			->setActionName($action)
-			->setPathInfo('/mpblog/' . $controller . '/' . $action);
-		foreach ($params as $key => $value) {
-			$this->_request->setParam($key, $value);
-		}
-		return $this->actionFactory->create('Magento\Framework\App\Action\Forward');
-	}
 
 	/**
 	 * @override
@@ -114,5 +100,22 @@ class Router implements \Magento\Framework\App\RouterInterface {
 				$params = ['id' => $post->getId()];
 		}
 		return $this->_forward($controller, $action, $params);
+	}
+
+	/**
+	 * @used-by match()
+	 * @param $controller
+	 * @param $action
+	 * @param array $params
+	 * @return \Magento\Framework\App\ActionInterface
+	 */
+	private function _forward($controller, $action, $params = []) {
+		$this->_request->setControllerName($controller)
+			->setActionName($action)
+			->setPathInfo('/mpblog/' . $controller . '/' . $action);
+		foreach ($params as $key => $value) {
+			$this->_request->setParam($key, $value);
+		}
+		return $this->actionFactory->create('Magento\Framework\App\Action\Forward');
 	}
 }
