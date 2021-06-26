@@ -36,7 +36,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 		# 2021-06-26 E.g.: «blog».
 		$prefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX; /** @var string $prefix */
 		$routeSize  = sizeof($pathA);
-		if ($h->isEnabled() && $routeSize && $routeSize < 4 && $prefix === array_shift($pathA)) {
+		if ($h->isEnabled() && df_between($routeSize, 1, 3) && $prefix === array_shift($pathA)) {
 			$req->setModuleName('mpblog')->setAlias(Url::REWRITE_REQUEST_PATH_ALIAS, $path);
 			$params = [];
 			$controller = array_shift($pathA);
