@@ -1,6 +1,7 @@
 <?php
 namespace Mageplaza\Blog\Controller;
 use Magento\Framework\App\RequestInterface as IRequest;
+use Mageplaza\Blog\Helper\Data as H;
 class Router implements \Magento\Framework\App\RouterInterface {
 	/**
 	 * @var \Magento\Framework\App\ActionFactory
@@ -8,7 +9,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	public $actionFactory;
 
 	/**
-	 * @var \Mageplaza\Blog\Helper\Data
+	 * @var H
 	 */
 	public $helper;
 
@@ -16,12 +17,9 @@ class Router implements \Magento\Framework\App\RouterInterface {
 
 	/**
 	 * @param \Magento\Framework\App\ActionFactory $actionFactory
-	 * @param \Mageplaza\Blog\Helper\Data $helper
+	 * @param H $helper
 	 */
-	function __construct(
-		\Magento\Framework\App\ActionFactory $actionFactory,
-		\Mageplaza\Blog\Helper\Data $helper
-	) {
+	function __construct(\Magento\Framework\App\ActionFactory $actionFactory, H $helper) {
 		$this->actionFactory = $actionFactory;
 		$this->helper = $helper;
 	}
@@ -52,7 +50,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	function match(IRequest $req) {
 		$identifier = trim($req->getPathInfo(), '/');
 		$routePath  = explode('/', $identifier);
-		$urlPrefix = $this->helper->getBlogConfig('general/url_prefix') ?: \Mageplaza\Blog\Helper\Data::DEFAULT_URL_PREFIX;
+		$urlPrefix = $this->helper->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX;
 		$routeSize  = sizeof($routePath);
 		if (!$this->helper->isEnabled() ||
 			!$routeSize || ($routeSize > 3) ||
