@@ -8,21 +8,13 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	 */
 	public $actionFactory;
 
-	/**
-	 * @var H
-	 */
-	public $helper;
-
 	protected $_request;
 
 	/**
 	 * @param \Magento\Framework\App\ActionFactory $actionFactory
 	 * @param H $helper
 	 */
-	function __construct(\Magento\Framework\App\ActionFactory $actionFactory, H $helper) {
-		$this->actionFactory = $actionFactory;
-		$this->helper = $helper;
-	}
+	function __construct(\Magento\Framework\App\ActionFactory $actionFactory) {$this->actionFactory = $actionFactory;}
 
 	/**
 	 * @param $controller
@@ -48,11 +40,12 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	 * @return bool
 	 */
 	function match(IRequest $req) {
+		$h = df_o(H::class); /** @var H $h */
 		$identifier = trim($req->getPathInfo(), '/');
 		$routePath  = explode('/', $identifier);
-		$urlPrefix = $this->helper->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX;
+		$urlPrefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX;
 		$routeSize  = sizeof($routePath);
-		if (!$this->helper->isEnabled() ||
+		if (!$h->isEnabled() ||
 			!$routeSize || ($routeSize > 3) ||
 			(array_shift($routePath) != $urlPrefix)
 		) {
@@ -78,7 +71,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 			case 'post':
 				$action = $pathF() ?: 'index';
 				if (!in_array($action, ['index', 'rss'])) {
-					$post = $this->helper->getPostByUrl($action);
+					$post = $h->getPostByUrl($action);
 					$action = 'view';
 					$params = ['id' => $post->getId()];
 				}
@@ -86,18 +79,18 @@ class Router implements \Magento\Framework\App\RouterInterface {
 			case 'category':
 				$action = $pathF() ?: 'index';
 				if (!in_array($action, ['index', 'rss'])) {
-					$category = $this->helper->getCategoryByParam('url_key', $action);
+					$category = $h->getCategoryByParam('url_key', $action);
 					$action = 'view';
 					$params = ['id' => $category->getId()];
 				}
 				break;
 			case 'tag':
-				$tag = $this->helper->getTagByParam('url_key', $pathF());
+				$tag = $h->getTagByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $tag->getId()];
 				break;
 			case 'topic':
-				$topic = $this->helper->getTopicByParam('url_key', $pathF());
+				$topic = $h->getTopicByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $topic->getId()];
 				break;
@@ -105,17 +98,17 @@ class Router implements \Magento\Framework\App\RouterInterface {
 				$action = 'index';
 				break;
 			case 'author':
-				$author  = $this->helper->getAuthorByParam('url_key', $pathF());
+				$author  = $h->getAuthorByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $author->getId()];
 				break;
 			case 'month':
-				$author  = $this->helper->getAuthorByParam('url_key', $pathF());
+				$author = $h->getAuthorByParam('url_key', $pathF());
 				$action = 'view';
 				$params = ['id' => $author->getId()];
 				break;
 			default:
-				$post = $this->helper->getPostByUrl($controller);
+				$post = $h->getPostByUrl($controller);
 				$controller = 'post';
 				$action = 'view';
 				$params = ['id' => $post->getId()];
