@@ -109,6 +109,6 @@ class Router implements \Magento\Framework\App\RouterInterface {
 		foreach ($params as $key => $value) {
 			$this->_request->setParam($key, $value);
 		}
-		return $this->actionFactory->create('Magento\Framework\App\Action\Forward');
+		return df_action_c_forward();
 	}
 }
