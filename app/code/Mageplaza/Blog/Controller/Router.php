@@ -3,7 +3,9 @@ namespace Mageplaza\Blog\Controller;
 use Magento\Framework\App\Action\Forward as Forward;
 use Magento\Framework\App\RequestInterface as IRequest;
 use Magento\Framework\App\Request\Http;
+use Magento\Framework\Url;
 use Mageplaza\Blog\Helper\Data as H;
+# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Router implements \Magento\Framework\App\RouterInterface {
@@ -28,14 +30,16 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	function match(IRequest $req) {
 		$r = null; /** @var Forward|null $r */
 		$h = df_o(H::class); /** @var H $h */
-		$identifier = trim($req->getPathInfo(), '/');
-		$routePath  = explode('/', $identifier);
+		# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# E.g.: «blog/tag/space-force».
+		$path = trim($req->getPathInfo(), '/'); /** @var string $path */
+		$pathA  = explode('/', $path); /** @var string[] $pathA */
 		$urlPrefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX;
-		$routeSize  = sizeof($routePath);
-		if ($h->isEnabled() && $routeSize && $routeSize < 4 && $urlPrefix === array_shift($routePath)) {
-			$req->setModuleName('mpblog')->setAlias(\Magento\Framework\Url::REWRITE_REQUEST_PATH_ALIAS, $identifier);
+		$routeSize  = sizeof($pathA);
+		if ($h->isEnabled() && $routeSize && $routeSize < 4 && $urlPrefix === array_shift($pathA)) {
+			$req->setModuleName('mpblog')->setAlias(Url::REWRITE_REQUEST_PATH_ALIAS, $path);
 			$params = [];
-			$controller = array_shift($routePath);
+			$controller = array_shift($pathA);
 			if (!$controller) {
 				$r = $this->forward($req, 'post', 'index');
 			}
@@ -47,7 +51,7 @@ class Router implements \Magento\Framework\App\RouterInterface {
 				 * https://github.com/canadasatellite-ca/site/issues/189
 				 * @return string
 				 */
-				$pathF = function() use(&$routePath) {return urldecode(array_shift($routePath));};
+				$pathF = function() use(&$pathA) {return urldecode(array_shift($pathA));};
 				switch ($controller) {
 					case 'post':
 						$action = $pathF() ?: 'index';
