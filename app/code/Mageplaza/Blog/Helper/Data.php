@@ -461,7 +461,7 @@ class Data extends CoreHelper
 	}
 
 	/**
-	 * get tag by param
+	 * @used-by \Mageplaza\Blog\Controller\Router::match()
 	 * @param $code
 	 * @param $param
 	 * @return \Mageplaza\Blog\Model\Tag | null
