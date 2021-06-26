@@ -1,5 +1,6 @@
 <?php
 namespace Mageplaza\Blog\Controller;
+use Magento\Framework\App\Action\Forward as Forward;
 use Magento\Framework\App\RequestInterface as IRequest;
 use Mageplaza\Blog\Helper\Data as H;
 # "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
@@ -9,8 +10,6 @@ class Router implements \Magento\Framework\App\RouterInterface {
 	 * @var \Magento\Framework\App\ActionFactory
 	 */
 	public $actionFactory;
-
-	protected $_request;
 
 	/**
 	 * @param \Magento\Framework\App\ActionFactory $actionFactory
@@ -34,13 +33,11 @@ class Router implements \Magento\Framework\App\RouterInterface {
 		if (!$h->isEnabled() || !$routeSize || ($routeSize > 3) || (array_shift($routePath) != $urlPrefix)) {
 			return null;
 		}
-		$req->setModuleName('mpblog')
-			->setAlias(\Magento\Framework\Url::REWRITE_REQUEST_PATH_ALIAS, $identifier);
-		$this->_request = $req;
-		$params     = [];
+		$req->setModuleName('mpblog')->setAlias(\Magento\Framework\Url::REWRITE_REQUEST_PATH_ALIAS, $identifier);
+		$params = [];
 		$controller = array_shift($routePath);
 		if (!$controller) {
-			return $this->_forward('post', 'index');
+			return $this->forward($req, 'post', 'index');
 		}
 		/**
 		 * 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -92,22 +89,21 @@ class Router implements \Magento\Framework\App\RouterInterface {
 				$action = 'view';
 				$params = ['id' => $post->getId()];
 		}
-		return $this->_forward($controller, $action, $params);
+		return $this->forward($req, $controller, $action, $params);
 	}
 
 	/**
 	 * @used-by match()
-	 * @param $controller
-	 * @param $action
-	 * @param array $params
-	 * @return \Magento\Framework\App\ActionInterface
+	 * @param IRequest $req
+	 * @param string $c
+	 * @param string $a
+	 * @param array(string => mixed) $p [optional]
+	 * @return Forward
 	 */
-	private function _forward($controller, $action, $params = []) {
-		$this->_request->setControllerName($controller)
-			->setActionName($action)
-			->setPathInfo('/mpblog/' . $controller . '/' . $action);
-		foreach ($params as $key => $value) {
-			$this->_request->setParam($key, $value);
+	private function forward(IRequest $req, $c, $a, $p = []) {
+		$req->setControllerName($c)->setActionName($a)->setPathInfo("/mpblog/$c/$a");
+		foreach ($p as $k => $v) {
+			$req->setParam($k, $v);
 		}
 		return df_action_c_forward();
 	}
