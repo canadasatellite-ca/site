@@ -121,6 +121,17 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
+	/**
+	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\CaptureOperation::capture():
+	 * 		$method->capture($payment, $amountToCapture);
+	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment/Operations/CaptureOperation.php#L82
+	 * @param II $sp46490f
+	 * @param float $spb954c6
+	 * @return $this
+	 * @throws \Magento\Framework\Exception\LocalizedException
+	 */
 	function capture(II $sp46490f, $spb954c6) {
 		$errorMessage = false;
 		if ($sp46490f->getParentTransactionId()) {
