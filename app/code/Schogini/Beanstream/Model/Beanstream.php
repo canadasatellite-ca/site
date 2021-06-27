@@ -1,12 +1,14 @@
 <?php
 namespace Schogini\Beanstream\Model;
 use Magento\Framework\DataObject;
+use Magento\Payment\Model\InfoInterface as II;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Sales\Model\Order as O;
 use Schogini\Beanstream\Model\Request as Req;
 use Schogini\Beanstream\Model\Response as Res;
-class Beanstream extends \Magento\Payment\Model\Method\Cc
-{
+# 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	const CODE = 'beanstream';
 	protected $_code = self::CODE;
 	protected $_isGateway = true;
@@ -81,7 +83,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 
 		return $checkResult->getData('is_available');
 	}
-	function authorize(\Magento\Payment\Model\InfoInterface $sp46490f, $spb954c6)
+	function authorize(II $sp46490f, $spb954c6)
 	{
 		if ($spb954c6 <= 0) {
 			self::throwException(__('Invalid amount for capture.'));
@@ -119,7 +121,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 		return $this;
 	}
 
-	function capture(\Magento\Payment\Model\InfoInterface $sp46490f, $spb954c6) {
+	function capture(II $sp46490f, $spb954c6) {
 		$errorMessage = false;
 		if ($sp46490f->getParentTransactionId()) {
 			$sp46490f->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
@@ -157,7 +159,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 		return $this;
 	}
 
-	function refund(\Magento\Payment\Model\InfoInterface $sp46490f, $spb954c6)
+	function refund(II $sp46490f, $spb954c6)
 	{
 		$sp62e25f = false;
 		$sp57fc4d = $sp46490f->getRefundTransactionId();
@@ -190,7 +192,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 		return $this;
 	}
 
-	function void(\Magento\Payment\Model\InfoInterface $sp46490f)
+	function void(II $sp46490f)
 	{
 		$sp62e25f = false;
 		$sp57fc4d = $sp46490f->getVoidTransactionId();
@@ -236,7 +238,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc
 		return $this;
 	}
 
-	protected function _buildRequest(\Magento\Payment\Model\InfoInterface $sp46490f)
+	protected function _buildRequest(II $sp46490f)
 	{
 		$o = $sp46490f->getOrder(); /** @var O $o */
 		$sp3382ae = $this->requestFactory->create();
