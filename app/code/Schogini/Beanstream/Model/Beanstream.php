@@ -87,19 +87,23 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	}
 
 	/**
-	 * @param II $i
-	 * @param float $spb954c6
+	 * @override
+	 * @see \Magento\Payment\Model\MethodInterface::authorize()
+	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\AuthorizeOperation::authorize()
+	 * https://github.com/magento/magento2/blob/2.1.5/app/code/Magento/Sales/Model/Order/Payment/Operations/AuthorizeOperation.php#L45 
+	 * @param II|I|OP $i
+	 * @param float $a
 	 * @return $this
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	function authorize(II $i, $spb954c6) {
-		if ($spb954c6 <= 0) {
+	function authorize(II $i, $a) {
+		if ($a <= 0) {
 			self::throwException(__('Invalid amount for capture.'));
 		}
 		$sp62e25f = false;
-		if ($spb954c6 > 0) {
+		if ($a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
-			$i->setAmount($spb954c6);
+			$i->setAmount($a);
 			$sp3382ae = $this->_buildRequest($i);
 			$res = $this->_postRequest($sp3382ae);
 			$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
@@ -138,18 +142,18 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * 		$method->capture($payment, $amountToCapture);
 	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment/Operations/CaptureOperation.php#L82
 	 * @param II|I|OP $i
-	 * @param float $spb954c6
+	 * @param float $a
 	 * @return $this
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	function capture(II $i, $spb954c6) {
+	function capture(II $i, $a) {
 		$errorMessage = false;
 		if ($i->getParentTransactionId()) {
 			$i->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
 		} else {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_CAPTURE);
 		}
-		$i->setAmount($spb954c6);
+		$i->setAmount($a);
 		$req = $this->_buildRequest($i); /** @var Req $req */
 		$res = $this->_postRequest($req); /** @var Res $res */
 		if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
@@ -180,17 +184,17 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	function refund(II $i, $spb954c6)
+	function refund(II $i, $a)
 	{
 		$sp62e25f = false;
 		$sp57fc4d = $i->getRefundTransactionId();
 		if (empty($sp57fc4d)) {
 			$sp57fc4d = $i->getParentTransactionId();
 		}
-		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $spb954c6 > 0) {
+		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_CREDIT);
 			$sp3382ae = $this->_buildRequest($i);
-			$sp3382ae->setXAmount($spb954c6);
+			$sp3382ae->setXAmount($a);
 			$res = $this->_postRequest($sp3382ae);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 				$i->setStatus(self::STATUS_SUCCESS);
@@ -220,12 +224,12 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		if (empty($sp57fc4d)) {
 			$sp57fc4d = $i->getParentTransactionId();
 		}
-		$spb954c6 = $i->getAmount();
-		if ($spb954c6 <= 0) {
-			$spb954c6 = $i->getAmountAuthorized();
+		$a = $i->getAmount();
+		if ($a <= 0) {
+			$a = $i->getAmountAuthorized();
 			$i->setAmount($i->getAmountAuthorized());
 		}
-		if ($sp57fc4d && $spb954c6 > 0) {
+		if ($sp57fc4d && $a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_VOID);
 			$sp3382ae = $this->_buildRequest($i);
 			$res = $this->_postRequest($sp3382ae);
@@ -244,7 +248,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$spfc96e2 = __('Error in voiding the payment. Transaction ID not found');
 				$sp62e25f = true;
 			} else {
-				if ($spb954c6 <= 0) {
+				if ($a <= 0) {
 					$spfc96e2 = __('Error in voiding the payment. Payment amount is 0');
 					$sp62e25f = true;
 				} else {
