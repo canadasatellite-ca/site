@@ -1,9 +1,11 @@
 <?php
 namespace Schogini\Beanstream\Model;
 use Magento\Framework\DataObject;
+use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
 use Magento\Quote\Api\Data\CartInterface;
 use Magento\Sales\Model\Order as O;
+use Magento\Sales\Model\Order\Payment as OP;
 use Schogini\Beanstream\Model\Request as Req;
 use Schogini\Beanstream\Model\Response as Res;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -83,27 +85,27 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 
 		return $checkResult->getData('is_available');
 	}
-	function authorize(II $sp46490f, $spb954c6)
+	function authorize(II $payment, $spb954c6)
 	{
 		if ($spb954c6 <= 0) {
 			self::throwException(__('Invalid amount for capture.'));
 		}
 		$sp62e25f = false;
 		if ($spb954c6 > 0) {
-			$sp46490f->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
-			$sp46490f->setAmount($spb954c6);
-			$sp3382ae = $this->_buildRequest($sp46490f);
+			$payment->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
+			$payment->setAmount($spb954c6);
+			$sp3382ae = $this->_buildRequest($payment);
 			$res = $this->_postRequest($sp3382ae);
-			$sp46490f->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
+			$payment->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 			$spbd1c75 = $res->getResponseReasonCode();
 			$spd17c47 = $res->getResponseReasonText();
 			switch ($res->getResponseCode()) {
 				case self::RESPONSE_CODE_APPROVED:
-					$sp46490f->setStatus(self::STATUS_APPROVED);
-					if ($res->getTransactionId() != $sp46490f->getParentTransactionId()) {
-						$sp46490f->setTransactionId($res->getTransactionId());
+					$payment->setStatus(self::STATUS_APPROVED);
+					if ($res->getTransactionId() != $payment->getParentTransactionId()) {
+						$payment->setTransactionId($res->getTransactionId());
 					}
-					$sp46490f->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+					$payment->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 					break;
 				case self::RESPONSE_CODE_DECLINED:
 					$sp62e25f = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
@@ -124,40 +126,42 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @override
+	 * @see \Magento\Payment\Model\MethodInterface::capture()
 	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\CaptureOperation::capture():
 	 * 		$method->capture($payment, $amountToCapture);
 	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment/Operations/CaptureOperation.php#L82
-	 * @param II $sp46490f
+	 * @param II|I|OP $payment
 	 * @param float $spb954c6
 	 * @return $this
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	function capture(II $sp46490f, $spb954c6) {
+	function capture(II $payment, $spb954c6) {
 		$errorMessage = false;
-		if ($sp46490f->getParentTransactionId()) {
-			$sp46490f->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
+		if ($payment->getParentTransactionId()) {
+			$payment->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
 		} else {
-			$sp46490f->setAnetTransType(self::REQUEST_TYPE_AUTH_CAPTURE);
+			$payment->setAnetTransType(self::REQUEST_TYPE_AUTH_CAPTURE);
 		}
-		$sp46490f->setAmount($spb954c6);
-		$req = $this->_buildRequest($sp46490f); /** @var Req $req */
+		$payment->setAmount($spb954c6);
+		$req = $this->_buildRequest($payment); /** @var Req $req */
 		$res = $this->_postRequest($req); /** @var Res $res */
 		if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
-			$sp46490f->setStatus(self::STATUS_APPROVED);
-			$sp46490f->setCcTransId($res->getTransactionId());
-			$sp46490f->setLastTransId($res->getTransactionId());
-			if ($res->getTransactionId() != $sp46490f->getParentTransactionId()) {
-				$sp46490f->setTransactionId($res->getTransactionId());
+			$payment->setStatus(self::STATUS_APPROVED);
+			$payment->setCcTransId($res->getTransactionId());
+			$payment->setLastTransId($res->getTransactionId());
+			if ($res->getTransactionId() != $payment->getParentTransactionId()) {
+				$payment->setTransactionId($res->getTransactionId());
 			}
-			$sp46490f->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+			$payment->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		} else {
 			if ($res->getResponseReasonText()) {
 				$errorMessage = $res->getResponseReasonText();
 			} else {
 				$errorMessage = __('Error in capturing the payment');
 			}
-			if (!($o = $sp46490f->getOrder())) {
-				$o = $sp46490f->getQuote();
+			if (!($o = $payment->getOrder())) {
+				$o = $payment->getQuote();
 			}
 			$o->addStatusToHistory(
 				$o->getStatus(), urldecode($errorMessage) . ' at Beanstream', $errorMessage . ' from Beanstream'
@@ -170,25 +174,25 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	function refund(II $sp46490f, $spb954c6)
+	function refund(II $payment, $spb954c6)
 	{
 		$sp62e25f = false;
-		$sp57fc4d = $sp46490f->getRefundTransactionId();
+		$sp57fc4d = $payment->getRefundTransactionId();
 		if (empty($sp57fc4d)) {
-			$sp57fc4d = $sp46490f->getParentTransactionId();
+			$sp57fc4d = $payment->getParentTransactionId();
 		}
 		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $spb954c6 > 0) {
-			$sp46490f->setAnetTransType(self::REQUEST_TYPE_CREDIT);
-			$sp3382ae = $this->_buildRequest($sp46490f);
+			$payment->setAnetTransType(self::REQUEST_TYPE_CREDIT);
+			$sp3382ae = $this->_buildRequest($payment);
 			$sp3382ae->setXAmount($spb954c6);
 			$res = $this->_postRequest($sp3382ae);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
-				$sp46490f->setStatus(self::STATUS_SUCCESS);
-				if ($res->getTransactionId() != $sp46490f->getParentTransactionId()) {
-					$sp46490f->setTransactionId($res->getTransactionId());
+				$payment->setStatus(self::STATUS_SUCCESS);
+				if ($res->getTransactionId() != $payment->getParentTransactionId()) {
+					$payment->setTransactionId($res->getTransactionId());
 				}
-				$sp41f7d8 = $sp46490f->getOrder()->canCreditmemo() ? 0 : 1;
-				$sp46490f->setIsTransactionClosed(1)->setShouldCloseParentTransaction($sp41f7d8)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+				$sp41f7d8 = $payment->getOrder()->canCreditmemo() ? 0 : 1;
+				$payment->setIsTransactionClosed(1)->setShouldCloseParentTransaction($sp41f7d8)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 			} else {
 				$spfc96e2 = $res->getResponseReasonText();
 				$sp62e25f = true;
@@ -203,28 +207,28 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	function void(II $sp46490f)
+	function void(II $payment)
 	{
 		$sp62e25f = false;
-		$sp57fc4d = $sp46490f->getVoidTransactionId();
+		$sp57fc4d = $payment->getVoidTransactionId();
 		if (empty($sp57fc4d)) {
-			$sp57fc4d = $sp46490f->getParentTransactionId();
+			$sp57fc4d = $payment->getParentTransactionId();
 		}
-		$spb954c6 = $sp46490f->getAmount();
+		$spb954c6 = $payment->getAmount();
 		if ($spb954c6 <= 0) {
-			$spb954c6 = $sp46490f->getAmountAuthorized();
-			$sp46490f->setAmount($sp46490f->getAmountAuthorized());
+			$spb954c6 = $payment->getAmountAuthorized();
+			$payment->setAmount($payment->getAmountAuthorized());
 		}
 		if ($sp57fc4d && $spb954c6 > 0) {
-			$sp46490f->setAnetTransType(self::REQUEST_TYPE_VOID);
-			$sp3382ae = $this->_buildRequest($sp46490f);
+			$payment->setAnetTransType(self::REQUEST_TYPE_VOID);
+			$sp3382ae = $this->_buildRequest($payment);
 			$res = $this->_postRequest($sp3382ae);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
-				$sp46490f->setStatus(self::STATUS_VOID);
-				if ($res->getTransactionId() != $sp46490f->getParentTransactionId()) {
-					$sp46490f->setTransactionId($res->getTransactionId());
+				$payment->setStatus(self::STATUS_VOID);
+				if ($res->getTransactionId() != $payment->getParentTransactionId()) {
+					$payment->setTransactionId($res->getTransactionId());
 				}
-				$sp46490f->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+				$payment->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 			} else {
 				$spfc96e2 = $res->getResponseReasonText();
 				$sp62e25f = true;
@@ -249,25 +253,25 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	protected function _buildRequest(II $sp46490f)
+	protected function _buildRequest(II $payment)
 	{
-		$o = $sp46490f->getOrder(); /** @var O $o */
+		$o = $payment->getOrder(); /** @var O $o */
 		$sp3382ae = $this->requestFactory->create();
 		$sp3382ae->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
-		$sp3382ae->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($sp46490f->getAnetTransType())->setXMethod($sp46490f->getAnetTransMethod());
-		if ($sp46490f->getAmount()) {
-			$sp3382ae->setXAmount($sp46490f->getAmount(), 2);
+		$sp3382ae->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($payment->getAnetTransType())->setXMethod($payment->getAnetTransMethod());
+		if ($payment->getAmount()) {
+			$sp3382ae->setXAmount($payment->getAmount(), 2);
 			$sp3382ae->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
-		switch ($sp46490f->getAnetTransType()) {
+		switch ($payment->getAnetTransType()) {
 			case self::REQUEST_TYPE_CREDIT:
 			case self::REQUEST_TYPE_VOID:
 			case self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
-				$sp3382ae->setXTransId($sp46490f->getCcTransId());
-				$sp3382ae->setXCardNum($sp46490f->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $sp46490f->getCcExpMonth(), $sp46490f->getCcExpYear()))->setXCardCode($sp46490f->getCcCid())->setXCardName($sp46490f->getCcOwner());
+				$sp3382ae->setXTransId($payment->getCcTransId());
+				$sp3382ae->setXCardNum($payment->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $payment->getCcExpMonth(), $payment->getCcExpYear()))->setXCardCode($payment->getCcCid())->setXCardName($payment->getCcOwner());
 				break;
 			case self::REQUEST_TYPE_CAPTURE_ONLY:
-				$sp3382ae->setXAuthCode($sp46490f->getCcAuthCode());
+				$sp3382ae->setXAuthCode($payment->getCcAuthCode());
 				break;
 		}
 		if (!empty($o)) {
@@ -332,10 +336,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 					$sp9dfdb6 = $sp79f718->getSubtotal();
 				}
 			}
-			$sp3382ae->setXPoNum($sp46490f->getPoNumber())->setXTax($spba68ac)->setXSubtotal($sp9dfdb6)->setXFreight($spcf7599);
+			$sp3382ae->setXPoNum($payment->getPoNumber())->setXTax($spba68ac)->setXSubtotal($sp9dfdb6)->setXFreight($spcf7599);
 		}
-		if ($sp46490f->getCcNumber()) {
-			$sp3382ae->setXCardNum($sp46490f->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $sp46490f->getCcExpMonth(), $sp46490f->getCcExpYear()))->setXCardCode($sp46490f->getCcCid())->setXCardName($sp46490f->getCcOwner());
+		if ($payment->getCcNumber()) {
+			$sp3382ae->setXCardNum($payment->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $payment->getCcExpMonth(), $payment->getCcExpYear()))->setXCardCode($payment->getCcCid())->setXCardName($payment->getCcOwner());
 		}
 		return $sp3382ae;
 	}
