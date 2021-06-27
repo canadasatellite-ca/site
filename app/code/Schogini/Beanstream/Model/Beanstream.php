@@ -63,9 +63,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		parent::__construct($sp58b303, $sp7a3bd5, $spefc1b3, $sp6c48a7, $spc7669b, $sp49d401, $spbabc0e, $sp1d4edd, $sp94b432, $spf17733, $spd3c755, $sp7cb355);
 	}
 
-	function isAvailable(CartInterface $sp6f1aa8 = null)
-	{
-		$quote = $sp6f1aa8;
+	function isAvailable(CartInterface $q = null) {
+		$quote = $q;
 		if (!$this->isActive($quote ? $quote->getStoreId() : null)) {
 			return false;
 		}
