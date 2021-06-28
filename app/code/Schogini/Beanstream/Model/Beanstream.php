@@ -65,6 +65,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	}
 
 	/**
+	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @param ICart|null $q
 	 * @return array|bool|mixed|null
 	 */
@@ -91,6 +93,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	}
 
 	/**
+	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @override
 	 * @see \Magento\Payment\Model\MethodInterface::authorize()
 	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\AuthorizeOperation::authorize()
@@ -794,22 +798,22 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	}
 
 	/**
-	 * Validate payment method information object
-	 *
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @override
+	 * How is a payment method's validate() used? https://mage2.pro/t/698
+	 * @see \Magento\Payment\Model\MethodInterface::validate()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L230-L237
+	 * @see \Magento\Payment\Model\Method\AbstractMethod::validate()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L566-L583
 	 * @return $this
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
-	final function validate()
-	{
-		/*
-		 * calling parent validate function
-		 */
+	final function validate() {
 		$info = $this->getInfoInstance();
 		$ccNumber = $info->getCcNumber();
-
-		// remove credit card number delimiters such as "-" and space
 		$ccNumber = preg_replace('/[\-\s]+/', '', $ccNumber);
 		$info->setCcNumber($ccNumber);
 		$autoDetectCcType = $this->autoDetectCcType($ccNumber);
@@ -817,8 +821,14 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return  parent::validate();
 	}
 
-	function autoDetectCcType($ccNumber)
-	{
+	/**
+	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by validate()
+	 * @param string $ccNumber
+	 * @return string
+	 */
+	private function autoDetectCcType($ccNumber) {
 		$ccTypeRegExpList = [
 			//Solo, Switch or Maestro. International safe
 			'SO' => '/(^(6334)[5-9](\d{11}$|\d{13,14}$))|(^(6767)(\d{12}$|\d{14,15}$))/',
