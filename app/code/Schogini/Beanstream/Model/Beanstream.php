@@ -3,13 +3,14 @@ namespace Schogini\Beanstream\Model;
 use Magento\Framework\DataObject;
 use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
-use Magento\Quote\Api\Data\CartInterface;
+use Magento\Quote\Api\Data\CartInterface as ICart;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Payment as OP;
 use Schogini\Beanstream\Model\Request as Req;
 use Schogini\Beanstream\Model\Response as Res;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	const CODE = 'beanstream';
 	protected $_code = self::CODE;
@@ -38,7 +39,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 
 	public $beanstreamLogger;
 
-	function __construct(
+	final function __construct(
 		\Magento\Framework\Model\Context $sp58b303,
 		\Magento\Framework\Registry $sp7a3bd5,
 		\Magento\Framework\Api\ExtensionAttributesFactory $spefc1b3,
@@ -63,7 +64,11 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		parent::__construct($sp58b303, $sp7a3bd5, $spefc1b3, $sp6c48a7, $spc7669b, $sp49d401, $spbabc0e, $sp1d4edd, $sp94b432, $spf17733, $spd3c755, $sp7cb355);
 	}
 
-	function isAvailable(CartInterface $q = null) {
+	/**
+	 * @param ICart|null $q
+	 * @return array|bool|mixed|null
+	 */
+	final function isAvailable(ICart $q = null) {
 		$quote = $q;
 		if (!$this->isActive($quote ? $quote->getStoreId() : null)) {
 			return false;
@@ -95,7 +100,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	function authorize(II $i, $a) {
+	final function authorize(II $i, $a) {
 		if ($a <= 0) {
 			self::throwException(__('Invalid amount for capture.'));
 		}
@@ -145,7 +150,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	function capture(II $i, $a) {
+	final function capture(II $i, $a) {
 		$errorMessage = false;
 		if ($i->getParentTransactionId()) {
 			$i->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
@@ -183,8 +188,19 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	function refund(II $i, $a)
-	{
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @override
+	 * @see \Magento\Payment\Model\MethodInterface::refund()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L269-L277
+	 * @see \Magento\Payment\Model\Method\AbstractMethod::refund()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L640-L656
+	 * @param II|I|OP $payment
+	 * @param float $a
+	 * @return $this
+	 */
+	final function refund(II $i, $a) {
 		$sp62e25f = false;
 		$sp57fc4d = $i->getRefundTransactionId();
 		if (empty($sp57fc4d)) {
@@ -216,8 +232,19 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	function void(II $i)
-	{
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @override
+	 * @see \Magento\Payment\Model\MethodInterface::void()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L288-L295
+	 * @see \Magento\Payment\Model\Method\AbstractMethod::void()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L671-L686
+	 * @param II|I|OP $i
+	 * @return $this
+	 * @uses _void()
+	 */
+	final function void(II $i) {
 		$sp62e25f = false;
 		$sp57fc4d = $i->getVoidTransactionId();
 		if (empty($sp57fc4d)) {
@@ -774,7 +801,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
-	function validate()
+	final function validate()
 	{
 		/*
 		 * calling parent validate function
