@@ -67,38 +67,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @param ICart|null $q
-	 * @return array|bool|mixed|null
-	 */
-	final function isAvailable(ICart $q = null) {
-		$quote = $q;
-		if (!$this->isActive($quote ? $quote->getStoreId() : null)) {
-			return false;
-		}
-
-		$checkResult = new DataObject();
-		$checkResult->setData('is_available', true);
-
-		// for future use in observers
-		$this->_eventManager->dispatch(
-			'payment_method_is_active',
-			[
-				'result' => $checkResult,
-				'method_instance' => $this,
-				'quote' => $quote
-			]
-		);
-
-		return $checkResult->getData('is_available');
-	}
-
-	/**
-	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @override
 	 * @see \Magento\Payment\Model\MethodInterface::authorize()
 	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\AuthorizeOperation::authorize()
-	 * https://github.com/magento/magento2/blob/2.1.5/app/code/Magento/Sales/Model/Order/Payment/Operations/AuthorizeOperation.php#L45 
+	 * https://github.com/magento/magento2/blob/2.1.5/app/code/Magento/Sales/Model/Order/Payment/Operations/AuthorizeOperation.php#L45
 	 * @param II|I|OP $i
 	 * @param float $a
 	 * @return $this
@@ -112,8 +84,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		if ($a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
 			$i->setAmount($a);
-			$sp3382ae = $this->_buildRequest($i);
-			$res = $this->_postRequest($sp3382ae);
+			$req = $this->_buildRequest($i);
+			$res = $this->_postRequest($req);
 			$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 			$spbd1c75 = $res->getResponseReasonCode();
 			$spd17c47 = $res->getResponseReasonText();
@@ -193,6 +165,34 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	}
 
 	/**
+	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @param ICart|null $q
+	 * @return array|bool|mixed|null
+	 */
+	final function isAvailable(ICart $q = null) {
+		$quote = $q;
+		if (!$this->isActive($quote ? $quote->getStoreId() : null)) {
+			return false;
+		}
+
+		$checkResult = new DataObject();
+		$checkResult->setData('is_available', true);
+
+		// for future use in observers
+		$this->_eventManager->dispatch(
+			'payment_method_is_active',
+			[
+				'result' => $checkResult,
+				'method_instance' => $this,
+				'quote' => $quote
+			]
+		);
+
+		return $checkResult->getData('is_available');
+	}
+
+	/**
 	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @override
@@ -212,9 +212,9 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_CREDIT);
-			$sp3382ae = $this->_buildRequest($i);
-			$sp3382ae->setXAmount($a);
-			$res = $this->_postRequest($sp3382ae);
+			$req = $this->_buildRequest($i);
+			$req->setXAmount($a);
+			$res = $this->_postRequest($req);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 				$i->setStatus(self::STATUS_SUCCESS);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
@@ -261,8 +261,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		if ($sp57fc4d && $a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_VOID);
-			$sp3382ae = $this->_buildRequest($i);
-			$res = $this->_postRequest($sp3382ae);
+			$req = $this->_buildRequest($i);
+			$res = $this->_postRequest($req);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 				$i->setStatus(self::STATUS_VOID);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
@@ -293,32 +293,41 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $this;
 	}
 
-	protected function _buildRequest(II $i)
-	{
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @used-by capture()
+	 * @used-by refund()
+	 * @used-by void()
+	 * @param II $i
+	 * @return Req
+	 */
+	private function _buildRequest(II $i) {
 		$o = $i->getOrder(); /** @var O $o */
-		$sp3382ae = $this->requestFactory->create();
-		$sp3382ae->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
-		$sp3382ae->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($i->getAnetTransType())->setXMethod($i->getAnetTransMethod());
+		$req = $this->requestFactory->create();
+		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
+		$req->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($i->getAnetTransType())->setXMethod($i->getAnetTransMethod());
 		if ($i->getAmount()) {
-			$sp3382ae->setXAmount($i->getAmount(), 2);
-			$sp3382ae->setXCurrencyCode($o->getBaseCurrencyCode());
+			$req->setXAmount($i->getAmount(), 2);
+			$req->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
 		switch ($i->getAnetTransType()) {
 			case self::REQUEST_TYPE_CREDIT:
 			case self::REQUEST_TYPE_VOID:
 			case self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
-				$sp3382ae->setXTransId($i->getCcTransId());
-				$sp3382ae->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
+				$req->setXTransId($i->getCcTransId());
+				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
 				break;
 			case self::REQUEST_TYPE_CAPTURE_ONLY:
-				$sp3382ae->setXAuthCode($i->getCcAuthCode());
+				$req->setXAuthCode($i->getCcAuthCode());
 				break;
 		}
 		if (!empty($o)) {
 			$spcf7599 = $o->getShippingAmount();
 			$spba68ac = $o->getTaxAmount();
 			$sp9dfdb6 = $o->getSubtotal();
-			$sp3382ae->setXInvoiceNum($o->getIncrementId());
+			$req->setXInvoiceNum($o->getIncrementId());
 			$sp4ed284 = $o->getBillingAddress();
 			if (!empty($sp4ed284)) {
 				$sp864f41 = $sp4ed284->getEmail();
@@ -328,7 +337,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				if (!$sp864f41) {
 					$sp864f41 = $o->getCustomerEmail();
 				}
-				$sp3382ae->setXFirstName($sp4ed284->getFirstname())
+				$req->setXFirstName($sp4ed284->getFirstname())
 					->setXLastName($sp4ed284->getLastname())
 					->setXCompany($sp4ed284->getCompany())
 					->setXAddress($sp4ed284->getStreet(1)[0])
@@ -348,8 +357,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 					->setXEmailCustomer($this->getConfigData('email_customer'))
 					->setXMerchantEmail($this->getConfigData('merchant_email'));
 
-				if (!$sp3382ae->getXCountry()) {
-					$sp3382ae->setXCountry($sp4ed284->getCountryId());
+				if (!$req->getXCountry()) {
+					$req->setXCountry($sp4ed284->getCountryId());
 				}
 			}
 			$sp79f718 = $o->getShippingAddress();
@@ -357,7 +366,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$sp79f718 = $sp4ed284;
 			}
 			if (!empty($sp79f718)) {
-				$sp3382ae->setXShipToFirstName($sp79f718->getFirstname())
+				$req->setXShipToFirstName($sp79f718->getFirstname())
 					->setXShipToLastName($sp79f718->getLastname())
 					->setXShipToCompany($sp79f718->getCompany())
 					->setXShipToAddress($sp79f718->getStreet(1)[0])
@@ -376,18 +385,28 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 					$sp9dfdb6 = $sp79f718->getSubtotal();
 				}
 			}
-			$sp3382ae->setXPoNum($i->getPoNumber())->setXTax($spba68ac)->setXSubtotal($sp9dfdb6)->setXFreight($spcf7599);
+			$req->setXPoNum($i->getPoNumber())->setXTax($spba68ac)->setXSubtotal($sp9dfdb6)->setXFreight($spcf7599);
 		}
 		if ($i->getCcNumber()) {
-			$sp3382ae->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
+			$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
 		}
-		return $sp3382ae;
+		return $req;
 	}
 
-	protected function _postRequest(\Schogini\Beanstream\Model\Request $sp3382ae)
-	{
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @used-by capture()
+	 * @used-by refund()
+	 * @used-by void()
+	 * @param Req $req
+	 * @return mixed
+	 * @throws \Magento\Framework\Exception\LocalizedException
+	 */
+	private function _postRequest(Req $req) {
 		$res = $this->responseFactory->create();
-		$sp21957c = $sp3382ae->getData();
+		$sp21957c = $req->getData();
 		$spa81281 = array(
 			0 => '1',
 			1 => '1',
