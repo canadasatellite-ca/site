@@ -786,17 +786,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		throw new \Magento\Framework\Exception\LocalizedException($sp485bd8);
 	}
 
-	public static function getResourceModel($sp069fc3)
-	{
-		$sp88ad3c = \Magento\Framework\App\ObjectManager::getInstance();
-		return $sp88ad3c->get($sp069fc3);
-	}
-
-	function decrypt($sp882b00)
-	{
-		return self::getResourceModel('\\Magento\\Framework\\Encryption\\EncryptorInterface')->decrypt($sp882b00);
-	}
-
 	/**
 	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
