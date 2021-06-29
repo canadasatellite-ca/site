@@ -53,7 +53,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		\Magento\Framework\Stdlib\DateTime\TimezoneInterface $sp94b432,
 		\Schogini\Beanstream\Model\Request\Factory $spd5edf9,
 		\Schogini\Beanstream\Model\Response\Factory $spd4c858,
-		\Magento\Backend\Model\Auth\Session $spa652ea,
 		\Schogini\Beanstream\Model\Logger\Logger $beanstreamLogger,
 		\Magento\Framework\Model\ResourceModel\AbstractResource $spf17733 = null,
 		\Magento\Framework\Data\Collection\AbstractDb $spd3c755 = null,
@@ -61,7 +60,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	) {
 		$this->requestFactory = $spd5edf9;
 		$this->responseFactory = $spd4c858;
-		$this->authSession = $spa652ea;
 		$this->beanstreamLogger = $beanstreamLogger;
 		parent::__construct($sp58b303, $sp7a3bd5, $spefc1b3, $sp6c48a7, $spc7669b, $sp49d401, $spbabc0e, $sp1d4edd, $sp94b432, $spf17733, $spd3c755, $sp7cb355);
 	}
