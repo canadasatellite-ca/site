@@ -52,13 +52,11 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		\Magento\Framework\Module\ModuleListInterface $sp1d4edd,
 		\Magento\Framework\Stdlib\DateTime\TimezoneInterface $sp94b432,
 		\Schogini\Beanstream\Model\Request\Factory $spd5edf9,
-		\Schogini\Beanstream\Model\Response\Factory $spd4c858,
 		\Magento\Framework\Model\ResourceModel\AbstractResource $spf17733 = null,
 		\Magento\Framework\Data\Collection\AbstractDb $spd3c755 = null,
 		array $sp7cb355 = array()
 	) {
 		$this->requestFactory = $spd5edf9;
-		$this->responseFactory = $spd4c858;
 		parent::__construct($sp58b303, $sp7a3bd5, $spefc1b3, $sp6c48a7, $spc7669b, $sp49d401, $spbabc0e, $sp1d4edd, $sp94b432, $spf17733, $spd3c755, $sp7cb355);
 	}
 
@@ -717,7 +715,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @throws LE
 	 */
 	private function postRequest(Req $req) {
-		$res = $this->responseFactory->create();
+		$res = df_new_om(Res::class);
 		$sp21957c = $req->getData();
 		$spa81281 = array(
 			0 => '1',
