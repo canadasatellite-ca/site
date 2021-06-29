@@ -85,8 +85,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		if ($a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
 			$i->setAmount($a);
-			$req = $this->_buildRequest($i);
-			$res = $this->_postRequest($req);
+			$req = $this->buildRequest($i);
+			$res = $this->postRequest($req);
 			$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 			$spbd1c75 = $res->getResponseReasonCode();
 			$spd17c47 = $res->getResponseReasonText();
@@ -135,8 +135,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_CAPTURE);
 		}
 		$i->setAmount($a);
-		$req = $this->_buildRequest($i); /** @var Req $req */
-		$res = $this->_postRequest($req); /** @var Res $res */
+		$req = $this->buildRequest($i); /** @var Req $req */
+		$res = $this->postRequest($req); /** @var Res $res */
 		if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
 			$i->setCcTransId($res->getTransactionId());
@@ -213,9 +213,9 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_CREDIT);
-			$req = $this->_buildRequest($i);
+			$req = $this->buildRequest($i);
 			$req->setXAmount($a);
-			$res = $this->_postRequest($req);
+			$res = $this->postRequest($req);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 				$i->setStatus(self::STATUS_SUCCESS);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
@@ -236,6 +236,30 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		return $this;
 	}
+	
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @override
+	 * How is a payment method's validate() used? https://mage2.pro/t/698
+	 * @see \Magento\Payment\Model\MethodInterface::validate()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L230-L237
+	 * @see \Magento\Payment\Model\Method\AbstractMethod::validate()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L566-L583
+	 * @return $this
+	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+	 * @SuppressWarnings(PHPMD.NPathComplexity)
+	 */
+	final function validate() {
+		$info = $this->getInfoInstance();
+		$ccNumber = $info->getCcNumber();
+		$ccNumber = preg_replace('/[\-\s]+/', '', $ccNumber);
+		$info->setCcNumber($ccNumber);
+		$autoDetectCcType = $this->autoDetectCcType($ccNumber);
+		$info->setCcType($autoDetectCcType);
+		return  parent::validate();
+	}	
 
 	/**
 	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -262,8 +286,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		if ($sp57fc4d && $a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_VOID);
-			$req = $this->_buildRequest($i);
-			$res = $this->_postRequest($req);
+			$req = $this->buildRequest($i);
+			$res = $this->postRequest($req);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 				$i->setStatus(self::STATUS_VOID);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
@@ -295,6 +319,47 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	}
 
 	/**
+	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by validate()
+	 * @param string $ccNumber
+	 * @return string
+	 */
+	private function autoDetectCcType($ccNumber) {
+		$ccTypeRegExpList = [
+			//Solo, Switch or Maestro. International safe
+			'SO' => '/(^(6334)[5-9](\d{11}$|\d{13,14}$))|(^(6767)(\d{12}$|\d{14,15}$))/',
+			'SM' => '/(^(5[0678])\d{11,18}$)|(^(6[^05])\d{11,18}$)|(^(601)[^1]\d{9,16}$)|(^(6011)\d{9,11}$)' .
+				'|(^(6011)\d{13,16}$)|(^(65)\d{11,13}$)|(^(65)\d{15,18}$)' .
+				'|(^(49030)[2-9](\d{10}$|\d{12,13}$))|(^(49033)[5-9](\d{10}$|\d{12,13}$))' .
+				'|(^(49110)[1-2](\d{10}$|\d{12,13}$))|(^(49117)[4-9](\d{10}$|\d{12,13}$))' .
+				'|(^(49118)[0-2](\d{10}$|\d{12,13}$))|(^(4936)(\d{12}$|\d{14,15}$))/',
+			// Visa
+			'VI' => '/^4[0-9]{12}([0-9]{3})?$/',
+			// Master Card
+			'MC' => '/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/',
+			// American Express
+			'AE' => '/^3[47][0-9]{13}$/',
+			// Discover
+			'DI' => '/^(6011((0|9|[2-4])[0-9]{11,14}|(74|7[7-9]|8[6-9])[0-9]{10,13})|6(4[4-9][0-9]{13,16}|' .
+				'5[0-9]{14,17}))/',
+			'DN' => '/^3(0[0-5][0-9]{13,16}|095[0-9]{12,15}|(6|[8-9])[0-9]{14,17})/',
+			// UnionPay
+			'UN' => '/^622(1(2[6-9][0-9]{10,13}|[3-9][0-9]{11,14})|[3-8][0-9]{12,15}|9([[0-1][0-9]{11,14}|' .
+				'2[0-5][0-9]{10,13}))|62[4-6][0-9]{13,16}|628[2-8][0-9]{12,15}/',
+			// JCB
+			'JCB' => '/^35(2[8-9][0-9]{12,15}|[3-8][0-9]{13,16})/',
+			'MI' => '/^(5(0|[6-9])|63|67(?!59|6770|6774))\d*$/',
+			'MD' => '/^(6759(?!24|38|40|6[3-9]|70|76)|676770|676774)\d*$/',
+		];
+		foreach($ccTypeRegExpList as $cardType=>$regExp){
+			if (preg_match($ccTypeRegExpList[$cardType],$ccNumber)){
+				return $cardType;
+			}
+		}
+	}	
+	
+	/**
 	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by authorize()
@@ -304,7 +369,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @param II $i
 	 * @return Req
 	 */
-	private function _buildRequest(II $i) {
+	private function buildRequest(II $i) {
 		$o = $i->getOrder(); /** @var O $o */
 		$req = $this->requestFactory->create();
 		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
@@ -405,7 +470,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return mixed
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	private function _postRequest(Req $req) {
+	private function postRequest(Req $req) {
 		$res = $this->responseFactory->create();
 		$sp21957c = $req->getData();
 		$spa81281 = array(
@@ -556,7 +621,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by _postRequest()
+	 * @used-by postRequest()
 	 * @param $sp21957c
 	 * @return array
 	 * @throws \Magento\Framework\Exception\LocalizedException
@@ -801,12 +866,12 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		return $spc59ec5;
 	}
-
+	
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by _beanstreamapi()
-	 * @used-by _postRequest()
+	 * @used-by postRequest()
 	 * @used-by authorize()
 	 * @used-by capture()
 	 * @used-by refund()
@@ -821,70 +886,5 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$m = __($m);
 		}
 		throw new \Magento\Framework\Exception\LocalizedException($m);
-	}
-
-	/**
-	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @override
-	 * How is a payment method's validate() used? https://mage2.pro/t/698
-	 * @see \Magento\Payment\Model\MethodInterface::validate()
-	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L230-L237
-	 * @see \Magento\Payment\Model\Method\AbstractMethod::validate()
-	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L566-L583
-	 * @return $this
-	 * @throws \Magento\Framework\Exception\LocalizedException
-	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
-	 * @SuppressWarnings(PHPMD.NPathComplexity)
-	 */
-	final function validate() {
-		$info = $this->getInfoInstance();
-		$ccNumber = $info->getCcNumber();
-		$ccNumber = preg_replace('/[\-\s]+/', '', $ccNumber);
-		$info->setCcNumber($ccNumber);
-		$autoDetectCcType = $this->autoDetectCcType($ccNumber);
-		$info->setCcType($autoDetectCcType);
-		return  parent::validate();
-	}
-
-	/**
-	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by validate()
-	 * @param string $ccNumber
-	 * @return string
-	 */
-	private function autoDetectCcType($ccNumber) {
-		$ccTypeRegExpList = [
-			//Solo, Switch or Maestro. International safe
-			'SO' => '/(^(6334)[5-9](\d{11}$|\d{13,14}$))|(^(6767)(\d{12}$|\d{14,15}$))/',
-			'SM' => '/(^(5[0678])\d{11,18}$)|(^(6[^05])\d{11,18}$)|(^(601)[^1]\d{9,16}$)|(^(6011)\d{9,11}$)' .
-				'|(^(6011)\d{13,16}$)|(^(65)\d{11,13}$)|(^(65)\d{15,18}$)' .
-				'|(^(49030)[2-9](\d{10}$|\d{12,13}$))|(^(49033)[5-9](\d{10}$|\d{12,13}$))' .
-				'|(^(49110)[1-2](\d{10}$|\d{12,13}$))|(^(49117)[4-9](\d{10}$|\d{12,13}$))' .
-				'|(^(49118)[0-2](\d{10}$|\d{12,13}$))|(^(4936)(\d{12}$|\d{14,15}$))/',
-			// Visa
-			'VI' => '/^4[0-9]{12}([0-9]{3})?$/',
-			// Master Card
-			'MC' => '/^(?:5[1-5][0-9]{2}|222[1-9]|22[3-9][0-9]|2[3-6][0-9]{2}|27[01][0-9]|2720)[0-9]{12}$/',
-			// American Express
-			'AE' => '/^3[47][0-9]{13}$/',
-			// Discover
-			'DI' => '/^(6011((0|9|[2-4])[0-9]{11,14}|(74|7[7-9]|8[6-9])[0-9]{10,13})|6(4[4-9][0-9]{13,16}|' .
-				'5[0-9]{14,17}))/',
-			'DN' => '/^3(0[0-5][0-9]{13,16}|095[0-9]{12,15}|(6|[8-9])[0-9]{14,17})/',
-			// UnionPay
-			'UN' => '/^622(1(2[6-9][0-9]{10,13}|[3-9][0-9]{11,14})|[3-8][0-9]{12,15}|9([[0-1][0-9]{11,14}|' .
-				'2[0-5][0-9]{10,13}))|62[4-6][0-9]{13,16}|628[2-8][0-9]{12,15}/',
-			// JCB
-			'JCB' => '/^35(2[8-9][0-9]{12,15}|[3-8][0-9]{13,16})/',
-			'MI' => '/^(5(0|[6-9])|63|67(?!59|6770|6774))\d*$/',
-			'MD' => '/^(6759(?!24|38|40|6[3-9]|70|76)|676770|676774)\d*$/',
-		];
-		foreach($ccTypeRegExpList as $cardType=>$regExp){
-			if (preg_match($ccTypeRegExpList[$cardType],$ccNumber)){
-				return $cardType;
-			}
-		}
-	}
+	}	
 }
