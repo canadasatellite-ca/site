@@ -805,6 +805,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by _beanstreamapi()
+	 * @used-by _postRequest()
 	 * @used-by authorize()
 	 * @used-by capture()
 	 * @used-by refund()
