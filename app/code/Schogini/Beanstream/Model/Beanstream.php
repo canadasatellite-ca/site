@@ -1,6 +1,7 @@
 <?php
 namespace Schogini\Beanstream\Model;
 use Magento\Framework\DataObject;
+use Magento\Framework\Phrase;
 use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
 use Magento\Quote\Api\Data\CartInterface as ICart;
@@ -801,15 +802,21 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $spc59ec5;
 	}
 
-	public static function throwException($sp485bd8 = null)
-	{
-		if (is_null($sp485bd8)) {
-			$sp485bd8 = __('Payment error occurred.');
+	/**
+	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @param Phrase|string|null $m [optional]
+	 * @throws \Magento\Framework\Exception\LocalizedException
+	 */
+	private static function throwException($m = null) {
+		if (is_null($m)) {
+			$m = __('Payment error occurred.');
 		}
-		if (!($sp485bd8 instanceof \Magento\Framework\Phrase)) {
-			$sp485bd8 = __($sp485bd8);
+		if (!$m instanceof Phrase) {
+			$m = __($m);
 		}
-		throw new \Magento\Framework\Exception\LocalizedException($sp485bd8);
+		throw new \Magento\Framework\Exception\LocalizedException($m);
 	}
 
 	/**
