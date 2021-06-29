@@ -358,265 +358,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			}
 		}
 	}	
-	
-	/**
-	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by authorize()
-	 * @used-by capture()
-	 * @used-by refund()
-	 * @used-by void()
-	 * @param II $i
-	 * @return Req
-	 */
-	private function buildRequest(II $i) {
-		$o = $i->getOrder(); /** @var O $o */
-		$req = $this->requestFactory->create();
-		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
-		$req->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($i->getAnetTransType())->setXMethod($i->getAnetTransMethod());
-		if ($i->getAmount()) {
-			$req->setXAmount($i->getAmount(), 2);
-			$req->setXCurrencyCode($o->getBaseCurrencyCode());
-		}
-		switch ($i->getAnetTransType()) {
-			case self::REQUEST_TYPE_CREDIT:
-			case self::REQUEST_TYPE_VOID:
-			case self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
-				$req->setXTransId($i->getCcTransId());
-				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
-				break;
-			case self::REQUEST_TYPE_CAPTURE_ONLY:
-				$req->setXAuthCode($i->getCcAuthCode());
-				break;
-		}
-		if (!empty($o)) {
-			$spcf7599 = $o->getShippingAmount();
-			$spba68ac = $o->getTaxAmount();
-			$sp9dfdb6 = $o->getSubtotal();
-			$req->setXInvoiceNum($o->getIncrementId());
-			$sp4ed284 = $o->getBillingAddress();
-			if (!empty($sp4ed284)) {
-				$sp864f41 = $sp4ed284->getEmail();
-				if (!$sp864f41) {
-					$sp864f41 = $o->getBillingAddress()->getEmail();
-				}
-				if (!$sp864f41) {
-					$sp864f41 = $o->getCustomerEmail();
-				}
-				$req->setXFirstName($sp4ed284->getFirstname())
-					->setXLastName($sp4ed284->getLastname())
-					->setXCompany($sp4ed284->getCompany())
-					->setXAddress($sp4ed284->getStreet(1)[0])
-					->setXCity($sp4ed284->getCity())
-					->setXState($sp4ed284->getRegion())
-					->setXZip($sp4ed284->getPostcode())
-					->setXCountry($sp4ed284->getCountry())
-					->setXPhone($sp4ed284->getTelephone())
-					->setXFax($sp4ed284->getFax())
-					->setXCustId($sp4ed284->getCustomerId())
-# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-# «Ensure that the Customer IP address is being passed in the API request for all transactions»:
-# https://github.com/canadasatellite-ca/site/issues/175
-					->setXCustomerIp(df_visitor_ip())
-					->setXCustomerTaxId($sp4ed284->getTaxId())
-					->setXEmail($sp864f41)
-					->setXEmailCustomer($this->getConfigData('email_customer'))
-					->setXMerchantEmail($this->getConfigData('merchant_email'));
-
-				if (!$req->getXCountry()) {
-					$req->setXCountry($sp4ed284->getCountryId());
-				}
-			}
-			$sp79f718 = $o->getShippingAddress();
-			if (!$sp79f718) {
-				$sp79f718 = $sp4ed284;
-			}
-			if (!empty($sp79f718)) {
-				$req->setXShipToFirstName($sp79f718->getFirstname())
-					->setXShipToLastName($sp79f718->getLastname())
-					->setXShipToCompany($sp79f718->getCompany())
-					->setXShipToAddress($sp79f718->getStreet(1)[0])
-					->setXShipToCity($sp79f718->getCity())
-					->setXShipToState($sp79f718->getRegion())
-					->setXShipToZip($sp79f718->getPostcode())
-					->setXShipToCountry($sp79f718->getCountry());
-
-				if (!isset($spcf7599) || $spcf7599 <= 0) {
-					$spcf7599 = $sp79f718->getShippingAmount();
-				}
-				if (!isset($spba68ac) || $spba68ac <= 0) {
-					$spba68ac = $sp79f718->getTaxAmount();
-				}
-				if (!isset($sp9dfdb6) || $sp9dfdb6 <= 0) {
-					$sp9dfdb6 = $sp79f718->getSubtotal();
-				}
-			}
-			$req->setXPoNum($i->getPoNumber())->setXTax($spba68ac)->setXSubtotal($sp9dfdb6)->setXFreight($spcf7599);
-		}
-		if ($i->getCcNumber()) {
-			$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
-		}
-		return $req;
-	}
-
-	/**
-	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by authorize()
-	 * @used-by capture()
-	 * @used-by refund()
-	 * @used-by void()
-	 * @param Req $req
-	 * @return mixed
-	 * @throws \Magento\Framework\Exception\LocalizedException
-	 */
-	private function postRequest(Req $req) {
-		$res = $this->responseFactory->create();
-		$sp21957c = $req->getData();
-		$spa81281 = array(
-			0 => '1',
-			1 => '1',
-			2 => '1',
-			3 => '(TESTMODE) This transaction has been approved.',
-			4 => '000000',
-			5 => 'P',
-			6 => '0',
-			7 => '100000018',
-			8 => '',
-			9 => '2704.99',
-			10 => 'CC',
-			11 => 'auth_only',
-			12 => '',
-			13 => 'Sreeprakash',
-			14 => 'N.',
-			15 => 'Schogini',
-			16 => 'XYZ',
-			17 => 'City',
-			18 => 'Idaho',
-			19 => '695038',
-			20 => 'US',
-			21 => '1234567890',
-			22 => '',
-			23 => '',
-			24 => 'Sreeprakash',
-			25 => 'N.',
-			26 => 'Schogini',
-			27 => 'XYZ',
-			28 => 'City',
-			29 => 'Idaho',
-			30 => '695038',
-			31 => 'US',
-			32 => '',
-			33 => '',
-			34 => '',
-			35 => '',
-			36 => '',
-			37 => '382065EC3B4C2F5CDC424A730393D2DF',
-			38 => '',
-			39 => '',
-			40 => '',
-			41 => '',
-			42 => '',
-			43 => '',
-			44 => '',
-			45 => '',
-			46 => '',
-			47 => '',
-			48 => '',
-			49 => '',
-			50 => '',
-			51 => '',
-			52 => '',
-			53 => '',
-			54 => '',
-			55 => '',
-			56 => '',
-			57 => '',
-			58 => '',
-			59 => '',
-			60 => '',
-			61 => '',
-			62 => '',
-			63 => '',
-			64 => '',
-			65 => '',
-			66 => '',
-			67 => ''
-		);
-		$spa81281[7] = $sp21957c['x_invoice_num'];
-		$spa81281[8] = '';
-		$spa81281[9] = $sp21957c['x_amount'];
-		$spa81281[10] = $sp21957c['x_method'];
-		$spa81281[11] = $sp21957c['x_type'];
-		$spa81281[12] = $sp21957c['x_cust_id'];
-		$spa81281[13] = $sp21957c['x_first_name'];
-		$spa81281[14] = $sp21957c['x_last_name'];
-		$spa81281[15] = $sp21957c['x_company'];
-		$spa81281[16] = $sp21957c['x_address'];
-		$spa81281[17] = $sp21957c['x_city'];
-		$spa81281[18] = $sp21957c['x_state'];
-		$spa81281[19] = $sp21957c['x_zip'];
-		$spa81281[20] = $sp21957c['x_country'];
-		$spa81281[21] = $sp21957c['x_phone'];
-		$spa81281[22] = $sp21957c['x_fax'];
-		$spa81281[23] = '';
-		$sp21957c['x_ship_to_first_name'] = !isset($sp21957c['x_ship_to_first_name']) ? $sp21957c['x_first_name'] : $sp21957c['x_ship_to_first_name'];
-		$sp21957c['x_ship_to_first_name'] = !isset($sp21957c['x_ship_to_first_name']) ? $sp21957c['x_first_name'] : $sp21957c['x_ship_to_first_name'];
-		$sp21957c['x_ship_to_last_name'] = !isset($sp21957c['x_ship_to_last_name']) ? $sp21957c['x_last_name'] : $sp21957c['x_ship_to_last_name'];
-		$sp21957c['x_ship_to_company'] = !isset($sp21957c['x_ship_to_company']) ? $sp21957c['x_company'] : $sp21957c['x_ship_to_company'];
-		$sp21957c['x_ship_to_address'] = !isset($sp21957c['x_ship_to_address']) ? $sp21957c['x_address'] : $sp21957c['x_ship_to_address'];
-		$sp21957c['x_ship_to_city'] = !isset($sp21957c['x_ship_to_city']) ? $sp21957c['x_city'] : $sp21957c['x_ship_to_city'];
-		$sp21957c['x_ship_to_state'] = !isset($sp21957c['x_ship_to_state']) ? $sp21957c['x_state'] : $sp21957c['x_ship_to_state'];
-		$sp21957c['x_ship_to_zip'] = !isset($sp21957c['x_ship_to_zip']) ? $sp21957c['x_zip'] : $sp21957c['x_ship_to_zip'];
-		$sp21957c['x_ship_to_country'] = !isset($sp21957c['x_ship_to_country']) ? $sp21957c['x_country'] : $sp21957c['x_ship_to_country'];
-		$spa81281[24] = $sp21957c['x_ship_to_first_name'];
-		$spa81281[25] = $sp21957c['x_ship_to_last_name'];
-		$spa81281[26] = $sp21957c['x_ship_to_company'];
-		$spa81281[27] = $sp21957c['x_ship_to_address'];
-		$spa81281[28] = $sp21957c['x_ship_to_city'];
-		$spa81281[29] = $sp21957c['x_ship_to_state'];
-		$spa81281[30] = $sp21957c['x_ship_to_zip'];
-		$spa81281[31] = $sp21957c['x_ship_to_country'];
-		$spa81281[0] = '1';
-		$spa81281[1] = '1';
-		$spa81281[2] = '1';
-		$spa81281[3] = '(TESTMODE2) This transaction has been approved.';
-		$spa81281[4] = '000000';
-		$spa81281[5] = 'P';
-		$spa81281[6] = '0';
-		$spa81281[37] = '382065EC3B4C2F5CDC424A730393D2DF';
-		$spa81281[39] = '';
-		$spc59ec5 = $this->_beanstreamapi($sp21957c);
-		$spa81281[0] = $spc59ec5['response_code'];
-		$spa81281[1] = $spc59ec5['response_subcode'];
-		$spa81281[2] = $spc59ec5['response_reason_code'];
-		$spa81281[3] = $spc59ec5['response_reason_text'];
-		$spa81281[4] = $spc59ec5['approval_code'];
-		$spa81281[5] = $spc59ec5['avs_result_code'];
-		$spa81281[6] = $spc59ec5['transaction_id'];
-		$spa81281[37] = $spc59ec5['md5_hash'];
-		$spa81281[39] = $spc59ec5['card_code_response'];
-		if ($spa81281) {
-			$res->setResponseCode((int)str_replace('"', '', $spa81281[0]));
-			$res->setResponseSubcode((int)str_replace('"', '', $spa81281[1]));
-			$res->setResponseReasonCode((int)str_replace('"', '', $spa81281[2]));
-			$res->setResponseReasonText($spa81281[3]);
-			$res->setApprovalCode($spa81281[4]);
-			$res->setAvsResultCode($spa81281[5]);
-			$res->setTransactionId($spa81281[6]);
-			$res->setInvoiceNumber($spa81281[7]);
-			$res->setDescription($spa81281[8]);
-			$res->setAmount($spa81281[9]);
-			$res->setMethod($spa81281[10]);
-			$res->setTransactionType($spa81281[11]);
-			$res->setCustomerId($spa81281[12]);
-			$res->setMd5Hash($spa81281[37]);
-			$res->setCardCodeResponseCode($spa81281[39]);
-		} else {
-			self::throwException(__('Error in payment gateway'));
-		}
-		return $res;
-	}
 
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -626,7 +367,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return array
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
-	private function _beanstreamapi($sp21957c) {
+	private function beanstreamapi($sp21957c) {
 		$sp9c6e65 = $this->getConfigData('merchant_id');
 		$spf4dcd7 = $this->getConfigData('merchant_username');
 		$sp909eb6 = $this->getConfigData('merchant_password');
@@ -866,11 +607,270 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		return $spc59ec5;
 	}
+
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @used-by capture()
+	 * @used-by refund()
+	 * @used-by void()
+	 * @param II $i
+	 * @return Req
+	 */
+	private function buildRequest(II $i) {
+		$o = $i->getOrder(); /** @var O $o */
+		$req = $this->requestFactory->create();
+		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
+		$req->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($i->getAnetTransType())->setXMethod($i->getAnetTransMethod());
+		if ($i->getAmount()) {
+			$req->setXAmount($i->getAmount(), 2);
+			$req->setXCurrencyCode($o->getBaseCurrencyCode());
+		}
+		switch ($i->getAnetTransType()) {
+			case self::REQUEST_TYPE_CREDIT:
+			case self::REQUEST_TYPE_VOID:
+			case self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
+				$req->setXTransId($i->getCcTransId());
+				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
+				break;
+			case self::REQUEST_TYPE_CAPTURE_ONLY:
+				$req->setXAuthCode($i->getCcAuthCode());
+				break;
+		}
+		if (!empty($o)) {
+			$spcf7599 = $o->getShippingAmount();
+			$spba68ac = $o->getTaxAmount();
+			$sp9dfdb6 = $o->getSubtotal();
+			$req->setXInvoiceNum($o->getIncrementId());
+			$sp4ed284 = $o->getBillingAddress();
+			if (!empty($sp4ed284)) {
+				$sp864f41 = $sp4ed284->getEmail();
+				if (!$sp864f41) {
+					$sp864f41 = $o->getBillingAddress()->getEmail();
+				}
+				if (!$sp864f41) {
+					$sp864f41 = $o->getCustomerEmail();
+				}
+				$req->setXFirstName($sp4ed284->getFirstname())
+					->setXLastName($sp4ed284->getLastname())
+					->setXCompany($sp4ed284->getCompany())
+					->setXAddress($sp4ed284->getStreet(1)[0])
+					->setXCity($sp4ed284->getCity())
+					->setXState($sp4ed284->getRegion())
+					->setXZip($sp4ed284->getPostcode())
+					->setXCountry($sp4ed284->getCountry())
+					->setXPhone($sp4ed284->getTelephone())
+					->setXFax($sp4ed284->getFax())
+					->setXCustId($sp4ed284->getCustomerId())
+# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Ensure that the Customer IP address is being passed in the API request for all transactions»:
+# https://github.com/canadasatellite-ca/site/issues/175
+					->setXCustomerIp(df_visitor_ip())
+					->setXCustomerTaxId($sp4ed284->getTaxId())
+					->setXEmail($sp864f41)
+					->setXEmailCustomer($this->getConfigData('email_customer'))
+					->setXMerchantEmail($this->getConfigData('merchant_email'));
+
+				if (!$req->getXCountry()) {
+					$req->setXCountry($sp4ed284->getCountryId());
+				}
+			}
+			$sp79f718 = $o->getShippingAddress();
+			if (!$sp79f718) {
+				$sp79f718 = $sp4ed284;
+			}
+			if (!empty($sp79f718)) {
+				$req->setXShipToFirstName($sp79f718->getFirstname())
+					->setXShipToLastName($sp79f718->getLastname())
+					->setXShipToCompany($sp79f718->getCompany())
+					->setXShipToAddress($sp79f718->getStreet(1)[0])
+					->setXShipToCity($sp79f718->getCity())
+					->setXShipToState($sp79f718->getRegion())
+					->setXShipToZip($sp79f718->getPostcode())
+					->setXShipToCountry($sp79f718->getCountry());
+
+				if (!isset($spcf7599) || $spcf7599 <= 0) {
+					$spcf7599 = $sp79f718->getShippingAmount();
+				}
+				if (!isset($spba68ac) || $spba68ac <= 0) {
+					$spba68ac = $sp79f718->getTaxAmount();
+				}
+				if (!isset($sp9dfdb6) || $sp9dfdb6 <= 0) {
+					$sp9dfdb6 = $sp79f718->getSubtotal();
+				}
+			}
+			$req->setXPoNum($i->getPoNumber())->setXTax($spba68ac)->setXSubtotal($sp9dfdb6)->setXFreight($spcf7599);
+		}
+		if ($i->getCcNumber()) {
+			$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
+		}
+		return $req;
+	}
+
+	/**
+	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @used-by capture()
+	 * @used-by refund()
+	 * @used-by void()
+	 * @param Req $req
+	 * @return mixed
+	 * @throws \Magento\Framework\Exception\LocalizedException
+	 */
+	private function postRequest(Req $req) {
+		$res = $this->responseFactory->create();
+		$sp21957c = $req->getData();
+		$spa81281 = array(
+			0 => '1',
+			1 => '1',
+			2 => '1',
+			3 => '(TESTMODE) This transaction has been approved.',
+			4 => '000000',
+			5 => 'P',
+			6 => '0',
+			7 => '100000018',
+			8 => '',
+			9 => '2704.99',
+			10 => 'CC',
+			11 => 'auth_only',
+			12 => '',
+			13 => 'Sreeprakash',
+			14 => 'N.',
+			15 => 'Schogini',
+			16 => 'XYZ',
+			17 => 'City',
+			18 => 'Idaho',
+			19 => '695038',
+			20 => 'US',
+			21 => '1234567890',
+			22 => '',
+			23 => '',
+			24 => 'Sreeprakash',
+			25 => 'N.',
+			26 => 'Schogini',
+			27 => 'XYZ',
+			28 => 'City',
+			29 => 'Idaho',
+			30 => '695038',
+			31 => 'US',
+			32 => '',
+			33 => '',
+			34 => '',
+			35 => '',
+			36 => '',
+			37 => '382065EC3B4C2F5CDC424A730393D2DF',
+			38 => '',
+			39 => '',
+			40 => '',
+			41 => '',
+			42 => '',
+			43 => '',
+			44 => '',
+			45 => '',
+			46 => '',
+			47 => '',
+			48 => '',
+			49 => '',
+			50 => '',
+			51 => '',
+			52 => '',
+			53 => '',
+			54 => '',
+			55 => '',
+			56 => '',
+			57 => '',
+			58 => '',
+			59 => '',
+			60 => '',
+			61 => '',
+			62 => '',
+			63 => '',
+			64 => '',
+			65 => '',
+			66 => '',
+			67 => ''
+		);
+		$spa81281[7] = $sp21957c['x_invoice_num'];
+		$spa81281[8] = '';
+		$spa81281[9] = $sp21957c['x_amount'];
+		$spa81281[10] = $sp21957c['x_method'];
+		$spa81281[11] = $sp21957c['x_type'];
+		$spa81281[12] = $sp21957c['x_cust_id'];
+		$spa81281[13] = $sp21957c['x_first_name'];
+		$spa81281[14] = $sp21957c['x_last_name'];
+		$spa81281[15] = $sp21957c['x_company'];
+		$spa81281[16] = $sp21957c['x_address'];
+		$spa81281[17] = $sp21957c['x_city'];
+		$spa81281[18] = $sp21957c['x_state'];
+		$spa81281[19] = $sp21957c['x_zip'];
+		$spa81281[20] = $sp21957c['x_country'];
+		$spa81281[21] = $sp21957c['x_phone'];
+		$spa81281[22] = $sp21957c['x_fax'];
+		$spa81281[23] = '';
+		$sp21957c['x_ship_to_first_name'] = !isset($sp21957c['x_ship_to_first_name']) ? $sp21957c['x_first_name'] : $sp21957c['x_ship_to_first_name'];
+		$sp21957c['x_ship_to_first_name'] = !isset($sp21957c['x_ship_to_first_name']) ? $sp21957c['x_first_name'] : $sp21957c['x_ship_to_first_name'];
+		$sp21957c['x_ship_to_last_name'] = !isset($sp21957c['x_ship_to_last_name']) ? $sp21957c['x_last_name'] : $sp21957c['x_ship_to_last_name'];
+		$sp21957c['x_ship_to_company'] = !isset($sp21957c['x_ship_to_company']) ? $sp21957c['x_company'] : $sp21957c['x_ship_to_company'];
+		$sp21957c['x_ship_to_address'] = !isset($sp21957c['x_ship_to_address']) ? $sp21957c['x_address'] : $sp21957c['x_ship_to_address'];
+		$sp21957c['x_ship_to_city'] = !isset($sp21957c['x_ship_to_city']) ? $sp21957c['x_city'] : $sp21957c['x_ship_to_city'];
+		$sp21957c['x_ship_to_state'] = !isset($sp21957c['x_ship_to_state']) ? $sp21957c['x_state'] : $sp21957c['x_ship_to_state'];
+		$sp21957c['x_ship_to_zip'] = !isset($sp21957c['x_ship_to_zip']) ? $sp21957c['x_zip'] : $sp21957c['x_ship_to_zip'];
+		$sp21957c['x_ship_to_country'] = !isset($sp21957c['x_ship_to_country']) ? $sp21957c['x_country'] : $sp21957c['x_ship_to_country'];
+		$spa81281[24] = $sp21957c['x_ship_to_first_name'];
+		$spa81281[25] = $sp21957c['x_ship_to_last_name'];
+		$spa81281[26] = $sp21957c['x_ship_to_company'];
+		$spa81281[27] = $sp21957c['x_ship_to_address'];
+		$spa81281[28] = $sp21957c['x_ship_to_city'];
+		$spa81281[29] = $sp21957c['x_ship_to_state'];
+		$spa81281[30] = $sp21957c['x_ship_to_zip'];
+		$spa81281[31] = $sp21957c['x_ship_to_country'];
+		$spa81281[0] = '1';
+		$spa81281[1] = '1';
+		$spa81281[2] = '1';
+		$spa81281[3] = '(TESTMODE2) This transaction has been approved.';
+		$spa81281[4] = '000000';
+		$spa81281[5] = 'P';
+		$spa81281[6] = '0';
+		$spa81281[37] = '382065EC3B4C2F5CDC424A730393D2DF';
+		$spa81281[39] = '';
+		$spc59ec5 = $this->beanstreamapi($sp21957c);
+		$spa81281[0] = $spc59ec5['response_code'];
+		$spa81281[1] = $spc59ec5['response_subcode'];
+		$spa81281[2] = $spc59ec5['response_reason_code'];
+		$spa81281[3] = $spc59ec5['response_reason_text'];
+		$spa81281[4] = $spc59ec5['approval_code'];
+		$spa81281[5] = $spc59ec5['avs_result_code'];
+		$spa81281[6] = $spc59ec5['transaction_id'];
+		$spa81281[37] = $spc59ec5['md5_hash'];
+		$spa81281[39] = $spc59ec5['card_code_response'];
+		if ($spa81281) {
+			$res->setResponseCode((int)str_replace('"', '', $spa81281[0]));
+			$res->setResponseSubcode((int)str_replace('"', '', $spa81281[1]));
+			$res->setResponseReasonCode((int)str_replace('"', '', $spa81281[2]));
+			$res->setResponseReasonText($spa81281[3]);
+			$res->setApprovalCode($spa81281[4]);
+			$res->setAvsResultCode($spa81281[5]);
+			$res->setTransactionId($spa81281[6]);
+			$res->setInvoiceNumber($spa81281[7]);
+			$res->setDescription($spa81281[8]);
+			$res->setAmount($spa81281[9]);
+			$res->setMethod($spa81281[10]);
+			$res->setTransactionType($spa81281[11]);
+			$res->setCustomerId($spa81281[12]);
+			$res->setMd5Hash($spa81281[37]);
+			$res->setCardCodeResponseCode($spa81281[39]);
+		} else {
+			self::throwException(__('Error in payment gateway'));
+		}
+		return $res;
+	}
 	
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by _beanstreamapi()
+	 * @used-by beanstreamapi()
 	 * @used-by postRequest()
 	 * @used-by authorize()
 	 * @used-by capture()
