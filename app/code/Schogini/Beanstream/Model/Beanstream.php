@@ -1,6 +1,7 @@
 <?php
 namespace Schogini\Beanstream\Model;
 use Magento\Framework\DataObject;
+use Magento\Framework\Exception\LocalizedException as LE;
 use Magento\Framework\Phrase;
 use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
@@ -75,11 +76,11 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @param II|I|OP $i
 	 * @param float $a
 	 * @return $this
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @throws LE
 	 */
 	final function authorize(II $i, $a) {
 		if ($a <= 0) {
-			self::throwException(__('Invalid amount for capture.'));
+			self::err(__('Invalid amount for capture.'));
 		}
 		$m = false; /** @var Phrase|string|false $m */
 		if ($a > 0) {
@@ -109,7 +110,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$m = __('Invalid amount for authorization.');
 		}
 		if ($m !== false) {
-			self::throwException($m);
+			self::err($m);
 		}
 		return $this;
 	}
@@ -125,7 +126,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @param II|I|OP $i
 	 * @param float $a
 	 * @return $this
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @throws LE
 	 */
 	final function capture(II $i, $a) {
 		$errorMessage = false;
@@ -160,7 +161,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		if ($errorMessage !== false) {
 			dfp_report($this, ['request' => $req->getData(), 'response' => $res->getData()]);
-			self::throwException($errorMessage);
+			self::err($errorMessage);
 		}
 		return $this;
 	}
@@ -232,7 +233,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$m = true;
 		}
 		if ($m !== false) {
-			self::throwException($m);
+			self::err($m);
 		}
 		return $this;
 	}
@@ -247,7 +248,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @see \Magento\Payment\Model\Method\AbstractMethod::validate()
 	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L566-L583
 	 * @return $this
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @throws LE
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
@@ -313,7 +314,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			}
 		}
 		if ($m !== false) {
-			self::throwException($m);
+			self::err($m);
 		}
 		return $this;
 	}
@@ -365,7 +366,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @used-by postRequest()
 	 * @param $sp21957c
 	 * @return array
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @throws LE
 	 */
 	private function beanstreamapi($sp21957c) {
 		$sp9c6e65 = $this->getConfigData('merchant_id');
@@ -537,7 +538,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		curl_close($specd301);
 		if ($sp35fa42 != '') {
 			df_log_l($this, ['request' => $sp05e2c8, 'response' => $sp35fa42], 'error-curl');
-			self::throwException('Error: ' . $sp35fa42);
+			self::err('Error: ' . $sp35fa42);
 		}
 		# 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# "Beanstream: «Microsoft OLE DB Driver for SQL Server» / «TCP Provider: The wait operation timed out» /
@@ -545,7 +546,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		# https://github.com/canadasatellite-ca/site/issues/18
 		if (df_contains($spf8f74c, 'Microsoft OLE DB Driver for SQL Server')) {
 			df_log_l($this, ['request' => $sp05e2c8, 'response' => $spf8f74c], 'error-ole');
-			self::throwException('Error: ' . $spf8f74c);
+			self::err('Error: ' . $spf8f74c);
 		}
 		$sp1e8be2 = explode('&', $spf8f74c);
 		$spb41165 = array();
@@ -717,7 +718,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @used-by void()
 	 * @param Req $req
 	 * @return mixed
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @throws LE
 	 */
 	private function postRequest(Req $req) {
 		$res = $this->responseFactory->create();
@@ -862,7 +863,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$res->setMd5Hash($spa81281[37]);
 			$res->setCardCodeResponseCode($spa81281[39]);
 		} else {
-			self::throwException(__('Error in payment gateway'));
+			self::err(__('Error in payment gateway'));
 		}
 		return $res;
 	}
@@ -876,15 +877,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @used-by capture()
 	 * @used-by refund()
 	 * @param Phrase|string|null $m [optional]
-	 * @throws \Magento\Framework\Exception\LocalizedException
+	 * @throws LE
 	 */
-	private static function throwException($m = null) {
-		if (is_null($m)) {
-			$m = __('Payment error occurred.');
-		}
-		if (!$m instanceof Phrase) {
-			$m = __($m);
-		}
-		throw new \Magento\Framework\Exception\LocalizedException($m);
-	}	
+	private static function err($m = null) {throw new LE(__($m ?: 'Payment error occurred.'));}	
 }
