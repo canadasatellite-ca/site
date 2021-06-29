@@ -206,7 +206,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 */
 	final function refund(II $i, $a) {
-		$m = false;
+		$m = false; /** @var Phrase|string|false $m */
 		$sp57fc4d = $i->getRefundTransactionId();
 		if (empty($sp57fc4d)) {
 			$sp57fc4d = $i->getParentTransactionId();
@@ -224,15 +224,15 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$sp41f7d8 = $i->getOrder()->canCreditmemo() ? 0 : 1;
 				$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction($sp41f7d8)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 			} else {
-				$spfc96e2 = $res->getResponseReasonText();
+				$m = $res->getResponseReasonText();
 				$m = true;
 			}
 		} else {
-			$spfc96e2 = __('Error in refunding the payment');
+			$m = __('Error in refunding the payment');
 			$m = true;
 		}
 		if ($m !== false) {
-			self::throwException($spfc96e2);
+			self::throwException($m);
 		}
 		return $this;
 	}
@@ -271,25 +271,25 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				}
 				$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 			} else {
-				$spfc96e2 = $res->getResponseReasonText();
+				$m = $res->getResponseReasonText();
 				$m = true;
 			}
 		} else {
 			if (!$sp57fc4d) {
-				$spfc96e2 = __('Error in voiding the payment. Transaction ID not found');
+				$m = __('Error in voiding the payment. Transaction ID not found');
 				$m = true;
 			} else {
 				if ($a <= 0) {
-					$spfc96e2 = __('Error in voiding the payment. Payment amount is 0');
+					$m = __('Error in voiding the payment. Payment amount is 0');
 					$m = true;
 				} else {
-					$spfc96e2 = __('Error in voiding the payment');
+					$m = __('Error in voiding the payment');
 					$m = true;
 				}
 			}
 		}
 		if ($m !== false) {
-			self::throwException($spfc96e2);
+			self::throwException($m);
 		}
 		return $this;
 	}
@@ -806,6 +806,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by authorize()
+	 * @used-by capture()
+	 * @used-by refund()
 	 * @param Phrase|string|null $m [optional]
 	 * @throws \Magento\Framework\Exception\LocalizedException
 	 */
