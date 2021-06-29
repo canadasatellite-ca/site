@@ -3,7 +3,9 @@ namespace Schogini\Beanstream\Model\Response;
 class Factory {
 	protected $objectManager;
 	protected $instanceName;
-	function __construct(\Magento\Framework\ObjectManagerInterface $spaac7e9, $spd97872 = 'Schogini\\Beanstream\\Model\\Response') {
+	function __construct(
+		\Magento\Framework\ObjectManagerInterface $spaac7e9, $spd97872 = \Schogini\Beanstream\Model\Response::class
+	) {
 		$this->objectManager = $spaac7e9;
 		$this->instanceName = $spd97872;
 	}
