@@ -1,13 +1,7 @@
 <?php
 namespace Schogini\Beanstream\Model\Response;
 class Factory {
-	protected $objectManager;
-	protected $instanceName;
-	function __construct(
-		\Magento\Framework\ObjectManagerInterface $spaac7e9, $spd97872 = \Schogini\Beanstream\Model\Response::class
-	) {
-		$this->objectManager = $spaac7e9;
-		$this->instanceName = $spd97872;
-	}
-	function create(array $sp7f1c57 = array()) {return $this->objectManager->create($this->instanceName, $sp7f1c57);}
+	private $_c;
+	function __construct($c = \Schogini\Beanstream\Model\Response::class) {$this->_c = $c;}
+	function create(array $p = []) {return df_new_om($this->_c, $p);}
 }
