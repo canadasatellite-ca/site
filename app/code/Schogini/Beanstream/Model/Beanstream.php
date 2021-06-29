@@ -37,25 +37,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	const RESPONSE_CODE_ERROR = 3;
 	const RESPONSE_CODE_HELD = 4;
 
-	public $beanstreamLogger;
-
-	final function __construct(
-		\Magento\Framework\Model\Context $sp58b303,
-		\Magento\Framework\Registry $sp7a3bd5,
-		\Magento\Framework\Api\ExtensionAttributesFactory $spefc1b3,
-		\Magento\Framework\Api\AttributeValueFactory $sp6c48a7,
-		\Magento\Payment\Helper\Data $spc7669b,
-		\Magento\Framework\App\Config\ScopeConfigInterface $sp49d401,
-		\Magento\Payment\Model\Method\Logger $spbabc0e,
-		\Magento\Framework\Module\ModuleListInterface $sp1d4edd,
-		\Magento\Framework\Stdlib\DateTime\TimezoneInterface $sp94b432,
-		\Magento\Framework\Model\ResourceModel\AbstractResource $spf17733 = null,
-		\Magento\Framework\Data\Collection\AbstractDb $spd3c755 = null,
-		array $sp7cb355 = array()
-	) {
-		parent::__construct($sp58b303, $sp7a3bd5, $spefc1b3, $sp6c48a7, $spc7669b, $sp49d401, $spbabc0e, $sp1d4edd, $sp94b432, $spf17733, $spd3c755, $sp7cb355);
-	}
-
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
