@@ -81,7 +81,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		if ($a <= 0) {
 			self::throwException(__('Invalid amount for capture.'));
 		}
-		$sp62e25f = false;
+		$m = false; /** @var Phrase|string|false $m */
 		if ($a > 0) {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
 			$i->setAmount($a);
@@ -99,17 +99,17 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 					$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 					break;
 				case self::RESPONSE_CODE_DECLINED:
-					$sp62e25f = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
+					$m = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
 					break;
 				default:
-					$sp62e25f = __('Payment authorization error. ' . "\n{$spd17c47}");
+					$m = __('Payment authorization error. ' . "\n{$spd17c47}");
 					break;
 			}
 		} else {
-			$sp62e25f = __('Invalid amount for authorization.');
+			$m = __('Invalid amount for authorization.');
 		}
-		if ($sp62e25f !== false) {
-			self::throwException($sp62e25f);
+		if ($m !== false) {
+			self::throwException($m);
 		}
 		return $this;
 	}
@@ -206,7 +206,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 */
 	final function refund(II $i, $a) {
-		$sp62e25f = false;
+		$m = false;
 		$sp57fc4d = $i->getRefundTransactionId();
 		if (empty($sp57fc4d)) {
 			$sp57fc4d = $i->getParentTransactionId();
@@ -225,13 +225,13 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction($sp41f7d8)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 			} else {
 				$spfc96e2 = $res->getResponseReasonText();
-				$sp62e25f = true;
+				$m = true;
 			}
 		} else {
 			$spfc96e2 = __('Error in refunding the payment');
-			$sp62e25f = true;
+			$m = true;
 		}
-		if ($sp62e25f !== false) {
+		if ($m !== false) {
 			self::throwException($spfc96e2);
 		}
 		return $this;
@@ -250,7 +250,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @uses _void()
 	 */
 	final function void(II $i) {
-		$sp62e25f = false;
+		$m = false;
 		$sp57fc4d = $i->getVoidTransactionId();
 		if (empty($sp57fc4d)) {
 			$sp57fc4d = $i->getParentTransactionId();
@@ -272,23 +272,23 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 			} else {
 				$spfc96e2 = $res->getResponseReasonText();
-				$sp62e25f = true;
+				$m = true;
 			}
 		} else {
 			if (!$sp57fc4d) {
 				$spfc96e2 = __('Error in voiding the payment. Transaction ID not found');
-				$sp62e25f = true;
+				$m = true;
 			} else {
 				if ($a <= 0) {
 					$spfc96e2 = __('Error in voiding the payment. Payment amount is 0');
-					$sp62e25f = true;
+					$m = true;
 				} else {
 					$spfc96e2 = __('Error in voiding the payment');
-					$sp62e25f = true;
+					$m = true;
 				}
 			}
 		}
-		if ($sp62e25f !== false) {
+		if ($m !== false) {
 			self::throwException($spfc96e2);
 		}
 		return $this;
