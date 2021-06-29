@@ -8,7 +8,6 @@ use Magento\Payment\Model\InfoInterface as II;
 use Magento\Quote\Api\Data\CartInterface as ICart;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Payment as OP;
-use Schogini\Beanstream\Model\Request as Req;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
@@ -50,12 +49,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		\Magento\Payment\Model\Method\Logger $spbabc0e,
 		\Magento\Framework\Module\ModuleListInterface $sp1d4edd,
 		\Magento\Framework\Stdlib\DateTime\TimezoneInterface $sp94b432,
-		\Schogini\Beanstream\Model\Request\Factory $spd5edf9,
 		\Magento\Framework\Model\ResourceModel\AbstractResource $spf17733 = null,
 		\Magento\Framework\Data\Collection\AbstractDb $spd3c755 = null,
 		array $sp7cb355 = array()
 	) {
-		$this->requestFactory = $spd5edf9;
 		parent::__construct($sp58b303, $sp7a3bd5, $spefc1b3, $sp6c48a7, $spc7669b, $sp49d401, $spbabc0e, $sp1d4edd, $sp94b432, $spf17733, $spd3c755, $sp7cb355);
 	}
 
@@ -129,7 +126,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_CAPTURE);
 		}
 		$i->setAmount($a);
-		$req = $this->buildRequest($i); /** @var Req $req */
+		$req = $this->buildRequest($i); /** @var _DO $req */
 		$res = $this->postRequest($req); /** @var _DO $res */
 		if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
@@ -610,11 +607,11 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @used-by refund()
 	 * @used-by void()
 	 * @param II $i
-	 * @return Req
+	 * @return _DO
 	 */
 	private function buildRequest(II $i) {
 		$o = $i->getOrder(); /** @var O $o */
-		$req = $this->requestFactory->create();
+		$req = new _DO;
 		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
 		$req->setXLogin($this->getConfigData('login'))->setXTranKey($this->getConfigData('trans_key'))->setXType($i->getAnetTransType())->setXMethod($i->getAnetTransMethod());
 		if ($i->getAmount()) {
@@ -709,11 +706,11 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @used-by capture()
 	 * @used-by refund()
 	 * @used-by void()
-	 * @param Req $req
+	 * @param _DO $req
 	 * @return mixed
 	 * @throws LE
 	 */
-	private function postRequest(Req $req) {
+	private function postRequest(_DO $req) {
 		$res = new _DO;
 		$sp21957c = $req->getData();
 		$spa81281 = array(
