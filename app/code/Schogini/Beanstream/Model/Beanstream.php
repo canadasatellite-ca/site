@@ -552,8 +552,15 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		return $res;
 	}
 
-	function _beanstreamapi($sp21957c)
-	{
+	/**
+	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by _postRequest()
+	 * @param $sp21957c
+	 * @return array
+	 * @throws \Magento\Framework\Exception\LocalizedException
+	 */
+	private function _beanstreamapi($sp21957c) {
 		$sp9c6e65 = $this->getConfigData('merchant_id');
 		$spf4dcd7 = $this->getConfigData('merchant_username');
 		$sp909eb6 = $this->getConfigData('merchant_password');
