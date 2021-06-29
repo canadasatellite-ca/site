@@ -1,6 +1,6 @@
 <?php
 namespace Schogini\Beanstream\Model;
-use Magento\Framework\DataObject;
+use Magento\Framework\DataObject as _DO;
 use Magento\Framework\Exception\LocalizedException as LE;
 use Magento\Framework\Phrase;
 use Magento\Payment\Model\Info as I;
@@ -9,7 +9,6 @@ use Magento\Quote\Api\Data\CartInterface as ICart;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Payment as OP;
 use Schogini\Beanstream\Model\Request as Req;
-use Schogini\Beanstream\Model\Response as Res;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
@@ -131,7 +130,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		$i->setAmount($a);
 		$req = $this->buildRequest($i); /** @var Req $req */
-		$res = $this->postRequest($req); /** @var Res $res */
+		$res = $this->postRequest($req); /** @var _DO $res */
 		if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
 			$i->setCcTransId($res->getTransactionId());
@@ -172,7 +171,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			return false;
 		}
 
-		$checkResult = new DataObject();
+		$checkResult = new _DO;
 		$checkResult->setData('is_available', true);
 
 		// for future use in observers
@@ -715,7 +714,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @throws LE
 	 */
 	private function postRequest(Req $req) {
-		$res = df_new_om(Res::class);
+		$res = new _DO;
 		$sp21957c = $req->getData();
 		$spa81281 = array(
 			0 => '1',
