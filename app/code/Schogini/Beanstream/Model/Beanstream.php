@@ -26,7 +26,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	protected $_canUseForMultishipping = true;
 	protected $_canSaveCc = false;
 	protected $_canOrder = false;
-	const REQUEST_TYPE_AUTH_CAPTURE = 'AUTH_CAPTURE';
 	const REQUEST_TYPE_AUTH_ONLY = 'AUTH_ONLY';
 	const REQUEST_TYPE_CAPTURE_ONLY = 'CAPTURE_ONLY';
 	const REQUEST_TYPE_CREDIT = 'REFUND';
@@ -102,7 +101,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		if ($i->getParentTransactionId()) {
 			$i->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
 		} else {
-			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_CAPTURE);
+			$i->setAnetTransType('AUTH_CAPTURE');
 		}
 		$i->setAmount($a);
 		$req = $this->buildRequest($i); /** @var _DO $req */
