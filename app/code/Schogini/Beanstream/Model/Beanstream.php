@@ -34,8 +34,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	const REQUEST_TYPE_PRIOR_AUTH_CAPTURE = 'PRIOR_AUTH_CAPTURE';
 	const RESPONSE_CODE_APPROVED = 1;
 	const RESPONSE_CODE_DECLINED = 2;
-	const RESPONSE_CODE_ERROR = 3;
-	const RESPONSE_CODE_HELD = 4;
 
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
