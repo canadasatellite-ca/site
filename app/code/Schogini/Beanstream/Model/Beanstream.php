@@ -41,9 +41,9 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 */
 	final function authorize(II $i, $a) {
 		if (0 >= $a) {
-			self::err(__('Invalid amount for authorization.'));
+			self::err('Invalid amount for authorization.');
 		}
-		$m = false; /** @var Phrase|string|false $m */
+		$m = false; /** @var string|false $m */
 		$i->setAnetTransType('AUTH_ONLY');
 		$i->setAmount($a);
 		$req = $this->buildRequest($i); /** @var _DO $req */
@@ -60,10 +60,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 				break;
 			case 2:
-				$m = __("Payment authorization transaction has been declined. \n$reasonS");
+				$m = "Payment authorization transaction has been declined. \n$reasonS";
 				break;
 			default:
-				$m = __("Payment authorization error. \n$reasonS");
+				$m = "Payment authorization error. \n$reasonS";
 		}
 		if ($m) {
 			dfp_report($this, ['request' => $req->getData(), 'response' => $res->getData()]);
@@ -178,9 +178,9 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$m = $res->getResponseReasonText();
 				$m = true;
 			}
-		} else {
-			$m = __('Error in refunding the payment');
-			$m = true;
+		}
+		else {
+			$m = 'Error in refunding the payment';
 		}
 		if ($m !== false) {
 			self::err($m);
@@ -249,17 +249,17 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$m = $res->getResponseReasonText();
 				$m = true;
 			}
-		} else {
+		}
+		else {
 			if (!$sp57fc4d) {
-				$m = __('Error in voiding the payment. Transaction ID not found');
-				$m = true;
-			} else {
+				$m = 'Error in voiding the payment. Transaction ID not found';
+			}
+			else {
 				if ($a <= 0) {
-					$m = __('Error in voiding the payment. Payment amount is 0');
-					$m = true;
-				} else {
-					$m = __('Error in voiding the payment');
-					$m = true;
+					$m = 'Error in voiding the payment. Payment amount is 0';
+				}
+				else {
+					$m = 'Error in voiding the payment';
 				}
 			}
 		}
