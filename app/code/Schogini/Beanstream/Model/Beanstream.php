@@ -40,36 +40,32 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @throws LE
 	 */
 	final function authorize(II $i, $a) {
-		if ($a <= 0) {
-			self::err(__('Invalid amount for capture.'));
+		if (0 >= $a) {
+			self::err(__('Invalid amount for authorization.'));
 		}
 		$m = false; /** @var Phrase|string|false $m */
-		if ($a > 0) {
-			$i->setAnetTransType('AUTH_ONLY');
-			$i->setAmount($a);
-			$req = $this->buildRequest($i);
-			$res = $this->postRequest($req);
-			$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
-			$spbd1c75 = $res->getResponseReasonCode();
-			$spd17c47 = $res->getResponseReasonText();
-			switch ($res->getResponseCode()) {
-				case self::$APPROVED:
-					$i->setStatus(self::STATUS_APPROVED);
-					if ($res->getTransactionId() != $i->getParentTransactionId()) {
-						$i->setTransactionId($res->getTransactionId());
-					}
-					$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
-					break;
-				case 2:
-					$m = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
-					break;
-				default:
-					$m = __('Payment authorization error. ' . "\n{$spd17c47}");
-			}
-		} else {
-			$m = __('Invalid amount for authorization.');
+		$i->setAnetTransType('AUTH_ONLY');
+		$i->setAmount($a);
+		$req = $this->buildRequest($i);
+		$res = $this->postRequest($req);
+		$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
+		$spbd1c75 = $res->getResponseReasonCode();
+		$spd17c47 = $res->getResponseReasonText();
+		switch ($res->getResponseCode()) {
+			case self::$APPROVED:
+				$i->setStatus(self::STATUS_APPROVED);
+				if ($res->getTransactionId() != $i->getParentTransactionId()) {
+					$i->setTransactionId($res->getTransactionId());
+				}
+				$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+				break;
+			case 2:
+				$m = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
+				break;
+			default:
+				$m = __('Payment authorization error. ' . "\n{$spd17c47}");
 		}
-		if ($m !== false) {
+		if ($m) {
 			self::err($m);
 		}
 		return $this;
