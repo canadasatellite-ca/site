@@ -46,8 +46,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		$m = false; /** @var Phrase|string|false $m */
 		$i->setAnetTransType('AUTH_ONLY');
 		$i->setAmount($a);
-		$req = $this->buildRequest($i);
-		$res = $this->postRequest($req);
+		$req = $this->buildRequest($i); /** @var _DO $req */
+		$res = $this->postRequest($req); /** @var _DO $res */
 		$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 		$reasonC = $res->getResponseReasonCode();
 		$reasonS = $res->getResponseReasonText();
@@ -66,6 +66,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$m = __("Payment authorization error. \n$reasonS");
 		}
 		if ($m) {
+			dfp_report($this, ['request' => $req->getData(), 'response' => $res->getData()]);
 			self::err($m);
 		}
 		return $this;
@@ -85,7 +86,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @throws LE
 	 */
 	final function capture(II $i, $a) {
-		$errorMessage = false;
+		$m = false; /** @var string|false $m */
 		if ($i->getParentTransactionId()) {
 			$i->setAnetTransType(self::$PRIOR_AUTH_CAPTURE);
 		} else {
@@ -102,22 +103,22 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$i->setTransactionId($res->getTransactionId());
 			}
 			$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
-		} else {
+		}
+		else {
 			if ($res->getResponseReasonText()) {
-				$errorMessage = $res->getResponseReasonText();
-			} else {
-				$errorMessage = __('Error in capturing the payment');
+				$m = $res->getResponseReasonText();
+			}
+			else {
+				$m = __('Error in capturing the payment');
 			}
 			if (!($o = $i->getOrder())) {
 				$o = $i->getQuote();
 			}
-			$o->addStatusToHistory(
-				$o->getStatus(), urldecode($errorMessage) . ' at Beanstream', $errorMessage . ' from Beanstream'
-			);
+			$o->addStatusToHistory($o->getStatus(), urldecode($m) . ' at Beanstream', $m . ' from Beanstream');
 		}
-		if ($errorMessage !== false) {
+		if ($m) {
 			dfp_report($this, ['request' => $req->getData(), 'response' => $res->getData()]);
-			self::err($errorMessage);
+			self::err($m);
 		}
 		return $this;
 	}
