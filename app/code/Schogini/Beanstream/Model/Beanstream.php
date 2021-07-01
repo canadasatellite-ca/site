@@ -30,7 +30,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	const REQUEST_TYPE_CAPTURE_ONLY = 'CAPTURE_ONLY';
 	const REQUEST_TYPE_CREDIT = 'REFUND';
 	const REQUEST_TYPE_VOID = 'VOID';
-	const REQUEST_TYPE_PRIOR_AUTH_CAPTURE = 'PRIOR_AUTH_CAPTURE';
 	const RESPONSE_CODE_APPROVED = 1;
 	const RESPONSE_CODE_DECLINED = 2;
 
@@ -99,7 +98,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	final function capture(II $i, $a) {
 		$errorMessage = false;
 		if ($i->getParentTransactionId()) {
-			$i->setAnetTransType(self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
+			$i->setAnetTransType(self::$REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
 		} else {
 			$i->setAnetTransType('AUTH_CAPTURE');
 		}
@@ -599,7 +598,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		switch ($i->getAnetTransType()) {
 			case self::REQUEST_TYPE_CREDIT:
 			case self::REQUEST_TYPE_VOID:
-			case self::REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
+			case self::$REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
 				$req->setXTransId($i->getCcTransId());
 				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
 				break;
@@ -835,7 +834,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		return $res;
 	}
-	
+
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
@@ -847,5 +846,14 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @param Phrase|string|null $m [optional]
 	 * @throws LE
 	 */
-	private static function err($m = null) {throw new LE(__($m ?: 'Payment error occurred.'));}	
+	private static function err($m = null) {throw new LE(__($m ?: 'Payment error occurred.'));}
+
+	/**
+	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by buildRequest()
+	 * @used-by capture()
+	 * @var string
+	 */
+	private static $REQUEST_TYPE_PRIOR_AUTH_CAPTURE = 'PRIOR_AUTH_CAPTURE';		
 }
