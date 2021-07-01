@@ -26,7 +26,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	protected $_canUseForMultishipping = true;
 	protected $_canSaveCc = false;
 	protected $_canOrder = false;
-	const RESPONSE_CODE_APPROVED = 1;
 	const RESPONSE_CODE_DECLINED = 2;
 
 	/**
@@ -55,7 +54,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$spbd1c75 = $res->getResponseReasonCode();
 			$spd17c47 = $res->getResponseReasonText();
 			switch ($res->getResponseCode()) {
-				case self::RESPONSE_CODE_APPROVED:
+				case self::$APPROVED:
 					$i->setStatus(self::STATUS_APPROVED);
 					if ($res->getTransactionId() != $i->getParentTransactionId()) {
 						$i->setTransactionId($res->getTransactionId());
@@ -101,7 +100,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		$i->setAmount($a);
 		$req = $this->buildRequest($i); /** @var _DO $req */
 		$res = $this->postRequest($req); /** @var _DO $res */
-		if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
+		if ($res->getResponseCode() == self::$APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
 			$i->setCcTransId($res->getTransactionId());
 			$i->setLastTransId($res->getTransactionId());
@@ -180,7 +179,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$req = $this->buildRequest($i);
 			$req->setXAmount($a);
 			$res = $this->postRequest($req);
-			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
+			if ($res->getResponseCode() == self::$APPROVED) {
 				$i->setStatus(self::STATUS_SUCCESS);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
 					$i->setTransactionId($res->getTransactionId());
@@ -252,7 +251,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$i->setAnetTransType(self::$VOID);
 			$req = $this->buildRequest($i);
 			$res = $this->postRequest($req);
-			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
+			if ($res->getResponseCode() == self::$APPROVED) {
 				$i->setStatus(self::STATUS_VOID);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
 					$i->setTransactionId($res->getTransactionId());
@@ -843,6 +842,17 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @throws LE
 	 */
 	private static function err($m = null) {throw new LE(__($m ?: 'Payment error occurred.'));}
+
+	/**
+	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @used-by capture()
+	 * @used-by refund()
+	 * @used-by void()
+	 * @var int
+	 */
+	private static $APPROVED = 1;
 
 	/**
 	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
