@@ -2,6 +2,7 @@
 namespace Schogini\Beanstream\Model;
 use Magento\Framework\DataObject as _DO;
 use Magento\Framework\Exception\LocalizedException as LE;
+use Magento\Framework\ObjectManager\NoninterceptableInterface as INonInterceptable;
 use Magento\Framework\Phrase;
 use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
@@ -10,8 +11,7 @@ use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Payment as OP;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-/** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
-class Beanstream extends \Magento\Payment\Model\Method\Cc {
+final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonInterceptable {
 	const CODE = 'beanstream';
 	protected $_code = self::CODE;
 	protected $_isGateway = true;
@@ -39,7 +39,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 * @throws LE
 	 */
-	final function authorize(II $i, $a) {
+	function authorize(II $i, $a) {
 		if (0 >= $a) {
 			self::err('Invalid amount for authorization.');
 		}
@@ -85,7 +85,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 * @throws LE
 	 */
-	final function capture(II $i, $a) {
+	function capture(II $i, $a) {
 		$m = false; /** @var string|false $m */
 		if ($i->getParentTransactionId()) {
 			$i->setAnetTransType(self::$PRIOR_AUTH_CAPTURE);
@@ -122,7 +122,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @param ICart|null $q
 	 * @return array|bool|mixed|null
 	 */
-	final function isAvailable(ICart $q = null) {
+	function isAvailable(ICart $q = null) {
 		$quote = $q;
 		if (!$this->isActive($quote ? $quote->getStoreId() : null)) {
 			return false;
@@ -156,7 +156,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @param float $a
 	 * @return $this
 	 */
-	final function refund(II $i, $a) {
+	function refund(II $i, $a) {
 		$m = false; /** @var Phrase|string|false $m */
 		$sp57fc4d = $i->getRefundTransactionId();
 		if (empty($sp57fc4d)) {
@@ -202,7 +202,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @SuppressWarnings(PHPMD.CyclomaticComplexity)
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
-	final function validate() {
+	function validate() {
 		$info = $this->getInfoInstance();
 		$ccNumber = $info->getCcNumber();
 		$ccNumber = preg_replace('/[\-\s]+/', '', $ccNumber);
@@ -224,7 +224,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @return $this
 	 * @uses _void()
 	 */
-	final function void(II $i) {
+	function void(II $i) {
 		$m = false;
 		$sp57fc4d = $i->getVoidTransactionId();
 		if (empty($sp57fc4d)) {
