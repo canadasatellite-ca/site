@@ -35,8 +35,12 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @see \Magento\Payment\Model\MethodInterface::authorize()
 	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\AuthorizeOperation::authorize()
 	 * https://github.com/magento/magento2/blob/2.1.5/app/code/Magento/Sales/Model/Order/Payment/Operations/AuthorizeOperation.php#L45
+	 * 2021-07-01
+	 * $a is a string because it is a result of the @see \Magento\Sales\Model\Order\Payment::formatAmount() call:
+	 * 		$amount = $payment->formatAmount($amount, true);
+	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment/Operations/AuthorizeOperation.php#L36
 	 * @param II|I|OP $i
-	 * @param float $a
+	 * @param string|float $a
 	 * @return $this
 	 * @throws LE
 	 */
