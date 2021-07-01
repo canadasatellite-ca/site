@@ -49,8 +49,8 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		$req = $this->buildRequest($i);
 		$res = $this->postRequest($req);
 		$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
-		$spbd1c75 = $res->getResponseReasonCode();
-		$spd17c47 = $res->getResponseReasonText();
+		$reasonC = $res->getResponseReasonCode();
+		$reasonS = $res->getResponseReasonText();
 		switch ($res->getResponseCode()) {
 			case self::$APPROVED:
 				$i->setStatus(self::STATUS_APPROVED);
@@ -60,10 +60,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 				$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 				break;
 			case 2:
-				$m = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
+				$m = __("Payment authorization transaction has been declined. \n$reasonS");
 				break;
 			default:
-				$m = __('Payment authorization error. ' . "\n{$spd17c47}");
+				$m = __("Payment authorization error. \n$reasonS");
 		}
 		if ($m) {
 			self::err($m);
