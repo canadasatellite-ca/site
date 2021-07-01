@@ -105,16 +105,9 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		}
 		else {
-			if ($res->getResponseReasonText()) {
-				$m = $res->getResponseReasonText();
-			}
-			else {
-				$m = __('Error in capturing the payment');
-			}
-			if (!($o = $i->getOrder())) {
-				$o = $i->getQuote();
-			}
-			$o->addStatusToHistory($o->getStatus(), urldecode($m) . ' at Beanstream', $m . ' from Beanstream');
+			$m = $res->getResponseReasonText() ?: 'Error in capturing the payment';
+			$oq = $i->getOrder() ?: $i->getQuote();
+			$oq->addStatusToHistory($oq->getStatus(), urldecode($m) . ' at Beanstream', $m . ' from Beanstream');
 		}
 		if ($m) {
 			dfp_report($this, ['request' => $req->getData(), 'response' => $res->getData()]);
