@@ -26,7 +26,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	protected $_canUseForMultishipping = true;
 	protected $_canSaveCc = false;
 	protected $_canOrder = false;
-	const REQUEST_TYPE_VOID = 'VOID';
 	const RESPONSE_CODE_APPROVED = 1;
 	const RESPONSE_CODE_DECLINED = 2;
 
@@ -250,7 +249,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$i->setAmount($i->getAmountAuthorized());
 		}
 		if ($sp57fc4d && $a > 0) {
-			$i->setAnetTransType(self::REQUEST_TYPE_VOID);
+			$i->setAnetTransType(self::$VOID);
 			$req = $this->buildRequest($i);
 			$res = $this->postRequest($req);
 			if ($res->getResponseCode() == self::RESPONSE_CODE_APPROVED) {
@@ -594,7 +593,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		switch ($i->getAnetTransType()) {
 			case self::$REFUND:
-			case self::REQUEST_TYPE_VOID:
+			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
 				$req->setXTransId($i->getCcTransId());
 				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
@@ -855,9 +854,20 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	private static $PRIOR_AUTH_CAPTURE = 'PRIOR_AUTH_CAPTURE';		
 	
 	/**
+	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by buildRequest()
 	 * @used-by refund()
 	 * @var string 
 	 */
-	private static $REFUND = 'REFUND';	
+	private static $REFUND = 'REFUND';
+
+	/**
+	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by buildRequest()
+	 * @used-by void()
+	 * @var string
+	 */
+	private static $VOID = 'VOID';
 }
