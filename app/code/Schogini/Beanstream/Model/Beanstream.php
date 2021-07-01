@@ -26,9 +26,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	protected $_canUseForMultishipping = true;
 	protected $_canSaveCc = false;
 	protected $_canOrder = false;
-	const REQUEST_TYPE_AUTH_ONLY = 'AUTH_ONLY';
-	const REQUEST_TYPE_CAPTURE_ONLY = 'CAPTURE_ONLY';
-	const REQUEST_TYPE_CREDIT = 'REFUND';
 	const REQUEST_TYPE_VOID = 'VOID';
 	const RESPONSE_CODE_APPROVED = 1;
 	const RESPONSE_CODE_DECLINED = 2;
@@ -51,7 +48,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		}
 		$m = false; /** @var Phrase|string|false $m */
 		if ($a > 0) {
-			$i->setAnetTransType(self::REQUEST_TYPE_AUTH_ONLY);
+			$i->setAnetTransType('AUTH_ONLY');
 			$i->setAmount($a);
 			$req = $this->buildRequest($i);
 			$res = $this->postRequest($req);
@@ -98,7 +95,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	final function capture(II $i, $a) {
 		$errorMessage = false;
 		if ($i->getParentTransactionId()) {
-			$i->setAnetTransType(self::$REQUEST_TYPE_PRIOR_AUTH_CAPTURE);
+			$i->setAnetTransType(self::$PRIOR_AUTH_CAPTURE);
 		} else {
 			$i->setAnetTransType('AUTH_CAPTURE');
 		}
@@ -180,7 +177,7 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$sp57fc4d = $i->getParentTransactionId();
 		}
 		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $a > 0) {
-			$i->setAnetTransType(self::REQUEST_TYPE_CREDIT);
+			$i->setAnetTransType(self::$REFUND);
 			$req = $this->buildRequest($i);
 			$req->setXAmount($a);
 			$res = $this->postRequest($req);
@@ -596,13 +593,13 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$req->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
 		switch ($i->getAnetTransType()) {
-			case self::REQUEST_TYPE_CREDIT:
+			case self::$REFUND:
 			case self::REQUEST_TYPE_VOID:
-			case self::$REQUEST_TYPE_PRIOR_AUTH_CAPTURE:
+			case self::$PRIOR_AUTH_CAPTURE:
 				$req->setXTransId($i->getCcTransId());
 				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
 				break;
-			case self::REQUEST_TYPE_CAPTURE_ONLY:
+			case 'CAPTURE_ONLY':
 				$req->setXAuthCode($i->getCcAuthCode());
 				break;
 		}
@@ -855,5 +852,12 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	 * @used-by capture()
 	 * @var string
 	 */
-	private static $REQUEST_TYPE_PRIOR_AUTH_CAPTURE = 'PRIOR_AUTH_CAPTURE';		
+	private static $PRIOR_AUTH_CAPTURE = 'PRIOR_AUTH_CAPTURE';		
+	
+	/**
+	 * @used-by buildRequest()
+	 * @used-by refund()
+	 * @var string 
+	 */
+	private static $REFUND = 'REFUND';	
 }
