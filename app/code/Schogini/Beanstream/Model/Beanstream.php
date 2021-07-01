@@ -120,6 +120,16 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @override
+	 * @see \Magento\Payment\Model\MethodInterface::isAvailable()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L343-L350
+	 * @see \Magento\Payment\Model\Method\AbstractMethod::isAvailable()
+	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L805-L825
+	 * @used-by \Magento\Payment\Block\Form\Container::getMethods()
+	 * @used-by \Magento\Payment\Helper\Data::getStoreMethods()
+	 * @used-by \Magento\Payment\Model\MethodList::getAvailableMethods()
+	 * @used-by \Magento\Quote\Model\Quote\Payment::importData()
+	 * @used-by \Magento\Sales\Model\AdminOrder\Create::_validate()
 	 * @param ICart|Q|null $q
 	 * @return array|bool|mixed|null
 	 */
