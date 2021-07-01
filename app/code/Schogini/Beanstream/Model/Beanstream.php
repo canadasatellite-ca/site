@@ -7,6 +7,7 @@ use Magento\Framework\Phrase;
 use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
 use Magento\Quote\Api\Data\CartInterface as ICart;
+use Magento\Quote\Model\Quote as Q;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Payment as OP;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -119,29 +120,17 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @param ICart|null $q
+	 * @param ICart|Q|null $q
 	 * @return array|bool|mixed|null
 	 */
-	function isAvailable(ICart $q = null) {
-		$quote = $q;
-		if (!$this->isActive($quote ? $quote->getStoreId() : null)) {
-			return false;
+	function isAvailable(ICart $q = null) {/** @var bool $r */
+		if ($r = $this->isActive($q ? $q->getStoreId() : null)) {
+			df_dispatch('payment_method_is_active', ['method_instance' => $this, 'quote' => $q,
+				'result' => ($evR = new _DO(['is_available' => true])) /** @var _DO $evR */
+			]);
+			$r = $evR['is_available'];
 		}
-
-		$checkResult = new _DO;
-		$checkResult->setData('is_available', true);
-
-		// for future use in observers
-		$this->_eventManager->dispatch(
-			'payment_method_is_active',
-			[
-				'result' => $checkResult,
-				'method_instance' => $this,
-				'quote' => $quote
-			]
-		);
-
-		return $checkResult->getData('is_available');
+		return $r;
 	}
 
 	/**
