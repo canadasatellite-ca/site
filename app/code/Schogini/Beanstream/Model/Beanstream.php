@@ -796,7 +796,10 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 		$spa81281[6] = $spc59ec5['transaction_id'];
 		$spa81281[37] = $spc59ec5['md5_hash'];
 		$spa81281[39] = $spc59ec5['card_code_response'];
-		if ($spa81281) {
+		if (!$spa81281) {
+			self::err('Error in payment gateway');
+		}
+		else {
 			$res->setResponseCode((int)str_replace('"', '', $spa81281[0]));
 			$res->setResponseSubcode((int)str_replace('"', '', $spa81281[1]));
 			$res->setResponseReasonCode((int)str_replace('"', '', $spa81281[2]));
@@ -812,8 +815,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 			$res->setCustomerId($spa81281[12]);
 			$res->setMd5Hash($spa81281[37]);
 			$res->setCardCodeResponseCode($spa81281[39]);
-		} else {
-			self::err(__('Error in payment gateway'));
 		}
 		return $res;
 	}
