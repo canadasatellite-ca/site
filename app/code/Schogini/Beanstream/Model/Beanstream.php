@@ -154,13 +154,21 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	/**
 	 * 2021-06-28 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * 2021-07-02
+	 * $a is a string because it is a result of the @see \Magento\Sales\Model\Order\Payment::formatAmount() call:
+	 * 		$baseAmountToRefund = $this->formatAmount($creditmemo->getBaseGrandTotal());
+	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment.php#L655
 	 * @override
 	 * @see \Magento\Payment\Model\MethodInterface::refund()
 	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/MethodInterface.php#L269-L277
 	 * @see \Magento\Payment\Model\Method\AbstractMethod::refund()
 	 * https://github.com/magento/magento2/blob/6ce74b2/app/code/Magento/Payment/Model/Method/AbstractMethod.php#L640-L656
+	 * @used-by \Magento\Sales\Model\Order\Payment::refund()
+	 * 		$gateway->refund($this, $baseAmountToRefund);
+	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment.php#L684
+	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment.php#L701
 	 * @param II|I|OP $payment
-	 * @param float $a
+	 * @param string|float $a
 	 * @return $this
 	 */
 	function refund(II $i, $a) {
