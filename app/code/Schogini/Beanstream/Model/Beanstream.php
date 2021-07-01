@@ -81,8 +81,12 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @used-by \Magento\Sales\Model\Order\Payment\Operations\CaptureOperation::capture():
 	 * 		$method->capture($payment, $amountToCapture);
 	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment/Operations/CaptureOperation.php#L82
+	 * 2021-07-01
+	 * $a is a string because it is a result of the @see \Magento\Sales\Model\Order\Payment::formatAmount() call:
+	 * 		$amountToCapture = $payment->formatAmount($invoice->getBaseGrandTotal());
+	 * https://github.com/magento/magento2/blob/2.3.5-p2/app/code/Magento/Sales/Model/Order/Payment/Operations/CaptureOperation.php#L37
 	 * @param II|I|OP $i
-	 * @param float $a
+	 * @param string|float $a
 	 * @return $this
 	 * @throws LE
 	 */
