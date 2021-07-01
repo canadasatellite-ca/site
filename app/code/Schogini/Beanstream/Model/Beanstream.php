@@ -26,7 +26,6 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 	protected $_canUseForMultishipping = true;
 	protected $_canSaveCc = false;
 	protected $_canOrder = false;
-	const RESPONSE_CODE_DECLINED = 2;
 
 	/**
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -61,12 +60,11 @@ class Beanstream extends \Magento\Payment\Model\Method\Cc {
 					}
 					$i->setIsTransactionClosed(0)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 					break;
-				case self::RESPONSE_CODE_DECLINED:
+				case 2:
 					$m = __('Payment authorization transaction has been declined. ' . "\n{$spd17c47}");
 					break;
 				default:
 					$m = __('Payment authorization error. ' . "\n{$spd17c47}");
-					break;
 			}
 		} else {
 			$m = __('Invalid amount for authorization.');
