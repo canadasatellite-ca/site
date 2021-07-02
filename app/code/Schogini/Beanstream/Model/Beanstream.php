@@ -8,6 +8,7 @@ use Magento\Payment\Model\Info as I;
 use Magento\Payment\Model\InfoInterface as II;
 use Magento\Quote\Api\Data\CartInterface as ICart;
 use Magento\Quote\Model\Quote as Q;
+use Magento\Quote\Model\Quote\Payment as QP;
 use Magento\Sales\Model\Order as O;
 use Magento\Sales\Model\Order\Payment as OP;
 # 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -226,13 +227,10 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @SuppressWarnings(PHPMD.NPathComplexity)
 	 */
 	function validate() {
-		$info = $this->getInfoInstance();
-		$ccNumber = $info->getCcNumber();
-		$ccNumber = preg_replace('/[\-\s]+/', '', $ccNumber);
-		$info->setCcNumber($ccNumber);
-		$autoDetectCcType = $this->autoDetectCcType($ccNumber);
-		$info->setCcType($autoDetectCcType);
-		return  parent::validate();
+		$i = $this->getInfoInstance(); /** @var QP $i */
+		$i->setCcNumber($n = preg_replace('/[\-\s]+/', '', $i->getCcNumber()));
+		$i->setCcType($this->autoDetectCcType($n));
+		return parent::validate();
 	}	
 
 	/**
