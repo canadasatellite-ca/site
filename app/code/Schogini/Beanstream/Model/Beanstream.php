@@ -229,7 +229,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	function validate() {
 		$i = $this->getInfoInstance(); /** @var QP $i */
 		$i->setCcNumber($n = preg_replace('/[\-\s]+/', '', $i->getCcNumber()));
-		$i->setCcType($this->autoDetectCcType($n));
+		$i->setCcType(self::cardBrand($n));
 		return parent::validate();
 	}	
 
@@ -294,11 +294,13 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by validate()
-	 * @param string $ccNumber
+	 * @see \Df\Payment\BankCardNetworkDetector::p()
+	 * @param string $n
 	 * @return string
 	 */
-	private function autoDetectCcType($ccNumber) {
-		$ccTypeRegExpList = [
+	private static function cardBrand($n) {
+		$r = null; /** @var string|null $list */
+		$list = [
 			//Solo, Switch or Maestro. International safe
 			'SO' => '/(^(6334)[5-9](\d{11}$|\d{13,14}$))|(^(6767)(\d{12}$|\d{14,15}$))/',
 			'SM' => '/(^(5[0678])\d{11,18}$)|(^(6[^05])\d{11,18}$)|(^(601)[^1]\d{9,16}$)|(^(6011)\d{9,11}$)' .
@@ -324,11 +326,13 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			'MI' => '/^(5(0|[6-9])|63|67(?!59|6770|6774))\d*$/',
 			'MD' => '/^(6759(?!24|38|40|6[3-9]|70|76)|676770|676774)\d*$/',
 		];
-		foreach($ccTypeRegExpList as $cardType=>$regExp){
-			if (preg_match($ccTypeRegExpList[$cardType],$ccNumber)){
-				return $cardType;
+		foreach($list as $brand => $exp) {
+			if (preg_match($exp, $n)){
+				$r = $brand;
+				break;
 			}
 		}
+		return $r;
 	}	
 
 	/**
