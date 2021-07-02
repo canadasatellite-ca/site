@@ -614,7 +614,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				break;
 		}
 		if (!empty($o)) {
-			$sp9dfdb6 = $o->getSubtotal();
 			$req->setXInvoiceNum($o->getIncrementId());
 			$sp4ed284 = $o->getBillingAddress();
 			if (!empty($sp4ed284)) {
@@ -655,6 +654,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			}
 			$amtShipping = $o->getShippingAmount(); /** @var float $amtShipping */
 			$amtTax = $o->getTaxAmount(); /** @var float $amtTax */
+			$subtotal = $o->getSubtotal(); /** @var float $subtotal */
 			if (!empty($sp79f718)) {
 				$req->setXShipToFirstName($sp79f718->getFirstname())
 					->setXShipToLastName($sp79f718->getLastname())
@@ -671,11 +671,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				if (!isset($amtTax) || $amtTax <= 0) {
 					$amtTax = $sp79f718->getTaxAmount();
 				}
-				if (!isset($sp9dfdb6) || $sp9dfdb6 <= 0) {
-					$sp9dfdb6 = $sp79f718->getSubtotal();
+				if (!isset($subtotal) || $subtotal <= 0) {
+					$subtotal = $sp79f718->getSubtotal();
 				}
 			}
-			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($sp9dfdb6)->setXFreight($amtShipping);
+			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($subtotal)->setXFreight($amtShipping);
 		}
 		if ($i->getCcNumber()) {
 			$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
