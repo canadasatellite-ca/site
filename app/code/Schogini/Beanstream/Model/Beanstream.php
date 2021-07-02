@@ -533,7 +533,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				'request' => $sp05e2c8, 'response parsed' => $spb41165, 'response raw' => $spf8f74c
 			], "error-$errorType");
 		}
-		$spc59ec5 = array();
+		$spc59ec5 = [];
 		$spc59ec5['response_code'] = '1';
 		$spc59ec5['response_subcode'] = '1';
 		$spc59ec5['response_reason_code'] = '1';
