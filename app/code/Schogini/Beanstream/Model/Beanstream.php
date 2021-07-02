@@ -364,7 +364,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if (isset($spd54e5d[$sp21957c['x_state']])) {
 			$sp21957c['x_state'] = $spd54e5d[$sp21957c['x_state']];
 		}
-		$spb0dc2a = array();
+		$spb0dc2a = [];
 		$spb0dc2a['Alabama'] = 'AL';
 		$spb0dc2a['Alaska'] = 'AK';
 		$spb0dc2a['American Samoa'] = 'AS';
@@ -520,7 +520,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			self::err('Error: ' . $spf8f74c);
 		}
 		$sp1e8be2 = explode('&', $spf8f74c);
-		$spb41165 = array();
+		$spb41165 = [];
 		foreach (@$sp1e8be2 as $sp107d68) {
 			list($sp005512, $sp5b9bbc) = explode('=', $sp107d68);
 			$spb41165[$sp005512] = strip_tags(urldecode($sp5b9bbc));
