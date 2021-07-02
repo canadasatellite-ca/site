@@ -606,8 +606,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$REFUND:
 			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
+				$req->setXCardCode($i->getCcCid());
+				$req->setXCardName($i->getCcOwner());
+				$req->setXCardNum($i->getCcNumber());
+				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 				$req->setXTransId($i->getCcTransId());
-				$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
 				break;
 			case 'CAPTURE_ONLY':
 				$req->setXAuthCode($i->getCcAuthCode());
@@ -643,7 +646,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 					->setXEmail($sp864f41)
 					->setXEmailCustomer($this->getConfigData('email_customer'))
 					->setXMerchantEmail($this->getConfigData('merchant_email'));
-
 				if (!$req->getXCountry()) {
 					$req->setXCountry($sp4ed284->getCountryId());
 				}
