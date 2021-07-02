@@ -97,11 +97,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function capture(II $i, $a) {
 		$m = false; /** @var string|false $m */
-		if ($i->getParentTransactionId()) {
-			$i->setAnetTransType(self::$PRIOR_AUTH_CAPTURE);
-		} else {
-			$i->setAnetTransType('AUTH_CAPTURE');
-		}
+		$i->setAnetTransType($i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : 'AUTH_CAPTURE');
 		$i->setAmount($a);
 		$req = $this->buildRequest($i); /** @var _DO $req */
 		$res = $this->postRequest($req); /** @var _DO $res */
