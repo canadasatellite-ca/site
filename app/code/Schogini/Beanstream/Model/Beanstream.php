@@ -618,63 +618,63 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		if (!empty($o)) {
 			$req->setXInvoiceNum($o->getIncrementId());
-			$sp4ed284 = $o->getBillingAddress();
-			if (!empty($sp4ed284)) {
-				$sp864f41 = $sp4ed284->getEmail();
+			$ba = $o->getBillingAddress();
+			if (!empty($ba)) {
+				$sp864f41 = $ba->getEmail();
 				if (!$sp864f41) {
 					$sp864f41 = $o->getBillingAddress()->getEmail();
 				}
 				if (!$sp864f41) {
 					$sp864f41 = $o->getCustomerEmail();
 				}
-				$req->setXFirstName($sp4ed284->getFirstname())
-					->setXLastName($sp4ed284->getLastname())
-					->setXCompany($sp4ed284->getCompany())
-					->setXAddress($sp4ed284->getStreet(1)[0])
-					->setXCity($sp4ed284->getCity())
-					->setXState($sp4ed284->getRegion())
-					->setXZip($sp4ed284->getPostcode())
-					->setXCountry($sp4ed284->getCountry())
-					->setXPhone($sp4ed284->getTelephone())
-					->setXFax($sp4ed284->getFax())
-					->setXCustId($sp4ed284->getCustomerId())
+				$req->setXFirstName($ba->getFirstname())
+					->setXLastName($ba->getLastname())
+					->setXCompany($ba->getCompany())
+					->setXAddress($ba->getStreet(1)[0])
+					->setXCity($ba->getCity())
+					->setXState($ba->getRegion())
+					->setXZip($ba->getPostcode())
+					->setXCountry($ba->getCountry())
+					->setXPhone($ba->getTelephone())
+					->setXFax($ba->getFax())
+					->setXCustId($ba->getCustomerId())
 # 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «Ensure that the Customer IP address is being passed in the API request for all transactions»:
 # https://github.com/canadasatellite-ca/site/issues/175
 					->setXCustomerIp(df_visitor_ip())
-					->setXCustomerTaxId($sp4ed284->getTaxId())
+					->setXCustomerTaxId($ba->getTaxId())
 					->setXEmail($sp864f41)
 					->setXEmailCustomer($this->getConfigData('email_customer'))
 					->setXMerchantEmail($this->getConfigData('merchant_email'));
 				if (!$req->getXCountry()) {
-					$req->setXCountry($sp4ed284->getCountryId());
+					$req->setXCountry($ba->getCountryId());
 				}
 			}
-			$sp79f718 = $o->getShippingAddress();
-			if (!$sp79f718) {
-				$sp79f718 = $sp4ed284;
+			$sa = $o->getShippingAddress();
+			if (!$sa) {
+				$sa = $ba;
 			}
 			$amtShipping = $o->getShippingAmount(); /** @var float $amtShipping */
 			$amtTax = $o->getTaxAmount(); /** @var float $amtTax */
 			$subtotal = $o->getSubtotal(); /** @var float $subtotal */
-			if (!empty($sp79f718)) {
-				$req->setXShipToFirstName($sp79f718->getFirstname())
-					->setXShipToLastName($sp79f718->getLastname())
-					->setXShipToCompany($sp79f718->getCompany())
-					->setXShipToAddress($sp79f718->getStreet(1)[0])
-					->setXShipToCity($sp79f718->getCity())
-					->setXShipToState($sp79f718->getRegion())
-					->setXShipToZip($sp79f718->getPostcode())
-					->setXShipToCountry($sp79f718->getCountry());
+			if (!empty($sa)) {
+				$req->setXShipToFirstName($sa->getFirstname())
+					->setXShipToLastName($sa->getLastname())
+					->setXShipToCompany($sa->getCompany())
+					->setXShipToAddress($sa->getStreet(1)[0])
+					->setXShipToCity($sa->getCity())
+					->setXShipToState($sa->getRegion())
+					->setXShipToZip($sa->getPostcode())
+					->setXShipToCountry($sa->getCountry());
 
 				if (!isset($amtShipping) || $amtShipping <= 0) {
-					$amtShipping = $sp79f718->getShippingAmount();
+					$amtShipping = $sa->getShippingAmount();
 				}
 				if (!isset($amtTax) || $amtTax <= 0) {
-					$amtTax = $sp79f718->getTaxAmount();
+					$amtTax = $sa->getTaxAmount();
 				}
 				if (!isset($subtotal) || $subtotal <= 0) {
-					$subtotal = $sp79f718->getSubtotal();
+					$subtotal = $sa->getSubtotal();
 				}
 			}
 			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($subtotal)->setXFreight($amtShipping);
