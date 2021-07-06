@@ -169,25 +169,22 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function refund(II $i, $a) {
 		$m = false; /** @var Phrase|string|false $m */
-		$parentId = $i->getRefundTransactionId() ?: $i->getParentTransactionId();
-		if (0 < $a && ($parentId || $this->getConfigData('test'))) {
-			$req = $this->buildRequest($i, self::$REFUND);
-			$req->setXAmount($a);
-			$res = $this->postRequest($req);
-			if ($res->getResponseCode() == self::$APPROVED) {
-				$i->setStatus(self::STATUS_SUCCESS);
-				if ($res->getTransactionId() != $i->getParentTransactionId()) {
-					$i->setTransactionId($res->getTransactionId());
-				}
-				$sp41f7d8 = $i->getOrder()->canCreditmemo() ? 0 : 1;
-				$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction($sp41f7d8)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
-			} else {
-				$m = $res->getResponseReasonText();
-				$m = true;
+		df_assert_gt0($a);
+		# 2021-07-06 A string like «10000003».
+		df_assert_sne($parentId = $i->getParentTransactionId()); /** @var string $parentId */
+		$req = $this->buildRequest($i, self::$REFUND);
+		$req->setXAmount($a);
+		$res = $this->postRequest($req);
+		if ($res->getResponseCode() == self::$APPROVED) {
+			$i->setStatus(self::STATUS_SUCCESS);
+			if ($res->getTransactionId() != $parentId) {
+				$i->setTransactionId($res->getTransactionId());
 			}
+			$sp41f7d8 = $i->getOrder()->canCreditmemo() ? 0 : 1;
+			$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction($sp41f7d8)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		}
 		else {
-			$m = 'Error in refunding the payment';
+			$m = $res->getResponseReasonText();
 		}
 		if ($m !== false) {
 			self::err($m);
@@ -848,7 +845,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @used-by postRequest()
 	 * @used-by authorize()
 	 * @used-by capture()
-	 * @used-by refund()
 	 * @param Phrase|string|null $m [optional]
 	 * @throws LE
 	 */
