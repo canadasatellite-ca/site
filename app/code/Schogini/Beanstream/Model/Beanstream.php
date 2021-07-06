@@ -596,7 +596,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$o = $i->getOrder(); /** @var O $o */
 		$req = new _DO;
 		$req[self::$X_METHOD] = $i->getAnetTransMethod();
-		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
 		$req->setXType($type);
 		if ($i->getAmount()) {
 			$req->setXAmount($i->getAmount());
