@@ -168,7 +168,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		# 2021-07-06 A string like «10000003».
 		df_assert_sne($parentId = $i->getParentTransactionId()); /** @var string $parentId */
 		$req = $this->buildRequest($i, self::$REFUND, $a);
-		$req->setXAmount($a);
 		$res = $this->postRequest($req, self::$REFUND);
 		if ($res->getResponseCode() == self::$APPROVED) {
 			$i->setStatus(self::STATUS_SUCCESS);
