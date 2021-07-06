@@ -428,7 +428,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$spbd0c59 = 'PAC';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
-			$sp21957c['x_amount'] = 0.0;
+			$sp21957c[self::$X_AMOUNT] = 0.0;
 		}
 		$custIp = $sp21957c['x_customer_ip'];
 		if (array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
@@ -438,7 +438,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		username={$spf4dcd7}&
 		password={$sp909eb6}&
 		trnType={$spbd0c59}&
-		trnAmount={$sp21957c['x_amount']}&
+		trnAmount={$sp21957c[self::$X_AMOUNT]}&
 		trnOrderNumber={$sp21957c['x_invoice_num']}&
 		trnCardOwner=" . urlencode($sp21957c['x_first_name']) . '+' . urlencode($sp21957c['x_last_name']) . "&
 		trnCardNumber={$sp21957c['x_card_num']}&
@@ -555,7 +555,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$o = $i->getOrder(); /** @var O $o */
 		$req = new _DO;
 		if ($a) {
-			$req->setXAmount($a);
+			$req[self::$X_AMOUNT] = $a;
 			$req->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
 		switch ($type) {
@@ -725,7 +725,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		);
 		$spa81281[7] = $sp21957c['x_invoice_num'];
 		$spa81281[8] = '';
-		$spa81281[9] = $sp21957c['x_amount'];
+		$spa81281[9] = $sp21957c[self::$X_AMOUNT];
 		$spa81281[10] = null;
 		$spa81281[11] = $type;
 		$spa81281[12] = $sp21957c['x_cust_id'];
@@ -868,4 +868,14 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var string
 	 */
 	private static $VOID = 'VOID';
+
+	/**
+	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by buildRequest()
+	 * @used-by postRequest()
+	 * @var string
+	 */
+	private static $X_AMOUNT = 'x_amount';
 }
