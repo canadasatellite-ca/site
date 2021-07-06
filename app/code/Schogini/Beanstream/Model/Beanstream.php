@@ -303,8 +303,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$merchantID = $this->getConfigData('merchant_id');
 		$merchantName = $this->getConfigData('merchant_username');
 		$merchantPassword = $this->getConfigData('merchant_password');
-		$spb9c31a = substr($reqA['x_exp_date'], 0, 2);
-		$sp6f57cf = substr($reqA['x_exp_date'], -2);
+		$expMonth = substr($reqA['x_exp_date'], 0, 2); /** @var string $expMonth */
+		$expYear = substr($reqA['x_exp_date'], -2); /** @var string $expYear */
 		$spd54e5d = [
 			'AB' => 'Alberta',
 			'BC' => 'British Columbia',
@@ -437,8 +437,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		trnOrderNumber={$reqA['x_invoice_num']}&
 		trnCardOwner=" . urlencode($reqA['x_first_name']) . '+' . urlencode($reqA['x_last_name']) . "&
 		trnCardNumber={$reqA[self::$CARD_NUMBER]}&
-		trnExpMonth={$spb9c31a}&
-		trnExpYear={$sp6f57cf}&
+		trnExpMonth={$expMonth}&
+		trnExpYear={$expYear}&
 		trnCardCvd={$cvv}&
 		customerIp={$custIp}&
 		ordEmailAddress={$reqA['x_email']}&
