@@ -259,18 +259,14 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				$m = true;
 			}
 		}
+		elseif (!$parentId) {
+			$m = 'Error in voiding the payment. Transaction ID not found';
+		}
+		elseif ($a <= 0) {
+			$m = 'Error in voiding the payment. Payment amount is 0';
+		}
 		else {
-			if (!$parentId) {
-				$m = 'Error in voiding the payment. Transaction ID not found';
-			}
-			else {
-				if ($a <= 0) {
-					$m = 'Error in voiding the payment. Payment amount is 0';
-				}
-				else {
-					$m = 'Error in voiding the payment';
-				}
-			}
+			$m = 'Error in voiding the payment';
 		}
 		if ($m !== false) {
 			self::err($m);
