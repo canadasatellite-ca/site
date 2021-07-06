@@ -244,16 +244,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if (self::$APPROVED != $res->getResponseCode()) {
 			self::err($res->getResponseReasonText());
 		}
-		else {
-			$i->setStatus(self::STATUS_VOID);
-			if ($res->getTransactionId() != $parentId) {
-				$i->setTransactionId($res->getTransactionId());
-			}
-			$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+		$i->setStatus(self::STATUS_VOID);
+		if ($res->getTransactionId() != $parentId) {
+			$i->setTransactionId($res->getTransactionId());
 		}
-		if ($m !== false) {
-			self::err($m);
-		}
+		$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		return $this;
 	}
 
@@ -791,23 +786,21 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if (!$spa81281) {
 			self::err('Error in payment gateway');
 		}
-		else {
-			$res->setResponseCode((int)str_replace('"', '', $spa81281[0]));
-			$res->setResponseSubcode((int)str_replace('"', '', $spa81281[1]));
-			$res->setResponseReasonCode((int)str_replace('"', '', $spa81281[2]));
-			$res->setResponseReasonText($spa81281[3]);
-			$res->setApprovalCode($spa81281[4]);
-			$res->setAvsResultCode($spa81281[5]);
-			$res->setTransactionId($spa81281[6]);
-			$res->setInvoiceNumber($spa81281[7]);
-			$res->setDescription($spa81281[8]);
-			$res->setAmount($spa81281[9]);
-			$res->setMethod($spa81281[10]);
-			$res->setTransactionType($spa81281[11]);
-			$res->setCustomerId($spa81281[12]);
-			$res->setMd5Hash($spa81281[37]);
-			$res->setCardCodeResponseCode($spa81281[39]);
-		}
+		$res->setResponseCode((int)str_replace('"', '', $spa81281[0]));
+		$res->setResponseSubcode((int)str_replace('"', '', $spa81281[1]));
+		$res->setResponseReasonCode((int)str_replace('"', '', $spa81281[2]));
+		$res->setResponseReasonText($spa81281[3]);
+		$res->setApprovalCode($spa81281[4]);
+		$res->setAvsResultCode($spa81281[5]);
+		$res->setTransactionId($spa81281[6]);
+		$res->setInvoiceNumber($spa81281[7]);
+		$res->setDescription($spa81281[8]);
+		$res->setAmount($spa81281[9]);
+		$res->setMethod($spa81281[10]);
+		$res->setTransactionType($spa81281[11]);
+		$res->setCustomerId($spa81281[12]);
+		$res->setMd5Hash($spa81281[37]);
+		$res->setCardCodeResponseCode($spa81281[39]);
 		return $res;
 	}
 
