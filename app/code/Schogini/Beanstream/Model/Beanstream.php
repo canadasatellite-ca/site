@@ -557,7 +557,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
 				$req[self::$CVV] = $i->getCcCid();
-				$req->setXCardName($i->getCcOwner());
 				$req[self::$CARD_NUMBER] = $i->getCcNumber();
 				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 				$req->setXTransId($i->getCcTransId());
@@ -628,7 +627,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		if ($i->getCcNumber()) {
 			$req[self::$CVV] = $i->getCcCid();
-			$req->setXCardName($i->getCcOwner());
 			$req[self::$CARD_NUMBER] = $i->getCcNumber();
 			$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 		}
