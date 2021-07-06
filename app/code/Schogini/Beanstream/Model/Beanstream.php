@@ -561,7 +561,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	private function buildRequest(II $i, $type) {
 		$o = $i->getOrder(); /** @var O $o */
 		$req = new _DO;
-		$req->setXType($type);
 		if ($i->getAmount()) {
 			$req->setXAmount($i->getAmount());
 			$req->setXCurrencyCode($o->getBaseCurrencyCode());
