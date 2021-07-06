@@ -294,17 +294,17 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by postRequest()
-	 * @param $sp21957c
+	 * @param $reqA
 	 * @param string $type
 	 * @return array
 	 * @throws LE
 	 */
-	private function beanstreamapi($sp21957c, $type) {
+	private function beanstreamapi($reqA, $type) {
 		$sp9c6e65 = $this->getConfigData('merchant_id');
 		$spf4dcd7 = $this->getConfigData('merchant_username');
 		$sp909eb6 = $this->getConfigData('merchant_password');
-		$spb9c31a = substr($sp21957c['x_exp_date'], 0, 2);
-		$sp6f57cf = substr($sp21957c['x_exp_date'], -2);
+		$spb9c31a = substr($reqA['x_exp_date'], 0, 2);
+		$sp6f57cf = substr($reqA['x_exp_date'], -2);
 		$spd54e5d = [
 			'AB' => 'Alberta',
 			'BC' => 'British Columbia',
@@ -321,8 +321,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			'YT' => 'Yukon Territory'
 	];
 		$spd54e5d = array_flip($spd54e5d);
-		if (isset($spd54e5d[$sp21957c['x_state']])) {
-			$sp21957c['x_state'] = $spd54e5d[$sp21957c['x_state']];
+		if (isset($spd54e5d[$reqA['x_state']])) {
+			$reqA['x_state'] = $spd54e5d[$reqA['x_state']];
 		}
 		$spb0dc2a = [];
 		$spb0dc2a['Alabama'] = 'AL';
@@ -390,21 +390,21 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$spb0dc2a['West Virginia'] = 'WV';
 		$spb0dc2a['Wisconsin'] = 'WI';
 		$spb0dc2a['Wyoming'] = 'WY';
-		if ($sp21957c['x_country'] == '') {
-			if ($sp21957c['x_state'] != '') {
-				if (isset($spd54e5d[$sp21957c['x_state']])) {
-					$sp21957c['x_country'] = 'CA';
-				} elseif (isset($spb0dc2a[$sp21957c['x_state']])) {
-					$sp21957c['x_country'] = 'US';
+		if ($reqA['x_country'] == '') {
+			if ($reqA['x_state'] != '') {
+				if (isset($spd54e5d[$reqA['x_state']])) {
+					$reqA['x_country'] = 'CA';
+				} elseif (isset($spb0dc2a[$reqA['x_state']])) {
+					$reqA['x_country'] = 'US';
 				}
 			}
 		}
-		if ($sp21957c['x_country'] == 'US') {
-			$sp21957c['x_state'] = $spb0dc2a[$sp21957c['x_state']];
+		if ($reqA['x_country'] == 'US') {
+			$reqA['x_state'] = $spb0dc2a[$reqA['x_state']];
 		}
 
-		if ($sp21957c['x_country'] != 'US' && $sp21957c['x_country'] != 'CA') {
-			$sp21957c['x_state'] = '--';
+		if ($reqA['x_country'] != 'US' && $reqA['x_country'] != 'CA') {
+			$reqA['x_state'] = '--';
 		}
 		$spbd0c59 = 'P';
 		$sp8d1f04 = '';
@@ -416,39 +416,39 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		elseif ($type == self::$PRIOR_AUTH_CAPTURE) {
 			$spbd0c59 = 'PAC';
-			$sp8d1f04 = '&adjId=' . $sp21957c['x_trans_id'];
+			$sp8d1f04 = '&adjId=' . $reqA['x_trans_id'];
 		}
 		elseif ($type == self::$VOID) {
 			$spbd0c59 = 'PAC';
-			$spd28804 = explode('--', $sp21957c['x_trans_id']);
+			$spd28804 = explode('--', $reqA['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
-			$sp21957c[self::$X_AMOUNT] = 0.0;
+			$reqA[self::$X_AMOUNT] = 0.0;
 		}
-		$custIp = $sp21957c['x_customer_ip'];
+		$custIp = $reqA['x_customer_ip'];
 		if (array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
-		$cvv = df_ets(dfa($sp21957c, self::$CVV)); /** @var string $cvv */
+		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
 		$sp05e2c8 = "requestType=BACKEND&merchant_id={$sp9c6e65}&
 		username={$spf4dcd7}&
 		password={$sp909eb6}&
 		trnType={$spbd0c59}&
-		trnAmount={$sp21957c[self::$X_AMOUNT]}&
-		trnOrderNumber={$sp21957c['x_invoice_num']}&
-		trnCardOwner=" . urlencode($sp21957c['x_first_name']) . '+' . urlencode($sp21957c['x_last_name']) . "&
-		trnCardNumber={$sp21957c[self::$CARD_NUMBER]}&
+		trnAmount={$reqA[self::$X_AMOUNT]}&
+		trnOrderNumber={$reqA['x_invoice_num']}&
+		trnCardOwner=" . urlencode($reqA['x_first_name']) . '+' . urlencode($reqA['x_last_name']) . "&
+		trnCardNumber={$reqA[self::$CARD_NUMBER]}&
 		trnExpMonth={$spb9c31a}&
 		trnExpYear={$sp6f57cf}&
 		trnCardCvd={$cvv}&
 		customerIp={$custIp}&
-		ordEmailAddress={$sp21957c['x_email']}&
-		ordName=" . urlencode($sp21957c['x_first_name'] . ' ' . $sp21957c['x_last_name']) . "&
-		ordPhoneNumber={$sp21957c['x_phone']}&
-		ordAddress1=" . urlencode($sp21957c['x_address']) . '&
-		ordAddress2=&ordCity=' . urlencode($sp21957c['x_city']) . '&
-		ordProvince=' . urlencode($sp21957c['x_state']) . '&
-		ordPostalCode=' . urlencode($sp21957c['x_zip']) . "&
-		ordCountry={$sp21957c['x_country']}" . $sp8d1f04;
+		ordEmailAddress={$reqA['x_email']}&
+		ordName=" . urlencode($reqA['x_first_name'] . ' ' . $reqA['x_last_name']) . "&
+		ordPhoneNumber={$reqA['x_phone']}&
+		ordAddress1=" . urlencode($reqA['x_address']) . '&
+		ordAddress2=&ordCity=' . urlencode($reqA['x_city']) . '&
+		ordProvince=' . urlencode($reqA['x_state']) . '&
+		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
+		ordCountry={$reqA['x_country']}" . $sp8d1f04;
 		$specd301 = curl_init();
 		curl_setopt($specd301, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
 		curl_setopt($specd301, CURLOPT_POST, 1);
@@ -647,7 +647,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	private function postRequest(_DO $req, $type) {
 		$res = new _DO;
-		$sp21957c = $req->getData();
+		$reqA = $req->getData();
 		$spa81281 = array(
 			0 => '1',
 			1 => '1',
@@ -718,40 +718,40 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			66 => '',
 			67 => ''
 		);
-		$spa81281[7] = $sp21957c['x_invoice_num'];
+		$spa81281[7] = $reqA['x_invoice_num'];
 		$spa81281[8] = '';
-		$spa81281[9] = $sp21957c[self::$X_AMOUNT];
+		$spa81281[9] = $reqA[self::$X_AMOUNT];
 		$spa81281[10] = null;
 		$spa81281[11] = $type;
-		$spa81281[12] = $sp21957c['x_cust_id'];
-		$spa81281[13] = $sp21957c['x_first_name'];
-		$spa81281[14] = $sp21957c['x_last_name'];
-		$spa81281[15] = $sp21957c['x_company'];
-		$spa81281[16] = $sp21957c['x_address'];
-		$spa81281[17] = $sp21957c['x_city'];
-		$spa81281[18] = $sp21957c['x_state'];
-		$spa81281[19] = $sp21957c['x_zip'];
-		$spa81281[20] = $sp21957c['x_country'];
-		$spa81281[21] = $sp21957c['x_phone'];
-		$spa81281[22] = $sp21957c['x_fax'];
+		$spa81281[12] = $reqA['x_cust_id'];
+		$spa81281[13] = $reqA['x_first_name'];
+		$spa81281[14] = $reqA['x_last_name'];
+		$spa81281[15] = $reqA['x_company'];
+		$spa81281[16] = $reqA['x_address'];
+		$spa81281[17] = $reqA['x_city'];
+		$spa81281[18] = $reqA['x_state'];
+		$spa81281[19] = $reqA['x_zip'];
+		$spa81281[20] = $reqA['x_country'];
+		$spa81281[21] = $reqA['x_phone'];
+		$spa81281[22] = $reqA['x_fax'];
 		$spa81281[23] = '';
-		$sp21957c['x_ship_to_first_name'] = !isset($sp21957c['x_ship_to_first_name']) ? $sp21957c['x_first_name'] : $sp21957c['x_ship_to_first_name'];
-		$sp21957c['x_ship_to_first_name'] = !isset($sp21957c['x_ship_to_first_name']) ? $sp21957c['x_first_name'] : $sp21957c['x_ship_to_first_name'];
-		$sp21957c['x_ship_to_last_name'] = !isset($sp21957c['x_ship_to_last_name']) ? $sp21957c['x_last_name'] : $sp21957c['x_ship_to_last_name'];
-		$sp21957c['x_ship_to_company'] = !isset($sp21957c['x_ship_to_company']) ? $sp21957c['x_company'] : $sp21957c['x_ship_to_company'];
-		$sp21957c['x_ship_to_address'] = !isset($sp21957c['x_ship_to_address']) ? $sp21957c['x_address'] : $sp21957c['x_ship_to_address'];
-		$sp21957c['x_ship_to_city'] = !isset($sp21957c['x_ship_to_city']) ? $sp21957c['x_city'] : $sp21957c['x_ship_to_city'];
-		$sp21957c['x_ship_to_state'] = !isset($sp21957c['x_ship_to_state']) ? $sp21957c['x_state'] : $sp21957c['x_ship_to_state'];
-		$sp21957c['x_ship_to_zip'] = !isset($sp21957c['x_ship_to_zip']) ? $sp21957c['x_zip'] : $sp21957c['x_ship_to_zip'];
-		$sp21957c['x_ship_to_country'] = !isset($sp21957c['x_ship_to_country']) ? $sp21957c['x_country'] : $sp21957c['x_ship_to_country'];
-		$spa81281[24] = $sp21957c['x_ship_to_first_name'];
-		$spa81281[25] = $sp21957c['x_ship_to_last_name'];
-		$spa81281[26] = $sp21957c['x_ship_to_company'];
-		$spa81281[27] = $sp21957c['x_ship_to_address'];
-		$spa81281[28] = $sp21957c['x_ship_to_city'];
-		$spa81281[29] = $sp21957c['x_ship_to_state'];
-		$spa81281[30] = $sp21957c['x_ship_to_zip'];
-		$spa81281[31] = $sp21957c['x_ship_to_country'];
+		$reqA['x_ship_to_first_name'] = !isset($reqA['x_ship_to_first_name']) ? $reqA['x_first_name'] : $reqA['x_ship_to_first_name'];
+		$reqA['x_ship_to_first_name'] = !isset($reqA['x_ship_to_first_name']) ? $reqA['x_first_name'] : $reqA['x_ship_to_first_name'];
+		$reqA['x_ship_to_last_name'] = !isset($reqA['x_ship_to_last_name']) ? $reqA['x_last_name'] : $reqA['x_ship_to_last_name'];
+		$reqA['x_ship_to_company'] = !isset($reqA['x_ship_to_company']) ? $reqA['x_company'] : $reqA['x_ship_to_company'];
+		$reqA['x_ship_to_address'] = !isset($reqA['x_ship_to_address']) ? $reqA['x_address'] : $reqA['x_ship_to_address'];
+		$reqA['x_ship_to_city'] = !isset($reqA['x_ship_to_city']) ? $reqA['x_city'] : $reqA['x_ship_to_city'];
+		$reqA['x_ship_to_state'] = !isset($reqA['x_ship_to_state']) ? $reqA['x_state'] : $reqA['x_ship_to_state'];
+		$reqA['x_ship_to_zip'] = !isset($reqA['x_ship_to_zip']) ? $reqA['x_zip'] : $reqA['x_ship_to_zip'];
+		$reqA['x_ship_to_country'] = !isset($reqA['x_ship_to_country']) ? $reqA['x_country'] : $reqA['x_ship_to_country'];
+		$spa81281[24] = $reqA['x_ship_to_first_name'];
+		$spa81281[25] = $reqA['x_ship_to_last_name'];
+		$spa81281[26] = $reqA['x_ship_to_company'];
+		$spa81281[27] = $reqA['x_ship_to_address'];
+		$spa81281[28] = $reqA['x_ship_to_city'];
+		$spa81281[29] = $reqA['x_ship_to_state'];
+		$spa81281[30] = $reqA['x_ship_to_zip'];
+		$spa81281[31] = $reqA['x_ship_to_country'];
 		$spa81281[0] = '1';
 		$spa81281[1] = '1';
 		$spa81281[2] = '1';
@@ -761,7 +761,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$spa81281[6] = '0';
 		$spa81281[37] = '382065EC3B4C2F5CDC424A730393D2DF';
 		$spa81281[39] = '';
-		$spc59ec5 = $this->beanstreamapi($sp21957c, $type);
+		$spc59ec5 = $this->beanstreamapi($reqA, $type);
 		$spa81281[0] = $spc59ec5['response_code'];
 		$spa81281[1] = $spc59ec5['response_subcode'];
 		$spa81281[2] = $spc59ec5['response_reason_code'];
