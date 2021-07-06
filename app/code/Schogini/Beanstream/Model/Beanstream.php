@@ -457,11 +457,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$spbd0c59 = 'PAC';
 			$sp8d1f04 = '&adjId=' . $sp21957c['x_trans_id'];
 		}
-		elseif ($type == 'CREDIT') {
-			$spbd0c59 = 'R';
-			$spd28804 = explode('--', $sp21957c['x_trans_id']);
-			$sp8d1f04 = '&adjId=' . $spd28804[0];
-		}
 		elseif ($type == self::$VOID) {
 			$spbd0c59 = 'PAC';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
