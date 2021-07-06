@@ -632,7 +632,10 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($subtotal)->setXFreight($amtShipping);
 		}
 		if ($i->getCcNumber()) {
-			$req->setXCardNum($i->getCcNumber())->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()))->setXCardCode($i->getCcCid())->setXCardName($i->getCcOwner());
+			$req->setXCardCode($i->getCcCid());
+			$req->setXCardName($i->getCcOwner());
+			$req->setXCardNum($i->getCcNumber());
+			$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 		}
 		return $req;
 	}
