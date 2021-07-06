@@ -406,12 +406,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($sp21957c['x_country'] != 'US' && $sp21957c['x_country'] != 'CA') {
 			$sp21957c['x_state'] = '--';
 		}
-		if (isset($sp21957c['x_card_code']) && !empty($sp21957c['x_card_code'])) {
-			$sp2bde2d = $sp21957c['x_card_code'];
-		}
-		else {
-			$sp2bde2d = '';
-		}
 		$spbd0c59 = 'P';
 		$sp8d1f04 = '';
 		if ($type == self::$AUTH_CAPTURE) {
@@ -434,6 +428,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if (array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
+		$cardNumber = df_ets(dfa($sp21957c, self::$CARD_NUMBER)); /** @var string $cardNumber */
 		$sp05e2c8 = "requestType=BACKEND&merchant_id={$sp9c6e65}&
 		username={$spf4dcd7}&
 		password={$sp909eb6}&
@@ -444,7 +439,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		trnCardNumber={$sp21957c['x_card_num']}&
 		trnExpMonth={$spb9c31a}&
 		trnExpYear={$sp6f57cf}&
-		trnCardCvd={$sp2bde2d}&
+		trnCardCvd={$cardNumber}&
 		customerIp={$custIp}&
 		ordEmailAddress={$sp21957c['x_email']}&
 		ordName=" . urlencode($sp21957c['x_first_name'] . ' ' . $sp21957c['x_last_name']) . "&
@@ -561,7 +556,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$REFUND:
 			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
-				$req->setXCardCode($i->getCcCid());
+				$req[self::$CARD_NUMBER] = $i->getCcCid();
 				$req->setXCardName($i->getCcOwner());
 				$req->setXCardNum($i->getCcNumber());
 				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
@@ -632,7 +627,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($subtotal)->setXFreight($amtShipping);
 		}
 		if ($i->getCcNumber()) {
-			$req->setXCardCode($i->getCcCid());
+			$req[self::$CARD_NUMBER] = $i->getCcCid();
 			$req->setXCardName($i->getCcOwner());
 			$req->setXCardNum($i->getCcNumber());
 			$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
@@ -841,6 +836,15 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var string
 	 */
 	private static $AUTH_ONLY = 'AUTH_ONLY';
+	
+	/**
+	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by buildRequest()
+	 * @var string
+	 */	
+	private static $CARD_NUMBER = 'card_number';
 
 	/**
 	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
