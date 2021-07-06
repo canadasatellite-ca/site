@@ -598,7 +598,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$req->setXLogin($this->getConfigData('login'));
 		$req->setXMethod($i->getAnetTransMethod());
 		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
-		$req->setXTranKey($this->getConfigData('trans_key'));
 		$req->setXType($type);
 		if ($i->getAmount()) {
 			$req->setXAmount($i->getAmount());
