@@ -235,7 +235,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @uses _void()
 	 */
 	function void(II $i) {
-		$m = false;
 		$i->setAmount(df_assert_gt0($a = $i->getAmountAuthorized()));
 		# 2021-07-06 A string like «10000003».
 		df_assert_sne($parentId = $i->getParentTransactionId()); /** @var string $parentId */
@@ -248,7 +247,9 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($res->getTransactionId() != $parentId) {
 			$i->setTransactionId($res->getTransactionId());
 		}
-		$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
+		$i->setIsTransactionClosed(1);
+		$i->setShouldCloseParentTransaction(1);
+		$i->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		return $this;
 	}
 
