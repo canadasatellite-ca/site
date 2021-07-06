@@ -294,15 +294,15 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by postRequest()
-	 * @param $reqA
+	 * @param array(string => mixed) $reqA
 	 * @param string $type
 	 * @return array
 	 * @throws LE
 	 */
-	private function beanstreamapi($reqA, $type) {
-		$sp9c6e65 = $this->getConfigData('merchant_id');
-		$spf4dcd7 = $this->getConfigData('merchant_username');
-		$sp909eb6 = $this->getConfigData('merchant_password');
+	private function beanstreamapi(array $reqA, $type) {
+		$merchantID = $this->getConfigData('merchant_id');
+		$merchantName = $this->getConfigData('merchant_username');
+		$merchantPassword = $this->getConfigData('merchant_password');
 		$spb9c31a = substr($reqA['x_exp_date'], 0, 2);
 		$sp6f57cf = substr($reqA['x_exp_date'], -2);
 		$spd54e5d = [
@@ -429,9 +429,9 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
 		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
-		$sp05e2c8 = "requestType=BACKEND&merchant_id={$sp9c6e65}&
-		username={$spf4dcd7}&
-		password={$sp909eb6}&
+		$sp05e2c8 = "requestType=BACKEND&merchant_id={$merchantID}&
+		username={$merchantName}&
+		password={$merchantPassword}&
 		trnType={$spbd0c59}&
 		trnAmount={$reqA[self::$X_AMOUNT]}&
 		trnOrderNumber={$reqA['x_invoice_num']}&
