@@ -50,9 +50,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			self::err('Invalid amount for authorization.');
 		}
 		$m = false; /** @var string|false $m */
-		$i->setAnetTransType('AUTH_ONLY');
 		$i->setAmount($a);
-		$req = $this->buildRequest($i); /** @var _DO $req */
+		$req = $this->buildRequest($i, 'AUTH_ONLY'); /** @var _DO $req */
 		$res = $this->postRequest($req); /** @var _DO $res */
 		$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 		$reasonC = $res->getResponseReasonCode();
@@ -97,9 +96,9 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function capture(II $i, $a) {
 		$m = false; /** @var string|false $m */
-		$i->setAnetTransType($i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : 'AUTH_CAPTURE');
 		$i->setAmount($a);
-		$req = $this->buildRequest($i); /** @var _DO $req */
+		/** @var _DO $req */
+		$req = $this->buildRequest($i, $i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : 'AUTH_CAPTURE');
 		$res = $this->postRequest($req); /** @var _DO $res */
 		if ($res->getResponseCode() == self::$APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
@@ -175,8 +174,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$sp57fc4d = $i->getParentTransactionId();
 		}
 		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $a > 0) {
-			$i->setAnetTransType(self::$REFUND);
-			$req = $this->buildRequest($i);
+			$req = $this->buildRequest($i, self::$REFUND);
 			$req->setXAmount($a);
 			$res = $this->postRequest($req);
 			if ($res->getResponseCode() == self::$APPROVED) {
@@ -253,8 +251,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$i->setAmount($i->getAmountAuthorized());
 		}
 		if ($sp57fc4d && $a > 0) {
-			$i->setAnetTransType(self::$VOID);
-			$req = $this->buildRequest($i);
+			$req = $this->buildRequest($i, self::$VOID);
 			$res = $this->postRequest($req);
 			if ($res->getResponseCode() == self::$APPROVED) {
 				$i->setStatus(self::STATUS_VOID);
@@ -588,21 +585,22 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @used-by refund()
 	 * @used-by void()
 	 * @param II $i
+	 * @param string $type
 	 * @return _DO
 	 */
-	private function buildRequest(II $i) {
+	private function buildRequest(II $i, $type) {
 		$o = $i->getOrder(); /** @var O $o */
 		$req = new _DO;
 		$req->setXLogin($this->getConfigData('login'));
 		$req->setXMethod($i->getAnetTransMethod());
 		$req->setXTestRequest($this->getConfigData('test') ? 'TRUE' : 'FALSE');
 		$req->setXTranKey($this->getConfigData('trans_key'));
-		$req->setXType($i->getAnetTransType());
+		$req->setXType($type);
 		if ($i->getAmount()) {
 			$req->setXAmount($i->getAmount());
 			$req->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
-		switch ($i->getAnetTransType()) {
+		switch ($type) {
 			case self::$REFUND:
 			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
