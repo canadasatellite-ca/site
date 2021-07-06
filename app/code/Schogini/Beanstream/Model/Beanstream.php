@@ -169,11 +169,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function refund(II $i, $a) {
 		$m = false; /** @var Phrase|string|false $m */
-		$parentId = $i->getRefundTransactionId();
-		if (empty($parentId)) {
-			$parentId = $i->getParentTransactionId();
-		}
-		if (($this->getConfigData('test') && $parentId == 0 || $parentId) && $a > 0) {
+		$parentId = $i->getRefundTransactionId() ?: $i->getParentTransactionId();
+		if (0 < $a && ($parentId || $this->getConfigData('test'))) {
 			$req = $this->buildRequest($i, self::$REFUND);
 			$req->setXAmount($a);
 			$res = $this->postRequest($req);
