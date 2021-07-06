@@ -51,7 +51,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		$m = false; /** @var string|false $m */
 		$i->setAmount($a);
-		$req = $this->buildRequest($i, 'AUTH_ONLY'); /** @var _DO $req */
+		$req = $this->buildRequest($i, self::$AUTH_ONLY); /** @var _DO $req */
 		$res = $this->postRequest($req); /** @var _DO $res */
 		$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 		$reasonC = $res->getResponseReasonCode();
@@ -443,26 +443,30 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($sp21957c['x_country'] != 'US' && $sp21957c['x_country'] != 'CA') {
 			$sp21957c['x_state'] = '--';
 		}
-
 		if (isset($sp21957c['x_card_code']) && !empty($sp21957c['x_card_code'])) {
 			$sp2bde2d = $sp21957c['x_card_code'];
-		} else {
+		}
+		else {
 			$sp2bde2d = '';
 		}
 		$spbd0c59 = 'P';
 		$sp8d1f04 = '';
 		if ($sp21957c['x_type'] == 'AUTH_CAPTURE') {
 			$spbd0c59 = 'P';
-		} elseif ($sp21957c['x_type'] == 'AUTH_ONLY') {
+		}
+		elseif ($sp21957c['x_type'] == self::$AUTH_ONLY) {
 			$spbd0c59 = 'PA';
-		} elseif ($sp21957c['x_type'] == 'CAPTURE_ONLY' || $sp21957c['x_type'] == 'PRIOR_AUTH_CAPTURE') {
+		}
+		elseif ($sp21957c['x_type'] == 'CAPTURE_ONLY' || $sp21957c['x_type'] == 'PRIOR_AUTH_CAPTURE') {
 			$spbd0c59 = 'PAC';
 			$sp8d1f04 = '&adjId=' . $sp21957c['x_trans_id'];
-		} elseif ($sp21957c['x_type'] == 'CREDIT') {
+		}
+		elseif ($sp21957c['x_type'] == 'CREDIT') {
 			$spbd0c59 = 'R';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
-		} elseif ($sp21957c['x_type'] == 'VOID') {
+		}
+		elseif ($sp21957c['x_type'] == 'VOID') {
 			$spbd0c59 = 'PAC';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
@@ -866,6 +870,15 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var int
 	 */
 	private static $APPROVED = 1;
+
+	/**
+	 * 2021-07-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by authorize()
+	 * @used-by beanstreamapi()
+	 * @var string
+	 */
+	private static $AUTH_ONLY = 'AUTH_ONLY';
 
 	/**
 	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
