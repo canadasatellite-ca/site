@@ -236,37 +236,20 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function void(II $i) {
 		$m = false;
-		$parentId = $i->getVoidTransactionId();
-		if (empty($parentId)) {
-			$parentId = $i->getParentTransactionId();
-		}
-		$a = $i->getAmount();
-		if ($a <= 0) {
-			$a = $i->getAmountAuthorized();
-			$i->setAmount($i->getAmountAuthorized());
-		}
-		if ($parentId && $a > 0) {
-			$req = $this->buildRequest($i, self::$VOID);
-			$res = $this->postRequest($req, self::$VOID);
-			if ($res->getResponseCode() == self::$APPROVED) {
-				$i->setStatus(self::STATUS_VOID);
-				if ($res->getTransactionId() != $i->getParentTransactionId()) {
-					$i->setTransactionId($res->getTransactionId());
-				}
-				$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
-			} else {
-				$m = $res->getResponseReasonText();
-				$m = true;
-			}
-		}
-		elseif (!$parentId) {
-			$m = 'Error in voiding the payment. Transaction ID not found';
-		}
-		elseif ($a <= 0) {
-			$m = 'Error in voiding the payment. Payment amount is 0';
+		$i->setAmount(df_assert_gt0($a = $i->getAmountAuthorized()));
+		# 2021-07-06 A string like «10000003».
+		df_assert_sne($parentId = $i->getParentTransactionId()); /** @var string $parentId */
+		$req = $this->buildRequest($i, self::$VOID);
+		$res = $this->postRequest($req, self::$VOID);
+		if (self::$APPROVED != $res->getResponseCode()) {
+			self::err($res->getResponseReasonText());
 		}
 		else {
-			$m = 'Error in voiding the payment';
+			$i->setStatus(self::STATUS_VOID);
+			if ($res->getTransactionId() != $parentId) {
+				$i->setTransactionId($res->getTransactionId());
+			}
+			$i->setIsTransactionClosed(1)->setShouldCloseParentTransaction(1)->setTransactionAdditionalInfo('real_transaction_id', $res->getTransactionId());
 		}
 		if ($m !== false) {
 			self::err($m);
@@ -831,10 +814,12 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	/**
 	 * 2021-06-29 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by beanstreamapi()
-	 * @used-by postRequest()
 	 * @used-by authorize()
+	 * @used-by beanstreamapi()
 	 * @used-by capture()
+	 * @used-by postRequest()
+	 * @used-by refund()
+	 * @used-by void()
 	 * @param Phrase|string|null $m [optional]
 	 * @throws LE
 	 */
