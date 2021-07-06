@@ -457,7 +457,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		elseif ($sp21957c['x_type'] == self::$AUTH_ONLY) {
 			$spbd0c59 = 'PA';
 		}
-		elseif ($sp21957c['x_type'] == 'CAPTURE_ONLY' || $sp21957c['x_type'] == 'PRIOR_AUTH_CAPTURE') {
+		elseif ($sp21957c['x_type'] == 'CAPTURE_ONLY' || $sp21957c['x_type'] == self::$PRIOR_AUTH_CAPTURE) {
 			$spbd0c59 = 'PAC';
 			$sp8d1f04 = '&adjId=' . $sp21957c['x_trans_id'];
 		}
@@ -892,6 +892,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	/**
 	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
 	 * @used-by buildRequest()
 	 * @used-by capture()
 	 * @var string
