@@ -541,7 +541,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @used-by capture()
 	 * @used-by refund()
 	 * @used-by void()
-	 * @param II $i
+	 * @param II|OP $i
 	 * @param string $type
 	 * @param float|string $a
 	 * @return _DO
