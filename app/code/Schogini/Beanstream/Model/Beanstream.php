@@ -305,7 +305,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$merchantPassword = $this->getConfigData('merchant_password');
 		$expMonth = substr($reqA['x_exp_date'], 0, 2); /** @var string $expMonth */
 		$expYear = substr($reqA['x_exp_date'], -2); /** @var string $expYear */
-		$statesCA = [
+		$statesCA = array_flip([
 			'AB' => 'Alberta',
 			'BC' => 'British Columbia',
 			'MB' => 'Manitoba',
@@ -319,11 +319,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			'QC' => 'Quebec',
 			'SK' => 'Saskatchewan',
 			'YT' => 'Yukon Territory'
-		]; /** @var array(string => string) $statesCA */
-		$statesCA = array_flip($statesCA);
-		if (isset($statesCA[$reqA['x_state']])) {
-			$reqA['x_state'] = $statesCA[$reqA['x_state']];
-		}
+		]); /** @var array(string => string) $statesCA */
+		$reqA['x_state'] = dftr($reqA['x_state'], $statesCA);
 		$spb0dc2a = [];
 		$spb0dc2a['Alabama'] = 'AL';
 		$spb0dc2a['Alaska'] = 'AK';
