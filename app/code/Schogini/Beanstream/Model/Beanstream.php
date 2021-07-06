@@ -169,11 +169,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function refund(II $i, $a) {
 		$m = false; /** @var Phrase|string|false $m */
-		$sp57fc4d = $i->getRefundTransactionId();
-		if (empty($sp57fc4d)) {
-			$sp57fc4d = $i->getParentTransactionId();
+		$parentId = $i->getRefundTransactionId();
+		if (empty($parentId)) {
+			$parentId = $i->getParentTransactionId();
 		}
-		if (($this->getConfigData('test') && $sp57fc4d == 0 || $sp57fc4d) && $a > 0) {
+		if (($this->getConfigData('test') && $parentId == 0 || $parentId) && $a > 0) {
 			$req = $this->buildRequest($i, self::$REFUND);
 			$req->setXAmount($a);
 			$res = $this->postRequest($req);
@@ -241,16 +241,16 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 */
 	function void(II $i) {
 		$m = false;
-		$sp57fc4d = $i->getVoidTransactionId();
-		if (empty($sp57fc4d)) {
-			$sp57fc4d = $i->getParentTransactionId();
+		$parentId = $i->getVoidTransactionId();
+		if (empty($parentId)) {
+			$parentId = $i->getParentTransactionId();
 		}
 		$a = $i->getAmount();
 		if ($a <= 0) {
 			$a = $i->getAmountAuthorized();
 			$i->setAmount($i->getAmountAuthorized());
 		}
-		if ($sp57fc4d && $a > 0) {
+		if ($parentId && $a > 0) {
 			$req = $this->buildRequest($i, self::$VOID);
 			$res = $this->postRequest($req);
 			if ($res->getResponseCode() == self::$APPROVED) {
@@ -265,7 +265,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			}
 		}
 		else {
-			if (!$sp57fc4d) {
+			if (!$parentId) {
 				$m = 'Error in voiding the payment. Transaction ID not found';
 			}
 			else {
