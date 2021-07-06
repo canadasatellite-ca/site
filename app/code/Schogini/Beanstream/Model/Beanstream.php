@@ -589,7 +589,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	private function buildRequest(II $i, $type) {
 		$o = $i->getOrder(); /** @var O $o */
 		$req = new _DO;
-		$req[self::$X_METHOD] = $i->getAnetTransMethod();
 		$req->setXType($type);
 		if ($i->getAmount()) {
 			$req->setXAmount($i->getAmount());
@@ -765,7 +764,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$spa81281[7] = $sp21957c['x_invoice_num'];
 		$spa81281[8] = '';
 		$spa81281[9] = $sp21957c['x_amount'];
-		$spa81281[10] = $sp21957c[self::$X_METHOD];
+		$spa81281[10] = null;
 		$spa81281[11] = $sp21957c['x_type'];
 		$spa81281[12] = $sp21957c['x_cust_id'];
 		$spa81281[13] = $sp21957c['x_first_name'];
@@ -906,13 +905,4 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var string
 	 */
 	private static $VOID = 'VOID';
-
-	/**
-	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
-	 * @used-by buildRequest()
-	 * @used-by postRequest()
-	 * @var string
-	 */
-	private static $X_METHOD = 'x_method';
 }
