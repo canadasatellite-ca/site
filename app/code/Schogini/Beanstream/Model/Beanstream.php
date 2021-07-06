@@ -305,7 +305,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$merchantPassword = $this->getConfigData('merchant_password');
 		$expMonth = substr($reqA['x_exp_date'], 0, 2); /** @var string $expMonth */
 		$expYear = substr($reqA['x_exp_date'], -2); /** @var string $expYear */
-		$reqA['x_state'] = dftr($reqA['x_state'], [
+		$reqA['x_state'] = dftr($reqA['x_state'], $statesCA = [
 			 'Alberta' => 'AB'
 			 ,'British Columbia' => 'BC'
 			 ,'Manitoba' => 'MB'
@@ -319,7 +319,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			 ,'Quebec' => 'QC'
 			 ,'Saskatchewan' => 'SK'
 			 ,'Yukon Territory' => 'YT'
-		]);
+		]); /** @var array(string => string) $statesCA */
 		$statesUS = [
 			'Alabama' => 'AL'
 			,'Alaska' => 'AK'
@@ -391,13 +391,14 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			if ($reqA['x_state'] != '') {
 				if (isset($statesCA[$reqA['x_state']])) {
 					$reqA['x_country'] = 'CA';
-				} elseif (isset($statesUS[$reqA['x_state']])) {
+				}
+				elseif (isset($statesUS[$reqA['x_state']])) {
 					$reqA['x_country'] = 'US';
 				}
 			}
 		}
 		if ($reqA['x_country'] == 'US') {
-			$reqA['x_state'] = $statesUS[$reqA['x_state']];
+			$reqA['x_state'] = dftr($reqA['x_state'], $statesUS);
 		}
 		if ($reqA['x_country'] != 'US' && $reqA['x_country'] != 'CA') {
 			$reqA['x_state'] = '--';
