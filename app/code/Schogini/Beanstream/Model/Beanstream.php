@@ -52,7 +52,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$m = false; /** @var string|false $m */
 		$i->setAmount($a);
 		$req = $this->buildRequest($i, self::$AUTH_ONLY); /** @var _DO $req */
-		$res = $this->postRequest($req); /** @var _DO $res */
+		$res = $this->postRequest($req, self::$AUTH_ONLY); /** @var _DO $res */
 		$i->setCcApproval($res->getApprovalCode())->setLastTransId($res->getTransactionId())->setCcTransId($res->getTransactionId())->setCcAvsStatus($res->getAvsResultCode())->setCcCidStatus($res->getCardCodeResponseCode());
 		$reasonC = $res->getResponseReasonCode();
 		$reasonS = $res->getResponseReasonText();
@@ -97,9 +97,10 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	function capture(II $i, $a) {
 		$m = false; /** @var string|false $m */
 		$i->setAmount($a);
+		$type = $i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : self::$AUTH_CAPTURE; /** @var string $type */
 		/** @var _DO $req */
-		$req = $this->buildRequest($i, $i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : self::$AUTH_CAPTURE);
-		$res = $this->postRequest($req); /** @var _DO $res */
+		$req = $this->buildRequest($i, $type);
+		$res = $this->postRequest($req, $type); /** @var _DO $res */
 		if ($res->getResponseCode() == self::$APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
 			$i->setCcTransId($res->getTransactionId());
@@ -174,7 +175,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		df_assert_sne($parentId = $i->getParentTransactionId()); /** @var string $parentId */
 		$req = $this->buildRequest($i, self::$REFUND);
 		$req->setXAmount($a);
-		$res = $this->postRequest($req);
+		$res = $this->postRequest($req, self::$REFUND);
 		if ($res->getResponseCode() == self::$APPROVED) {
 			$i->setStatus(self::STATUS_SUCCESS);
 			if ($res->getTransactionId() != $parentId) {
@@ -246,7 +247,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		if ($parentId && $a > 0) {
 			$req = $this->buildRequest($i, self::$VOID);
-			$res = $this->postRequest($req);
+			$res = $this->postRequest($req, self::$VOID);
 			if ($res->getResponseCode() == self::$APPROVED) {
 				$i->setStatus(self::STATUS_VOID);
 				if ($res->getTransactionId() != $i->getParentTransactionId()) {
@@ -327,10 +328,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
 	 * @used-by postRequest()
 	 * @param $sp21957c
+	 * @param string $type
 	 * @return array
 	 * @throws LE
 	 */
-	private function beanstreamapi($sp21957c) {
+	private function beanstreamapi($sp21957c, $type) {
 		$sp9c6e65 = $this->getConfigData('merchant_id');
 		$spf4dcd7 = $this->getConfigData('merchant_username');
 		$sp909eb6 = $this->getConfigData('merchant_password');
@@ -445,22 +447,22 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		$spbd0c59 = 'P';
 		$sp8d1f04 = '';
-		if ($sp21957c['x_type'] == self::$AUTH_CAPTURE) {
+		if ($type == self::$AUTH_CAPTURE) {
 			$spbd0c59 = 'P';
 		}
-		elseif ($sp21957c['x_type'] == self::$AUTH_ONLY) {
+		elseif ($type == self::$AUTH_ONLY) {
 			$spbd0c59 = 'PA';
 		}
-		elseif ($sp21957c['x_type'] == 'CAPTURE_ONLY' || $sp21957c['x_type'] == self::$PRIOR_AUTH_CAPTURE) {
+		elseif ($type == 'CAPTURE_ONLY' || $type == self::$PRIOR_AUTH_CAPTURE) {
 			$spbd0c59 = 'PAC';
 			$sp8d1f04 = '&adjId=' . $sp21957c['x_trans_id'];
 		}
-		elseif ($sp21957c['x_type'] == 'CREDIT') {
+		elseif ($type == 'CREDIT') {
 			$spbd0c59 = 'R';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
 		}
-		elseif ($sp21957c['x_type'] == 'VOID') {
+		elseif ($type == 'VOID') {
 			$spbd0c59 = 'PAC';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
@@ -685,10 +687,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @used-by refund()
 	 * @used-by void()
 	 * @param _DO $req
+	 * @param string $type
 	 * @return mixed
 	 * @throws LE
 	 */
-	private function postRequest(_DO $req) {
+	private function postRequest(_DO $req, $type) {
 		$res = new _DO;
 		$sp21957c = $req->getData();
 		$spa81281 = array(
@@ -765,7 +768,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$spa81281[8] = '';
 		$spa81281[9] = $sp21957c['x_amount'];
 		$spa81281[10] = null;
-		$spa81281[11] = $sp21957c['x_type'];
+		$spa81281[11] = $type;
 		$spa81281[12] = $sp21957c['x_cust_id'];
 		$spa81281[13] = $sp21957c['x_first_name'];
 		$spa81281[14] = $sp21957c['x_last_name'];
@@ -804,7 +807,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$spa81281[6] = '0';
 		$spa81281[37] = '382065EC3B4C2F5CDC424A730393D2DF';
 		$spa81281[39] = '';
-		$spc59ec5 = $this->beanstreamapi($sp21957c);
+		$spc59ec5 = $this->beanstreamapi($sp21957c, $type);
 		$spa81281[0] = $spc59ec5['response_code'];
 		$spa81281[1] = $spc59ec5['response_subcode'];
 		$spa81281[2] = $spc59ec5['response_reason_code'];
