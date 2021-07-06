@@ -387,20 +387,20 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			,'Wisconsin' => 'WI'
 			,'Wyoming' => 'WY'			
 		];
-		if ($reqA['x_country'] == '') {
+		if ($reqA[self::$COUNTRY] == '') {
 			if ($reqA['x_state'] != '') {
 				if (isset($statesCA[$reqA['x_state']])) {
-					$reqA['x_country'] = 'CA';
+					$reqA[self::$COUNTRY] = 'CA';
 				}
 				elseif (isset($statesUS[$reqA['x_state']])) {
-					$reqA['x_country'] = 'US';
+					$reqA[self::$COUNTRY] = 'US';
 				}
 			}
 		}
-		if ($reqA['x_country'] == 'US') {
+		if ($reqA[self::$COUNTRY] == 'US') {
 			$reqA['x_state'] = dftr($reqA['x_state'], $statesUS);
 		}
-		if ($reqA['x_country'] != 'US' && $reqA['x_country'] != 'CA') {
+		if ($reqA[self::$COUNTRY] != 'US' && $reqA[self::$COUNTRY] != 'CA') {
 			$reqA['x_state'] = '--';
 		}
 		$spbd0c59 = 'P';
@@ -445,7 +445,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		ordAddress2=&ordCity=' . urlencode($reqA['x_city']) . '&
 		ordProvince=' . urlencode($reqA['x_state']) . '&
 		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
-		ordCountry={$reqA['x_country']}" . $sp8d1f04;
+		ordCountry={$reqA[self::$COUNTRY]}" . $sp8d1f04;
 		$specd301 = curl_init();
 		curl_setopt($specd301, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
 		curl_setopt($specd301, CURLOPT_POST, 1);
@@ -570,28 +570,25 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				if (!$sp864f41) {
 					$sp864f41 = $o->getCustomerEmail();
 				}
-				$req->setXFirstName($ba->getFirstname())
-					->setXLastName($ba->getLastname())
-					->setXCompany($ba->getCompany())
-					->setXAddress($ba->getStreet(1)[0])
-					->setXCity($ba->getCity())
-					->setXState($ba->getRegion())
-					->setXZip($ba->getPostcode())
-					->setXCountry($ba->getCountry())
-					->setXPhone($ba->getTelephone())
-					->setXFax($ba->getFax())
-					->setXCustId($ba->getCustomerId())
+				$req->setXFirstName($ba->getFirstname());
+				$req->setXLastName($ba->getLastname());
+				$req->setXCompany($ba->getCompany());
+				$req->setXAddress($ba->getStreet(1)[0]);
+				$req->setXCity($ba->getCity());
+				$req->setXState($ba->getRegion());
+				$req->setXZip($ba->getPostcode());
+				$req[self::$COUNTRY] = $ba->getCountry() ?: $ba->getCountryId();
+				$req->setXPhone($ba->getTelephone());
+				$req->setXFax($ba->getFax());
+				$req->setXCustId($ba->getCustomerId());
 # 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «Ensure that the Customer IP address is being passed in the API request for all transactions»:
 # https://github.com/canadasatellite-ca/site/issues/175
-					->setXCustomerIp(df_visitor_ip())
-					->setXCustomerTaxId($ba->getTaxId())
-					->setXEmail($sp864f41)
-					->setXEmailCustomer($this->getConfigData('email_customer'))
-					->setXMerchantEmail($this->getConfigData('merchant_email'));
-				if (!$req->getXCountry()) {
-					$req->setXCountry($ba->getCountryId());
-				}
+				$req->setXCustomerIp(df_visitor_ip());
+				$req->setXCustomerTaxId($ba->getTaxId());
+				$req->setXEmail($sp864f41);
+				$req->setXEmailCustomer($this->getConfigData('email_customer'));
+				$req->setXMerchantEmail($this->getConfigData('merchant_email'));
 			}
 			$sa = $o->getShippingAddress();
 			if (!$sa) {
@@ -728,7 +725,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$spa81281[17] = $reqA['x_city'];
 		$spa81281[18] = $reqA['x_state'];
 		$spa81281[19] = $reqA['x_zip'];
-		$spa81281[20] = $reqA['x_country'];
+		$spa81281[20] = $reqA[self::$COUNTRY];
 		$spa81281[21] = $reqA['x_phone'];
 		$spa81281[22] = $reqA['x_fax'];
 		$spa81281[23] = '';
@@ -740,7 +737,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$reqA['x_ship_to_city'] = !isset($reqA['x_ship_to_city']) ? $reqA['x_city'] : $reqA['x_ship_to_city'];
 		$reqA['x_ship_to_state'] = !isset($reqA['x_ship_to_state']) ? $reqA['x_state'] : $reqA['x_ship_to_state'];
 		$reqA['x_ship_to_zip'] = !isset($reqA['x_ship_to_zip']) ? $reqA['x_zip'] : $reqA['x_ship_to_zip'];
-		$reqA['x_ship_to_country'] = !isset($reqA['x_ship_to_country']) ? $reqA['x_country'] : $reqA['x_ship_to_country'];
+		$reqA['x_ship_to_country'] = !isset($reqA['x_ship_to_country']) ? $reqA[self::$COUNTRY] : $reqA['x_ship_to_country'];
 		$spa81281[24] = $reqA['x_ship_to_first_name'];
 		$spa81281[25] = $reqA['x_ship_to_last_name'];
 		$spa81281[26] = $reqA['x_ship_to_company'];
@@ -840,7 +837,17 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var string
 	 */
 	private static $CARD_NUMBER = 'card_number';
-	
+
+	/**
+	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by buildRequest()
+	 * @used-by postRequest()
+	 * @var string
+	 */
+	private static $COUNTRY = 'country';
+
 	/**
 	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
