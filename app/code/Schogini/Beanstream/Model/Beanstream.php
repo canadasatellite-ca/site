@@ -436,7 +436,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		trnAmount={$sp21957c[self::$X_AMOUNT]}&
 		trnOrderNumber={$sp21957c['x_invoice_num']}&
 		trnCardOwner=" . urlencode($sp21957c['x_first_name']) . '+' . urlencode($sp21957c['x_last_name']) . "&
-		trnCardNumber={$sp21957c['x_card_num']}&
+		trnCardNumber={$sp21957c[self::$CARD_NUMBER]}&
 		trnExpMonth={$spb9c31a}&
 		trnExpYear={$sp6f57cf}&
 		trnCardCvd={$cvv}&
@@ -558,7 +558,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$PRIOR_AUTH_CAPTURE:
 				$req[self::$CVV] = $i->getCcCid();
 				$req->setXCardName($i->getCcOwner());
-				$req->setXCardNum($i->getCcNumber());
+				$req[self::$CARD_NUMBER] = $i->getCcNumber();
 				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 				$req->setXTransId($i->getCcTransId());
 				break;
@@ -629,7 +629,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($i->getCcNumber()) {
 			$req[self::$CVV] = $i->getCcCid();
 			$req->setXCardName($i->getCcOwner());
-			$req->setXCardNum($i->getCcNumber());
+			$req[self::$CARD_NUMBER] = $i->getCcNumber();
 			$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 		}
 		return $req;
@@ -836,6 +836,15 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var string
 	 */
 	private static $AUTH_ONLY = 'AUTH_ONLY';
+
+	/**
+	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by buildRequest()
+	 * @var string
+	 */
+	private static $CARD_NUMBER = 'card_number';
 	
 	/**
 	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
