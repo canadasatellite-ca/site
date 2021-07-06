@@ -428,7 +428,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if (array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
-		$cardNumber = df_ets(dfa($sp21957c, self::$CARD_NUMBER)); /** @var string $cardNumber */
+		$cardNumber = df_ets(dfa($sp21957c, self::$CVV)); /** @var string $cardNumber */
 		$sp05e2c8 = "requestType=BACKEND&merchant_id={$sp9c6e65}&
 		username={$spf4dcd7}&
 		password={$sp909eb6}&
@@ -556,7 +556,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$REFUND:
 			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
-				$req[self::$CARD_NUMBER] = $i->getCcCid();
+				$req[self::$CVV] = $i->getCcCid();
 				$req->setXCardName($i->getCcOwner());
 				$req->setXCardNum($i->getCcNumber());
 				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
@@ -627,7 +627,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($subtotal)->setXFreight($amtShipping);
 		}
 		if ($i->getCcNumber()) {
-			$req[self::$CARD_NUMBER] = $i->getCcCid();
+			$req[self::$CVV] = $i->getCcCid();
 			$req->setXCardName($i->getCcOwner());
 			$req->setXCardNum($i->getCcNumber());
 			$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
@@ -844,7 +844,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @used-by buildRequest()
 	 * @var string
 	 */	
-	private static $CARD_NUMBER = 'card_number';
+	private static $CVV = 'cvv';
 
 	/**
 	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
