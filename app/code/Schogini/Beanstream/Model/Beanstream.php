@@ -556,7 +556,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$req = new _DO;
 		if ($a) {
 			$req[self::$X_AMOUNT] = $a;
-			$req->setXCurrencyCode($o->getBaseCurrencyCode());
 		}
 		switch ($type) {
 			case self::$REFUND:
