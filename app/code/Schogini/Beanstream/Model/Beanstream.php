@@ -305,21 +305,21 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$merchantPassword = $this->getConfigData('merchant_password');
 		$expMonth = substr($reqA['x_exp_date'], 0, 2); /** @var string $expMonth */
 		$expYear = substr($reqA['x_exp_date'], -2); /** @var string $expYear */
-		$reqA['x_state'] = dftr($reqA['x_state'], array_flip([
-			'AB' => 'Alberta',
-			'BC' => 'British Columbia',
-			'MB' => 'Manitoba',
-			'NB' => 'New Brunswick',
-			'NL' => 'Newfoundland and Labrador',
-			'NS' => 'Nova Scotia',
-			'NT' => 'Northwest Territories',
-			'NU' => 'Nunavut',
-			'ON' => 'Ontario',
-			'PE' => 'Prince Edward Island',
-			'QC' => 'Quebec',
-			'SK' => 'Saskatchewan',
-			'YT' => 'Yukon Territory'
-		]));
+		$reqA['x_state'] = dftr($reqA['x_state'], [
+			 'Alberta' => 'AB'
+			 ,'British Columbia' => 'BC'
+			 ,'Manitoba' => 'MB'
+			 ,'New Brunswick' => 'NB'
+			 ,'Newfoundland and Labrador' => 'NL'
+			 ,'Northwest Territories' => 'NT'
+			 ,'Nova Scotia' => 'NS'
+			 ,'Nunavut' => 'NU'
+			 ,'Ontario' => 'ON'
+			 ,'Prince Edward Island' => 'PE'
+			 ,'Quebec' => 'QC'
+			 ,'Saskatchewan' => 'SK'
+			 ,'Yukon Territory' => 'YT'
+		]);
 		$spb0dc2a = [];
 		$spb0dc2a['Alabama'] = 'AL';
 		$spb0dc2a['Alaska'] = 'AK';
