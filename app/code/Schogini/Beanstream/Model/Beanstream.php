@@ -428,7 +428,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if (array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
-		$cardNumber = df_ets(dfa($sp21957c, self::$CVV)); /** @var string $cardNumber */
+		$cvv = df_ets(dfa($sp21957c, self::$CVV)); /** @var string $cvv */
 		$sp05e2c8 = "requestType=BACKEND&merchant_id={$sp9c6e65}&
 		username={$spf4dcd7}&
 		password={$sp909eb6}&
@@ -439,7 +439,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		trnCardNumber={$sp21957c['x_card_num']}&
 		trnExpMonth={$spb9c31a}&
 		trnExpYear={$sp6f57cf}&
-		trnCardCvd={$cardNumber}&
+		trnCardCvd={$cvv}&
 		customerIp={$custIp}&
 		ordEmailAddress={$sp21957c['x_email']}&
 		ordName=" . urlencode($sp21957c['x_first_name'] . ' ' . $sp21957c['x_last_name']) . "&
