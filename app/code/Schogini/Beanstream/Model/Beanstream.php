@@ -453,7 +453,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		elseif ($type == self::$AUTH_ONLY) {
 			$spbd0c59 = 'PA';
 		}
-		elseif ($type == 'CAPTURE_ONLY' || $type == self::$PRIOR_AUTH_CAPTURE) {
+		elseif ($type == self::$PRIOR_AUTH_CAPTURE) {
 			$spbd0c59 = 'PAC';
 			$sp8d1f04 = '&adjId=' . $sp21957c['x_trans_id'];
 		}
@@ -462,7 +462,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
 		}
-		elseif ($type == 'VOID') {
+		elseif ($type == self::$VOID) {
 			$spbd0c59 = 'PAC';
 			$spd28804 = explode('--', $sp21957c['x_trans_id']);
 			$sp8d1f04 = '&adjId=' . $spd28804[0];
@@ -605,9 +605,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				$req->setXCardNum($i->getCcNumber());
 				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
 				$req->setXTransId($i->getCcTransId());
-				break;
-			case 'CAPTURE_ONLY':
-				$req->setXAuthCode($i->getCcAuthCode());
 				break;
 		}
 		if (!empty($o)) {
@@ -903,6 +900,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	/**
 	 * 2021-07-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
 	 * @used-by buildRequest()
 	 * @used-by void()
 	 * @var string
