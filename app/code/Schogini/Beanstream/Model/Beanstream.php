@@ -98,7 +98,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$m = false; /** @var string|false $m */
 		$i->setAmount($a);
 		/** @var _DO $req */
-		$req = $this->buildRequest($i, $i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : 'AUTH_CAPTURE');
+		$req = $this->buildRequest($i, $i->getParentTransactionId() ? self::$PRIOR_AUTH_CAPTURE : self::$AUTH_CAPTURE);
 		$res = $this->postRequest($req); /** @var _DO $res */
 		if ($res->getResponseCode() == self::$APPROVED) {
 			$i->setStatus(self::STATUS_APPROVED);
@@ -451,7 +451,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		$spbd0c59 = 'P';
 		$sp8d1f04 = '';
-		if ($sp21957c['x_type'] == 'AUTH_CAPTURE') {
+		if ($sp21957c['x_type'] == self::$AUTH_CAPTURE) {
 			$spbd0c59 = 'P';
 		}
 		elseif ($sp21957c['x_type'] == self::$AUTH_ONLY) {
@@ -870,6 +870,15 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var int
 	 */
 	private static $APPROVED = 1;
+
+	/**
+	 * 2021-07-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by capture()
+	 * @var string
+	 */
+	private static $AUTH_CAPTURE = 'AUTH_CAPTURE';
 
 	/**
 	 * 2021-07-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
