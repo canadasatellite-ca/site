@@ -589,15 +589,14 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$amtTax = $o->getTaxAmount(); /** @var float $amtTax */
 			$subtotal = $o->getSubtotal(); /** @var float $subtotal */
 			if (!empty($sa)) {
-				$req->setXShipToFirstName($sa->getFirstname())
-					->setXShipToLastName($sa->getLastname())
-					->setXShipToCompany($sa->getCompany())
-					->setXShipToAddress($sa->getStreet(1)[0])
-					->setXShipToCity($sa->getCity())
-					->setXShipToState($sa->getRegion())
-					->setXShipToZip($sa->getPostcode())
-					->setXShipToCountry($sa->getCountry());
-
+				$req->setXShipToFirstName($sa->getFirstname());
+				$req->setXShipToLastName($sa->getLastname());
+				$req->setXShipToCompany($sa->getCompany());
+				$req->setXShipToAddress($sa->getStreet(1)[0]);
+				$req->setXShipToCity($sa->getCity());
+				$req->setXShipToState($sa->getRegion());
+				$req->setXShipToZip($sa->getPostcode());
+				$req->setXShipToCountry($sa->getCountry());
 				if (!isset($amtShipping) || $amtShipping <= 0) {
 					$amtShipping = $sa->getShippingAmount();
 				}
