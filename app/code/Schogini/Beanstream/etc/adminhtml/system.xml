@@ -64,11 +64,6 @@
                     <label>Payment from Specific Countries</label>
                     <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
                 </field>
-        
-        <field id="merchant_email" translate="label" type="text" sortOrder="14" showInDefault="1" showInWebsite="1" showInStore="0">
-                    <label>Merchant's email</label>
-                </field>              
-
                 <field id="debug" translate="label" type="select" sortOrder="17" showInDefault="1" showInWebsite="1" showInStore="0">
                     <label>Debug</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
