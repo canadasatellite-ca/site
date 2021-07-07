@@ -607,6 +607,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($req[self::$CARD_NUMBER] = $i->getCcNumber()) {
 			$req[self::$CVV] = $i->getCcCid();
 			$req[self::$CARD_EXP_MONTH] = sprintf('%02d', $i->getCcExpMonth());
+			# 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 1) "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+			# 2) The year should be represented by the last 2 digits:
+			# 2.1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#card-info
+			# 2.2) https://dev.na.bambora.com/docs/references/payment_APIs/v1-0-5/
 			$req[self::$CARD_EXP_YEAR] = substr($i->getCcExpYear(), -2);
 		}
 		return $req;
