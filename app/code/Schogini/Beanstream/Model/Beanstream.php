@@ -303,8 +303,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		$merchantID = $this->getConfigData('merchant_id');
 		$merchantName = $this->getConfigData('merchant_username');
 		$merchantPassword = $this->getConfigData('merchant_password');
-		$expMonth = substr($reqA['x_exp_date'], 0, 2); /** @var string $expMonth */
-		$expYear = substr($reqA['x_exp_date'], -2); /** @var string $expYear */
 		$reqA['x_state'] = dftr($reqA['x_state'], $statesCA = [
 			 'Alberta' => 'AB'
 			 ,'British Columbia' => 'BC'
@@ -434,8 +432,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		trnOrderNumber={$reqA['x_invoice_num']}&
 		trnCardOwner=" . urlencode($reqA['x_first_name']) . '+' . urlencode($reqA['x_last_name']) . "&
 		trnCardNumber={$reqA[self::$CARD_NUMBER]}&
-		trnExpMonth={$expMonth}&
-		trnExpYear={$expYear}&
+		trnExpMonth={$reqA[self::$CARD_EXP_MONTH]}&
+		trnExpYear={$reqA[self::$CARD_EXP_YEAR]}&
 		trnCardCvd={$cvv}&
 		customerIp={$custIp}&
 		ordEmailAddress={$reqA['x_email']}&
@@ -555,7 +553,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$PRIOR_AUTH_CAPTURE:
 				$req[self::$CVV] = $i->getCcCid();
 				$req[self::$CARD_NUMBER] = $i->getCcNumber();
-				$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
+				$req[self::$CARD_EXP_MONTH] = sprintf('%02d', $i->getCcExpMonth());
+				$req[self::$CARD_EXP_YEAR] = sprintf('%04d', $i->getCcExpYear());
 				$req->setXTransId($i->getCcTransId());
 				break;
 		}
@@ -612,7 +611,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($i->getCcNumber()) {
 			$req[self::$CVV] = $i->getCcCid();
 			$req[self::$CARD_NUMBER] = $i->getCcNumber();
-			$req->setXExpDate(sprintf('%02d-%04d', $i->getCcExpMonth(), $i->getCcExpYear()));
+			$req[self::$CARD_EXP_MONTH] = sprintf('%02d', $i->getCcExpMonth());
+			$req[self::$CARD_EXP_YEAR] = sprintf('%04d', $i->getCcExpYear());
 		}
 		return $req;
 	}
@@ -818,6 +818,24 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @var string
 	 */
 	private static $AUTH_ONLY = 'AUTH_ONLY';
+
+	/**
+	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by buildRequest()
+	 * @var string
+	 */
+	private static $CARD_EXP_MONTH = 'card_exp_month';
+
+	/**
+	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * "Refactor the `Schogini_Beanstream` module": https://github.com/canadasatellite-ca/site/issues/176
+	 * @used-by beanstreamapi()
+	 * @used-by buildRequest()
+	 * @var string
+	 */
+	private static $CARD_EXP_YEAR = 'card_exp_year';
 
 	/**
 	 * 2021-07-07 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
