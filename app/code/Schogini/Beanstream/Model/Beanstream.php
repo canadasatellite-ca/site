@@ -551,10 +551,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			case self::$REFUND:
 			case self::$VOID:
 			case self::$PRIOR_AUTH_CAPTURE:
-				$req[self::$CVV] = $i->getCcCid();
-				$req[self::$CARD_NUMBER] = $i->getCcNumber();
-				$req[self::$CARD_EXP_MONTH] = sprintf('%02d', $i->getCcExpMonth());
-				$req[self::$CARD_EXP_YEAR] = sprintf('%04d', $i->getCcExpYear());
 				$req->setXTransId($i->getCcTransId());
 				break;
 		}
@@ -608,11 +604,10 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			}
 			$req->setXPoNum($i->getPoNumber())->setXTax($amtTax)->setXSubtotal($subtotal)->setXFreight($amtShipping);
 		}
-		if ($i->getCcNumber()) {
+		if ($req[self::$CARD_NUMBER] = $i->getCcNumber()) {
 			$req[self::$CVV] = $i->getCcCid();
-			$req[self::$CARD_NUMBER] = $i->getCcNumber();
 			$req[self::$CARD_EXP_MONTH] = sprintf('%02d', $i->getCcExpMonth());
-			$req[self::$CARD_EXP_YEAR] = sprintf('%04d', $i->getCcExpYear());
+			$req[self::$CARD_EXP_YEAR] = substr($i->getCcExpYear(), -2);
 		}
 		return $req;
 	}
