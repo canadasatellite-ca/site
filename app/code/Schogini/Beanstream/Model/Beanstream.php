@@ -580,7 +580,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				$req->setXCustomerIp(df_visitor_ip());
 				$req->setXCustomerTaxId($ba->getTaxId());
 				$req->setXEmail($ba->getEmail() ?: $o->getCustomerEmail());
-				$req->setXMerchantEmail($this->getConfigData('merchant_email'));
 			}
 			$sa = $o->getShippingAddress();
 			if (!$sa) {
