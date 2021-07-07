@@ -563,13 +563,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$req->setXInvoiceNum($o->getIncrementId());
 			$ba = $o->getBillingAddress();
 			if (!empty($ba)) {
-				$sp864f41 = $ba->getEmail();
-				if (!$sp864f41) {
-					$sp864f41 = $o->getBillingAddress()->getEmail();
-				}
-				if (!$sp864f41) {
-					$sp864f41 = $o->getCustomerEmail();
-				}
+				$email = $ba->getEmail() ?: $o->getCustomerEmail(); /** @var string $email */
 				$req->setXFirstName($ba->getFirstname());
 				$req->setXLastName($ba->getLastname());
 				$req->setXCompany($ba->getCompany());
@@ -586,7 +580,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 # https://github.com/canadasatellite-ca/site/issues/175
 				$req->setXCustomerIp(df_visitor_ip());
 				$req->setXCustomerTaxId($ba->getTaxId());
-				$req->setXEmail($sp864f41);
+				$req->setXEmail($email);
 				$req->setXEmailCustomer($this->getConfigData('email_customer'));
 				$req->setXMerchantEmail($this->getConfigData('merchant_email'));
 			}
