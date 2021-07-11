@@ -401,22 +401,22 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		if ($reqA[self::$COUNTRY] != 'US' && $reqA[self::$COUNTRY] != 'CA') {
 			$reqA['x_state'] = '--';
 		}
-		$spbd0c59 = 'P';
-		$query2 = ''; /** @var string $query2 */
+		$trnType = 'P';
+		$query2 = []; /** @var array(string => string) $query2 */
 		if ($type == self::$AUTH_CAPTURE) {
-			$spbd0c59 = 'P';
+			$trnType = 'P';
 		}
 		elseif ($type == self::$AUTH_ONLY) {
-			$spbd0c59 = 'PA';
+			$trnType = 'PA';
 		}
 		elseif ($type == self::$PRIOR_AUTH_CAPTURE) {
-			$spbd0c59 = 'PAC';
-			$query2 = '&adjId=' . $reqA['x_trans_id'];
+			$trnType = 'PAC';
+			$query2 = ['adjId' => $reqA['x_trans_id']];
 		}
 		elseif ($type == self::$VOID) {
-			$spbd0c59 = 'PAC';
+			$trnType = 'PAC';
 			$spd28804 = explode('--', $reqA['x_trans_id']);
-			$query2 = '&adjId=' . $spd28804[0];
+			$query2 = ['adjId' => $spd28804[0]];
 			$reqA[self::$X_AMOUNT] = 0.0;
 		}
 		$custIp = $reqA['x_customer_ip'];
@@ -445,9 +445,9 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			,'trnExpMonth' => $reqA[self::$CARD_EXP_MONTH]
 			,'trnExpYear' => $reqA[self::$CARD_EXP_YEAR]
 			,'trnOrderNumber' => $reqA['x_invoice_num']
-			,'trnType' => $spbd0c59
+			,'trnType' => $trnType
 			,'username' => $merchantName
-		]) . $query2; /** @var string $query */
+		] + $query2); /** @var string $query */
 		$curl = curl_init();
 		# 2021-07-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# 1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#request-parameters
