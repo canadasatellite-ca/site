@@ -445,6 +445,9 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
 		ordCountry={$reqA[self::$COUNTRY]}" . $sp8d1f04;
 		$specd301 = curl_init();
+		# 2021-07-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#request-parameters
+		# 2) https://dev.na.bambora.com/docs/references/recurring_payment/#request-parameters
 		curl_setopt($specd301, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
 		curl_setopt($specd301, CURLOPT_POST, 1);
 
