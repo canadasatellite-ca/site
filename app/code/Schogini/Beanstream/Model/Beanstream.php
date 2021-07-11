@@ -424,7 +424,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
 		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
-		$sp05e2c8 = "requestType=BACKEND&merchant_id={$merchantID}&
+		$query = "requestType=BACKEND&merchant_id={$merchantID}&
 		username={$merchantName}&
 		password={$merchantPassword}&
 		trnType={$spbd0c59}&
@@ -443,7 +443,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		ordAddress2=&ordCity=' . urlencode($reqA['x_city']) . '&
 		ordProvince=' . urlencode($reqA['x_state']) . '&
 		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
-		ordCountry={$reqA[self::$COUNTRY]}" . $sp8d1f04;
+		ordCountry={$reqA[self::$COUNTRY]}" . $sp8d1f04; /** @var string $query */
 		$specd301 = curl_init();
 		# 2021-07-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# 1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#request-parameters
@@ -454,13 +454,13 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		curl_setopt($specd301, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($specd301, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($specd301, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($specd301, CURLOPT_POSTFIELDS, $sp05e2c8);
+		curl_setopt($specd301, CURLOPT_POSTFIELDS, $query);
 		$spf8f74c = curl_exec($specd301);
 		$sp35fa42 = '';
 		$sp35fa42 = curl_error($specd301);
 		curl_close($specd301);
 		if ($sp35fa42 != '') {
-			df_log_l($this, ['request' => $sp05e2c8, 'response' => $sp35fa42], 'error-curl');
+			df_log_l($this, ['request' => $query, 'response' => $sp35fa42], 'error-curl');
 			self::err('Error: ' . $sp35fa42);
 		}
 		# 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -468,7 +468,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		# «C:\INETPUB\BEANSTREAM\ERRORPAGES\../admin/include/VBScript_ado_connection_v2.asp»":
 		# https://github.com/canadasatellite-ca/site/issues/18
 		if (df_contains($spf8f74c, 'Microsoft OLE DB Driver for SQL Server')) {
-			df_log_l($this, ['request' => $sp05e2c8, 'response' => $spf8f74c], 'error-ole');
+			df_log_l($this, ['request' => $query, 'response' => $spf8f74c], 'error-ole');
 			self::err('Error: ' . $spf8f74c);
 		}
 		$sp1e8be2 = explode('&', $spf8f74c);
@@ -482,7 +482,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		# https://github.com/canadasatellite-ca/site/issues/17
 		if ('N' !== ($errorType = dfa($spb41165, 'errorType', 'unknown'))) { /** @var string $errorType */
 			df_log_l($this, [
-				'request' => $sp05e2c8, 'response parsed' => $spb41165, 'response raw' => $spf8f74c
+				'request' => $query, 'response parsed' => $spb41165, 'response raw' => $spf8f74c
 			], "error-$errorType");
 		}
 		$spc59ec5 = [];
