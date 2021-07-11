@@ -444,19 +444,19 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		ordProvince=' . urlencode($reqA['x_state']) . '&
 		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
 		ordCountry={$reqA[self::$COUNTRY]}" . $query2; /** @var string $query */
-		$specd301 = curl_init();
+		$curl = curl_init();
 		# 2021-07-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# 1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#request-parameters
 		# 2) https://dev.na.bambora.com/docs/references/recurring_payment/#request-parameters
-		curl_setopt($specd301, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
-		curl_setopt($specd301, CURLOPT_POST, 1);
-		curl_setopt($specd301, CURLOPT_SSL_VERIFYHOST, 0);
-		curl_setopt($specd301, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($specd301, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($specd301, CURLOPT_POSTFIELDS, $query);
-		$spf8f74c = curl_exec($specd301);
-		$sp35fa42 = curl_error($specd301);
-		curl_close($specd301);
+		curl_setopt($curl, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 0);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $query);
+		$spf8f74c = curl_exec($curl);
+		$sp35fa42 = curl_error($curl);
+		curl_close($curl);
 		if ($sp35fa42 != '') {
 			df_log_l($this, ['request' => $query, 'response' => $sp35fa42], 'error-curl');
 			self::err('Error: ' . $sp35fa42);
