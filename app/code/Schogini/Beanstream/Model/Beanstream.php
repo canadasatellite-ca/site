@@ -402,7 +402,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$reqA['x_state'] = '--';
 		}
 		$spbd0c59 = 'P';
-		$sp8d1f04 = '';
+		$query2 = ''; /** @var string $query2 */
 		if ($type == self::$AUTH_CAPTURE) {
 			$spbd0c59 = 'P';
 		}
@@ -411,12 +411,12 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		elseif ($type == self::$PRIOR_AUTH_CAPTURE) {
 			$spbd0c59 = 'PAC';
-			$sp8d1f04 = '&adjId=' . $reqA['x_trans_id'];
+			$query2 = '&adjId=' . $reqA['x_trans_id'];
 		}
 		elseif ($type == self::$VOID) {
 			$spbd0c59 = 'PAC';
 			$spd28804 = explode('--', $reqA['x_trans_id']);
-			$sp8d1f04 = '&adjId=' . $spd28804[0];
+			$query2 = '&adjId=' . $spd28804[0];
 			$reqA[self::$X_AMOUNT] = 0.0;
 		}
 		$custIp = $reqA['x_customer_ip'];
@@ -443,7 +443,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		ordAddress2=&ordCity=' . urlencode($reqA['x_city']) . '&
 		ordProvince=' . urlencode($reqA['x_state']) . '&
 		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
-		ordCountry={$reqA[self::$COUNTRY]}" . $sp8d1f04; /** @var string $query */
+		ordCountry={$reqA[self::$COUNTRY]}" . $query2; /** @var string $query */
 		$specd301 = curl_init();
 		# 2021-07-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# 1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#request-parameters
