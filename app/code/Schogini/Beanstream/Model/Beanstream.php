@@ -424,26 +424,30 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
 		}
 		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
-		$query = "requestType=BACKEND&merchant_id={$merchantID}&
-		username={$merchantName}&
-		password={$merchantPassword}&
-		trnType={$spbd0c59}&
-		trnAmount={$reqA[self::$X_AMOUNT]}&
-		trnOrderNumber={$reqA['x_invoice_num']}&
-		trnCardOwner=" . urlencode($reqA['x_first_name']) . '+' . urlencode($reqA['x_last_name']) . "&
-		trnCardNumber={$reqA[self::$CARD_NUMBER]}&
-		trnExpMonth={$reqA[self::$CARD_EXP_MONTH]}&
-		trnExpYear={$reqA[self::$CARD_EXP_YEAR]}&
-		trnCardCvd={$cvv}&
-		customerIp={$custIp}&
-		ordEmailAddress={$reqA['x_email']}&
-		ordName=" . urlencode($reqA['x_first_name'] . ' ' . $reqA['x_last_name']) . "&
-		ordPhoneNumber={$reqA['x_phone']}&
-		ordAddress1=" . urlencode($reqA['x_address']) . '&
-		ordAddress2=&ordCity=' . urlencode($reqA['x_city']) . '&
-		ordProvince=' . urlencode($reqA['x_state']) . '&
-		ordPostalCode=' . urlencode($reqA['x_zip']) . "&
-		ordCountry={$reqA[self::$COUNTRY]}" . $query2; /** @var string $query */
+		$query = http_build_query([
+			'customerIp' => $custIp
+			,'merchant_id' => $merchantID
+			,'ordAddress1' => $reqA['x_address']
+			,'ordAddress2' => ''
+			,'ordCity' => $reqA['x_city']
+			,'ordCountry' => $reqA[self::$COUNTRY]
+			,'ordEmailAddress' => $reqA['x_email']
+			,'ordName' => df_cc_s($reqA['x_first_name'], $reqA['x_last_name'])
+			,'ordPhoneNumber' => $reqA['x_phone']
+			,'ordPostalCode' => $reqA['x_zip']
+			,'ordProvince' => $reqA['x_state']
+			,'password' => $merchantPassword
+			,'requestType' => 'BACKEND'
+			,'trnAmount' => $reqA[self::$X_AMOUNT]
+			,'trnCardCvd' => $cvv
+			,'trnCardNumber' => $reqA[self::$CARD_NUMBER]
+			,'trnCardOwner' => df_cc_s($reqA['x_first_name'], $reqA['x_last_name'])
+			,'trnExpMonth' => $reqA[self::$CARD_EXP_MONTH]
+			,'trnExpYear' => $reqA[self::$CARD_EXP_YEAR]
+			,'trnOrderNumber' => $reqA['x_invoice_num']
+			,'trnType' => $spbd0c59
+			,'username' => $merchantName
+		]) . $query2; /** @var string $query */
 		$curl = curl_init();
 		# 2021-07-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 		# 1) https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#request-parameters
