@@ -450,13 +450,11 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		# 2) https://dev.na.bambora.com/docs/references/recurring_payment/#request-parameters
 		curl_setopt($specd301, CURLOPT_URL, 'https://www.beanstream.com/scripts/process_transaction.asp');
 		curl_setopt($specd301, CURLOPT_POST, 1);
-
 		curl_setopt($specd301, CURLOPT_SSL_VERIFYHOST, 0);
 		curl_setopt($specd301, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($specd301, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($specd301, CURLOPT_POSTFIELDS, $query);
 		$spf8f74c = curl_exec($specd301);
-		$sp35fa42 = '';
 		$sp35fa42 = curl_error($specd301);
 		curl_close($specd301);
 		if ($sp35fa42 != '') {
