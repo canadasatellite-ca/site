@@ -425,6 +425,15 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 		}
 		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
 		$query = http_build_query([
+			# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# «Ensure that the Customer IP address is being passed in the API request for all transactions»:
+			# https://github.com/canadasatellite-ca/site/issues/175
+			# 2021-07-12 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 1) «Ensure that the Customer IP address is being passed in the API request for all transactions»:
+			# https://github.com/canadasatellite-ca/site/issues/175
+			# 2) I have not found the `customerIp` parameter in the documentation.
+			# 3) The documentation mentions the `customer_ip` paramenter: https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/risk_thresholds/index.md#required-fields-for-transactions
+			# It does not work.
 			'customerIp' => $custIp
 			,'merchant_id' => $merchantID
 			,'ordAddress1' => $reqA['x_address']
