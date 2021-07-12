@@ -419,10 +419,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$query2 = ['adjId' => $spd28804[0]];
 			$reqA[self::$X_AMOUNT] = 0.0;
 		}
-		$custIp = $reqA['x_customer_ip'];
-		if (array_key_exists("HTTP_CF_CONNECTING_IP", $_SERVER)) {
-			$custIp = $_SERVER["HTTP_CF_CONNECTING_IP"];
-		}
 		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
 		$query = http_build_query([
 			# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
@@ -434,7 +430,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			# 2) I have not found the `customerIp` parameter in the documentation.
 			# 3) The documentation mentions the `customer_ip` paramenter: https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/risk_thresholds/index.md#required-fields-for-transactions
 			# It does not work.
-			'customerIp' => $custIp
+			'customerIp' => df_visitor_ip()
 			,'merchant_id' => $merchantID
 			,'ordAddress1' => $reqA['x_address']
 			,'ordAddress2' => ''
@@ -583,10 +579,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 				$req->setXPhone($ba->getTelephone());
 				$req->setXFax($ba->getFax());
 				$req->setXCustId($ba->getCustomerId());
-# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-# «Ensure that the Customer IP address is being passed in the API request for all transactions»:
-# https://github.com/canadasatellite-ca/site/issues/175
-				$req->setXCustomerIp(df_visitor_ip());
 				$req->setXCustomerTaxId($ba->getTaxId());
 				$req->setXEmail($ba->getEmail() ?: $o->getCustomerEmail());
 			}
