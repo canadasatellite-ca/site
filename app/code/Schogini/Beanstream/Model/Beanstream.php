@@ -430,8 +430,8 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			# It does not work.
 			'customerIp' => df_visitor_ip()
 			# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-			# «Unique identifier for your Bambora merchant account (not "merchantId")»
-			# 9 digits
+			# 1) «Unique identifier for your Bambora merchant account (not "merchantId")»
+			# 2) «9 digits»
 			# https://dev.na.bambora.com/docs/references/recurring_payment/#authorization
 			,'merchant_id' => $this->getConfigData('merchant_id')
 			,'ordAddress1' => $reqA['x_address']
@@ -446,6 +446,13 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			,'password' => $merchantPassword
 			,'requestType' => 'BACKEND'
 			,'trnAmount' => $reqA[self::$X_AMOUNT]
+			# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 1) «Include the 3 or 4-digit CVD number from the back of the customer's credit card.
+			# CVD numbers are not stored in the Bambora system
+			# and will only be used for a first recurring billing transaction if passed.»
+			# 2) «4 digits Amex, 3 digits all other cards»
+			# https://dev.na.bambora.com/docs/references/recurring_payment/#card-info
+			# https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/recurring_payment/index.md#card-info
 			,'trnCardCvd' => df_ets(dfa($reqA, self::$CVV))
 			,'trnCardNumber' => $reqA[self::$CARD_NUMBER]
 			,'trnCardOwner' => df_cc_s($reqA['x_first_name'], $reqA['x_last_name'])
