@@ -431,6 +431,10 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			# 3) The documentation mentions the `customer_ip` paramenter: https://github.com/bambora-na/dev.na.bambora.com/blob/0486cc7e/source/docs/references/risk_thresholds/index.md#required-fields-for-transactions
 			# It does not work.
 			'customerIp' => df_visitor_ip()
+			# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# «Unique identifier for your Bambora merchant account (not "merchantId")»
+			# 9 digits
+			# https://dev.na.bambora.com/docs/references/recurring_payment/#authorization
 			,'merchant_id' => $merchantID
 			,'ordAddress1' => $reqA['x_address']
 			,'ordAddress2' => ''
