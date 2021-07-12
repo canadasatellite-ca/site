@@ -418,7 +418,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			$query2 = ['adjId' => $spd28804[0]];
 			$reqA[self::$X_AMOUNT] = 0.0;
 		}
-		$cvv = df_ets(dfa($reqA, self::$CVV)); /** @var string $cvv */
 		$query = http_build_query([
 			# 2021-06-11 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 			# «Ensure that the Customer IP address is being passed in the API request for all transactions»:
@@ -447,7 +446,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			,'password' => $merchantPassword
 			,'requestType' => 'BACKEND'
 			,'trnAmount' => $reqA[self::$X_AMOUNT]
-			,'trnCardCvd' => $cvv
+			,'trnCardCvd' => df_ets(dfa($reqA, self::$CVV))
 			,'trnCardNumber' => $reqA[self::$CARD_NUMBER]
 			,'trnCardOwner' => df_cc_s($reqA['x_first_name'], $reqA['x_last_name'])
 			,'trnExpMonth' => $reqA[self::$CARD_EXP_MONTH]
