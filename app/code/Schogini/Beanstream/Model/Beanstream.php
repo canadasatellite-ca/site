@@ -300,7 +300,6 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 	 * @throws LE
 	 */
 	private function beanstreamapi(array $reqA, $type) {
-		$merchantID = $this->getConfigData('merchant_id');
 		$merchantName = $this->getConfigData('merchant_username');
 		$merchantPassword = $this->getConfigData('merchant_password');
 		$reqA['x_state'] = dftr($reqA['x_state'], $statesCA = [
@@ -435,7 +434,7 @@ final class Beanstream extends \Magento\Payment\Model\Method\Cc implements INonI
 			# «Unique identifier for your Bambora merchant account (not "merchantId")»
 			# 9 digits
 			# https://dev.na.bambora.com/docs/references/recurring_payment/#authorization
-			,'merchant_id' => $merchantID
+			,'merchant_id' => $this->getConfigData('merchant_id')
 			,'ordAddress1' => $reqA['x_address']
 			,'ordAddress2' => ''
 			,'ordCity' => $reqA['x_city']
