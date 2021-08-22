@@ -40,6 +40,10 @@
 # «The product that was requested doesn't exist. Verify the product and try again.»:
 # https://github.com/canadasatellite-ca/site/issues/192
 !/vendor/magento/module-sales/CustomerData/LastOrderedItems.php
+# 2021-08-22 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "«The following tag(s) are not allowed: img» on sales/order/creditmemo/order_id/<…>":
+# https://github.com/canadasatellite-ca/site/issues/198
+!/vendor/magento/module-sales/view/frontend/templates/order/creditmemo/items/renderer/default.phtml
 # 2021-03-30 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # "«The following tag(s) are not allowed: img» on sales/order/invoice/order_id/<…>":
 # https://github.com/canadasatellite-ca/site/issues/57
