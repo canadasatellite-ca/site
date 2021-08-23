@@ -33,6 +33,10 @@
 # but their parents are different: 'skip_gallery_after.wrapper' and 'product.info.media' respectively»:
 # https://github.com/canadasatellite-ca/site/issues/112
 !/vendor/magento/module-catalog/view/frontend/layout/catalog_product_view.xml
+# 2021-08-23 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "Prevent Magento from logging the «Consumer "async.operations.all" skipped» message":
+# https://github.com/canadasatellite-ca/site/issues/202
+!/vendor/magento/module-message-queue/Model/Cron/ConsumersRunner.php
 # 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
 !/vendor/magento/module-quote/Model/QuoteAddressValidator.php
