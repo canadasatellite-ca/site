@@ -155,14 +155,17 @@ class ConsumersRunner
         try {
             $this->mqConnectionTypeResolver->getConnectionType($connectionName);
         } catch (\LogicException $e) {
-            $this->logger->info(
+			# 2021-08-23 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "Prevent Magento from logging the «Consumer "async.operations.all" skipped» message":
+			# https://github.com/canadasatellite-ca/site/issues/202
+            /*$this->logger->info(
                 sprintf(
                     'Consumer "%s" skipped as required connection "%s" is not configured. %s',
                     $consumerName,
                     $connectionName,
                     $e->getMessage()
                 )
-            );
+            );*/
             return false;
         }
 
