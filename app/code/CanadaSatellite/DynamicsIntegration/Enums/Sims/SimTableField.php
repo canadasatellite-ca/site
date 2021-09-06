@@ -20,4 +20,5 @@ class SimTableField
     const ExpiryDate = '6';
     const Nickname = '7';
     const Select = '8';
+    const Order = '9';
 }

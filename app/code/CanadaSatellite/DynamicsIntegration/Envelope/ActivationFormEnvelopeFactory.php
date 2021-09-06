@@ -2,69 +2,69 @@
 
 namespace CanadaSatellite\DynamicsIntegration\Envelope;
 
-class ActivationFormEnvelopeFactory
-{
-	private $orderModelFactory;
-	private $orderEnvelopeFactory;
-	private $customerEnvelopeFactory;
+class ActivationFormEnvelopeFactory {
+    private $orderModelFactory;
+    private $orderEnvelopeFactory;
+    private $customerEnvelopeFactory;
 
-	function __construct(
-		\Magento\Sales\Model\OrderFactory $orderModelFactory,
-		\CanadaSatellite\DynamicsIntegration\Envelope\OrderEnvelopeFactory $orderEnvelopeFactory,
-		\CanadaSatellite\DynamicsIntegration\Envelope\CustomerEnvelopeFactory $customerEnvelopeFactory,
-		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
-	) {
-		$this->orderModelFactory = $orderModelFactory;
-		$this->orderEnvelopeFactory = $orderEnvelopeFactory;
-		$this->customerEnvelopeFactory = $customerEnvelopeFactory;
-		$this->logger = $logger;
-	}
+    function __construct(
+        \Magento\Sales\Model\OrderFactory                                     $orderModelFactory,
+        \CanadaSatellite\DynamicsIntegration\Envelope\OrderEnvelopeFactory    $orderEnvelopeFactory,
+        \CanadaSatellite\DynamicsIntegration\Envelope\CustomerEnvelopeFactory $customerEnvelopeFactory,
+        \CanadaSatellite\DynamicsIntegration\Logger\Logger                    $logger
+    ) {
+        $this->orderModelFactory = $orderModelFactory;
+        $this->orderEnvelopeFactory = $orderEnvelopeFactory;
+        $this->customerEnvelopeFactory = $customerEnvelopeFactory;
+        $this->logger = $logger;
+    }
 
-	function create($activationForm, $customer = null)
-	{
-		$data = array();
+    function create($activationForm, $customer = null) {
+        $data = array();
 
-		$data['id'] = $activationForm->getId();
-		
-		$data['email'] = $activationForm->getEmail();
-		$data['firstName'] = $activationForm->getFirstname();
-		$data['lastName'] = $activationForm->getLastname();
-		$data['companyName'] = $activationForm->getCompany();
-		$data['notes'] = $activationForm->getNotes();
-		$data['simNumber'] = $activationForm->getSimNumber();
-		$data['dataNumber'] = $activationForm->getDataNumber();
+        $data['id'] = $activationForm->getId();
 
-		$orderNumber = $activationForm->getOrderNumber();
-		$data['orderNumber'] = $orderNumber;
+        $data['email'] = $activationForm->getEmail();
+        $data['firstName'] = $activationForm->getFirstname();
+        $data['lastName'] = $activationForm->getLastname();
+        $data['companyName'] = $activationForm->getCompany();
+        $data['notes'] = $activationForm->getNotes();
+        $data['simNumber'] = $activationForm->getSimNumber();
+        $data['dataNumber'] = $activationForm->getDataNumber();
 
-		$orderModel = $this->orderModelFactory->create()->loadByIncrementId($orderNumber);
-		if ($this->checkOrderItems($orderModel) && $orderModel->getId()) {
-			$data['order'] = $this->orderEnvelopeFactory->create($orderModel);
-		} else {
-			$data['order'] = null;
-		}
+        $orderNumber = $activationForm->getOrderNumber();
+        $data['orderNumber'] = $orderNumber;
 
-		$status = $activationForm->getStatus();
-		$data['status'] = intval($status);
+        $orderModel = $this->orderModelFactory->create()->loadByIncrementId($orderNumber);
+        if ($this->checkOrderItems($orderModel) && $orderModel->getId()) {
+            $data['order'] = $this->orderEnvelopeFactory->create($orderModel);
+        } else {
+            $data['order'] = null;
+        }
 
-		if ($customer !== null) {
-			$data['customer'] = $this->customerEnvelopeFactory->create($customer);
-		} else {
-			$data['customer'] = null;
-		}
+        $status = $activationForm->getStatus();
+        $data['status'] = intval($status);
 
-		$data['desiredActivationDate'] = $this->formatDateOnly($activationForm->getDesiredActivationDate());
-		$data['completedDate'] = $this->formatDateUtc($activationForm->getCompletedDate());
-		$data['expirationDate'] = $this->formatDateOnly($activationForm->getExpirationDate());
-		$data['phoneNumber'] = $activationForm->getPhoneNumber();
-		$data['comments'] = $activationForm->getComments();
+        if ($customer !== null) {
+            $data['customer'] = $this->customerEnvelopeFactory->create($customer);
+        } else {
+            $data['customer'] = null;
+        }
 
-		$this->logger->info("DesiredActivationDate " . var_export($activationForm->getDesiredActivationDate(), true));
-		$this->logger->info("CompletedDate " . var_export($activationForm->getCompletedDate(), true));
-		$this->logger->info("ExpirationDate " . var_export($activationForm->getExpirationDate(), true));
+        $data['desiredActivationDate'] = $this->formatDateOnly($activationForm->getDesiredActivationDate());
+        $data['completedDate'] = $this->formatDateUtc($activationForm->getCompletedDate());
+        $data['expirationDate'] = $this->formatDateOnly($activationForm->getExpirationDate());
+        $data['phoneNumber'] = $activationForm->getPhoneNumber();
+        $data['comments'] = $activationForm->getComments();
 
-		return $data;
-	}
+        $this->logger->info("DesiredActivationDate " . var_export($activationForm->getDesiredActivationDate(), true));
+        $this->logger->info("CompletedDate " . var_export($activationForm->getCompletedDate(), true));
+        $this->logger->info("ExpirationDate " . var_export($activationForm->getExpirationDate(), true));
+
+        $this->logger->info("ActivationFromEnvelopeFactory | " . var_export($data, true));
+
+        return $data;
+    }
 
     /**
      * Check product items in order.
@@ -72,35 +72,32 @@ class ActivationFormEnvelopeFactory
      * @param $order
      * @return bool
      */
-    private function checkOrderItems($order)
-    {
+    private function checkOrderItems($order) {
         foreach ($order->getAllItems() as $item) {
             $parent = $item->getParentItem();
             if ($parent) {
                 continue;
             }
             $product = $item->getProduct();
-            if($product === null)
+            if ($product === null)
                 return false;
         }
         return true;
     }
 
-    private function formatDateUtc($dateUtc)
-	{
-		if ($dateUtc === null) {
-			return null;
-		}
+    private function formatDateUtc($dateUtc) {
+        if ($dateUtc === null) {
+            return null;
+        }
 
-		return (new \DateTime($dateUtc))->format("Y-m-d\TH:i:s\Z");
-	}
+        return (new \DateTime($dateUtc))->format("Y-m-d\TH:i:s\Z");
+    }
 
-	private function formatDateOnly($dateLocal)
-	{
-		if ($dateLocal === null) {
-			return null;
-		}
+    private function formatDateOnly($dateLocal) {
+        if ($dateLocal === null) {
+            return null;
+        }
 
-		return (new \DateTime($dateLocal))->format("Y-m-d");
-	}
+        return (new \DateTime($dateLocal))->format("Y-m-d");
+    }
 }

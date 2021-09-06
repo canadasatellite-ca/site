@@ -39,11 +39,12 @@ class ActivationFormSaveAfterObserver implements ObserverInterface {
 
 			// Service contracts returns stale data and have no possibility to force invalidation.
 			$activationFormModel = $this->activationFormFactory->create()->load($activationFormId);
-			if (!$activationFormModel->getId()) {
+
+            if (!$activationFormModel->getId()) {
 				throw new \Exception("Activation form $activationFormId does not exist");
 			}
 
-			$this->publisher->publish(
+            $this->publisher->publish(
 				$this->config->getIntegrationQueue(),
 				$this->eventFactory->createActivationFormSavedEvent(
 					$activationFormId,

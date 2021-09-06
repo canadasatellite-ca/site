@@ -98,7 +98,10 @@ class Order
 		return $this->status;
 	}
 
-	function getItems()
+    /**
+     * @return \CanadaSatellite\DynamicsIntegration\Model\OrderItem[]
+     */
+    function getItems()
 	{
 		return $this->items;
 	}
