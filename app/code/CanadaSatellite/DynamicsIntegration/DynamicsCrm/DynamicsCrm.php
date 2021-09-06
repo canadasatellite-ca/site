@@ -2,254 +2,301 @@
 
 namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 
+use CanadaSatellite\AstIntegration\LogicProcessors\AstQueueItem;
+use CanadaSatellite\AstIntegration\LogicProcessors\OrderCustomOptionsHelper;
 use CanadaSatellite\DynamicsIntegration\Utils\ProductProfitCalculator;
 use Exception;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class DynamicsCrm {
-	private $customerHelper;
-	private $priceListHelper;
-	private $productComposer;
-	private $orderComposer;
-	private $orderNoteComposer;
-	private $simComposer;
-	private $restApi;
-	private $logger;
+    private $customerHelper;
+    private $priceListHelper;
+    private $productComposer;
+    private $orderComposer;
+    private $orderNoteComposer;
+    private $simComposer;
+    private $restApi;
+    private $logger;
+    private $productHelper;
+    private $providerResolver;
+    private $astManager;
+    private $publisher;
+    private $config;
+    private $eventFactory;
+    private $productRepository;
 
-	function __construct(
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CustomerHelper $customerHelper,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductModelComposer $productComposer,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderModelComposer $orderComposer,
-        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderNoteComposer $orderNoteComposer,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\SimModelComposer $simComposer,
-		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
-		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
-	) {
-		$this->customerHelper = $customerHelper;
-		$this->priceListHelper = $priceListHelper;
-		$this->productComposer = $productComposer;
-		$this->orderComposer = $orderComposer;
-		$this->orderNoteComposer = $orderNoteComposer;
-		$this->simComposer = $simComposer;
-		$this->restApi = $restApi;
-		$this->logger = $logger;
-	}
 
-	/**
-	* @return string Dynamics product id.
-	*/ 
-	function createOrUpdateProduct($sku, $product) {
-		$crmProduct = $this->productComposer->compose($product);
+    function __construct(
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\CustomerHelper       $customerHelper,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper      $priceListHelper,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductModelComposer $productComposer,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderModelComposer   $orderComposer,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderNoteComposer    $orderNoteComposer,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\SimModelComposer     $simComposer,
+        \CanadaSatellite\DynamicsIntegration\Rest\RestApi                     $restApi,
+        \CanadaSatellite\DynamicsIntegration\Logger\Logger                    $logger,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductHelper        $productHelper,
+        \CanadaSatellite\DynamicsIntegration\Utils\SatelliteProviderResolver  $providerResolver,
+        \CanadaSatellite\AstIntegration\AstManagement\AstManager              $astManager,
+        \CanadaSatellite\SimpleAmqp\Publisher                                 $publisher,
+        \CanadaSatellite\DynamicsIntegration\Config\Config                    $config,
+        \CanadaSatellite\DynamicsIntegration\Event\EventFactory               $eventFactory,
+        \Magento\Catalog\Model\ProductRepository                              $productRepository
+    ) {
+        $this->customerHelper = $customerHelper;
+        $this->priceListHelper = $priceListHelper;
+        $this->productComposer = $productComposer;
+        $this->orderComposer = $orderComposer;
+        $this->orderNoteComposer = $orderNoteComposer;
+        $this->simComposer = $simComposer;
+        $this->restApi = $restApi;
+        $this->logger = $logger;
+        $this->productHelper = $productHelper;
+        $this->providerResolver = $providerResolver;
+        $this->astManager = $astManager;
+        $this->publisher = $publisher;
+        $this->config = $config;
+        $this->eventFactory = $eventFactory;
+        $this->productRepository = $productRepository;
+    }
 
-		$productId = $this->restApi->findProductIdBySku($sku);	
-		if ($productId === false) {
-			$productId = $this->restApi->createProduct($crmProduct);
-		}
-		else {
-			//$this->logger->info("Find product: $productId");
-			$this->restApi->updateProduct($productId, $crmProduct);
-		}
+    /**
+     * @return string Dynamics product id.
+     */
+    function createOrUpdateProduct($sku, $product) {
+        $crmProduct = $this->productComposer->compose($product);
 
-		// TODO: Create/update product price in price list(s).
-		$crmPriceListItem = $this->productComposer->composePriceListItem($product, $productId);
-		$priceListId = $this->priceListHelper->getDefaultPriceListId();
-		$productPriceLevelId = $this->restApi->findProductPriceLevelIdByProductId($productId, $priceListId);
-		if ($productPriceLevelId === false) {
-			$this->logger->info("Creating product price level");
-			$productPriceLevelId = $this->restApi->createProductPriceLevel($productId, $crmPriceListItem);
-		}
-		else {
-			$this->logger->info("Found product price level with id $productPriceLevelId");
-			$this->restApi->updateProductPriceLevel($productPriceLevelId, $crmPriceListItem);
-		}
-		
-		$this->logger->info("Product price list level created with id $productPriceLevelId");
+        $productId = $this->restApi->findProductIdBySku($sku);
+        if ($productId === false) {
+            $productId = $this->restApi->createProduct($crmProduct);
+            $productIsNew = true;
+        } else {
+            //$this->logger->info("Find product: $productId");
+            $this->restApi->updateProduct($productId, $crmProduct);
+            $productIsNew = false;
+        }
 
-		// TODO: Update profit/margins.
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Start calculating profit/margin for product");
-		$crmProduct = $this->restApi->getProductById($productId);
+        // TODO: Create/update product price in price list(s).
+        $crmPriceListItem = $this->productComposer->composePriceListItem($product, $productId);
+        $priceListId = $this->priceListHelper->getDefaultPriceListId();
+        $productPriceLevelId = $this->restApi->findProductPriceLevelIdByProductId($productId, $priceListId);
+        if ($productPriceLevelId === false) {
+            $this->logger->info("Creating product price level");
+            $productPriceLevelId = $this->restApi->createProductPriceLevel($productId, $crmPriceListItem);
+        } else {
+            $this->logger->info("Found product price level with id $productPriceLevelId");
+            $this->restApi->updateProductPriceLevel($productPriceLevelId, $crmPriceListItem);
+        }
 
-		//$this->logger->info("Product from CRM:" . var_export($crmProduct, true));
-		$calculator = new ProductProfitCalculator($this->logger, $product, $crmProduct->new_shippingcost, $crmProduct->currentcost, $crmProduct->new_saleprice);
+        $this->logger->info("Product price list level created with id $productPriceLevelId");
 
-		$currencyExchange = $calculator->calculateCurrencyExchange();
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Currency exchange for product: $currencyExchange");
 
-		$processingFees = $calculator->calculateProcessingFees();
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Processing fees for product: $processingFees");
-		
-		$standardCost = $calculator->calculateStandardCost();
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Standard cost for product: $standardCost");
+        // TODO: Update profit/margins.
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Start calculating profit/margin for product");
+        $crmProduct = $this->restApi->getProductById($productId);
 
-		$profit = $calculator->calculateProfit();
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Profit for product: $profit");
-		$margin = $calculator->calculateMargin();
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Margin for product: $margin");
+        //$this->logger->info("Product from CRM:" . var_export($crmProduct, true));
+        $calculator = new ProductProfitCalculator($this->logger, $product, $crmProduct->new_shippingcost, $crmProduct->currentcost, $crmProduct->new_saleprice);
 
-		$profitData = array(
-			'new_currencyexchange' => $currencyExchange,
-			'new_processingfees' => $processingFees,
-			'standardcost' => $standardCost,
-			'new_profit' => $profit,
-			'new_margin' => $margin,
-		);
+        $currencyExchange = $calculator->calculateCurrencyExchange();
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Currency exchange for product: $currencyExchange");
 
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Trying to update product profit/margin...");
-		$this->restApi->updateProduct($productId, $profitData);
-		$this->logger->info("[DynamicsCrm::createOrUpdateProduct] Product profit/margin updated");
+        $processingFees = $calculator->calculateProcessingFees();
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Processing fees for product: $processingFees");
 
-		return $productId;
-	}
+        $standardCost = $calculator->calculateStandardCost();
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Standard cost for product: $standardCost");
 
-	function deleteProduct($sku) {
-		$productId = $this->restApi->findProductIdBySku($sku);
+        $profit = $calculator->calculateProfit();
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Profit for product: $profit");
+        $margin = $calculator->calculateMargin();
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Margin for product: $margin");
 
-		if ($productId === false) {
-			return;
-		}
+        $profitData = array(
+            'new_currencyexchange' => $currencyExchange,
+            'new_processingfees' => $processingFees,
+            'standardcost' => $standardCost,
+            'new_profit' => $profit,
+            'new_margin' => $margin,
 
-		$this->restApi->deleteProduct($productId);
-	}
+            // Force product revise for dynamics properties update
+            'statecode' => 3,
+            'statuscode' => -1
+        );
 
-	/**
-	* @return Order id.
-	*/
-	function createOrUpdateOrder($order) {
-		$this->logger->info("[createOrUpdateOrder] -> Enter");
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Trying to update product profit/margin...");
+        $this->restApi->updateProduct($productId, $profitData);
+        $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Product profit/margin updated");
 
-		$orderId = $order->getIncrementId();
-		$crmId = $this->restApi->findOrderByNumber($orderId);
-		if ($crmId === false) {	
-			$this->logger->info("[createOrUpdateOrder] Order not found in CRM. Creating...");
-			$customer = $order->getCustomer();
-			if ($customer === null) {
-				$this->logger->info("[createOrUpdateOrder] Order $orderId has no customer id. Stop processing.");
-				throw new Exception("Order $orderId has no customer id.");
-			}
+        // Sync product dynamic properties
+        $this->productHelper->syncProductDynamicProperties($productIsNew, $productId, $product->getSku());
+        // Force product published status
+        $this->restApi->updateProduct($productId, ['statecode' => 0, 'statuscode' => -1]);
 
-			$customerId = $order->getCustomerId();
+        return $productId;
+    }
 
-			$this->logger->info("[createOrUpdateOrder] Get or create customer account in CRM...");
-			$accountId = $this->customerHelper->createOrUpdateCustomer($customer);		
-			$this->logger->info("[createOrUpdateOrder] Customer account: $accountId.");
 
-			$crmOrder = $this->orderComposer->compose($order, true, $accountId, $customerId);
-			return $this->restApi->createOrder($crmOrder);
-		}
+    function deleteProduct($sku) {
+        $productId = $this->restApi->findProductIdBySku($sku);
 
-		$this->logger->info("[createOrUpdateOrder] Updating order $crmId");
-		$crmOrder = $this->orderComposer->compose($order);
-		$this->restApi->updateOrder($crmId, $crmOrder);
-		return $crmId;
-	}
+        if ($productId === false) {
+            return;
+        }
 
-	function getOrder($orderId) {
-		$this->logger->info("[getOrder] Enter");
-		
-		$crmOrderId = $this->restApi->findOrderByNumber($orderId);
-		$crmOrder = $this->restApi->getOrderById($crmOrderId);
-		if ($crmOrder === false) {
-			$this->logger->info("[getOrder] Order ($orderId) not found");
-			return;
-		}
+        $this->restApi->deleteProduct($productId);
+    }
 
-		$this->logger->info("[getOrder] Order received");
-		return $crmOrder;
-	}
+    /**
+     * @param \CanadaSatellite\DynamicsIntegration\Model\Order $order
+     * @return string GUID in Dynamics
+     * @throws Exception
+     */
+    function createOrUpdateOrder($order) {
+        $this->logger->info("[createOrUpdateOrder] -> Enter");
 
-	/**
-	* @param $orderId string
-	* @param $note string
-	* @throws Exception
-	*/
-	function createOrderNote($orderId, $note)
-	{
-		$this->logger->info("[createOrderNote] Enter");
+        $orderId = $order->getIncrementId();
+        $crmId = $this->restApi->findOrderByNumber($orderId);
+        if ($crmId === false) {
+            $this->logger->info("[createOrUpdateOrder] Order not found in CRM. Creating...");
+            $customer = $order->getCustomer();
+            if ($customer === null) {
+                $this->logger->info("[createOrUpdateOrder] Order $orderId has no customer id. Stop processing.");
+                throw new Exception("Order $orderId has no customer id.");
+            }
 
-		$crmId = $this->restApi->findOrderByNumber($orderId);
-		if ($crmId === false) {
-			throw new Exception("Order $orderId not found");
-		}
+            $customerId = $order->getCustomerId();
 
-		$this->logger->info("[createOrderNote] Creating note for order $crmId");
-		$crmNote = $this->orderNoteComposer->compose($note);
-		$this->restApi->createOrderNote($crmId, $crmNote);
-	}
+            $this->logger->info("[createOrUpdateOrder] Get or create customer account in CRM...");
+            $accountId = $this->customerHelper->createOrUpdateCustomer($customer);
+            $this->logger->info("[createOrUpdateOrder] Customer account: $accountId.");
 
-	/**
-	 * @param CanadaSatellite\DynamicsIntegration\Model\ActivationForm 
-	 * @return ActivationRequest entity id in Dynamics
-	 */
-	function createOrUpdateActivationRequest($request)
-	{
-		$this->logger->info("[createOrUpdateActivationRequest] Enter");
+            $crmOrder = $this->orderComposer->compose($order, true, $accountId, $customerId);
 
-		$requestId = $request->getId();
-		$email = $request->getEmail();
-		$firstName = $request->getFirstName();
-		$lastName = $request->getLastName();
-		$companyName = $request->getCompanyName();
-		$orderNumber = $request->getOrderNumber();
-		$simNumber = $request->getSimNumber();
-		$order = $request->getOrder();
-		$customer = $request->getCustomer();
-		$notes = $request->getNotes();
-		$status = $request->getStatus();
+            $crmId = $this->restApi->createOrder($crmOrder);
 
-		$this->logger->info("[createOrUpdateActivationRequest] Request id: $requestId Email: $email FirstName: $firstName LastName: $lastName CompanyName: $companyName OrderNumber: $orderNumber SimNumber: $simNumber Notes: $notes Status: $status");
+            $orderDynamicProps = $this->orderComposer->getOrderDynamicProperties($order);
+            $this->restApi->updateDynamicPropertiesInOrder($crmId, $orderDynamicProps);
 
-		$additionalInfo = '';
+            return $crmId;
+        }
 
-		$crmSim = $this->restApi->getSimByNumber($simNumber);
-		if ($crmSim !== false) {
-			$crmSimId = $crmSim->cs_simid;
-			$this->logger->info("[createOrUpdateActivationRequest] SIM $simNumber id in Dynamics: $crmSimId");			
-		} else {
-			$crmSimId = null;
-			$this->logger->info("[createOrUpdateActivationRequest] SIM $simNumber is not found in Dynamics");	
-			$additionalInfo = "SIM: $simNumber";
-		}
+        $this->logger->info("[createOrUpdateOrder] Updating order $crmId");
+        $crmOrder = $this->orderComposer->compose($order);
+        $this->restApi->updateOrder($crmId, $crmOrder);
 
-		if ($order !== null) {
-			$crmOrderId = $this->createOrUpdateOrder($order);
-			$this->logger->info("[createOrUpdateActivationRequest] Order $orderNumber id in Dynamics: $crmOrderId");
-		} else {
-			$crmOrderId = null;
-			$this->logger->info("[createOrUpdateActivationRequest] Order $orderNumber is not found in Dynamics");
+        $orderDynamicProps = $this->orderComposer->getOrderDynamicProperties($order);
+        $this->restApi->updateDynamicPropertiesInOrder($crmId, $orderDynamicProps);
 
-			if ($additionalInfo !== '') {
-				$additionalInfo .= " | ";
-			}
-			if ($orderNumber !== '' && $orderNumber !== null) {
-				$additionalInfo .= "Order: $orderNumber";
-			}
-		}
+        return $crmId;
+    }
 
-		if ($customer !== null) {
-			$crmAccountId = $this->customerHelper->createOrUpdateCustomer($customer);
-		} else {
-			$crmAccountId = null;
-		}
+    function getOrder($orderId) {
+        $this->logger->info("[getOrder] Enter");
+
+        $crmOrderId = $this->restApi->findOrderByNumber($orderId);
+        $crmOrder = $this->restApi->getOrderById($crmOrderId);
+        if ($crmOrder === false) {
+            $this->logger->info("[getOrder] Order ($orderId) not found");
+            return null;
+        }
+
+        $this->logger->info("[getOrder] Order received");
+        return $crmOrder;
+    }
+
+    /**
+     * @param string $orderId
+     * @param string $note
+     * @throws Exception
+     */
+    function createOrderNote($orderId, $note) {
+        $this->logger->info("[createOrderNote] Enter");
+
+        $crmId = $this->restApi->findOrderByNumber($orderId);
+        if ($crmId === false) {
+            throw new Exception("Order $orderId not found");
+        }
+
+        $this->logger->info("[createOrderNote] Creating note for order $crmId");
+        $crmNote = $this->orderNoteComposer->compose($note);
+        return $this->restApi->createOrderNote($crmId, $crmNote);
+    }
+
+    /**
+     * @param \CanadaSatellite\DynamicsIntegration\Model\ActivationForm $request
+     * @return mixed ActivationRequest entity id in Dynamics
+     * @throws Exception
+     */
+    function createOrUpdateActivationRequest($request) {
+        $this->logger->info("[createOrUpdateActivationRequest] Enter");
+
+        $requestId = $request->getId();
+        $email = $request->getEmail();
+        $firstName = $request->getFirstName();
+        $lastName = $request->getLastName();
+        $companyName = $request->getCompanyName();
+        $orderNumber = $request->getOrderNumber();
+        $simNumber = $request->getSimNumber();
+        $order = $request->getOrder();
+        $customer = $request->getCustomer();
+        $notes = $request->getNotes();
+        $status = $request->getStatus();
+
+        $this->logger->info("[createOrUpdateActivationRequest] Request id: $requestId Email: $email FirstName: $firstName LastName: $lastName CompanyName: $companyName OrderNumber: $orderNumber SimNumber: $simNumber Notes: $notes Status: $status");
+
+        $additionalInfo = '';
+
+        $crmSim = $this->restApi->getSimByNumber($simNumber);
+        if ($crmSim !== false) {
+            $crmSimId = $crmSim->cs_simid;
+            $this->logger->info("[createOrUpdateActivationRequest] SIM $simNumber id in Dynamics: $crmSimId");
+        } else {
+            $crmSimId = null;
+            $this->logger->info("[createOrUpdateActivationRequest] SIM $simNumber is not found in Dynamics");
+            $additionalInfo = "SIM: $simNumber";
+        }
+
+        if ($order !== null) {
+            $crmOrderId = $this->createOrUpdateOrder($order);
+            $this->logger->info("[createOrUpdateActivationRequest] Order $orderNumber id in Dynamics: $crmOrderId");
+        } else {
+            $crmOrderId = null;
+            $this->logger->info("[createOrUpdateActivationRequest] Order $orderNumber is not found in Dynamics");
+
+            if ($additionalInfo !== '') {
+                $additionalInfo .= " | ";
+            }
+            if ($orderNumber !== '' && $orderNumber !== null) {
+                $additionalInfo .= "Order: $orderNumber";
+            }
+        }
+
+        if ($customer !== null) {
+            $crmAccountId = $this->customerHelper->createOrUpdateCustomer($customer);
+        } else {
+            $crmAccountId = null;
+        }
 
         $crmModel = array(
-        	'cs_requestnumber' => $requestId,
-        	'cs_status' => $status == 2 ? 100000001 : 100000000,
-        	'cs_emailaddress' => $email,
-        	'cs_firstname' => $firstName,
-        	'cs_lastname' => $lastName,
-        	'cs_companyname' => $companyName,
-        	'cs_notes' => $notes,
-        	'cs_additionalinfo' => $additionalInfo,
+            'cs_requestnumber' => $requestId,
+            'cs_status' => $status == 2 ? 100000001 : 100000000,
+            'cs_emailaddress' => $email,
+            'cs_firstname' => $firstName,
+            'cs_lastname' => $lastName,
+            'cs_companyname' => $companyName,
+            'cs_notes' => $notes,
+            'cs_additionalinfo' => $additionalInfo,
         );
 
         if ($crmSimId !== null) {
-        	$crmModel['cs_sim@odata.bind'] = "/cs_sims($crmSimId)";
+            $crmModel['cs_sim@odata.bind'] = "/cs_sims($crmSimId)";
         }
         if ($crmOrderId !== null) {
-        	$crmModel['cs_order@odata.bind'] = "/salesorders($crmOrderId)";
+            $crmModel['cs_order@odata.bind'] = "/salesorders($crmOrderId)";
         }
         if ($crmAccountId !== null) {
-        	$crmModel['cs_account@odata.bind'] = "/accounts($crmAccountId)";
+            $crmModel['cs_account@odata.bind'] = "/accounts($crmAccountId)";
         }
 
         $desiredActivationDate = $request->getDesiredActivationDate();
@@ -271,50 +318,147 @@ class DynamicsCrm {
         $this->logger->info("Activation request $requestId created or updated in Dynamics with id $crmId");
 
         if ($crmSimId !== null) {
-        	$this->logger->info("[createOrUpdateActivationRequest] Activate SIM $crmSimId in Dynamics CRM for activation request $requestId...");
-        	$this->activateSim($crmSim, $phoneNumber, $dataNumber, $completedDate, $expirationDate);
-        	$this->logger->info("[createOrUpdateActivationRequest] SIM $crmSimId is activated in Dynamics CRM for activation request $requestId...");
+            $this->logger->info("[createOrUpdateActivationRequest] Activate SIM $crmSimId in Dynamics CRM for activation request $requestId...");
+            $this->activateSim($crmSim, $phoneNumber, $dataNumber, $completedDate, $expirationDate);
+            $this->logger->info("[createOrUpdateActivationRequest] SIM $crmSimId is activated in Dynamics CRM for activation request $requestId...");
         } else {
-        	$this->logger->info("[createOrUpdateActivationRequest] SIM $crmSimId in Dynamics CRM for activation request $requestId is not found. Skipping activation...");
+            $this->logger->info("[createOrUpdateActivationRequest] SIM $crmSimId in Dynamics CRM for activation request $requestId is not found. Skipping activation...");
         }
 
-		return $crmId;
-	}
+        // AST Activation Processing BEGIN
 
-	function createSim($sim) {
-		$this->logger->info("Start compose SIM model from #".$sim->getSimNumber());
-		$crmSim = $this->simComposer->compose($sim);
-		$this->logger->info("Send request to CRM with new SIM - ".json_encode($crmSim));
-		$simId = $this->restApi->createSim($crmSim);
-		$this->logger->info("SIM created on CRM. SimId = $simId");
-		return $simId;
-	}
+        if($crmSim === false || is_null($crmSim->new_plan_key)) {
+            $this->logger->info("[createOrUpdateActivationRequest] CRM SIM PlanKey is null. AST request will not be processed. SIM = $simNumber");
+            return $crmId;
+        }
 
-	private function activateSim($crmSim, $satelliteNumber, $dataNumber, $activationDate, $expirationDate)
-	{
-		$crmSimId = $crmSim->cs_simid;
-		$crmSimNumber = $crmSim->cs_number;
-		$oldExpirationDateUtc = $crmSim->cs_expirydate;
-		
-		$crmModel = array();
-		if ($expirationDate !== null) {
-			$newExpirationDateUtc = (new \DateTime($expirationDate))->format('Y-m-d\TH:i:s\Z');
-			$crmModel['cs_expirydate'] = $newExpirationDateUtc;
-		}
-		if ($satelliteNumber !== null) {
-			$crmModel['cs_satellitenumber'] = $satelliteNumber;
-		}
-		if ($dataNumber !== null) {
-			$crmModel['cs_data'] = $dataNumber;
-		}
-		if ($activationDate !== null) {
-			$crmModel['cs_activationdate'] = $activationDate;
-		}
+        $astPlansHelper = new \CanadaSatellite\AstIntegration\LogicProcessors\AstPlansHelper();
+        $reference = $orderNumber . ' - ' . $lastName;
 
-		$this->restApi->updateSim($crmSimId, $crmModel);
+        if ($this->providerResolver->isSimIridium($simNumber)) {
+            $planData = $astPlansHelper->get('iridium', $crmSim->new_plan_key);
 
-		if ($oldExpirationDateUtc !== $newExpirationDateUtc) {
-			$this->logger->info("[ActivateSim] Expiration date for SIM $crmSimId ($crmSimNumber) is changed from $oldExpirationDateUtc to $newExpirationDateUtc");
-		}
-	}
+            $result = $this->astManager->iridiumActivateSim($simNumber,
+                $reference,
+                $planData['ServiceTypeId'],
+                $planData['PlanId'],
+                $planData['PlanOptions'],
+                $planData['BillProfileId']);
+        } else if ($this->providerResolver->isSimInmarsat($simNumber)) {
+            $astPlansHelper = new \CanadaSatellite\AstIntegration\LogicProcessors\AstPlansHelper();
+            $planData = $astPlansHelper->get('inmarsat', $crmSim->new_plan_key);
+
+            $result = $this->astManager->inmarsatActivateSim($simNumber,
+                $reference,
+                $planData['ServiceTypeId'],
+                $planData['Category'],
+                $planData['PackageId'],
+                $planData['RatePlanId'],
+                $planData['BillProfileId']);
+        } else {
+            $result = null;
+        }
+
+        if (!is_null($result) && isset($planData)) {
+            $itemVoucher = null;
+            if (array_key_exists('Voucher', $planData)) {
+                $voucher = $planData['Voucher'];
+
+                if (gettype($voucher) === 'string') {
+                    try {
+                        $innerProduct = $this->productRepository->get($voucher);
+                        $itemVoucher = $this->astManager->getProductTopupAttributes($innerProduct);
+                        $itemVoucher['Reference'] = $reference;
+                    } catch (NoSuchEntityException $e) {
+                        $this->logger->info("[createOrUpdateActivationRequest] -> Inner topup product not found. SimNumber = $simNumber");
+                    }
+                } else if (gettype($voucher) === 'array') {
+                    $itemVoucher = [
+                        'ServiceTypeId' => $voucher['ServiceTypeId'],
+                        'Voucher' => $voucher['Voucher'],
+                        'Quantity' => $voucher['Quantity'],
+                        'Reference' => $reference
+                    ];
+                }
+            }
+
+            switch ($result->Status) {
+                case 'Failed':
+                    $this->logger->info("[createOrUpdateActivationRequest] AST API returned Failed status. SIM = $simNumber. Request id = $requestId");
+                    break;
+                case 'Succeeded':
+                    $queueItem = new AstQueueItem($result->DataId, $simNumber, $itemVoucher);
+                    $queueItem->finalize($result->MSISDN, $this->astManager, $this->restApi);
+                    break;
+                case 'Queued':
+                case 'Waiting':
+                    $queueItem = new AstQueueItem($result->DataId, $simNumber, $itemVoucher);
+
+                    $this->publisher->publish(
+                        $this->config->getIntegrationQueue(),
+                        $this->eventFactory->createAstQueuePushEvent($simNumber, $queueItem->toArray())
+                    );
+                    break;
+            }
+        } else {
+            $this->logger->info("[createOrUpdateActivationRequest] AST API error. SIM = $simNumber. Request id = $requestId");
+        }
+
+        // AST Activation Processing END
+
+        return $crmId;
+    }
+
+    function createSim($sim) {
+        $this->logger->info("Start compose SIM model from #" . $sim->getSimNumber());
+        $crmSim = $this->simComposer->compose($sim);
+        $this->logger->info("Send request to CRM with new SIM - " . json_encode($crmSim));
+        $simId = $this->restApi->createSim($crmSim);
+        $this->logger->info("SIM created on CRM. SimId = $simId");
+        return $simId;
+    }
+
+    private function activateSim($crmSim, $satelliteNumber, $dataNumber, $activationDate, $expirationDate) {
+        $crmSimId = $crmSim->cs_simid;
+        $crmSimNumber = $crmSim->cs_number;
+        $oldExpirationDateUtc = $crmSim->cs_expirydate;
+
+        $crmModel = array();
+        if ($expirationDate !== null) {
+            $newExpirationDateUtc = (new \DateTime($expirationDate))->format('Y-m-d\TH:i:s\Z');
+            $crmModel['cs_expirydate'] = $newExpirationDateUtc;
+        }
+        if ($satelliteNumber !== null) {
+            $crmModel['cs_satellitenumber'] = $satelliteNumber;
+        }
+        if ($dataNumber !== null) {
+            $crmModel['cs_data'] = $dataNumber;
+        }
+        if ($activationDate !== null) {
+            $crmModel['cs_activationdate'] = $activationDate;
+        }
+
+        if (!empty($crmModel)) {
+            $this->restApi->updateSim($crmSimId, $crmModel);
+
+            if (isset($newExpirationDateUtc) && $oldExpirationDateUtc !== $newExpirationDateUtc) {
+                $this->logger->info("[ActivateSim] Expiration date for SIM $crmSimId ($crmSimNumber) is changed from $oldExpirationDateUtc to $newExpirationDateUtc");
+            }
+        }
+    }
+
+    /**
+     * @param string $satelliteNumber
+     * @return string|false
+     */
+    function getSimNumberBySatelliteNumber($satelliteNumber) {
+        $this->logger->info("Resolving sim number by satellite number = $satelliteNumber");
+        $crmSim = $this->restApi->getSimBySatelliteNumber($satelliteNumber);
+        if ($crmSim) {
+            $this->logger->info("Sim number resolved. Satellite number = $satelliteNumber. Sim number = {$crmSim->cs_simid}");
+            return $crmSim->cs_simid;
+        }
+        $this->logger->info("Sim number resolve error. Satellite number = $satelliteNumber");
+        return false;
+    }
 }

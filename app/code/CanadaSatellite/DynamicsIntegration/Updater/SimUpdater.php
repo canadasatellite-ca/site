@@ -18,5 +18,6 @@ class SimUpdater {
 		$this->logger->info('Try to create SIM in CRM.');
 		$crmId = $this->crm->createSim($sim);
 		$this->logger->info("SIM created in CRM with id $crmId.");
+		return $crmId;
 	}
 }

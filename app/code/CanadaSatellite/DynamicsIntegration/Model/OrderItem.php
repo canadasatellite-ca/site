@@ -50,7 +50,10 @@ class OrderItem
 		return $this->sku;
 	}
 
-	function getProduct()
+    /**
+     * @return \CanadaSatellite\DynamicsIntegration\Model\Product
+     */
+    function getProduct()
 	{
 		return $this->product;
 	}

@@ -4,322 +4,374 @@ namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 
 use CanadaSatellite\DynamicsIntegration\Exception\DynamicsException;
 use CanadaSatellite\DynamicsIntegration\Utils\ProductProfitCalculator;
+use Magento\Framework\Exception\NoSuchEntityException;
 
 class ProductModelComposer {
-	private $mapper;
-	private $restApi;
-	private $currencyHelper;
-	private $priceListHelper;
-	private $vendorHelper;
-	private $countryHelper;
-	private $logger;
+    private $mapper;
+    private $restApi;
+    private $currencyHelper;
+    private $priceListHelper;
+    private $vendorHelper;
+    private $countryHelper;
+    private $logger;
+    private $productRepository;
 
-	function __construct(
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsMapper $mapper,
-		\CanadaSatellite\DynamicsIntegration\Rest\RestApi $restApi,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CurrencyHelper $currencyHelper,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\VendorHelper $vendorHelper,
-		\CanadaSatellite\DynamicsIntegration\DynamicsCrm\CountryHelper $countryHelper,
-		\CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
-	) {
-		$this->mapper = $mapper;
-		$this->restApi = $restApi;
-		$this->currencyHelper = $currencyHelper;
-		$this->priceListHelper = $priceListHelper;
-		$this->vendorHelper = $vendorHelper;
-		$this->countryHelper = $countryHelper;
-		$this->logger = $logger;
-	}
+    function __construct(
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsMapper  $mapper,
+        \CanadaSatellite\DynamicsIntegration\Rest\RestApi                $restApi,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\CurrencyHelper  $currencyHelper,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\PriceListHelper $priceListHelper,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\VendorHelper    $vendorHelper,
+        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\CountryHelper   $countryHelper,
+        \CanadaSatellite\DynamicsIntegration\Logger\Logger               $logger,
+        \Magento\Catalog\Model\ProductRepository                         $productRepository
+    ) {
+        $this->mapper = $mapper;
+        $this->restApi = $restApi;
+        $this->currencyHelper = $currencyHelper;
+        $this->priceListHelper = $priceListHelper;
+        $this->vendorHelper = $vendorHelper;
+        $this->countryHelper = $countryHelper;
+        $this->logger = $logger;
+        $this->productRepository = $productRepository;
+    }
 
-	/**
-	 * @param Product model
-	 */
-	function compose($product) {
-		$vendorCurrency = $product->getVendorCurrency();
-		$this->logger->info("Product currency: $vendorCurrency");
+    /**
+     * @param $productSku string
+     * @param $productGuid string
+     * @return array|null
+     */
+    function composeDynamicsProperties($productSku, $productGuid) {
+        try {
+            $mProduct = $this->productRepository->get($productSku);
+        } catch (NoSuchEntityException $e) {
+            return null;
+        }
 
-		if ($vendorCurrency === 'USD' && $product->hasPriceUsd()) {
-			// Price in USD.
-			$price = $product->getPriceUsd();
-		} else {
-			// Price in CAD.
-			$vendorCurrency = 'CAD';
-			$price = $product->getPrice();
-		}
+        $data = [];
 
-		if ($vendorCurrency === 'USD' && $product->hasSpecialPriceUsd()) {
-			// Special price USD.
-			$specialPrice = $product->getSpecialPriceUsd();
-		} else {
-			// Special price in CAD.
-			$specialPrice = $product->getSpecialPrice();
-			// If product has price USD, then it should have special price in USD, too.
-			//if ($product->hasPriceUsd()) {
-			//	$specialPrice = null;
-			//}
-		}
+        foreach ($mProduct->getOptions() as $option) {
+            $maxLength = $option->getMaxCharacters();
+            if ($maxLength <= 0) {
+                $values = $option->getValues();
+                if (empty($values)) {
+                    $maxLength = 500;
+                } else {
+                    foreach ($values as $val) {
+                        $titleLen = strlen($val->getTitle());
+                        if ($titleLen > $maxLength) {
+                            $maxLength = $titleLen;
+                        }
+                    }
+                }
+            }
 
-		$currencyId = $this->currencyHelper->getCurrencyIdByCode($vendorCurrency);
-		$this->logger->info("Currency id: $currencyId");
+            array_push($data, [
+                'datatype' => 3, // Single Line Of Text
+                'ishidden' => false,
+                'isreadonly' => false,
+                'isrequired' => false,
+                'maxlengthstring' => intval($maxLength),
+                'name' => $option->getTitle(),
+                'description' => "id:{$option->getOptionId()}",
+                'regardingobjectid_product@odata.bind' => "/products($productGuid)"
+            ]);
+        }
 
-		$priceLevelId = $this->priceListHelper->getDefaultPriceListId();
+        return $data;
+    }
 
-		$this->logger->info("Trying to get product quantity.");
-		$qty = $product->getQty();
-		$this->logger->info("Product quantity: $qty");
+    /**
+     * @param \CanadaSatellite\DynamicsIntegration\Model\Product $product
+     */
+    function compose($product) {
+        $vendorCurrency = $product->getVendorCurrency();
+        $this->logger->info("Product currency: $vendorCurrency");
 
-		$this->logger->info("Trying to get product url.");
-		$url = $product->getUrl();
-		$this->logger->info("Product URL: $url");
+        if ($vendorCurrency === 'USD' && $product->hasPriceUsd()) {
+            // Price in USD.
+            $price = $product->getPriceUsd();
+        } else {
+            // Price in CAD.
+            $vendorCurrency = 'CAD';
+            $price = $product->getPrice();
+        }
 
-		$quoteDescription = $product->getQuoteDescription();
-		$weight = $product->getWeight();
+        if ($vendorCurrency === 'USD' && $product->hasSpecialPriceUsd()) {
+            // Special price USD.
+            $specialPrice = $product->getSpecialPriceUsd();
+        } else {
+            // Special price in CAD.
+            $specialPrice = $product->getSpecialPrice();
+            // If product has price USD, then it should have special price in USD, too.
+            //if ($product->hasPriceUsd()) {
+            //	$specialPrice = null;
+            //}
+        }
 
-		$productDescription = $product->getDescription();
+        $currencyId = $this->currencyHelper->getCurrencyIdByCode($vendorCurrency);
+        $this->logger->info("Currency id: $currencyId");
 
-		$network = $product->getNetwork();
-		$this->logger->info("Product network: $network");
+        $priceLevelId = $this->priceListHelper->getDefaultPriceListId();
 
-		$category = $product->getCategory();
-		$this->logger->info("Product category: $category");
+        $this->logger->info("Trying to get product quantity.");
+        $qty = $product->getQty();
+        $this->logger->info("Product quantity: $qty");
 
-		$service = $product->getService();
-		$this->logger->info("Product service: $service");
+        $this->logger->info("Trying to get product url.");
+        $url = $product->getUrl();
+        $this->logger->info("Product URL: $url");
 
-		$brand = $product->getBrand();
-		$this->logger->info("Product brand: $brand");
+        $quoteDescription = $product->getQuoteDescription();
+        $weight = $product->getWeight();
 
-		$partNo = $product->getPartNo();
-		$this->logger->info("Product part#: $partNo");
+        $productDescription = $product->getDescription();
 
-		$countryOfOrigin = $product->getCountryOfOrigin();
-		$this->logger->info("Product country of origin: $countryOfOrigin");
+        $network = $product->getNetwork();
+        $this->logger->info("Product network: $network");
 
-		$priceListPage = $product->getPriceListPage();
-		$this->logger->info("Product price list page: $priceListPage");
+        $category = $product->getCategory();
+        $this->logger->info("Product category: $category");
 
-		$vendor = $product->getVendor();
-		$this->logger->info("Product vendor: $vendor");
+        $service = $product->getService();
+        $this->logger->info("Product service: $service");
 
-		$warranty = $product->getWarranty();
-		$this->logger->info("Product warranty: $warranty");
+        $brand = $product->getBrand();
+        $this->logger->info("Product brand: $brand");
 
-		$upc = $product->getUpc();
-		$this->logger->info("Product UPC: $upc");
+        $partNo = $product->getPartNo();
+        $this->logger->info("Product part#: $partNo");
 
-		$cost = $product->getCost();
-		$this->logger->info("Product cost: $cost");
+        $countryOfOrigin = $product->getCountryOfOrigin();
+        $this->logger->info("Product country of origin: $countryOfOrigin");
 
-		$this->logger->info("Product price: $price");
-		$this->logger->info("Product special price: $specialPrice");
+        $priceListPage = $product->getPriceListPage();
+        $this->logger->info("Product price list page: $priceListPage");
 
-		$data = array(
-			'name' => $product->getName(),
-			'productnumber' => $product->getSku(),
-			'price' => $price,
-			// price_base is calculated from price, so does not set it.
-			'transactioncurrencyid@odata.bind' => "/transactioncurrencies($currencyId)",
+        $vendor = $product->getVendor();
+        $this->logger->info("Product vendor: $vendor");
 
-			// Defaults for Unit Group and Default Unit.
-			'defaultuomscheduleid@odata.bind' => '/uomschedules(a974056b-8238-4cbd-93fd-bacda14d313d)',
-			'defaultuomid@odata.bind' => '/uoms(16b94c87-47ff-4583-884b-fba2cea56106)',
+        $warranty = $product->getWarranty();
+        $this->logger->info("Product warranty: $warranty");
 
-			'pricelevelid@odata.bind' => "/pricelevels($priceLevelId)",
-			
-			// cs_volusionid will not be synced.
-			// cs_issynced will not be synced.
+        $upc = $product->getUpc();
+        $this->logger->info("Product UPC: $upc");
 
-			'producturl' => $product->getUrl(),
-		);
+        $cost = $product->getCost();
+        $this->logger->info("Product cost: $cost");
 
-		if ($qty !== null) {
-			$data['quantityonhand'] = $qty;
-		}
+        $this->logger->info("Product price: $price");
+        $this->logger->info("Product special price: $specialPrice");
 
-		
-		if ($quoteDescription !== null) {
-			$data['new_quotedescription'] = $quoteDescription;
-		}
-		if ($weight !== null) {
-			$data['stockweight'] = $weight;
-		}
-		if ($productDescription !== null) {
-			$data['new_description'] = $productDescription;
-		}
+        $data = array(
+            'name' => $product->getName(),
+            'productnumber' => $product->getSku(),
+            'price' => $price,
+            // price_base is calculated from price, so does not set it.
+            'transactioncurrencyid@odata.bind' => "/transactioncurrencies($currencyId)",
 
-		if ($network !== null) {
-			$data['new_network'] = $this->mapper->mapNetwork($network);
-		}
-		if ($category !== null) {
-			$data['new_productcategory'] = $this->mapper->mapProductCategory($category);
-		}
-		if ($service !== null) {
-			$data['new_service'] = $this->mapper->mapServiceType($service);
-		}
+            // Defaults for Unit Group and Default Unit.
+            'defaultuomscheduleid@odata.bind' => '/uomschedules(a974056b-8238-4cbd-93fd-bacda14d313d)',
+            'defaultuomid@odata.bind' => '/uoms(16b94c87-47ff-4583-884b-fba2cea56106)',
 
-		if ($brand !== null) {
-			$vendorId = $this->vendorHelper->getOrCreateVendorAccount($brand);
-			$data['new_manufacturerlookup@odata.bind'] = "/accounts($vendorId)";
-		}
-		if ($partNo !== null) {
-			$data['new_manufacturerpart'] = $partNo;
-		}
+            'pricelevelid@odata.bind' => "/pricelevels($priceLevelId)",
 
-		if ($countryOfOrigin !== null) {
-			$this->logger->info("Finding country");
-			$countryId = $this->countryHelper->findCountryByName($countryOfOrigin);
-			$this->logger->info("Country found: $countryId");
-			if ($countryId !== null) {
-				$data['new_countryoforiginlookup@odata.bind'] = "/new_countries($countryId)";
+            // cs_volusionid will not be synced.
+            // cs_issynced will not be synced.
+
+            'producturl' => $product->getUrl(),
+        );
+
+        if ($qty !== null) {
+            $data['quantityonhand'] = $qty;
+        }
+
+
+        if ($quoteDescription !== null) {
+            $data['new_quotedescription'] = $quoteDescription;
+        }
+        if ($weight !== null) {
+            $data['stockweight'] = $weight;
+        }
+        if ($productDescription !== null) {
+            $data['new_description'] = $productDescription;
+        }
+
+        if ($network !== null) {
+            $data['new_network'] = $this->mapper->mapNetwork($network);
+        }
+        if ($category !== null) {
+            $data['new_productcategory'] = $this->mapper->mapProductCategory($category);
+        }
+        if ($service !== null) {
+            $data['new_service'] = $this->mapper->mapServiceType($service);
+			if ($data['new_service'] === 100000000) {
+				unset ($data['new_service']); // TODO: Hotfix. Update values from dynamics later
 			}
-		}
+        }
 
-		if ($priceListPage !== null) {
-			$page = intval($priceListPage);
-			if ($page !== 0) {
-				$data['new_pricelistpage'] = $page;
-			}
-		}
+        if ($brand !== null) {
+            $vendorId = $this->vendorHelper->getOrCreateVendorAccount($brand);
+            $data['new_manufacturerlookup@odata.bind'] = "/accounts($vendorId)";
+        }
+        if ($partNo !== null) {
+            $data['new_manufacturerpart'] = $partNo;
+        }
 
-		if ($vendor !== null) {
-			$vendorId = $this->vendorHelper->getOrCreateVendorAccount($vendor);
-			$data['cs_vendorid@odata.bind'] = "/accounts($vendorId)"; 
-		}
+        if ($countryOfOrigin !== null) {
+            $this->logger->info("Finding country");
+            $countryId = $this->countryHelper->findCountryByName($countryOfOrigin);
+            $this->logger->info("Country found: $countryId");
+            if ($countryId !== null) {
+                $data['new_countryoforiginlookup@odata.bind'] = "/new_countries($countryId)";
+            }
+        }
 
-		if ($warranty !== null) {
-			$data['new_warranty'] = $this->mapper->mapWarranty($warranty);
-		}
+        if ($priceListPage !== null) {
+            $page = intval($priceListPage);
+            if ($page !== 0) {
+                $data['new_pricelistpage'] = $page;
+            }
+        }
 
-		if ($upc !== null) {
-			$data['new_upc'] = $upc;
-		}
+        if ($vendor !== null) {
+            $vendorId = $this->vendorHelper->getOrCreateVendorAccount($vendor);
+            $data['cs_vendorid@odata.bind'] = "/accounts($vendorId)";
+        }
 
-		if ($cost !== null) {
-			$data['new_usdcost'] = $cost;
-		}
+        if ($warranty !== null) {
+            $data['new_warranty'] = $this->mapper->mapWarranty($warranty);
+        }
 
-		$data['new_saleprice'] = $specialPrice;
+        if ($upc !== null) {
+            $data['new_upc'] = $upc;
+        }
 
-		$data = array_merge_recursive($data, $this->buildVendorData($product));
-		$data = array_merge_recursive($data, $this->buildMetadata($product));
-		$data = array_merge_recursive($data, $this->buildShippingData($product));
+        if ($cost !== null) {
+            $data['new_usdcost'] = $cost;
+        }
 
-		// TODO: Calculate profit/margin.
-		$this->logger->info("Start calculating profit/margin for product");
-		$calculator = new ProductProfitCalculator($this->logger, $product);
+        $data['new_saleprice'] = $specialPrice;
 
-		$currencyExchange = $calculator->calculateCurrencyExchange();
-		$this->logger->info("Currency exchange for product: $currencyExchange");
+        $data = array_merge_recursive($data, $this->buildVendorData($product));
+        $data = array_merge_recursive($data, $this->buildMetadata($product));
+        $data = array_merge_recursive($data, $this->buildShippingData($product));
 
-		$processingFees = $calculator->calculateProcessingFees();
-		$this->logger->info("Processing fees for product: $processingFees");
-		
-		$standardCost = $calculator->calculateStandardCost();
-		$this->logger->info("Standard cost for product: $standardCost");
+        // TODO: Calculate profit/margin.
+        $this->logger->info("Start calculating profit/margin for product");
+        $calculator = new ProductProfitCalculator($this->logger, $product);
 
-		$profit = $calculator->calculateProfit();
-		$this->logger->info("Profit for product: $profit");
-		$margin = $calculator->calculateMargin();
-		$this->logger->info("Margin for product: $margin");
+        $currencyExchange = $calculator->calculateCurrencyExchange();
+        $this->logger->info("Currency exchange for product: $currencyExchange");
 
-		if ($currencyExchange !== null) {
-			$data['new_currencyexchange'] = $currencyExchange;
-		}
-		if ($processingFees !== null) {
-			$data['new_processingfees'] = $processingFees;
-		}
-		if ($standardCost !== null) {
-			$data['standardcost'] = $standardCost;
-		}
-		if ($profit !== null) {
-			$data['new_profit'] = $profit;
-		}
-		if ($margin !== null) {
-			$data['new_margin'] = $margin;
-		}	
+        $processingFees = $calculator->calculateProcessingFees();
+        $this->logger->info("Processing fees for product: $processingFees");
 
-		return $data;
-	}
+        $standardCost = $calculator->calculateStandardCost();
+        $this->logger->info("Standard cost for product: $standardCost");
 
-	function composePriceListItem($product, $productId) {
-		$this->logger->info("[composePriceListItem] -> Enter");
+        $profit = $calculator->calculateProfit();
+        $this->logger->info("Profit for product: $profit");
+        $margin = $calculator->calculateMargin();
+        $this->logger->info("Margin for product: $margin");
 
-		$vendorCurrency = $product->getVendorCurrency();
-		$this->logger->info("[composePriceListItem] Product currency: $vendorCurrency");
+        if ($currencyExchange !== null) {
+            $data['new_currencyexchange'] = $currencyExchange;
+        }
+        if ($processingFees !== null) {
+            $data['new_processingfees'] = $processingFees;
+        }
+        if ($standardCost !== null) {
+            $data['standardcost'] = $standardCost;
+        }
+        if ($profit !== null) {
+            $data['new_profit'] = $profit;
+        }
+        if ($margin !== null) {
+            $data['new_margin'] = $margin;
+        }
 
-		// Always use CAD currency and default price list.
-		$currencyId = $this->currencyHelper->getCurrencyIdByCode('CAD');
-		$priceLevelId = $this->priceListHelper->getDefaultPriceListId();
-		$price = $product->getPrice();
-		$this->logger->info("[composePriceListItem] Set product price $price in CAD for default price list.");
+        return $data;
+    }
 
-		return array(
-			'productid@odata.bind' => "/products($productId)",
-			'amount' => $price,
-			'transactioncurrencyid@odata.bind' => "/transactioncurrencies($currencyId)",
-			"pricelevelid@odata.bind" => "/pricelevels($priceLevelId)",
-			// Defaults for Unit Group and Default Unit.
-			"uomid@odata.bind" => "/uoms(16b94c87-47ff-4583-884b-fba2cea56106)",
-			"uomscheduleid@odata.bind" => "/uomschedules(a974056b-8238-4cbd-93fd-bacda14d313d)"
-		);
-	}
+    function composePriceListItem($product, $productId) {
+        $this->logger->info("[composePriceListItem] -> Enter");
 
- 	private function buildVendorData($product) {
- 		$data = array();
+        $vendorCurrency = $product->getVendorCurrency();
+        $this->logger->info("[composePriceListItem] Product currency: $vendorCurrency");
 
- 		$vendorDescription = $product->getVendorDescription();
- 		$vendorName = $product->getVendorPart();
+        // Always use CAD currency and default price list.
+        $currencyId = $this->currencyHelper->getCurrencyIdByCode('CAD');
+        $priceLevelId = $this->priceListHelper->getDefaultPriceListId();
+        $price = $product->getPrice();
+        $this->logger->info("[composePriceListItem] Set product price $price in CAD for default price list.");
 
- 		if ($vendorDescription !== null) {
-			$data['description'] = $vendorDescription;
-		}
-		if ($vendorName !== null) {
-			$data['vendorpartnumber'] = $vendorName;
-		}
+        return array(
+            'productid@odata.bind' => "/products($productId)",
+            'amount' => $price,
+            'transactioncurrencyid@odata.bind' => "/transactioncurrencies($currencyId)",
+            "pricelevelid@odata.bind" => "/pricelevels($priceLevelId)",
+            // Defaults for Unit Group and Default Unit.
+            "uomid@odata.bind" => "/uoms(16b94c87-47ff-4583-884b-fba2cea56106)",
+            "uomscheduleid@odata.bind" => "/uomschedules(a974056b-8238-4cbd-93fd-bacda14d313d)"
+        );
+    }
 
- 		return $data;
- 	}
+    private function buildVendorData($product) {
+        $data = array();
 
- 	private function buildMetadata($product) {
- 		$data = array();
+        $vendorDescription = $product->getVendorDescription();
+        $vendorName = $product->getVendorPart();
 
- 		$metaTitle = $product->getMetaTitle();
- 		$metaDescription = $product->getMetaDescription();
- 		$metaKeywords = $product->getMetaKeyword();
+        if ($vendorDescription !== null) {
+            $data['description'] = $vendorDescription;
+        }
+        if ($vendorName !== null) {
+            $data['vendorpartnumber'] = $vendorName;
+        }
 
- 		if ($metaTitle !== null) {
- 			$data['new_metatagtitle'] = $metaTitle;
- 		}
+        return $data;
+    }
 
- 		if ($metaDescription !== null) {
- 			$data['new_metatagdescription'] = $metaDescription;
- 		}
+    private function buildMetadata($product) {
+        $data = array();
 
- 		if ($metaKeywords !== null) {
- 			$data['new_metatagkeywords10k'] = $metaKeywords;
- 		}
+        $metaTitle = $product->getMetaTitle();
+        $metaDescription = $product->getMetaDescription();
+        $metaKeywords = $product->getMetaKeyword();
 
- 		return $data;
- 	}
+        if ($metaTitle !== null) {
+            $data['new_metatagtitle'] = $metaTitle;
+        }
 
- 	private function buildShippingData($product) {
- 		$data = array();
+        if ($metaDescription !== null) {
+            $data['new_metatagdescription'] = $metaDescription;
+        }
 
- 		$length = $product->getShippingLength();
- 		$width = $product->getShippingWidth();
- 		$height = $product->getShippingHeight();
+        if ($metaKeywords !== null) {
+            $data['new_metatagkeywords10k'] = $metaKeywords;
+        }
 
- 		if ($length !== null) {
- 			$data['new_lengthcm'] = $length;
- 		}
- 		if ($width !== null) {
- 			$data['new_widthcm'] = $width;
- 		}
- 		if ($height !== null) {
- 			$data['new_heightcm'] = $height;
- 		}
+        return $data;
+    }
 
- 		return $data;
- 	}
+    private function buildShippingData($product) {
+        $data = array();
+
+        $length = $product->getShippingLength();
+        $width = $product->getShippingWidth();
+        $height = $product->getShippingHeight();
+
+        if ($length !== null) {
+            $data['new_lengthcm'] = $length;
+        }
+        if ($width !== null) {
+            $data['new_widthcm'] = $width;
+        }
+        if ($height !== null) {
+            $data['new_heightcm'] = $height;
+        }
+
+        return $data;
+    }
 }

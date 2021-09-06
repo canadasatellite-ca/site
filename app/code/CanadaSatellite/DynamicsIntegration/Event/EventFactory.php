@@ -67,4 +67,13 @@ class EventFactory
 			'data' => $activationFormEnvelope,
 		);
 	}
+
+    function createAstQueuePushEvent($id, $data)
+    {
+        return array(
+            'kind' => 'AstQueuePush',
+            'id' => $id,
+            'data' => $data,
+        );
+    }
 }

@@ -8,9 +8,53 @@
                 <resource>https://canadasatellite.crm.dynamics.com</resource>
             </credentials>
         </dynamics>
+		<ast>
+			<credentials>
+				<username>D-ONC001-A_API</username>
+				<password>najsqydS$1</password>
+			</credentials>
+			<urls>
+				<base_point>https://api.theastgroup.com:200/</base_point>
+				<login>token</login>
+				<iridium>
+					<base_part>ibisapi/prov/iridium/</base_part>
+					<activation>activation</activation>
+					<deactivation>deactivation</deactivation>
+					<suspension>suspension</suspension>
+					<unsuspension>unsuspension</unsuspension>
+					<topup>topup</topup>
+					<balance>balanceenquiry</balance>
+					<swap>simswap</swap>
+					<modification>modification</modification>
+				</iridium>
+				<inmarsat>
+					<base_part>ibisapi/prov/inmarsat/</base_part>
+					<activation>activation</activation>
+					<deactivation>deactivation</deactivation>
+					<suspension>suspension</suspension>
+					<unsuspension>unsuspension</unsuspension>
+					<topup>topup</topup>
+					<balance>balanceenquiry</balance>
+					<swap>simswap</swap>
+					<modification>modification</modification>
+					<create_vessel>createvessel</create_vessel>
+				</inmarsat>
+				<action_status>ibisapi/prov/status</action_status>
+			</urls>
+		</ast>
+		<map_options>
+			<sim_order>
+				<plan>PLAN SELECTION</plan>
+			</sim_order>
+			<topup>
+				<phone_number>IRIDIUM PHONE OR SIM #,ISATHUB SIM OR PHONE #,BGAN PHONE OR SIM NUMBER</phone_number>
+			    <target_sku>SELECT PLAN,SELECT TOP UP,ADD BGAN PREPAID PLAN</target_sku>
+			</topup>
+		</map_options>
 		<magento>
 			<regulars>
-				<get_sim_from_order_note>/(\d*).*please visit.*to activate your sim/i</get_sim_from_order_note>
+				<get_sim_list_from_order_note>/(.*?)\s*-\s*please visit.*to activate your sim/i</get_sim_list_from_order_note>
+				<split_sims_from_list>/(?:(89\d+);?\s?)+?/i</split_sims_from_list>
 			</regulars>
 		</magento>
     </default>
