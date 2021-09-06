@@ -1,0 +1,46 @@
+{
+  "iridium": {
+    "[THIS IA AN EXAMPLE! PLEASE FILL CORRECT VALUES] 75 GLOBAL MINUTES (VALID 60 DAYS, $3.47 / MINUTE)": {
+      "ServiceTypeId": 10,
+      "PlanId": 15,
+      "PlanOptions": [10, 15, 20],
+      "BillProfileId": 41566,
+      "DynamicsService": 1,
+      "DynamicsType": 100221000,
+      "DynamicsPlan": 100000029,
+      "Voucher": "Iridium-Northern-Lights-400-12"
+    },
+    "[THIS IA AN EXAMPLE! PLEASE FILL CORRECT VALUES] 1200 GLOBAL MINUTES (VALID 12 MONTHS, $1.90 / MINUTE)": {
+      "ServiceTypeId": 10,
+      "PlanId": 15,
+      "PlanOptions": [10, 15, 20],
+      "BillProfileId": 41566,
+      "DynamicsService": 1,
+      "DynamicsType": 100221000,
+      "DynamicsPlan": 100000029,
+      "Voucher": {
+        "ServiceTypeId": 10,
+        "Voucher": "5658329507",
+        "Quantity": 1
+      }
+    }
+  },
+  "inmarsat": {
+    "[THIS IA AN EXAMPLE! PLEASE FILL CORRECT VALUES] PLAN NAME HERE": {
+      "ServiceTypeId": 19,
+      "Category": "Postpay",
+      "PackageId": 303,
+      "RatePlanId": 1339,
+      "BillProfileId": 45264,
+      "DynamicsService": 1,
+      "DynamicsType": 100221000,
+      "DynamicsPlan": 100000029
+    }
+  },
+  "@meta": {
+    "NetworkCodes": {
+      "iridium": 100200000,
+      "inmarsat": 100100000
+    }
+  }
+}
