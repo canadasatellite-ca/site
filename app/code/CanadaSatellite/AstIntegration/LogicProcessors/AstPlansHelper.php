@@ -6,7 +6,11 @@ class AstPlansHelper {
     private $data;
 
     public function __construct() {
-        $file = file_get_contents('app/code/CanadaSatellite/AstIntegration/etc/plans.json');
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        $dir = $objectManager->get('Magento\Framework\Module\Dir');
+        $etc = $dir->getDir('CanadaSatellite_AstIntegration', 'etc');
+
+        $file = file_get_contents("$etc/plans.json");
         $this->data = json_decode($file, true);
     }
 

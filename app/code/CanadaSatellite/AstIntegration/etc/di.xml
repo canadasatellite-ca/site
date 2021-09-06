@@ -14,12 +14,4 @@
             </argument>
         </arguments>
     </type>
-    <type name="Magento\Framework\Console\CommandList">
-        <arguments>
-            <argument name="commands" xsi:type="array">
-                <item name="greeting_command" xsi:type="object">CanadaSatellite\AstIntegration\Console\Command\GreetingCommand</item>
-                <item name="ast_integration_import_orders_command" xsi:type="object">CanadaSatellite\AstIntegration\Console\Command\ImportOrderCommand</item>
-            </argument>
-        </arguments>
-    </type>
 </config>

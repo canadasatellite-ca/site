@@ -37,16 +37,23 @@ class AstQueueProcessor {
         $limit = 0;
         $i = 0;
         while ($i < count($this->queue)) {
-            $item = $this->queue[$i++];
+            $limit++;
+            if ($limit > 100) {
+                $this->logger->info("[AstQueueProcessor] Consumer reached global iter limit");
+                return;
+            }
+
+            $item = $this->queue[$i];
+            $i++;
             $this->logger->info("[AstQueueProcessor] DataId = $item->dataId | Begin");
             if ($item->nextTime > time()) {
                 $this->logger->info("[AstQueueProcessor] DataId = $item->dataId | Wait");
                 continue;
             }
 
-            if(++$limit >= 10) {
+            if ($limit >= 10) {
                 $this->logger->info("[AstQueueProcessor] Request limit reached");
-                break;
+                return;
             }
 
             $this->logger->info("[AstQueueProcessor] DataId = $item->dataId | Process");
