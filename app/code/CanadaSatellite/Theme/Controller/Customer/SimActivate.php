@@ -135,12 +135,15 @@ class SimActivate extends \Magento\Framework\App\Action\Action {
 
                     $activatedSimsIds [] = $simId;
 
-                    // TODO: return
-                    // $this->_emailSender->sendActivationEmails($request);
-                    // $this->_logger->info("[SIM Activate] SIM $simId activation emails sent");
+                    $this->_emailSender->sendActivationEmails($request);
+                    $this->_logger->info("[SIM Activate] SIM $simId activation emails sent");
                 } catch (\Exception $e) {
                     $this->_logger->info("[SIM Activate] Failed to activate SIM $simId for customer $customerId: " . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());
-                    $this->addErrorMessage("Sorry, an error has occurred on SIM {$sim->getSimNumber()} activation");
+                    if (isset($sim)) {
+                        $this->addErrorMessage("Sorry, an error has occurred on SIM {$sim->getSimNumber()} activation");
+                    } else {
+                        $this->addErrorMessage("Sorry, an error has occurred on SIM activation");
+                    }
                 }
             }
 
