@@ -8,68 +8,53 @@ use Magento\Framework\Controller\Result\ForwardFactory;
 use Magento\Framework\Controller\Result\RedirectFactory;
 use Magento\Framework\Registry;
 
-class SimActivate extends \Magento\Framework\App\Action\Action
-{
-    /**
-     * @var PageFactory
-     */
+class SimActivate extends \Magento\Framework\App\Action\Action {
+    /** @var PageFactory */
     protected $_resultPageFactory;
 
-    /**
-     * Customer session.
-     *
-     * @var \Magento\Customer\Model\Session
-     */
+    /** @var \Magento\Customer\Model\Session */
     protected $_customerSession;
 
-    /**
-     * The ActivationForm Factory
-     *
-     * @var \Interactivated\ActivationForm\Model\ActivationformFactory
-     */
+    /** @var \Interactivated\ActivationForm\Model\ActivationformFactory */
     protected $_requestFactory;
 
-    /**
-     * Activation email sender
-     *
-     * @var \Interactivated\ActivationForm\Email\EmailSender
-     */
+    /** @var \Interactivated\ActivationForm\Email\EmailSender */
     protected $_emailSender;
 
-    /**
-     * The SIM Factory
-     *
-     * @var \CanadaSatellite\Theme\Model\SimFactory
-     */
+    /** @var \CanadaSatellite\Theme\Model\SimFactory */
     protected $_simFactory;
 
-    /**
-     * Address utils
-     *
-     * @var \CanadaSatellite\DynamicsIntegration\Utils\AddressUtils
-     */
+    /** @var \CanadaSatellite\DynamicsIntegration\Utils\AddressUtils */
     protected $_addressUtils;
 
-    /**
-     * Logger
-     *
-     * @var \CanadaSatellite\DynamicsIntegration\Logger\Logger
-     */
+    /** @var \CanadaSatellite\DynamicsIntegration\Logger\Logger */
     protected $_logger;
 
-    function __construct(
-        \Magento\Framework\App\Action\Context $context,
-        \Magento\Framework\View\Result\PageFactory $resultPageFactory,
-        \Magento\Customer\Model\Session $customerSession,
-        \Interactivated\ActivationForm\Model\ActivationformFactory $requestFactory,
-        \Interactivated\ActivationForm\Email\EmailSender $emailSender,
-        \CanadaSatellite\Theme\Model\SimFactory $simFactory,
-        \CanadaSatellite\DynamicsIntegration\Utils\AddressUtils $addressUtils,
-        \CanadaSatellite\SimpleAmqp\Publisher $publisher,
-        \CanadaSatellite\DynamicsIntegration\Config\Config $config,
+    /** @var \CanadaSatellite\SimpleAmqp\Publisher */
+    private $_publisher;
+
+    /** @var \CanadaSatellite\DynamicsIntegration\Config\Config */
+    private $_config;
+
+    /** @var \CanadaSatellite\DynamicsIntegration\Envelope\ActivationFormEnvelopeFactory */
+    private $_envelopeFactory;
+
+    /** @var \CanadaSatellite\DynamicsIntegration\Event\EventFactory */
+    private $_eventFactory;
+
+    public function __construct(
+        \Magento\Framework\App\Action\Context                                       $context,
+        \Magento\Framework\View\Result\PageFactory                                  $resultPageFactory,
+        \Magento\Customer\Model\Session                                             $customerSession,
+        \Interactivated\ActivationForm\Model\ActivationformFactory                  $requestFactory,
+        \Interactivated\ActivationForm\Email\EmailSender                            $emailSender,
+        \CanadaSatellite\Theme\Model\SimFactory                                     $simFactory,
+        \CanadaSatellite\DynamicsIntegration\Utils\AddressUtils                     $addressUtils,
+        \CanadaSatellite\SimpleAmqp\Publisher                                       $publisher,
+        \CanadaSatellite\DynamicsIntegration\Config\Config                          $config,
         \CanadaSatellite\DynamicsIntegration\Envelope\ActivationFormEnvelopeFactory $envelopeFactory,
-        \CanadaSatellite\DynamicsIntegration\Event\EventFactory $eventFactory,
-        \CanadaSatellite\DynamicsIntegration\Logger\Logger $logger
+        \CanadaSatellite\DynamicsIntegration\Event\EventFactory                     $eventFactory,
+        \CanadaSatellite\DynamicsIntegration\Logger\Logger                          $logger
     ) {
         $this->_resultPageFactory = $resultPageFactory;
         $this->_customerSession = $customerSession;
@@ -86,27 +71,24 @@ class SimActivate extends \Magento\Framework\App\Action\Action
         parent::__construct($context);
     }
 
-    protected function _getCustomer()
-    {
+    protected function _getCustomer() {
         return $this->_customerSession->getCustomer();
     }
 
-    protected function _getSession()
-    {
+    protected function _getSession() {
         return $this->_customerSession;
     }
 
-    function dispatch(RequestInterface $request)
-    {
+    public function dispatch(RequestInterface $request) {
         if (!$this->_getSession()->authenticate()) {
             $this->_actionFlag->set('', 'no-dispatch', true);
         }
 
         return parent::dispatch($request);
     }
-    function execute()
-    {
-        try {      
+
+    public function execute() {
+        try {
             $simIds = $this->_request->getParam('sims');
 
             $customer = $this->_getCustomer()->getDataModel();
@@ -114,7 +96,7 @@ class SimActivate extends \Magento\Framework\App\Action\Action
             $customerEmail = $customer->getEmail();
 
             $this->_logger->info("[SIM Activate] Activate SIMs of customer $customerId ...");
-            
+
             $this->_logger->info("[SIM Activate] Activate SIMs: " . var_export($simIds, true));
 
             $activatedSimsIds = array();
@@ -124,7 +106,7 @@ class SimActivate extends \Magento\Framework\App\Action\Action
                     $sim = $this->_simFactory->create()->load($simId);
 
                     if (!$sim->getId()) {
-                        $this->_logger->info("[SIM Acitivate] SIM $simId not found");
+                        $this->_logger->info("[SIM Activate] SIM $simId not found");
                         $this->addErrorMessage('SIM does not longer exist');
                         continue;
                     }
@@ -151,40 +133,39 @@ class SimActivate extends \Magento\Framework\App\Action\Action
                     $this->setRequestAccount($request, $customer);
                     $this->_logger->info("[SIM Activate] Set account of customer $customerId on activation request");
 
-                    $activatedSimsIds []= $simId;
+                    $activatedSimsIds [] = $simId;
 
-                    $this->_emailSender->sendActivationEmails($request);
-                    $this->_logger->info("[SIM Activate] SIM $simId activation emails sent");
+                    // TODO: return
+                    // $this->_emailSender->sendActivationEmails($request);
+                    // $this->_logger->info("[SIM Activate] SIM $simId activation emails sent");
                 } catch (\Exception $e) {
                     $this->_logger->info("[SIM Activate] Failed to activate SIM $simId for customer $customerId: " . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());
-                    $this->addErrorMessage("Sorry, an error has occured on SIM {$sim->getSimNumber()} activation");
+                    $this->addErrorMessage("Sorry, an error has occurred on SIM {$sim->getSimNumber()} activation");
                 }
             }
 
             if (!empty($activatedSimsIds)) {
                 $this->addSuccessMessage("Your activation request(-s) has been received and is in progress. The activation may take up to 2 business days to complete. Once your service(s) are activated, you will receive an Activation Confirmation email, which will include your new satellite phone number and expiry date (if applicable).");
-                
             }
 
             return $this->redirect($activatedSimsIds);
         } catch (\Exception $e) {
-            $this->_logger->info("[SIM Activate] Failed to activate SIMs for customer $customerId: " . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());
-            $this->addErrorMessage("An error has occured");
+            $this->_logger->info("[SIM Activate] Failed to activate SIMs for customer $customerId: {$e->getMessage()}\nStack trace: {$e->getTraceAsString()}");
+            $this->addErrorMessage("An error has occurred");
             return $this->redirect();
         }
     }
 
-    private function createRequest($customer, $sim)
-    {
+    private function createRequest($customer, $sim) {
         $email = $customer->getEmail();
         $firstname = $customer->getFirstname();
         $lastname = $customer->getLastname();
         $company = $this->getCompany($customer);
-        $orderNumber = null;
+        $orderNumber = $sim->getOrder(); // Order increment id
         $simNumber = $sim->getSimNumber();
 
         $request = $this->_requestFactory->create();
-        $request->setData(array(
+        $request->setData([
             'email' => $email,
             'firstname' => $firstname,
             'lastname' => $lastname,
@@ -192,14 +173,13 @@ class SimActivate extends \Magento\Framework\App\Action\Action
             'order_number' => $orderNumber,
             'sim_number' => $simNumber,
             'notes' => null,
-        ));
+        ]);
         $request->save();
 
         return $request;
     }
 
-    private function setRequestAccount($request, $customer)
-    {
+    private function setRequestAccount($request, $customer) {
         $this->_publisher->publish(
             $this->_config->getIntegrationQueue(),
             $this->_eventFactory->createActivationFormSavedEvent(
@@ -209,8 +189,7 @@ class SimActivate extends \Magento\Framework\App\Action\Action
         );
     }
 
-    private function getCompany($customer)
-    {
+    private function getCompany($customer) {
         $address = $this->_addressUtils->getCustomerDefaultBillingAddress($customer);
         if ($address === null) {
             return null;
@@ -219,20 +198,17 @@ class SimActivate extends \Magento\Framework\App\Action\Action
         return $address->getCompany();
     }
 
-    private function addSuccessMessage($message)
-    {
+    private function addSuccessMessage($message) {
         $this->messageManager->addSuccess(__($message));
     }
 
-    private function addErrorMessage($error)
-    {
+    private function addErrorMessage($error) {
         $this->messageManager->addError(__($error));
     }
 
-    private function redirect($activatedSimsIds = null)
-    {
+    private function redirect($activatedSimsIds = null) {
         $resultRedirect = $this->resultRedirectFactory->create();
-        
+
         if (!is_array($activatedSimsIds)) {
             $activatedSimsIds = array();
         }
