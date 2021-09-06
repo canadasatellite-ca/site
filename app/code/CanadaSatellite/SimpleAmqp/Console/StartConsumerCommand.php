@@ -38,7 +38,9 @@ class StartConsumerCommand extends Command
 
     private $logger;
 
-	public function __construct(	
+    private $astQueue;
+
+	public function __construct(
         AmqpClientFactory $clientFactory,
         LoggerFactory $loggerFactory,
         Config $config,
@@ -47,6 +49,7 @@ class StartConsumerCommand extends Command
 		$this->clientFactory = $clientFactory;
         $this->loggerFactory = $loggerFactory;
 		$this->config = $config;
+        $this->astQueue = null;
 
 		parent::__construct($name);
 	}
@@ -56,7 +59,10 @@ class StartConsumerCommand extends Command
         try {
         	$queueName = $input->getArgument(self::ARGUMENT_QUEUE_NAME);
             $this->logger = $this->loggerFactory->getLogger($queueName);
-            $astQueue = new AstQueueProcessor();
+
+            if($this->astQueue === null) {
+                $this->astQueue = new AstQueueProcessor();
+            }
 
             $this->log("Consumer started.");
 
@@ -100,7 +106,7 @@ class StartConsumerCommand extends Command
         				$consumer = $this->config->getQueueBatchConsumerInstance($queueName);
 
         				try {
-        					$consumer->consume($batch, $client, $astQueue);
+        					$consumer->consume($batch, $client, $this->astQueue);
         				}
         				catch (\Exception $e) {
         					$this->log("Error: " . $e->getMessage());
@@ -108,7 +114,13 @@ class StartConsumerCommand extends Command
         				}
         			}
 
-                    $astQueue->consume();
+                    try {
+                        $this->astQueue->consume();
+                    }
+                    catch (\Exception $e) {
+                        $this->log("[astQueue] Error: " . $e->getMessage());
+                        $this->log("[astQueue] Stack trace: " . $e->getTraceAsString());
+                    }
 
         			$batch = array();
         			$timer->restart();
