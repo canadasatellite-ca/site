@@ -2,6 +2,7 @@
 
 namespace CanadaSatellite\SimpleAmqp\Console;
 
+use CanadaSatellite\AstIntegration\LogicProcessors\AstQueueProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -55,6 +56,7 @@ class StartConsumerCommand extends Command
         try {
         	$queueName = $input->getArgument(self::ARGUMENT_QUEUE_NAME);
             $this->logger = $this->loggerFactory->getLogger($queueName);
+            $astQueue = new AstQueueProcessor();
 
             $this->log("Consumer started.");
 
@@ -98,13 +100,15 @@ class StartConsumerCommand extends Command
         				$consumer = $this->config->getQueueBatchConsumerInstance($queueName);
 
         				try {
-        					$consumer->consume($batch, $client);
+        					$consumer->consume($batch, $client, $astQueue);
         				}
         				catch (\Exception $e) {
         					$this->log("Error: " . $e->getMessage());
                             $this->log("Stack trace: " . $e->getTraceAsString());
         				}
         			}
+
+                    $astQueue->consume();
 
         			$batch = array();
         			$timer->restart();
