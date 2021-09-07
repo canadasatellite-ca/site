@@ -4,7 +4,7 @@
     <type name="Magento\CatalogSearch\Model\ResourceModel\Fulltext\Collection">
         <plugin name="cs_theme_fulltext_collection" type="CanadaSatellite\Theme\Model\ResourceModel\Fulltext\CollectionPlugin" sortOrder="10" />
     </type>
-    <preference for="Magento\Framework\View\Page\Config\Renderer" type="CanadaSatellite\Theme\View\Page\Config\Renderer" />
+    <preference for="Magento\Framework\View\Page\Config\Renderer" type="CanadaSatellite\Theme\View_\Page\Config\Renderer" />
     <preference for="Magento\Bundle\Observer\AppendUpsellProductsObserver" type="CanadaSatellite\Theme\Observer\AppendUpsellProductsObserver" />
     <preference for="Magento\Config\Model\Config\Backend\Serialized" type="CanadaSatellite\Theme\Model\Config\Backend\Serialized" />
     <preference for="Magento\Config\Model\Config\Backend\Serialized\ArraySerialized" type="CanadaSatellite\Theme\Model\Config\Backend\Serialized\ArraySerialized" />

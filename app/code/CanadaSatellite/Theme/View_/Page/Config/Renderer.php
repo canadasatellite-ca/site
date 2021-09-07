@@ -1,6 +1,6 @@
 <?php
 
-namespace CanadaSatellite\Theme\View\Page\Config;
+namespace CanadaSatellite\Theme\View_\Page\Config;
 
 use Magento\Framework\View\Page\Config;
 use Magento\Framework\View\Page\Config\Renderer as MagentoRenderer;
