@@ -25,7 +25,10 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
 				# "MageSuper_Casat:
 				# «You just catched on trying to change product name and(or) description for not default store»":
 				# https://github.com/canadasatellite-ca/site/issues/27
-				df_log_l($this, $m);
+				# 2021-09-07
+				# "`MageSuper_Casat`: «The product's description is changed in a non-default scope!»":
+				# https://github.com/canadasatellite-ca/site/issues/215
+				df_log_l($this, ['message' => $m], 'non-default-scope');
 			}
 		}
         if (df_product_is_bundle($p)) {
