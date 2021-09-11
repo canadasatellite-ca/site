@@ -262,6 +262,7 @@ return [
         'Brsw_Reindexer' => 1,
         'Bss_AdminActionLog' => 1,
         'Cadence_ScopeFix' => 1,
+        'CanadaSatellite_Amelia' => 1,
         'Interactivated_ActivationForm' => 1,
         'Df_Core' => 1,
         'Virtua_SearchFix' => 1,
