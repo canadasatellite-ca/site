@@ -23,4 +23,9 @@ class Config
 
 		return $config[self::QUEUE];
 	}
+
+    function getAstQueue() {
+        $baseQueue = $this->getIntegrationQueue();
+        return "{$baseQueue}_ast";
+    }
 }

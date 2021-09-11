@@ -45,7 +45,7 @@ class RestApi {
         $response = $this->sendPostRequestJson($this->getCrmUrl() . '/api/data/v8.1/products', $headers, json_encode($crmProduct));
         $json = $this->getResponseJsonIfSuccess($response);
 
-        $this->logger->info('createProduct: ' . print_r($json, true));
+        $this->logger->info('createProduct: ' . json_encode($json));
 
         return $json->productid;
     }
@@ -957,6 +957,11 @@ class RestApi {
         return $json->value[0]->new_countryid;
     }
 
+    /**
+     * @used-by \CanadaSatellite\Theme\Model\ResourceModel\Card\Collection::loadWithFilter()
+     * @param $customerId
+     * @return false
+     */
     function getCardsByCustomerId($customerId) {
         $this->login();
 
@@ -975,14 +980,15 @@ class RestApi {
 
         $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_sundrieses', $headers, $query);
         $json = $this->getResponseJsonIfSuccess($response);
-		# 2021-06-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-		# «count(): Parameter must be an array or an object that implements Countable
-		# in app/code/CanadaSatellite/Theme/Model/ResourceModel/Card/Collection.php on line 77»:
-		# https://github.com/canadasatellite-ca/site/issues/131
-		return df_eta($json->value);
+        # 2021-06-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+        # «count(): Parameter must be an array or an object that implements Countable
+        # in app/code/CanadaSatellite/Theme/Model/ResourceModel/Card/Collection.php on line 77»:
+        # https://github.com/canadasatellite-ca/site/issues/131
+        return df_eta($json->value);
     }
 
-    function getCard($cardId) {
+    function getCard($cardId)
+    {
         $this->login();
 
         $headers = array(
@@ -1008,7 +1014,8 @@ class RestApi {
         return $json;
     }
 
-    function createCard($crmCard) {
+    function createCard($crmCard)
+    {
         $this->login();
 
         $headers = array(
@@ -1026,7 +1033,8 @@ class RestApi {
         return $json->new_sundriesid;
     }
 
-    function updateCard($cardId, $crmCard) {
+    function updateCard($cardId, $crmCard)
+    {
         $this->login();
 
         $headers = array(
@@ -1042,7 +1050,8 @@ class RestApi {
         $json = $this->getResponseJsonIfSuccess($response);
     }
 
-    function deleteCard($cardId) {
+    function deleteCard($cardId)
+    {
         $this->login();
 
         $headers = array(
@@ -1535,8 +1544,8 @@ QUERYXML;
         $client = new \Zend\Http\Client();
         $options = array(
             'adapter' => 'Zend\Http\Client\Adapter\Curl',
-            'curloptions' => [CURLOPT_FOLLOWLOCATION => true],
-            'maxredirects' => 0,
+            'curloptions' => [CURLOPT_FOLLOWLOCATION => true, CURLOPT_CONNECTTIMEOUT => 30, CURLOPT_MAXREDIRS => 15],
+            'maxredirects' => 15,
             'timeout' => 30
         );
         $client->setOptions($options);

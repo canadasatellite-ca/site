@@ -65,7 +65,7 @@ class OrderEnvelopeFactory
 
 		$this->logger->info("Calculating visible items costs");
 		$costs = $this->orderUtils->calculateVisibleItemsCosts($order);
-		$this->logger->info("Visible items costs calculated: " . var_export($costs, true));
+		$this->logger->info("Visible items costs calculated: " . json_encode($costs));
 
 		$data['items'] = array();
 		foreach ($order->getAllVisibleItems() as $item) {

@@ -78,7 +78,7 @@ class OrderItemEnvelopeFactory
 		try {
 			$level = error_reporting();
 			$this->logger->info("Error reporting level: $level");
-			$this->logger->info("Options got: " . var_export($options, true));
+			$this->logger->info("Options got: " . json_encode($options));
 		} catch (\Exception $e) {
 			$this->logger->info("Failed to dump options: " . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());
 		}

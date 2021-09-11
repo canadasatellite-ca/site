@@ -205,9 +205,6 @@ class ProductModelComposer {
         }
         if ($service !== null) {
             $data['new_service'] = $this->mapper->mapServiceType($service);
-			if ($data['new_service'] === 100000000) {
-				unset ($data['new_service']); // TODO: Hotfix. Update values from dynamics later
-			}
         }
 
         if ($brand !== null) {
