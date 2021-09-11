@@ -57,11 +57,11 @@ class ActivationFormEnvelopeFactory {
         $data['phoneNumber'] = $activationForm->getPhoneNumber();
         $data['comments'] = $activationForm->getComments();
 
-        $this->logger->info("DesiredActivationDate " . var_export($activationForm->getDesiredActivationDate(), true));
-        $this->logger->info("CompletedDate " . var_export($activationForm->getCompletedDate(), true));
-        $this->logger->info("ExpirationDate " . var_export($activationForm->getExpirationDate(), true));
+        $this->logger->info("DesiredActivationDate " . json_encode($activationForm->getDesiredActivationDate()));
+        $this->logger->info("CompletedDate " . json_encode($activationForm->getCompletedDate()));
+        $this->logger->info("ExpirationDate " . json_encode($activationForm->getExpirationDate()));
 
-        $this->logger->info("ActivationFromEnvelopeFactory | " . var_export($data, true));
+        $this->logger->info("ActivationFromEnvelopeFactory | " . json_encode($data));
 
         return $data;
     }

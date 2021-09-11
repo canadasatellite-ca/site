@@ -62,7 +62,7 @@ class OrderNoteProcessor {
 
                     $product = $item->getProduct();
                     $itemType = $product->getCustomAttribute('product_ast_type');
-                    if (is_null($itemType)) continue;
+                    if (!isset($itemType)) continue;
 
                     $qty = intval($item->getQtyOrdered());
                     switch ($itemType->getValue()) {
@@ -96,7 +96,7 @@ class OrderNoteProcessor {
                             continue;
                         }
 
-                        if (is_null($item)) {
+                        if (!isset($item)) {
                             $sim = $this->simFactory->create($simNumber, $accountId, $order->name, $plansHelper->getMeta('NetworkCodes', $providerKey));
                             $simGuid = $this->simUpdater->createSim($sim);
                             $this->logger->info("[OrderNoteProcessor] -> Order item not found. Sim without plan created. Guid = $simGuid. SimNumber = $simNumber. AccountId = $accountId");
@@ -106,7 +106,7 @@ class OrderNoteProcessor {
                         $this->logger->info("[OrderNoteProcessor] -> Provider = $providerKey | SimNumber = $simNumber");
 
                         $planKey = $item->getCustomAttribute('ast_plan_key');
-                        if (is_null($planKey)) {
+                        if (!isset($planKey) || empty($planKey->getValue())) {
                             $options = new OrderCustomOptionsHelper($item, false);
                             $planKey = $options->getFirstExistOptionValue(...$this->configValuesProvider->getSimOrderPlan()); // PLAN SELECTION
                         } else {
@@ -136,15 +136,18 @@ class OrderNoteProcessor {
                                 try {
                                     $innerProduct = $this->productRepository->get($voucherData);
                                     $value = $innerProduct->getCustomAttribute('dynamics_voucher_id');
-                                    if (!is_null($value)) {
-                                        $sim->setVoucher($value->getValue());
+                                    if (isset($value)) {
+                                        $voucherId = $value->getValue();
+                                        if (isset($voucherId) && !empty($voucherId)) {
+                                            $sim->setVoucher($voucherId);
+                                        }
                                     }
                                 } catch (NoSuchEntityException $e) {
                                     $this->logger->info("[OrderNoteProcessor] -> Inner topup product not found. SimNumber = $simNumber. AccountId = $accountId");
                                 }
                             } else if (gettype($voucherData) === 'array') {
-                                if (!empty($voucherData['dynamics_voucher_id'])) {
-                                    $sim->setVoucher($voucherData['dynamics_voucher_id']);
+                                if (isset($voucherData['DynamicsVoucherId']) && !empty($voucherData['DynamicsVoucherId'])) {
+                                    $sim->setVoucher($voucherData['DynamicsVoucherId']);
                                 }
                             }
                         }

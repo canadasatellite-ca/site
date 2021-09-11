@@ -286,7 +286,7 @@ class OrderModelComposer {
             array_push($result, $itemResult);
         }
 
-        $this->logger->info("[OrderModelComposer::getOrderDynamicProperties] Dynamic properties for order {$order->getIncrementId()}: " . print_r($result, true));
+        $this->logger->info("[OrderModelComposer::getOrderDynamicProperties] Dynamic properties for order {$order->getIncrementId()}: " . json_encode($result));
 
         return $result;
     }

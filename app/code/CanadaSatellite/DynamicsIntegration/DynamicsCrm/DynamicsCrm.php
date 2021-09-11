@@ -22,7 +22,6 @@ class DynamicsCrm {
     private $astManager;
     private $publisher;
     private $config;
-    private $eventFactory;
     private $productRepository;
 
 
@@ -40,7 +39,6 @@ class DynamicsCrm {
         \CanadaSatellite\AstIntegration\AstManagement\AstManager              $astManager,
         \CanadaSatellite\SimpleAmqp\Publisher                                 $publisher,
         \CanadaSatellite\DynamicsIntegration\Config\Config                    $config,
-        \CanadaSatellite\DynamicsIntegration\Event\EventFactory               $eventFactory,
         \Magento\Catalog\Model\ProductRepository                              $productRepository
     ) {
         $this->customerHelper = $customerHelper;
@@ -56,7 +54,6 @@ class DynamicsCrm {
         $this->astManager = $astManager;
         $this->publisher = $publisher;
         $this->config = $config;
-        $this->eventFactory = $eventFactory;
         $this->productRepository = $productRepository;
     }
 
@@ -95,7 +92,6 @@ class DynamicsCrm {
         $this->logger->info("[DynamicsCrm::createOrUpdateProduct] Start calculating profit/margin for product");
         $crmProduct = $this->restApi->getProductById($productId);
 
-        //$this->logger->info("Product from CRM:" . var_export($crmProduct, true));
         $calculator = new ProductProfitCalculator($this->logger, $product, $crmProduct->new_shippingcost, $crmProduct->currentcost, $crmProduct->new_saleprice);
 
         $currencyExchange = $calculator->calculateCurrencyExchange();
@@ -327,7 +323,7 @@ class DynamicsCrm {
 
         // AST Activation Processing BEGIN
 
-        if($crmSim === false || is_null($crmSim->new_plan_key)) {
+        if ($crmSim === false || is_null($crmSim->new_plan_key)) {
             $this->logger->info("[createOrUpdateActivationRequest] CRM SIM PlanKey is null. AST request will not be processed. SIM = $simNumber");
             return $crmId;
         }
@@ -393,11 +389,9 @@ class DynamicsCrm {
                 case 'Queued':
                 case 'Waiting':
                     $queueItem = new AstQueueItem($result->DataId, $simNumber, $itemVoucher);
+                    $queueItem->nextTime = time() + 60;
 
-                    $this->publisher->publish(
-                        $this->config->getIntegrationQueue(),
-                        $this->eventFactory->createAstQueuePushEvent($simNumber, $queueItem->toArray())
-                    );
+                    $this->publisher->publish($this->config->getAstQueue(), $queueItem);
                     break;
             }
         } else {

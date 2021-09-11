@@ -76,7 +76,6 @@ class ProductHelper {
         $this->logger->info("[ProductHelper::createOrUpdateProduct] Start calculating profit/margin for product");
         $crmProduct = $this->restApi->getProductById($productId);
 
-        //$this->logger->info("Product from CRM:" . var_export($crmProduct, true));
         $calculator = new ProductProfitCalculator($this->logger, $product, $crmProduct->new_shippingcost, $crmProduct->currentcost, $crmProduct->new_saleprice);
 
         $currencyExchange = $calculator->calculateCurrencyExchange();
@@ -143,7 +142,7 @@ class ProductHelper {
                 $localProps[$prop['description']] = $prop;
             }
 
-            $this->logger->info("[syncProductDynamicProperties] Local properties: " . print_r($localProps, true));
+            $this->logger->info("[syncProductDynamicProperties] Local properties: " . json_encode($localProps));
 
             foreach ($this->restApi->getProductDynamicProperties($productId) as $prop) {
                 if (empty($prop->description) || !array_key_exists($prop->description, $localProps)) {
@@ -154,7 +153,7 @@ class ProductHelper {
                 $dynamicsProps[$prop->description] = $prop;
             }
 
-            $this->logger->info("[syncProductDynamicProperties] Remote properties: " . print_r($dynamicsProps, true));
+            $this->logger->info("[syncProductDynamicProperties] Remote properties: " . json_encode($dynamicsProps));
 
             foreach ($localProps as $key => $prop) {
                 if (!array_key_exists($key, $dynamicsProps)) {

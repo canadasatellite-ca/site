@@ -58,7 +58,7 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
         $this->state = $state;
     }
 
-    function consume($batch, $client, $astQueue) {
+    function consume($batch, $client) {
         try {
             $this->state->getAreaCode();
         } catch (\Exception $e) {
@@ -109,11 +109,6 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
                         case 'ActivationFormSaved':
                             $activationForm = $event->data;
                             $this->processActivationForm($activationForm);
-                            break;
-                        case 'AstQueuePush':
-                            $astQueue->push(new AstQueueItem($event->data->dataId,
-                                $event->data->simNumber,
-                                $event->data->voucher));
                             break;
                     }
                 } catch (\Exception $e) {
@@ -209,7 +204,7 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
                 // Check that outer product it's a topup card
                 $itemType = $product->getCustomAttribute('product_ast_type');
 
-                if (is_null($itemType) || $itemType->getValue() != 'topup') continue;
+                if (!isset($itemType) || $itemType->getValue() !== 'topup') continue;
 
                 // Parse item options
                 $options = new OrderCustomOptionsHelper($item);
@@ -288,9 +283,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
     }
 
     private function dump($message, $body) {
-        echo "$message\r\n";
-        var_dump($body);
+        echo "$message\r\n" . json_encode($body);
 
-        $this->logger->info($message . var_export($body, true));
+        $this->logger->info("$message | " . json_encode($body));
     }
 }
