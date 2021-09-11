@@ -154,18 +154,30 @@ class AstManager {
         return $this->restApi->getActionStatus($dataId);
     }
 
+    /**
+     * @param $product
+     * @return array
+     * @throws \Exception
+     */
     public function getProductTopupAttributes($product) {
         $voucherId = $product->getCustomAttribute('ast_voucher_id');
         $voucherQuantity = $product->getCustomAttribute('ast_voucher_quantity');
         $serviceTypeId = $product->getCustomAttribute('ast_service_type_id');
-        if (is_null($voucherId) || is_null($voucherQuantity) || is_null($serviceTypeId)) {
+        if (!isset($voucherId) || !isset($voucherQuantity) || !isset($serviceTypeId)) {
             throw new \Exception('One of product custom attributes not exists');
         }
 
+        $voucherIdValue = $voucherId->getValue();
+        $voucherQuantityValue = $voucherQuantity->getValue();
+        $serviceTypeIdValue = $serviceTypeId->getValue();
+        if (empty($voucherIdValue) || empty($voucherQuantityValue) || empty($serviceTypeIdValue)) {
+            throw new \Exception('One of product custom attributes are empty');
+        }
+
         return [
-            'Voucher' => $voucherId->getValue(),
-            'Quantity' => intval($voucherQuantity->getValue()),
-            'ServiceTypeId' => intval($serviceTypeId->getValue())
+            'Voucher' => $voucherIdValue,
+            'Quantity' => intval($voucherQuantityValue),
+            'ServiceTypeId' => intval($serviceTypeIdValue)
         ];
     }
 

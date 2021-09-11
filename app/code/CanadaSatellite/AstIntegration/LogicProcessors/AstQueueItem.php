@@ -50,7 +50,7 @@ class AstQueueItem {
         ]);
 
         // Apply voucher
-        if (!is_null($this->voucher)) {
+        if (isset($this->voucher)) {
             $data = $this->voucher;
             $astManager->processTopup($this->simNumber, $data['ServiceTypeId'], $data['Voucher'],
                 $data['Quantity'], $data['Reference']);
