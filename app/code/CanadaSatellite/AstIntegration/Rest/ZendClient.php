@@ -34,7 +34,7 @@ class ZendClient {
 
 		$request->getHeaders()->addHeaders($headers);
 		$request->getPost()->fromArray($params);
-		
+
 		return $this->sendRequest($request);
 	}
 
@@ -81,8 +81,8 @@ class ZendClient {
 		$client = new \Zend\Http\Client();
 		$options = array(
 			'adapter' => 'Zend\Http\Client\Adapter\Curl',
-			'curloptions' => [CURLOPT_FOLLOWLOCATION => true],
-			'maxredirects' => 0,
+			'curloptions' => [CURLOPT_FOLLOWLOCATION => true, CURLOPT_CONNECTTIMEOUT => 30, CURLOPT_MAXREDIRS => 15],
+			'maxredirects' => 15,
 			'timeout' => 30
 		);
 		$client->setOptions($options);
