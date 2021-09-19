@@ -2,7 +2,6 @@
 
 namespace CanadaSatellite\SimpleAmqp\Console;
 
-use CanadaSatellite\AstIntegration\LogicProcessors\AstQueueProcessor;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
@@ -38,8 +37,6 @@ class StartConsumerCommand extends Command
 
     private $logger;
 
-    private $astQueue;
-
 	public function __construct(
         AmqpClientFactory $clientFactory,
         LoggerFactory $loggerFactory,
@@ -49,7 +46,6 @@ class StartConsumerCommand extends Command
 		$this->clientFactory = $clientFactory;
         $this->loggerFactory = $loggerFactory;
 		$this->config = $config;
-        $this->astQueue = null;
 
 		parent::__construct($name);
 	}
@@ -60,14 +56,14 @@ class StartConsumerCommand extends Command
         	$queueName = $input->getArgument(self::ARGUMENT_QUEUE_NAME);
             $this->logger = $this->loggerFactory->getLogger($queueName);
 
-            if($this->astQueue === null) {
-                $this->astQueue = new AstQueueProcessor();
-            }
-
             $this->log("Consumer started.");
 
         	$client = $this->clientFactory->getAmqpClient($queueName);
-        	$client->createQueue($queueName);
+        	$client->createQueue();
+
+            $astQueueName = "{$queueName}_ast";
+            $astClient = $this->clientFactory->getAmqpClient($astQueueName);
+            $astClient->createQueue();
 
         	// Interval in milliseconds.
             $interval = $input->getOption(self::OPTION_POLL_INTERVAL);
@@ -106,7 +102,7 @@ class StartConsumerCommand extends Command
         				$consumer = $this->config->getQueueBatchConsumerInstance($queueName);
 
         				try {
-        					$consumer->consume($batch, $client, $this->astQueue);
+        					$consumer->consume($batch, $client);
         				}
         				catch (\Exception $e) {
         					$this->log("Error: " . $e->getMessage());
@@ -115,7 +111,8 @@ class StartConsumerCommand extends Command
         			}
 
                     try {
-                        $this->astQueue->consume();
+                        $astProcessor = $this->config->getAstQueueProcessorInstance();
+                        $astProcessor->consume($astClient);
                     }
                     catch (\Exception $e) {
                         $this->log("[astQueue] Error: " . $e->getMessage());
