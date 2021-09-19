@@ -75,6 +75,13 @@ class Config extends \Magento\Framework\Config\Data
         );
 	}
 
+    /**
+     * @return \CanadaSatellite\AstIntegration\LogicProcessors\AstQueueProcessor
+     */
+    public function getAstQueueProcessorInstance() {
+        return $this->objectManager->create('CanadaSatellite\AstIntegration\LogicProcessors\AstQueueProcessor');
+    }
+
 	/**
 	 * @param string $key
 	 * @return string|null
