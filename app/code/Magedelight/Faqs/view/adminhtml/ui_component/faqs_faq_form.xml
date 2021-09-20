@@ -298,11 +298,14 @@
 					<item name="source" xsi:type="string">faqs</item>
 					<item name="sortOrder" xsi:type="number">10</item>
 					<item name="dataScope" xsi:type="string">email_send</item>
+<!-- 2021-09-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+"The `Magedelight_Faqs` module wrongly sends an email on a FAQ item saving in the backend
+when the «Notify Customer by Email» option is disabled": https://github.com/canadasatellite-ca/site/issues/226 -->
 					<item name="valueMap" xsi:type="array">
 						<item name="true" xsi:type="number">1</item>
-						<item name="false" xsi:type="number">2</item>
+						<item name="false" xsi:type="number">0</item>
 					</item>
-					<item name="default" xsi:type="number">2</item>
+					<item name="default" xsi:type="number">0</item>
 				</item>
 			</argument>
 		</field>
