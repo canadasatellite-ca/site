@@ -175,9 +175,6 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 			if (!$this->_getQuote()->getItemsCount()) {
 				$r = ['msg' => __('EMPTY')];
 			}
-			elseif (df_request('hasgiftbox')) {
-				$r = ['html_giftbox' => json_encode($this->renderGiftbox()), 'html_link' => $link, 'msg' => ''];
-			}
 			else {
 				$r = ['html_giftbox' => '', 'html_link' => $link, 'msg' => ''];
 			}
@@ -583,22 +580,6 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 		$layout->generateElements();
 		$output = $layout->getBlock('info')->toHtml();
 
-		return $output;
-	}
-
-	/**
-	 * 2021-06-05 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
-	 * @used-by _removeproduct()
-	 * @return string
-	 */
-	private function renderGiftbox() {
-		$layout = $this->layoutFactory->create();
-		$update = $layout->getUpdate();
-		$update->load('onestepcheckout_index_save');
-		$layout->generateXml();
-		$layout->generateElements();
-		$output = $layout->getBlock('onestepcheckout.onepage.shipping_method.additional')->toHtml();
 		return $output;
 	}
 
