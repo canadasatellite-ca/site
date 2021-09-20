@@ -521,10 +521,9 @@ window.OneStep.$(document).ready(function($){
         hdlRemoveItem: function(ev){
             var id = window.OneStep.$(ev.target).attr("data-item-id");
             window.OneStep.$(ev.target).closest('tr').css("opacity", "0.5");
-            var hasgift = (typeof(window.OneStep.$('#allow-gift-message-container')) != 'undefined') ? 1 : 0;
 
             var params = {removeproduct: true, updateshippingtype: true, updatepaymenttype: true, updatepaymentmethod: true};
-            params.addition_post = {id: id, hasgiftbox: hasgift};
+            params.addition_post = {id: id};
 
             view_onestep_init.update(params);
             /** update giftbox, link top cart */
