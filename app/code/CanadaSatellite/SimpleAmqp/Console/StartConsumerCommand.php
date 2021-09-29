@@ -20,21 +20,9 @@ class StartConsumerCommand extends Command
     const OPTION_POLL_INTERVAL = 'interval';
     const OPTION_BATCH_TIMEOUT = 'timeout';
 
-    /**
-     * @var AmqpClientFactory
-     */
     private $clientFactory;
-
-    /**
-     * @var LoggerFactory
-     */
     private $loggerFactory;
-
-    /**
-     * @var Config
-     */
     private $config;
-
     private $logger;
 
 	public function __construct(
@@ -58,6 +46,8 @@ class StartConsumerCommand extends Command
 
             $this->log("Consumer started.");
 
+            $autoRechargeTick = time();
+
         	$client = $this->clientFactory->getAmqpClient($queueName);
         	$client->createQueue();
 
@@ -74,6 +64,7 @@ class StartConsumerCommand extends Command
         	$batch = array();
         	$timer->start();
         	do {
+                $this->logger->close();
         		//$this->log("Try to get message from queue");
 
         		$message = $client->get();
@@ -86,7 +77,7 @@ class StartConsumerCommand extends Command
 
                     $decoded = json_decode($message->body);
                     if ($decoded === false || $decoded === null) {
-                        $this->logger->info("Failed to decode message: {$message->body}");
+                        $this->logger->err("Failed to decode message: {$message->body}");
                         $client->ack($message);
                         continue;
                     }
@@ -113,8 +104,11 @@ class StartConsumerCommand extends Command
                     try {
                         $astProcessor = $this->config->getAstQueueProcessorInstance();
                         $astProcessor->consume($astClient);
+
+                        $autoRechargeTick = $astProcessor->checkAutoRecharge($autoRechargeTick);
                     }
                     catch (\Exception $e) {
+                        $autoRechargeTick = time();
                         $this->log("[astQueue] Error: " . $e->getMessage());
                         $this->log("[astQueue] Stack trace: " . $e->getTraceAsString());
                     }

@@ -98,7 +98,7 @@ class SimRecharge extends \Magento\Framework\App\Action\Action
     }
     function execute()
     {
-        try {      
+        try {
             $simId = $this->_request->getParam('id');
             $customer = $this->_getCustomer();
             $customerId = $customer->getId();
@@ -114,7 +114,7 @@ class SimRecharge extends \Magento\Framework\App\Action\Action
                 $this->_logger->info("[SIM Auto-recharge] Customer $customerId is not set.");
                 return $this->redirectWithError();
             }
-     
+
             $sim = $this->_simFactory->create()->load($simId);
             if (!$sim->getId()) {
                 $this->_logger->info("[SIM Auto-recharge] SIM $simId not found");
@@ -172,7 +172,7 @@ class SimRecharge extends \Magento\Framework\App\Action\Action
 
             return $this->redirectWithSuccess('SIM will be auto-recharged');
         } catch (\Exception $e) {
-            $this->_logger->info("[SIM Auto-recharge] Failed to auto-recharge $simId for customer $customerId" . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());
+            $this->_logger->err("[SIM Auto-recharge] Failed to auto-recharge $simId for customer $customerId" . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());
             return $this->redirectWithError();
         }
     }
