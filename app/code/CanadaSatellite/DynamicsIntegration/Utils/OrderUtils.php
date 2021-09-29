@@ -25,7 +25,7 @@ class OrderUtils
 		if ($date === false) {
 			$errors = \DateTime::getLastErrors();
 			$msg = json_encode($errors);
-			$this->logger->info("Error while parsing '$createdAt' date: $msg");
+			$this->logger->err("Error while parsing '$createdAt' date: $msg");
 			return null;
 		}
 
@@ -48,7 +48,7 @@ class OrderUtils
 
 	function calculateVisibleItemsCosts($order)
 	{
-		// Item quote id => item aggregate cost over all children. 
+		// Item quote id => item aggregate cost over all children.
 		// Cart may have multiple items with same SKU under unclear conditions, so SKU is not reliable enough as unique identifier.
 		$costs = array();
 
@@ -62,7 +62,7 @@ class OrderUtils
 			$parentQuoteId = $parent->getQuoteItemId();
 			$cost = $this->orderItemUtils->getItemBaseCost($item);
 			$qty = $item->getQtyOrdered();
-				
+
 			$this->logger->info("[OrderUtils::calculateVisibleItemsCosts] Child item cost $cost for $parentQuoteId qty $qty");
 
 			if (!isset($costs[$parentQuoteId])) {
@@ -90,7 +90,7 @@ class OrderUtils
 				// Item has no children. Calculate cost as is.
 
 				$costs[$quoteId] = $cost;
-				$this->logger->info("[OrderUtils::calculateVisibleItemsCosts] Simple product cost $cost for $quoteId qty $qty");		
+				$this->logger->info("[OrderUtils::calculateVisibleItemsCosts] Simple product cost $cost for $quoteId qty $qty");
 			} else {
 				// Item has children. Divide calculated cost by item qty to get bundle cost per unit.
 

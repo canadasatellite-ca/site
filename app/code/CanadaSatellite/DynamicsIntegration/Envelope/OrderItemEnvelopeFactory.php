@@ -47,7 +47,7 @@ class OrderItemEnvelopeFactory
 		$price = $this->converterUtils->toFloat($price);
 		$this->logger->info("Item price after converter: $price. Introspect: " . gettype($price));
 		$data['price'] = $price;
-		
+
 		$qty = $item->getQtyOrdered();
 		$this->logger->info("Item qty: $qty. Introspect: " . gettype($qty));
 		$qty = $this->converterUtils->toFloat($qty);
@@ -76,8 +76,6 @@ class OrderItemEnvelopeFactory
 		$options = $item->getProductOptions();
 
 		try {
-			$level = error_reporting();
-			$this->logger->info("Error reporting level: $level");
 			$this->logger->info("Options got: " . json_encode($options));
 		} catch (\Exception $e) {
 			$this->logger->info("Failed to dump options: " . $e->getMessage() . "\r\nStack trace: " . $e->getTraceAsString());

@@ -108,7 +108,7 @@ class DynamicsMapper {
             case 'iridium go!':
                 return 100120000;
             case 'iridium ptt':
-                return 100000000;
+                return 100183000;
             case 'iridium sbd':
                 return 100130000;
             case 'iridium certus':

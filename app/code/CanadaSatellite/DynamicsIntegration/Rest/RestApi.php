@@ -158,9 +158,9 @@ class RestApi {
             $propInstances = $this->getResponseJsonIfSuccess($response)->value;
 
             foreach ($propInstances as $propInst) {
-				if (!array_key_exists($propInst->_dynamicpropertyid_value, $orderItemOptions[$index])) {
-					continue;
-				}
+                if (!array_key_exists($propInst->_dynamicpropertyid_value, $orderItemOptions[$index])) {
+                    continue;
+                }
                 $value = $orderItemOptions[$index][$propInst->_dynamicpropertyid_value];
                 if ($propInst->valuestring === $value) {
                     continue;
@@ -892,6 +892,13 @@ class RestApi {
     }
 
     function findOrderByNumber($orderId) {
+        $order = $this->getOrderByIncrementId($orderId);
+        if ($order === false) return false;
+
+        return $order->salesorderid;
+    }
+
+    function getOrderByIncrementId($orderId) {
         $this->login();
 
         $headers = array(
@@ -900,6 +907,7 @@ class RestApi {
             'OData-Max-Version' => '4.0',
             'OData-Version' => '4.0'
         );
+
         $sanitizedNumber = addslashes($orderId);
         $query = array(
             '$filter' => "name eq '$sanitizedNumber'"
@@ -911,7 +919,7 @@ class RestApi {
         if (empty($json->value))
             return false;
 
-        return $json->value[0]->salesorderid;
+        return $json->value[0];
     }
 
     function createOrderNote($orderId, $note) {
@@ -987,8 +995,7 @@ class RestApi {
         return df_eta($json->value);
     }
 
-    function getCard($cardId)
-    {
+    function getCard($cardId) {
         $this->login();
 
         $headers = array(
@@ -1014,8 +1021,7 @@ class RestApi {
         return $json;
     }
 
-    function createCard($crmCard)
-    {
+    function createCard($crmCard) {
         $this->login();
 
         $headers = array(
@@ -1033,8 +1039,7 @@ class RestApi {
         return $json->new_sundriesid;
     }
 
-    function updateCard($cardId, $crmCard)
-    {
+    function updateCard($cardId, $crmCard) {
         $this->login();
 
         $headers = array(
@@ -1050,8 +1055,7 @@ class RestApi {
         $json = $this->getResponseJsonIfSuccess($response);
     }
 
-    function deleteCard($cardId)
-    {
+    function deleteCard($cardId) {
         $this->login();
 
         $headers = array(
@@ -1090,6 +1094,89 @@ class RestApi {
         $json = $this->getResponseJsonIfSuccess($response);
 
         return $json->cs_simid;
+    }
+
+    function createProvisioning($payload) {
+        $this->login();
+
+        $headers = array(
+            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Content-Type' => 'application/json; charset=utf-8',
+            'Accept' => 'application/json',
+            'OData-Max-Version' => '4.0',
+            'OData-Version' => '4.0',
+            'Prefer' => 'return=representation'
+        );
+
+        $response = $this->sendPostRequestJson($this->getCrmUrl() . '/api/data/v8.1/new_provisionings', $headers, json_encode($payload));
+        $json = $this->getResponseJsonIfSuccess($response);
+
+        return $json->new_provisioningid;
+    }
+
+    function getAstVoucherBySku($sku) {
+        $this->login();
+
+        $headers = array(
+            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Accept' => 'application/json',
+            'OData-Max-Version' => '4.0',
+            'OData-Version' => '4.0',
+            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+        );
+
+        $sanitizedSku = addslashes($sku);
+        $query = array(
+            '$filter' => "new_name eq '$sanitizedSku'",
+        );
+
+        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_ast_vouchers', $headers, $query);
+        $json = $this->getResponseJsonIfSuccess($response);
+
+        if (empty($json->value))
+            return false;
+
+        return $json->value[0];
+    }
+
+    function getAstVoucherByPlan($planId) {
+        $this->login();
+
+        $headers = array(
+            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Accept' => 'application/json',
+            'OData-Max-Version' => '4.0',
+            'OData-Version' => '4.0',
+            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+        );
+
+        $query = array(
+            '$filter' => "new_plan eq $planId",
+        );
+
+        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_ast_vouchers', $headers, $query);
+        $json = $this->getResponseJsonIfSuccess($response);
+
+        if (empty($json->value))
+            return false;
+
+        return $json->value[0];
+    }
+
+    function getAstVoucherByGuid($guid) {
+        $this->login();
+
+        $headers = array(
+            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Accept' => 'application/json',
+            'OData-Max-Version' => '4.0',
+            'OData-Version' => '4.0',
+            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+        );
+
+        $response = $this->sendGetRequest($this->getCrmUrl() . "/api/data/v8.1/new_ast_vouchers($guid)", $headers, array());
+
+        return $this->getResponseJsonIfSuccess($response);
     }
 
     function getSimByNumber($simNumber) {
@@ -1142,6 +1229,71 @@ class RestApi {
         return $json->value[0];
     }
 
+    function getSimByNumberOrSatelliteNumber($simNumber) {
+        $this->login();
+
+        $headers = array(
+            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Accept' => 'application/json',
+            'OData-Max-Version' => '4.0',
+            'OData-Version' => '4.0',
+            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+        );
+
+        $sanitizedNumber = addslashes($simNumber);
+        $query = array(
+            '$filter' => "cs_number eq '$sanitizedNumber' or cs_satellitenumber eq '$sanitizedNumber'",
+        );
+
+        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
+        $json = $this->getResponseJsonIfSuccess($response);
+
+        if (empty($json->value))
+            return false;
+
+        return $json->value[0];
+    }
+
+    function getAutoRechargeSims() {
+        $this->login();
+
+        $headers = array(
+            'Authorization' => 'Bearer ' . $this->accessToken,
+            'Accept' => 'application/json',
+            'OData-Max-Version' => '4.0',
+            'OData-Version' => '4.0',
+            'Prefer' => 'odata.include-annotations="*"' // to get formatted values for option set (pick list) fields
+        );
+
+        $now = new \DateTime();
+        $now->modify('+1 day');
+        $targetDate = $now->format('Y-m-d\TH:i:s\Z');
+
+        $parts = [
+            // Item active?
+            '(statecode eq 0)',
+            // Network Status = Active
+            '(cs_simstatus eq 100000001)',
+            // Airtime Vendor == AST
+            '(new_airtimevendor eq 100000000)',
+            // Network = Iridium
+            '(cs_network eq 100100000)',
+            // Sub Status = {Auto Recharge - PAID, 0/2, 1/2, PAID}
+            '(new_substatus eq 100000014 or new_substatus eq 100000017 or new_substatus eq 100000001 or new_substatus eq 100000004)',
+            // Expiry Date < now + 1 day
+            "(cs_expirydate lt '$targetDate')"
+        ];
+
+        $query = [
+            '$filter' => join(' and ', $parts),
+        ];
+
+        $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/cs_sims', $headers, $query);
+        $json = $this->getResponseJsonIfSuccess($response);
+
+        return $json->value;
+    }
+
     /**
      * @param int $magentoCustomerId
      * @return array|false
@@ -1160,11 +1312,11 @@ class RestApi {
         $sanitizedMagentoCustomerId = intval($magentoCustomerId);
         $queryXml = <<<QUERYXML
 <fetch mapping="logical">
-   <entity name="cs_sim"> 
+   <entity name="cs_sim">
       <attribute name="cs_simstatus"/>
-      <attribute name="cs_number"/> 
+      <attribute name="cs_number"/>
       <attribute name="new_nickname"/>
-      <attribute name="cs_network"/> 
+      <attribute name="cs_network"/>
       <attribute name="cs_service"/>
       <attribute name="cs_plan"/>
       <attribute name="cs_currentminutes"/>
@@ -1172,11 +1324,11 @@ class RestApi {
       <attribute name="cs_expirydate"/>
       <attribute name="new_substatus"/>
       <attribute name="new_order"/>
-      <link-entity name="account" to="cs_accountid"> 
-         <filter type="and"> 
-            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
-          </filter> 
-      </link-entity> 
+      <link-entity name="account" to="cs_accountid">
+         <filter type="and">
+            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" />
+          </filter>
+      </link-entity>
 QUERYXML;
 
         $dynamicsField = '';
@@ -1272,21 +1424,21 @@ QUERYXML;
         $sanitizedMagentoCustomerId = intval($magentoCustomerId);
         $queryXml = <<<QUERYXML
 <fetch mapping="logical" aggregate="true" distinct="true">
-   <entity name="cs_sim"> 
-      <attribute name="cs_simid" alias="cs_simid" groupby="true"/> 
-      
-      <link-entity name="account" to="cs_accountid"> 
-         <filter type="and"> 
-            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
-          </filter> 
-      </link-entity> 
+   <entity name="cs_sim">
+      <attribute name="cs_simid" alias="cs_simid" groupby="true"/>
+
+      <link-entity name="account" to="cs_accountid">
+         <filter type="and">
+            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" />
+          </filter>
+      </link-entity>
       <link-entity name="cs_activationrequest" from="cs_sim" to="cs_simid" >
 		 <attribute name="cs_emailaddress" alias="activationrequests_count" aggregate="count" />
 		 <filter type="and" >
 			<condition attribute="createdon" operator="last-x-hours" value="72" />
 		 </filter>
 	  </link-entity>
-   </entity> 
+   </entity>
 </fetch>
 QUERYXML;
         $query = array(
@@ -1322,11 +1474,11 @@ QUERYXML;
         $sanitizedSimId = htmlspecialchars($simId);
         $queryXml = <<<QUERYXML
 <fetch mapping="logical">
-   <entity name="cs_sim"> 
+   <entity name="cs_sim">
       <attribute name="cs_simstatus"/>
-      <attribute name="cs_number"/> 
+      <attribute name="cs_number"/>
       <attribute name="new_nickname"/>
-      <attribute name="cs_network"/> 
+      <attribute name="cs_network"/>
       <attribute name="cs_type"/>
       <attribute name="cs_service"/>
       <attribute name="cs_plan"/>
@@ -1339,14 +1491,14 @@ QUERYXML;
       <attribute name="new_substatus"/>
       <attribute name="new_quicknote"/>
       <attribute name="new_order"/>
-      
-      <link-entity name="account" to="cs_accountid"> 
+
+      <link-entity name="account" to="cs_accountid">
           <attribute name="accountnumber" alias="magento_customer_id"/>
-      </link-entity> 
-      <filter type="and"> 
-        <condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" /> 
-      </filter> 
-   </entity> 
+      </link-entity>
+      <filter type="and">
+        <condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" />
+      </filter>
+   </entity>
 </fetch>
 QUERYXML;
         $query = array(
@@ -1382,12 +1534,12 @@ QUERYXML;
         $sanitizedSimId = htmlspecialchars($simId);
         $queryXml = <<<QUERYXML
 <fetch mapping="logical" aggregate="true">
-   <entity name="cs_sim"> 
+   <entity name="cs_sim">
       <attribute name="cs_simid" alias="cs_simid" groupby="true"/>
-      
-      <filter type="and"> 
-        <condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" /> 
-      </filter> 
+
+      <filter type="and">
+        <condition attribute="cs_simid" operator="eq" value="$sanitizedSimId" />
+      </filter>
 
       <link-entity name="cs_activationrequest" from="cs_sim" to="cs_simid" >
       <attribute name="cs_emailaddress" alias="activationrequests_count" aggregate="count" />
@@ -1395,7 +1547,7 @@ QUERYXML;
         	<condition attribute="createdon" operator="last-x-hours" value="72" />
       	</filter>
       </link-entity>
-   </entity> 
+   </entity>
 </fetch>
 QUERYXML;
         $query = array(
@@ -1446,24 +1598,24 @@ QUERYXML;
         $sanitizedMagentoCustomerId = intval($magentoCustomerId);
         $queryXml = <<<QUERYXML
 <fetch mapping="logical">
-   <entity name="new_device"> 
+   <entity name="new_device">
       <link-entity name="salesorder" to="new_order" link-type="outer">
           <attribute name="name" alias="ordernumber"/>
-          <order attribute="ordernumber" descending="true"/>       
-      </link-entity> 
+          <order attribute="ordernumber" descending="true"/>
+      </link-entity>
       <attribute name="new_saledate"/>
       <attribute name="new_name"/>
       <link-entity name="product" to="new_product" link-type="outer">
           <attribute name="name" alias="productname"/>
       </link-entity>
       <!-- <attribute name="new_serialnumber"/> -->
-      <link-entity name="account" to="new_soldto"> 
-         <filter type="and"> 
-            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" /> 
-          </filter> 
-      </link-entity> 
-      <order attribute="new_name"/>       
-   </entity> 
+      <link-entity name="account" to="new_soldto">
+         <filter type="and">
+            <condition attribute="accountnumber" operator="eq" value="$sanitizedMagentoCustomerId" />
+          </filter>
+      </link-entity>
+      <order attribute="new_name"/>
+   </entity>
 </fetch>
 QUERYXML;
         $query = array(
@@ -1529,6 +1681,10 @@ QUERYXML;
 
     private function getCrmUrl() {
         return $this->credentialsProvider->getCredentials()->getResource();
+    }
+
+    function isDevEnv(): bool {
+        return strpos($this->getCrmUrl(), '-dev') !== false;
     }
 
     private function isTokenExpired() {
@@ -1614,7 +1770,7 @@ QUERYXML;
     private function sendRequest($request) {
         try {
             $queryLog = json_encode($request->getQuery()->toArray());
-            $this->logger->info("Request | {$request->getMethod()} {$request->getUri()}\nQuery: $queryLog\nBody: {$request->getContent()}\n");
+            $this->logger->info("Request | {$request->getMethod()} {$request->getUri()}\nQuery: $queryLog\nBody: {$request->getContent()}");
 
             return $this->httpClient->send($request);
         } catch (\Zend\Http\Client\Exception\RuntimeException $e) {
@@ -1638,7 +1794,11 @@ QUERYXML;
      * @throws DynamicsException
      */
     private function checkResponseIsSuccess($response) {
-        $this->logger->info("Response | Code: {$response->getStatusCode()}\nBody: {$response->getBody()}\n");
+        $body = $response->getBody();
+        if (strlen($body) > 1000) {
+            $body = substr($body, 0, 1000) . ' (truncated)';
+        }
+        $this->logger->info("Response | Code: {$response->getStatusCode()}\nBody: $body");
 
         if (!$response->isSuccess())
             throw new DynamicsException('Dynamics API returned failed response');

@@ -5,14 +5,12 @@ namespace CanadaSatellite\DynamicsIntegration\DynamicsCrm;
 use CanadaSatellite\AstIntegration\LogicProcessors\OrderCustomOptionsHelper;
 use CanadaSatellite\DynamicsIntegration\Utils\OrderItemProfitCalculator;
 use CanadaSatellite\DynamicsIntegration\Utils\OrderProfitCalculator;
-use CanadaSatellite\DynamicsIntegration\Utils\ProductProfitCalculator;
 
 class OrderModelComposer {
     private $priceListHelper;
     private $currencyHelper;
     private $orderStatusHelper;
     private $productHelper;
-    private $mapper;
     private $restApi;
     private $logger;
     private $orderRepository;
@@ -23,7 +21,6 @@ class OrderModelComposer {
         \CanadaSatellite\DynamicsIntegration\DynamicsCrm\CurrencyHelper    $currencyHelper,
         \CanadaSatellite\DynamicsIntegration\DynamicsCrm\OrderStatusHelper $orderStatusHelper,
         \CanadaSatellite\DynamicsIntegration\DynamicsCrm\ProductHelper     $productHelper,
-        \CanadaSatellite\DynamicsIntegration\DynamicsCrm\DynamicsMapper    $mapper,
         \CanadaSatellite\DynamicsIntegration\Rest\RestApi                  $restApi,
         \CanadaSatellite\DynamicsIntegration\Logger\Logger                 $logger,
         \Magento\Sales\Model\Order                                         $orderRepository
@@ -32,7 +29,6 @@ class OrderModelComposer {
         $this->currencyHelper = $currencyHelper;
         $this->orderStatusHelper = $orderStatusHelper;
         $this->productHelper = $productHelper;
-        $this->mapper = $mapper;
         $this->restApi = $restApi;
         $this->logger = $logger;
         $this->orderRepository = $orderRepository;

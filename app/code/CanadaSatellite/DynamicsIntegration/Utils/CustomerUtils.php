@@ -64,7 +64,7 @@ class CustomerUtils
 		if ($date === false) {
 			$errors = \DateTime::getLastErrors();
 			$msg = json_encode($errors);
-			$this->logger->info("Error while parsing '$birthDate' date: $msg");
+			$this->logger->err("Error while parsing '$birthDate' date: $msg");
 			return null;
 		}
 

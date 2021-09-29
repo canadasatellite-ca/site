@@ -2,11 +2,6 @@
 
 namespace CanadaSatellite\DynamicsIntegration\Consumer;
 
-use CanadaSatellite\AstIntegration\LogicProcessors\AstQueueItem;
-use CanadaSatellite\AstIntegration\LogicProcessors\OrderCustomOptionsHelper;
-use CanadaSatellite\Theme\Model;
-use Magento\Framework\Exception\NoSuchEntityException;
-
 class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerInterface {
     private $customerFactory;
     private $customerUpdater;
@@ -18,11 +13,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
     private $activationFormUpdater;
     private $orderNoteProcessor;
     private $logger;
-    private $productRepository;
-    private $orderRepository;
-    private $configValuesProvider;
-    private $astManager;
     private $state;
+    private $topUpOrderProcessor;
 
     function __construct(
         \CanadaSatellite\DynamicsIntegration\Model\CustomerFactory              $customerFactory,
@@ -35,11 +27,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
         \CanadaSatellite\DynamicsIntegration\Updater\ActivationFormUpdater      $activationFormUpdater,
         \CanadaSatellite\DynamicsIntegration\LogicProcessors\OrderNoteProcessor $orderNoteProcessor,
         \CanadaSatellite\DynamicsIntegration\Logger\Logger                      $logger,
-        \Magento\Catalog\Model\ProductRepository                                $productRepository,
-        \Magento\Sales\Model\Order                                              $orderRepository,
-        \CanadaSatellite\DynamicsIntegration\Config\ConfigValuesProvider        $configValuesProvider,
-        \CanadaSatellite\AstIntegration\AstManagement\AstManager                $astManager,
-        \Magento\Framework\App\State                                            $state
+        \Magento\Framework\App\State                                            $state,
+        \CanadaSatellite\AstIntegration\LogicProcessors\TopUpOrderProcessor     $topUpOrderProcessor
     ) {
         $this->customerFactory = $customerFactory;
         $this->customerUpdater = $customerUpdater;
@@ -51,11 +40,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
         $this->activationFormUpdater = $activationFormUpdater;
         $this->orderNoteProcessor = $orderNoteProcessor;
         $this->logger = $logger;
-        $this->productRepository = $productRepository;
-        $this->orderRepository = $orderRepository;
-        $this->configValuesProvider = $configValuesProvider;
-        $this->astManager = $astManager;
         $this->state = $state;
+        $this->topUpOrderProcessor = $topUpOrderProcessor;
     }
 
     function consume($batch, $client) {
@@ -65,10 +51,16 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
             $this->state->setAreaCode(\Magento\Framework\App\Area::AREA_ADMINHTML);
         }
 
-        $this->dump("Got message!", $batch);
+        $this->logger->close();
+
+        foreach ($batch as $message) {
+            if (gettype($message) !== 'object' || !method_exists($message, 'getAmqpMessage')) continue;
+            $body = $message->getAmqpMessage()->body;
+            echo "[consume] Message: $body";
+            $this->logger->info("[consume] Message: $body");
+        }
 
         $eventsByKind = $this->groupByKind($batch, $client);
-        $this->dump("Grouped:", $eventsByKind);
 
         foreach ($eventsByKind as $kind => $eventsByEntity) {
             foreach ($eventsByEntity as $entityId => $events) {
@@ -112,8 +104,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
                             break;
                     }
                 } catch (\Exception $e) {
-                    $this->logger->info("Failed processing: " . $e->getMessage());
-                    $this->logger->info("Stack trace: " . $e->getTraceAsString());
+                    $this->logger->err("Failed processing: " . $e->getMessage());
+                    $this->logger->err("Stack trace: " . $e->getTraceAsString());
                 } finally {
                     foreach ($events as $envelope) {
                         $client->ack($envelope->getAmqpMessage());
@@ -188,56 +180,8 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
 
         $this->logger->info("[OrderConsumer] -> Order message received for order {$order->getId()}");
 
-        // Load Magento Order Object
-        $mOrder = $this->orderRepository->loadByIncrementId($order->getIncrementId());
-
-        // Check order paid
-        // TODO: Check how payments works
-        if ($mOrder->getBaseTotalDue() == 0) {
-            // Iterate through order items
-            foreach ($mOrder->getAllVisibleItems() as $item) {
-                /** @type \Magento\Sales\Model\Order\Item $item */
-
-                // Get outer product
-                $product = $item->getProduct();
-
-                // Check that outer product it's a topup card
-                $itemType = $product->getCustomAttribute('product_ast_type');
-
-                if (!isset($itemType) || $itemType->getValue() !== 'topup') continue;
-
-                // Parse item options
-                $options = new OrderCustomOptionsHelper($item);
-                $simNumber = $options->getFirstExistOptionValue(...$this->configValuesProvider->getTopupPhoneNumber());
-                $targetSku = $options->getFirstExistOptionValue(...$this->configValuesProvider->getTopupTargetSku());
-
-                // Check that sim number is exists
-                if (is_null($simNumber)) {
-                    $this->logger->info("[OrderConsumer] -> Sim number option not found. Full sku: {$item->getSku()}");
-                    continue;
-                }
-
-                // Replace product object by inner product if option exists
-                if (!is_null($targetSku)) {
-                    try {
-                        $product = $this->productRepository->get($targetSku);
-                    } catch (NoSuchEntityException $e) {
-                        $this->logger->info("[OrderConsumer] -> Product doesn't exists. Sku: $targetSku. Full sku: {$item->getSku()}");
-                        continue;
-                    }
-                }
-
-                $reference = "{$mOrder->getIncrementId()} - {$mOrder->getCustomerLastname()}";
-                try {
-                    $this->astManager->processTopupProduct($product, $simNumber, $reference,
-                        intval($item->getQtyOrdered()));
-                } catch (\Exception $e) {
-                    $this->logger->info("[OrderConsumer] -> ProcessTopupProduct error: " . $e->getMessage());
-                }
-            }
-        }
-
         $this->orderUpdater->createOrUpdate($order);
+        $this->topUpOrderProcessor->processTopUpOrder($order->getIncrementId());
 
         $this->logger->info("[OrderConsumer] -> Order message processed");
     }
@@ -280,11 +224,5 @@ class UpdatesConsumer implements \CanadaSatellite\SimpleAmqp\Api\BatchConsumerIn
         $this->activationFormUpdater->createOrUpdate($activationForm);
 
         $this->logger->info("[ActivationFormConsumer] -> Activation form message processed");
-    }
-
-    private function dump($message, $body) {
-        echo "$message\r\n" . json_encode($body);
-
-        $this->logger->info("$message | " . json_encode($body));
     }
 }

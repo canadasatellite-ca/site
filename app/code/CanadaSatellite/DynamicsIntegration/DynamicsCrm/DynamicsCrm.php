@@ -211,7 +211,15 @@ class DynamicsCrm {
 
         $crmId = $this->restApi->findOrderByNumber($orderId);
         if ($crmId === false) {
-            throw new Exception("Order $orderId not found");
+            $this->logger->info("[createOrderNote] Order $orderId not found. Creating...");
+            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+            $orderRepository = $objectManager->get('Magento\Sales\Model\Order');
+            $envelopeFactory = $objectManager->get('CanadaSatellite\DynamicsIntegration\Envelope\OrderEnvelopeFactory');
+            $orderFactory = $objectManager->get('CanadaSatellite\DynamicsIntegration\Model\OrderFactory');
+            $envelope = $envelopeFactory->create($orderRepository->loadByIncrementId($orderId));
+            $order = $orderFactory->fromEnvelope(json_decode(json_encode($envelope)));
+            $crmId = $this->createOrUpdateOrder($order);
+            $this->logger->info("[createOrderNote] Order created. Guid: $crmId");
         }
 
         $this->logger->info("[createOrderNote] Creating note for order $crmId");
@@ -362,11 +370,19 @@ class DynamicsCrm {
 
                 if (gettype($voucher) === 'string') {
                     try {
-                        $innerProduct = $this->productRepository->get($voucher);
-                        $itemVoucher = $this->astManager->getProductTopupAttributes($innerProduct);
-                        $itemVoucher['Reference'] = $reference;
-                    } catch (NoSuchEntityException $e) {
-                        $this->logger->info("[createOrUpdateActivationRequest] -> Inner topup product not found. SimNumber = $simNumber");
+                        $dynVoucher = $this->restApi->getAstVoucherBySku($voucher);
+                        if ($dynVoucher !== false) {
+                            $itemVoucher = [
+                                'ServiceTypeId' => $dynVoucher->new_voucher_1_service_type_id,
+                                'Voucher' => $dynVoucher->new_voucher_1_id,
+                                'Quantity' => $dynVoucher->new_voucher_1_quantity,
+                                'Reference' => $reference
+                            ];
+                        } else {
+                            $this->logger->info("[createOrUpdateActivationRequest] -> AST Voucher not found. SimNumber = $simNumber. Voucher = $voucher");
+                        }
+                    } catch (\Exception $e) {
+                        $this->logger->info("[createOrUpdateActivationRequest] -> AST Voucher error. SimNumber = $simNumber. Voucher = $voucher. Message = {$e->getMessage()}");
                     }
                 } else if (gettype($voucher) === 'array') {
                     $itemVoucher = [
