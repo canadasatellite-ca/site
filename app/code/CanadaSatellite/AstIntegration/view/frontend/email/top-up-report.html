@@ -1,0 +1,16 @@
+<!--@subject {{trans "AST TopUp Error"}} @-->
+
+{{template config_path="design/email/header_template"}}
+
+<div class="main-wrapper">
+    <div class="header-email">
+        <h3>AST Integration - TopUp</h3>
+        <p>TopUp request cannot be proceed</p>
+        <br/>
+        <p>SIM# : {{var sim_number|raw}}</p>
+        <p>Order# : {{var order_id|raw}}</p>
+        <p>Message : {{var message|raw}}</p>
+    </div>
+</div>
+
+{{template config_path="design/email/footer_template"}}

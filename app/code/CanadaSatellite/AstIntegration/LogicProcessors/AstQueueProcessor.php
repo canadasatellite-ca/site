@@ -12,14 +12,19 @@ class AstQueueProcessor {
     /** @var \CanadaSatellite\DynamicsIntegration\Rest\RestApi */
     private $dynamicsApi;
 
+    /** @var \CanadaSatellite\AstIntegration\LogicProcessors\TopUpOrderProcessor */
+    private $topUpOrderProcessor;
+
     public function __construct(
-        \CanadaSatellite\AstIntegration\AstManagement\AstManager $astManager,
-        \CanadaSatellite\DynamicsIntegration\Rest\RestApi        $dynamicsApi,
-        \CanadaSatellite\AstIntegration\Logger\Logger            $logger
+        \CanadaSatellite\AstIntegration\AstManagement\AstManager            $astManager,
+        \CanadaSatellite\DynamicsIntegration\Rest\RestApi                   $dynamicsApi,
+        \CanadaSatellite\AstIntegration\Logger\Logger                       $logger,
+        \CanadaSatellite\AstIntegration\LogicProcessors\TopUpOrderProcessor $topUpOrderProcessor
     ) {
         $this->astManager = $astManager;
         $this->dynamicsApi = $dynamicsApi;
         $this->logger = $logger;
+        $this->topUpOrderProcessor = $topUpOrderProcessor;
     }
 
     /**
@@ -41,7 +46,7 @@ class AstQueueProcessor {
         $resp = $this->astManager->getActionStatus($item->dataId);
         if ($resp->Error_Code !== 0 || $resp->Return_Objects[0]->Status === 'Failed') {
             $client->ack($message);
-            $this->logger->info("[AstQueueProcessor] AST activation error: $resp->Message. SIM = $item->simNumber. DataId = $item->dataId");
+            $this->logger->err("[AstQueueProcessor] AST activation error: $resp->Message. SIM = $item->simNumber. DataId = $item->dataId");
             return null;
         }
 
@@ -56,11 +61,11 @@ class AstQueueProcessor {
                 try {
                     $item->finalize($retObj->MSISDN, $this->astManager, $this->dynamicsApi);
                 } catch (\Exception $e) {
-                    $this->logger->info('[AstQueueProcessor] Failed to finalize. Item: ' . $message->body);
+                    $this->logger->err('[AstQueueProcessor] Failed to finalize. Item: ' . $message->body);
                 }
                 return null;
             default:
-                $this->logger->info("[AstQueueProcessor] AST API returned unknown status $retObj->Status. SIM = $item->simNumber. DataId = $item->dataId");
+                $this->logger->err("[AstQueueProcessor] AST API returned unknown status $retObj->Status. SIM = $item->simNumber. DataId = $item->dataId");
                 return $item;
         }
     }
@@ -69,6 +74,8 @@ class AstQueueProcessor {
      * @param \CanadaSatellite\SimpleAmqp\Api\AmqpClient $client
      */
     public function consume($client) {
+        $this->logger->close();
+
         $addItems = [];
         $addMessages = [];
 
@@ -85,9 +92,9 @@ class AstQueueProcessor {
                     array_push($addMessages, $message);
                 }
             } catch (\Exception $e) {
-                $this->logger->info('[AstQueueProcessor] Failed to process message: ' . $e->getMessage());
-                $this->logger->info('[AstQueueProcessor] Body: ' . $message->body);
-                $this->logger->info('[AstQueueProcessor] Stack trace: ' . $e->getTraceAsString());
+                $this->logger->err('[AstQueueProcessor] Failed to process message: ' . $e->getMessage());
+                $this->logger->err('[AstQueueProcessor] Body: ' . $message->body);
+                $this->logger->err('[AstQueueProcessor] Stack trace: ' . $e->getTraceAsString());
             }
         } while (true);
 
@@ -95,5 +102,18 @@ class AstQueueProcessor {
             $client->publish($addItems[$i]);
             $client->ack($addMessages[$i]);
         }
+    }
+
+    public function checkAutoRecharge($lastTick) {
+        if (time() - $lastTick < 600) return $lastTick;
+
+        try {
+            $this->topUpOrderProcessor->processAutoRecharge();
+        } catch (\Exception $e) {
+            $this->logger->err('[checkAutoRecharge] Exception: ' . $e->getMessage());
+            $this->logger->err('[checkAutoRecharge] Stack trace: ' . $e->getTraceAsString());
+        }
+
+        return time();
     }
 }

@@ -29,11 +29,11 @@ class RestApi {
         return $this->zendClient->getResponseJsonIfSuccess($response);
     }
 
-    public function iridiumTopUp($sim) {
+    public function iridiumTopUp($payload) {
         $response = $this->zendClient->sendPostRequestJson(
             $this->configProvider->getIridiumTopupUrl(),
             $this->getHeaders(),
-            json_encode($sim)
+            json_encode($payload)
         );
         return $this->zendClient->getResponseJsonIfSuccess($response);
     }

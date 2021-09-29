@@ -2,7 +2,6 @@
 
 namespace CanadaSatellite\AstIntegration\AstManagement\Models;
 
-
 class IridiumTopupModel implements \JsonSerializable {
     private $simNumber;
     private $serviceTypeId;
@@ -17,7 +16,7 @@ class IridiumTopupModel implements \JsonSerializable {
      * @param string $reference
      * @param string $voucher
      * @param integer $voucherQuantity
-     * @param integer $extraValidity
+     * @param integer|null $extraValidity
      */
     public function __construct(
         $simNumber,
@@ -36,14 +35,27 @@ class IridiumTopupModel implements \JsonSerializable {
     }
 
     public function jsonSerialize() {
-        return [
+        $data = [
             'Service' => $this->simNumber,
             'ServiceTypeId' => $this->serviceTypeId,
-            'Reference' => $this->reference,
-            'Voucher' => $this->voucher,
-            'VoucherQuantity' => $this->voucherQuantity,
-            'ExtraValidity' => $this->extraValidity
+            'Reference' => $this->reference
         ];
+
+        if (!is_null($this->voucher)) {
+            $data['Voucher'] = $this->voucher;
+        }
+
+        if (!is_null($this->voucherQuantity)) {
+            $data['VoucherQuantity'] = $this->voucherQuantity;
+        } else {
+            $data['VoucherQuantity'] = 1;
+        }
+
+        if (!is_null($this->extraValidity)) {
+            $data['ExtraValidity'] = $this->extraValidity;
+        }
+
+        return $data;
     }
 
     public function getSimNumber() {

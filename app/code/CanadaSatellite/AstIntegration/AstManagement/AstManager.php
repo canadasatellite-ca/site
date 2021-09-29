@@ -2,17 +2,17 @@
 
 namespace CanadaSatellite\AstIntegration\AstManagement;
 
+use CanadaSatellite\AstIntegration\AstManagement\Models\IridiumTopupModel;
+
 class AstManager {
 
     private $restApi;
     private $iriSimFactory;
     private $inmSimFactory;
     private $logger;
-    private $iriTopFactory;
     private $inmTopFactory;
     private $simValidator;
     private $providerResolver;
-    private $dynamicsManager;
     private $objectManager;
 
     public function __construct(
@@ -20,7 +20,6 @@ class AstManager {
         \CanadaSatellite\AstIntegration\AstManagement\Factories\IridiumSimFactory    $iriSimFactory,
         \CanadaSatellite\AstIntegration\AstManagement\Factories\InmarsatSimFactory   $inmSimFactory,
         \CanadaSatellite\AstIntegration\Logger\Logger                                $logger,
-        \CanadaSatellite\AstIntegration\AstManagement\Factories\IridiumTopupFactory  $iriTopFactory,
         \CanadaSatellite\AstIntegration\AstManagement\Factories\InmarsatTopupFactory $inmTopFactory,
         \CanadaSatellite\DynamicsIntegration\Validators\IccidValidator               $simValidator,
         \CanadaSatellite\DynamicsIntegration\Utils\SatelliteProviderResolver         $providerResolver,
@@ -30,7 +29,6 @@ class AstManager {
         $this->iriSimFactory = $iriSimFactory;
         $this->inmSimFactory = $inmSimFactory;
         $this->logger = $logger;
-        $this->iriTopFactory = $iriTopFactory;
         $this->inmTopFactory = $inmTopFactory;
         $this->simValidator = $simValidator;
         $this->providerResolver = $providerResolver;
@@ -61,28 +59,28 @@ class AstManager {
         $resp = $this->restApi->iridiumActivate($sim);
 
         if ($resp->Error_Code !== 0) {
-            $this->logger->info("[AST manager] Iridium SIM #{$sim->getSimNumber()} activation error: {$resp->Message}");
+            $this->logger->err("[AST manager] Iridium SIM #{$sim->getSimNumber()} activation error: {$resp->Message}");
             return null;
         }
 
         return $resp->Return_Objects[0];
     }
 
-    public function iridiumTopupSim($simNumber, $reference, $serviceTypeId, $voucher, $voucherQuantity) {
-        $sim = $this->iriTopFactory->create(
+    public function iridiumTopUp($simNumber, $reference, $serviceTypeId, $voucher, $voucherQuantity, $extraValidity = null) {
+        $payload = new IridiumTopupModel(
             $simNumber,
             $serviceTypeId,
             $reference,
             $voucher,
             $voucherQuantity,
-            0
+            $extraValidity
         );
 
-        $resp = $this->restApi->iridiumTopUp($sim);
+        $resp = $this->restApi->iridiumTopUp($payload);
 
         if ($resp->Error_Code !== 0) {
-            $this->logger->info("[AST manager] Iridium SIM #{$sim->getSimNumber()} top up error: {$resp->Message}");
-            return null;
+            $this->logger->err("[AST manager] Iridium SIM #$simNumber top-up error: {$resp->Message}");
+            return false;
         }
 
         return $resp->Return_Objects[0];
@@ -113,7 +111,7 @@ class AstManager {
         $resp = $this->restApi->inmarsatActivate($sim);
 
         if ($resp->Error_Code !== 0) {
-            $this->logger->info("[AST manager] Inmarsat SIM #{$sim->getSimNumber()} activation error: {$resp->Message}");
+            $this->logger->err("[AST manager] Inmarsat SIM #{$sim->getSimNumber()} activation error: {$resp->Message}");
             return null;
         }
 
@@ -139,7 +137,7 @@ class AstManager {
         $resp = $this->restApi->inmarsatTopup($sim);
 
         if ($resp->Error_Code !== 0) {
-            $this->logger->info("[AST manager] Inmarsat SIM #{$sim->getSimNumber()} top up error: {$resp->Message}");
+            $this->logger->err("[AST manager] Inmarsat SIM #{$sim->getSimNumber()} top up error: {$resp->Message}");
             return null;
         }
 
@@ -152,51 +150,6 @@ class AstManager {
      */
     public function getActionStatus($dataId) {
         return $this->restApi->getActionStatus($dataId);
-    }
-
-    /**
-     * @param $product
-     * @return array
-     * @throws \Exception
-     */
-    public function getProductTopupAttributes($product) {
-        $voucherId = $product->getCustomAttribute('ast_voucher_id');
-        $voucherQuantity = $product->getCustomAttribute('ast_voucher_quantity');
-        $serviceTypeId = $product->getCustomAttribute('ast_service_type_id');
-        if (!isset($voucherId) || !isset($voucherQuantity) || !isset($serviceTypeId)) {
-            throw new \Exception('One of product custom attributes not exists');
-        }
-
-        $voucherIdValue = $voucherId->getValue();
-        $voucherQuantityValue = $voucherQuantity->getValue();
-        $serviceTypeIdValue = $serviceTypeId->getValue();
-        if (empty($voucherIdValue) || empty($voucherQuantityValue) || empty($serviceTypeIdValue)) {
-            throw new \Exception('One of product custom attributes are empty');
-        }
-
-        return [
-            'Voucher' => $voucherIdValue,
-            'Quantity' => intval($voucherQuantityValue),
-            'ServiceTypeId' => intval($serviceTypeIdValue)
-        ];
-    }
-
-    /**
-     * @param \Magento\Catalog\Model\Product $product
-     * @param string $simNumber
-     * @param string $reference
-     * @param integer $quantity
-     * @return boolean
-     * @throws \Exception
-     */
-    public function processTopupProduct($product, $simNumber, $reference, $quantity = 1) {
-        $attributes = $this->getProductTopupAttributes($product);
-
-        return $this->processTopup($simNumber,
-            $attributes['ServiceTypeId'],
-            $attributes['Voucher'],
-            $attributes['Quantity'] * $quantity,
-            $reference);
     }
 
     /**
@@ -220,7 +173,7 @@ class AstManager {
         $this->logger->info("[processTopup] -> Topup begin. SimNumber = $simNumber. ServiceTypeId = $serviceTypeId. Voucher = $voucher. Quantity = $quantity");
 
         if ($this->providerResolver->isSimIridium($simNumber)) {
-            $this->iridiumTopupSim($simNumber, $reference, $serviceTypeId, $voucher, $quantity);
+            $this->iridiumTopUp($simNumber, $reference, $serviceTypeId, $voucher, $quantity);
             $this->logger->info("[processTopup] -> Iridium topup end. SimNumber = $simNumber. Voucher = $voucher. Quantity = $quantity");
             return true;
         } else if ($this->providerResolver->isSimInmarsat($simNumber)) {
@@ -228,7 +181,7 @@ class AstManager {
             $this->logger->info("[processTopup] -> Inmarsat topup end. SimNumber = $simNumber. Voucher = $voucher. Quantity = $quantity");
             return true;
         } else {
-            $this->logger->info("[processTopup] -> Unknown sim provider. SimNumber = $simNumber. Voucher = $voucher. Quantity = $quantity");
+            $this->logger->err("[processTopup] -> Unknown sim provider. SimNumber = $simNumber. Voucher = $voucher. Quantity = $quantity");
             return false;
         }
     }
