@@ -70,7 +70,6 @@
 # but their parents are different: 'page.wrapper' and 'content' respectively»:
 # https://github.com/canadasatellite-ca/site/issues/244
 !/vendor/magento/module-theme/view/adminhtml/page_layout/admin-1column.xml
-!/vendor/magento/module-theme/view/adminhtml/page_layout/admin-2columns-left.xml
 /update/
 /dev
 /vendor/codeception
