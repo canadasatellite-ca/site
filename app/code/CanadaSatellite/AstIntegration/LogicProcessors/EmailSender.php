@@ -33,7 +33,7 @@ class EmailSender {
         $templateId = 'ast_top_up_report';
 
         $templateVars = [
-            'sim_number' => $sim->cs_number,
+            'sim_number' => gettype($sim) === 'object' ? $sim->cs_number : $sim,
             'order_id' => $order->getIncrementId(),
             'message' => $message
         ];

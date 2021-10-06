@@ -8,53 +8,44 @@ class AstQueueItem {
     public $nextTime;
     public $simNumber;
 
-    /**
-     * @param integer $dataId AST API response queue DataId
-     * @param string $simNumber ICCID of SIM
-     * @param array|object|null $voucher Array of voucher data or null
-     */
-    public function __construct($dataId, $simNumber, $voucher = null) {
+    public function __construct(int $dataId, string $simNumber, string $voucher = null) {
         $this->dataId = $dataId;
         $this->simNumber = $simNumber;
-
-        if (gettype($voucher) === 'object') {
-            $this->voucher = [
-                'ServiceTypeId' => $voucher->ServiceTypeId,
-                'Voucher' => $voucher->Voucher,
-                'Quantity' => $voucher->Quantity,
-                'Reference' => $voucher->Reference
-            ];
-        } else {
-            $this->voucher = $voucher;
-        }
-
+        $this->voucher = $voucher;
     }
 
     /**
-     * @param string $phoneNumber
-     * @param \CanadaSatellite\AstIntegration\AstManagement\AstManager $astManager
-     * @param \CanadaSatellite\DynamicsIntegration\Rest\RestApi $dynamicsApi
      * @throws \Exception
      */
-    public function finalize($phoneNumber, $astManager, $dynamicsApi) {
-        // Update SIM entity in Dynamics
+    public function finalize(string                                                   $phoneNumber,
+                             \CanadaSatellite\AstIntegration\AstManagement\AstManager $astManager,
+                             \CanadaSatellite\DynamicsIntegration\Rest\RestApi        $dynamicsApi) {
+
+        // Update SIM in Dynamics 365
         $sim = $dynamicsApi->getSimByNumber($this->simNumber);
         if ($sim === false) {
             throw new \Exception("AstQueueItem finalize: SIM entity not found");
         }
 
-        $dynamicsApi->updateSim($sim->cs_simid, [
+        $payload = [
             'cs_activationdate' => (new \DateTime())->format('Y-m-d\TH:i:s\Z'),
             'cs_satellitenumber' => $phoneNumber,
-            'cs_simstatus' => 100000001
-        ]);
+            'cs_simstatus' => 100000001, // Network Status = Active
+            'new_airtimevendor' => 100000000, // Airtime Vendor == AST
+        ];
 
-        // Apply voucher
-        if (isset($this->voucher)) {
-            $data = $this->voucher;
-            $astManager->processTopup($this->simNumber, $data['ServiceTypeId'], $data['Voucher'],
-                $data['Quantity'], $data['Reference']);
+        if (isset($this->voucher) && !is_null($this->voucher)) {
+            $voucher = $dynamicsApi->getAstVoucherBySku($this->voucher);
+            if ($voucher !== false) {
+                $payload['new_substatus'] = $voucher->new_parts_count === 2
+                    ? 100000017 // Sub Status = 0/2
+                    : 100000004; // Sub Status = PAID
+                $payload['new_ast_voucher@odata.bind'] = "/new_ast_vouchers($voucher->new_ast_voucherid)";
+                $payload['cs_expirydate'] = (new \DateTime())->format('Y-m-d\TH:i:s\Z');
+            }
         }
+
+        $dynamicsApi->updateSim($sim->cs_simid, $payload);
     }
 
     /**

@@ -90,8 +90,8 @@ class TopUpOrderProcessor {
             $sim = $this->dynamicsApi->getSimByNumberOrSatelliteNumber($simNumber);
 
             if (!$sim) {
-                $this->sendEmail($simNumber, $order, "SIM entity not found in Dynamics");
                 $this->logger->info("[processTopUpOrder] Skip. Sim not found");
+                $this->sendEmail($simNumber, $order, "SIM entity not found in Dynamics");
                 continue;
             }
 
@@ -306,7 +306,7 @@ class TopUpOrderProcessor {
     }
 
     private function getReference(\Magento\Sales\Model\Order $order): string {
-        return "{$order->getCustomerLastname()} - {$order->getIncrementId()}";
+        return "{$order->getIncrementId()} - {$order->getCustomerLastname()}";
     }
 
     private function sendEmail($sim, \Magento\Sales\Model\Order $order, string $message) {
@@ -333,7 +333,6 @@ class TopUpOrderProcessor {
         $this->logger->info("[processAutoRecharge] Begin");
 
         $sims = $this->dynamicsApi->getAutoRechargeSims();
-        $this->logger->info("[processAutoRecharge] Sims: " . var_export($sims, true));
 
         $subStatusMapping = [
             100000014 => 100000000, // Auto Recharge - PAID -> Auto Recharge
@@ -343,7 +342,7 @@ class TopUpOrderProcessor {
         ];
 
         foreach ($sims as $sim) {
-            $this->logger->info("[processAutoRecharge] Begin processing SIM $sim->cs_simid");
+            $this->logger->info("[processAutoRecharge] Begin processing SIM $sim->cs_number");
 
             if (!array_key_exists($sim->new_substatus, $subStatusMapping)) {
                 $this->logger->err("[processAutoRecharge] Skip. Sub Status is incorrect. Sub Status: $sim->new_substatus");
@@ -397,7 +396,8 @@ class TopUpOrderProcessor {
             $this->logger->info("[processAutoRecharge] Updating SIM...");
             $payload = [
                 'new_substatus' => $subStatusMapping[$sim->new_substatus],
-                'cs_expirydate' => $this->getNewExpiryDate($voucher->new_expire_days)
+                'cs_expirydate' => $this->getNewExpiryDate($voucher->new_expire_days),
+                'new_quicknote' => null
             ];
             if ($sim->new_substatus !== 100000017) { // Do not clear AST Voucher if Sub Status was equals 0/2
                 $payload['new_ast_voucher'] = null;
