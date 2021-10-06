@@ -16,6 +16,10 @@
 # "How to fix the «Invalid template file» / «require_js.phtml» failure of Magento ≥ 2.3 in Windows?":
 # https://mage2.pro/t/5774
 !/vendor/magento/framework/View/Element/Template/File/Validator.php
+# 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Broken reference: the 'authorizenet_acceptjs_payment_script' tries to reorder itself towards 'billing_method',
+# but their parents are different: 'content' and 'data' respectively»:https://github.com/canadasatellite-ca/site/issues/243
+!/vendor/magento/module-authorizenet-acceptjs/view/adminhtml/layout/sales_order_create_index.xml
 # 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # «preg_match() expects parameter 2 to be string, object given
 # in vendor/magento/module-catalog/Helper/Output.php:245»: https://github.com/canadasatellite-ca/site/issues/28
