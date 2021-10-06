@@ -18,7 +18,11 @@
                 </container>
 
                 <container name="header" htmlTag="header" htmlClass="page-header"/>
-                <container name="page.menu" as="page.menu" after="header"/>
+<!-- 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+«Broken reference: the 'page.menu' tries to reorder itself towards 'header',
+but their parents are different: 'page.wrapper' and 'content' respectively»:
+https://github.com/canadasatellite-ca/site/issues/244 -->
+                <container name="page.menu" as="page.menu"/>
                 <container name="page.breadcrumbs" as="page.breadcrumbs"/>
 
                 <container name="page.formkey" as="page.formkey"/>
