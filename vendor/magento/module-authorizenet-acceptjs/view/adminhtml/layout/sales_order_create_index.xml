@@ -14,11 +14,15 @@
             </action>
         </referenceBlock>
         <referenceBlock name="content">
+<!-- 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+«Broken reference: the 'authorizenet_acceptjs_payment_script' tries to reorder itself towards 'billing_method',
+but their parents are different: 'content' and 'data' respectively»:
+https://github.com/canadasatellite-ca/site/issues/243 -->
             <block name="authorizenet_acceptjs_payment_script"
                    as="authorizenet_acceptjs_payment_script"
                    template="Magento_AuthorizenetAcceptjs::payment/script.phtml"
                    class="Magento\AuthorizenetAcceptjs\Block\Payment"
-                   after="billing_method"/>
+            />
         </referenceBlock>
     </body>
 </page>
