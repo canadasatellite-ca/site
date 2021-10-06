@@ -65,6 +65,11 @@
 # https://github.com/canadasatellite-ca/site/issues/45
 # https://github.com/magento/magento2/issues/25738#issuecomment-563473682
 !/vendor/magento/module-sales/view/frontend/templates/order/order_date.phtml
+# 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# «Broken reference: the 'page.menu' tries to reorder itself towards 'header',
+# but their parents are different: 'page.wrapper' and 'content' respectively»:
+# https://github.com/canadasatellite-ca/site/issues/244
+!/vendor/magento/module-theme/view/adminhtml/page_layout/admin-2columns-left.xml
 /update/
 /dev
 /vendor/codeception
