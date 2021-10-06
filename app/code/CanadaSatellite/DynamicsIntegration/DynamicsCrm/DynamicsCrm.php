@@ -366,32 +366,7 @@ class DynamicsCrm {
         if (!is_null($result) && isset($planData)) {
             $itemVoucher = null;
             if (array_key_exists('Voucher', $planData)) {
-                $voucher = $planData['Voucher'];
-
-                if (gettype($voucher) === 'string') {
-                    try {
-                        $dynVoucher = $this->restApi->getAstVoucherBySku($voucher);
-                        if ($dynVoucher !== false) {
-                            $itemVoucher = [
-                                'ServiceTypeId' => $dynVoucher->new_voucher_1_service_type_id,
-                                'Voucher' => $dynVoucher->new_voucher_1_id,
-                                'Quantity' => $dynVoucher->new_voucher_1_quantity,
-                                'Reference' => $reference
-                            ];
-                        } else {
-                            $this->logger->info("[createOrUpdateActivationRequest] -> AST Voucher not found. SimNumber = $simNumber. Voucher = $voucher");
-                        }
-                    } catch (\Exception $e) {
-                        $this->logger->info("[createOrUpdateActivationRequest] -> AST Voucher error. SimNumber = $simNumber. Voucher = $voucher. Message = {$e->getMessage()}");
-                    }
-                } else if (gettype($voucher) === 'array') {
-                    $itemVoucher = [
-                        'ServiceTypeId' => $voucher['ServiceTypeId'],
-                        'Voucher' => $voucher['Voucher'],
-                        'Quantity' => $voucher['Quantity'],
-                        'Reference' => $reference
-                    ];
-                }
+                $itemVoucher = $planData['Voucher'];
             }
 
             switch ($result->Status) {

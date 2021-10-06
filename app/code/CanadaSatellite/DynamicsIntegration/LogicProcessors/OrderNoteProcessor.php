@@ -126,29 +126,20 @@ class OrderNoteProcessor {
 
                         $sim = $this->simFactory->create($simNumber, $accountId, $order->name,
                             $plansHelper->getMeta('NetworkCodes', $providerKey),
-                            $planData['DynamicsService'], $planData['DynamicsType'], $planData['DynamicsPlan']);
+                            $planData['DynamicsService'], $planData['DynamicsType']);
                         $sim->setPlanKey($planKey);
 
                         // Voucher part
                         if (array_key_exists('Voucher', $planData)) {
-                            $voucherData = $planData['Voucher'];
-                            if (gettype($voucherData) === 'string') {
-                                try {
-                                    $innerProduct = $this->productRepository->get($voucherData);
-                                    $value = $innerProduct->getCustomAttribute('dynamics_voucher_id');
-                                    if (isset($value)) {
-                                        $voucherId = $value->getValue();
-                                        if (isset($voucherId) && !empty($voucherId)) {
-                                            $sim->setVoucher($voucherId);
-                                        }
-                                    }
-                                } catch (NoSuchEntityException $e) {
-                                    $this->logger->info("[OrderNoteProcessor] -> Inner topup product not found. SimNumber = $simNumber. AccountId = $accountId");
-                                }
-                            } else if (gettype($voucherData) === 'array') {
-                                if (isset($voucherData['DynamicsVoucherId']) && !empty($voucherData['DynamicsVoucherId'])) {
-                                    $sim->setVoucher($voucherData['DynamicsVoucherId']);
-                                }
+                            $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+                            $dynApi = $objectManager->get('CanadaSatellite\DynamicsIntegration\Rest\RestApi');
+                            $voucher = $dynApi->getAstVoucherBySku($planData['Voucher']);
+                            if ($voucher !== false) {
+                                $sim->setVoucher($voucher->new_voucher_type);
+                                $sim->setPlan($voucher->new_plan);
+                                $sim->setQuickNote("#$order->name");
+                            } else {
+                                $this->logger->err("[OrderNoteProcessor] -> AST Voucher not found. Name: " . $planData['Voucher']);
                             }
                         }
 
