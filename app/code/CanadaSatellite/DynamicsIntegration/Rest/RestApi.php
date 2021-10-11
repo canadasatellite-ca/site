@@ -1273,7 +1273,7 @@ class RestApi {
             // Item active?
             '(statecode eq 0)',
             // Network Status = Active
-            '(cs_simstatus eq 100000001)',
+            '(cs_simstatus eq 100000001 or cs_simstatus eq 100000002)',
             // Airtime Vendor == AST
             '(new_airtimevendor eq 100000000)',
             // Network = Iridium
