@@ -98,7 +98,8 @@ class TopUpOrderProcessor {
             $this->logger->info("[processTopUpOrder] Sim found. Guid: $sim->cs_simid");
 
             // ===== Check SIM Sub Status =====
-            if ($sim->new_substatus !== null) {
+            $validSubStatuses = [null, 100000002 /* 2/2 */];
+            if (!in_array($sim->new_substatus, $validSubStatuses, true)) {
                 // Trying to get formatted Sub Status value
                 $key = 'new_substatus@OData.Community.Display.V1.FormattedValue';
                 $subStatus = property_exists($sim, $key) ? $sim->$key : $sim->new_substatus;
@@ -157,17 +158,23 @@ class TopUpOrderProcessor {
                     continue;
                 }
 
+                // Update SIM if required
+                $payload = [];
+
+                if (!is_null($voucher->new_plan) && $voucher->new_plan !== $sim->cs_plan) {
+                    $payload['cs_plan'] = $voucher->new_plan; // sim.Plan = voucher.Plan
+                }
+
                 if ($voucher->new_parts_count === 2) {
+                    $payload['new_substatus'] = 100000001; // Sub Status = 1/2
+                    $payload['new_ast_voucher@odata.bind'] = "/new_ast_vouchers($voucher->new_ast_voucherid)";
+                    $payload['new_quicknote'] = "#{$order->getIncrementId()}";
+                    $payload['cs_expirydate'] = $this->getNewExpiryDate($voucher->new_expire_days);
+                }
+
+                if (!empty($payload)) {
                     $this->logger->info("[processTopUpOrder] Updating sim...");
-
-                    $payload = [
-                        'new_substatus' => 100000001, // Sub Status = 1/2
-                        'new_ast_voucher@odata.bind' => "/new_ast_vouchers($voucher->new_ast_voucherid)",
-                        'new_quicknote' => "#{$order->getIncrementId()}",
-                        'cs_expirydate' => $this->getNewExpiryDate($voucher->new_expire_days)
-                    ];
                     $this->logger->info("[processTopUpOrder] SIM update payload: " . json_encode($payload));
-
                     $this->dynamicsApi->updateSim($sim->cs_simid, $payload);
                     $this->logger->info("[processTopUpOrder] Sim updated");
                 } else {
@@ -190,6 +197,11 @@ class TopUpOrderProcessor {
                     'new_ast_voucher@odata.bind' => "/new_ast_vouchers($voucher->new_ast_voucherid)",
                     'new_quicknote' => "#{$order->getIncrementId()}"
                 ];
+
+                if (!is_null($voucher->new_plan) && $voucher->new_plan !== $sim->cs_plan) {
+                    $payload['cs_plan'] = $voucher->new_plan; // sim.Plan = voucher.Plan
+                }
+                
                 $this->logger->info("[processTopUpOrder] SIM update payload: " . json_encode($payload));
 
                 $this->dynamicsApi->updateSim($sim->cs_simid, $payload);
@@ -362,10 +374,10 @@ class TopUpOrderProcessor {
             }
 
             if (!empty($sim->_new_ast_voucher_value)) {
-                if ($sim->new_substatus === 100000014) {
+                /*if ($sim->new_substatus === 100000014) {
                     $this->logger->err("[processAutoRecharge] Skip. SIM has AST Voucher, but Sub Status is AutoRecharge - PAID");
                     continue;
-                }
+                }*/
 
                 $this->logger->info("[processAutoRecharge] Get AST Voucher by id in SIM ($sim->_new_ast_voucher_value)");
                 $voucher = $this->dynamicsApi->getAstVoucherByGuid($sim->_new_ast_voucher_value);
@@ -397,7 +409,8 @@ class TopUpOrderProcessor {
             $payload = [
                 'new_substatus' => $subStatusMapping[$sim->new_substatus],
                 'cs_expirydate' => $this->getNewExpiryDate($voucher->new_expire_days),
-                'new_quicknote' => null
+                'new_quicknote' => null,
+                'cs_simstatus' => 100000001
             ];
             if ($sim->new_substatus !== 100000017) { // Do not clear AST Voucher if Sub Status was equals 0/2
                 $payload['new_ast_voucher'] = null;
