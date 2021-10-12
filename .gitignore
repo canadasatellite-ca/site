@@ -29,6 +29,11 @@
 # in vendor/magento/module-catalog-search/Model/Layer/Filter/Price.php on line 145»:
 # https://github.com/canadasatellite-ca/site/issues/28
 !/vendor/magento/module-catalog/Model/Layer/Filter/DataProvider/Price.php
+# 2021-10-12 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# "`Cart2Quote_Features`: «DateTime::createFromFormat() expects parameter 2 to be string, array given
+# in vendor/magento/module-catalog/Model/Webapi/Product/Option/Type/Date.php on line 34»":
+# https://github.com/canadasatellite-ca/site/issues/249
+!/vendor/magento/module-catalog/Model/Webapi/Product/Option/Type/Date.php
 # 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
 # 1) «Broken reference: the 'skip_gallery_before' tries to reorder itself towards 'product.info.media.image',
 # but their parents are different: 'skip_gallery_before.wrapper' and 'product.info.media' respectively»:
