@@ -31,7 +31,15 @@ class Date extends \Magento\Catalog\Model\Product\Option\Type\Date
     {
         if (isset($values[$this->getOption()->getId()])) {
             $value = $values[$this->getOption()->getId()];
-            $dateTime = \DateTime::createFromFormat(DateTime::DATETIME_PHP_FORMAT, $value);
+			# 2021-10-12 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# "`Cart2Quote_Features`: «DateTime::createFromFormat() expects parameter 2 to be string, array given
+			# in vendor/magento/module-catalog/Model/Webapi/Product/Option/Type/Date.php on line 34»":
+			# https://github.com/canadasatellite-ca/site/issues/249
+			try {$dateTime = \DateTime::createFromFormat(DateTime::DATETIME_PHP_FORMAT, $value);}
+			catch (\Exception $e) {
+				df_log_e($e, null, ['v' => $value]);
+				throw $e;
+			}
             $values[$this->getOption()->getId()] = [
                 'date' => $value,
                 'year' => $dateTime->format('Y'),
