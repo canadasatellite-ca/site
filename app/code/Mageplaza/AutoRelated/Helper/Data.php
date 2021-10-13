@@ -120,90 +120,93 @@ class Data extends AbstractData
      */
     function getRelatedProduct($layout, $params, $isAjax = true) {
         if (!$this->isEnabled()) {
-            return false;
-        }
-        $r = [];
-        $autoRelatedModelRule = $this->objectManager->create('Mageplaza\AutoRelated\Model\RuleFactory');
-        $ruleIds = [];
-        $id = '';
-        if (
-			$params['module'] == 'catalog'
-			&& $params['controller'] == 'product'
-			&& $params['action'] == 'view'
-			&& $params['product_id']
-		) {
-            $pageType = 'product';
-            $id = $params['product_id'];
-        }
-		elseif (
-			$params['module'] == 'catalog'
-			&& $params['controller'] == 'category'
-			&& $params['action'] == 'view'
-			&& $params['category_id']
-		) {
-            $pageType = 'category';
-            $id = $params['category_id'];
-        }
-		elseif ($params['module'] == 'checkout' && $params['controller'] == 'cart' && $params['action'] == 'index') {
-            $pageType = 'cart';
+            $r = false;
         }
 		else {
-            $pageType = 'cms';
-            if (isset($params['ruleIds'])) {
-                $ruleIds = array_filter(explode(',', $params['ruleIds']));
-                foreach ($ruleIds as $ruleId) {
-                    $ruleParam = $autoRelatedModelRule->create()->load($ruleId);
-                    if ($ruleParam->hasChild()) {
-                        $ruleChild = $ruleParam->getChild();
-                        $ruleIds[] = $ruleChild['rule_id'];
-                    }
-                    if ($ruleParam->getParentId()) {
-                        $ruleIds[] = $ruleParam->getParentId();
-                    }
-                }
-            }
-        }
-        try {
-            /** @var \Mageplaza\AutoRelated\Model\ResourceModel\Rule $autoRelatedRule */
-            $autoRelatedRule = $autoRelatedModelRule->create()->getResource();
-            $data = $autoRelatedRule->getProductList($pageType, $id, $ruleIds);
-            if (!empty($data)) {
-                $i = 0;
-                foreach ($data as $location => $infos) {
-                    $html = '';
-                    $r['data'][$i]['id'] = $location;
-                    foreach ($infos as $info) {
-                        $productIds = $info['product_ids'];
-                        $rule = $info['rule'];
-                        $ruleId = $rule['rule_id'];
-                        if (!empty($productIds)) {
-                            if(!$isAjax || ($isAjax && isset($params['isAjax']))) {
-                                $html .= $layout->createBlock('Mageplaza\AutoRelated\Block\Product\ProductList\ProductList')
-                                    ->setTemplate('Mageplaza_AutoRelated::product/list/items.phtml')
-                                    ->setProductIds($productIds)
-                                    ->setRequestDefault($params)
-                                    ->setRule($rule)
-                                    ->toHtml();
-                            }
-                            if($isAjax) {
-                                $autoRelatedRule->updateImpression($pageType, $id, $ruleId);
-                            }
-                        }
-                    }
-                    $r['data'][$i]['content'] = $html;
-                    $i++;
-                }
-            }
-            if (!empty($r)) {
-                $r['status'] = true;
-                $this->catalogSession->create()->unsAutoRelated();
-            }
-        }
-		catch (\Exception $e) {
-            $r['status'] = false;
-            $this->_logger->critical($e);
-        }
-        return self::jsonEncode($r);
+			$r = [];
+			$autoRelatedModelRule = $this->objectManager->create('Mageplaza\AutoRelated\Model\RuleFactory');
+			$ruleIds = [];
+			$id = '';
+			if (
+				$params['module'] == 'catalog'
+				&& $params['controller'] == 'product'
+				&& $params['action'] == 'view'
+				&& $params['product_id']
+			) {
+				$pageType = 'product';
+				$id = $params['product_id'];
+			}
+			elseif (
+				$params['module'] == 'catalog'
+				&& $params['controller'] == 'category'
+				&& $params['action'] == 'view'
+				&& $params['category_id']
+			) {
+				$pageType = 'category';
+				$id = $params['category_id'];
+			}
+			elseif ($params['module'] == 'checkout' && $params['controller'] == 'cart' && $params['action'] == 'index') {
+				$pageType = 'cart';
+			}
+			else {
+				$pageType = 'cms';
+				if (isset($params['ruleIds'])) {
+					$ruleIds = array_filter(explode(',', $params['ruleIds']));
+					foreach ($ruleIds as $ruleId) {
+						$ruleParam = $autoRelatedModelRule->create()->load($ruleId);
+						if ($ruleParam->hasChild()) {
+							$ruleChild = $ruleParam->getChild();
+							$ruleIds[] = $ruleChild['rule_id'];
+						}
+						if ($ruleParam->getParentId()) {
+							$ruleIds[] = $ruleParam->getParentId();
+						}
+					}
+				}
+			}
+			try {
+				/** @var \Mageplaza\AutoRelated\Model\ResourceModel\Rule $autoRelatedRule */
+				$autoRelatedRule = $autoRelatedModelRule->create()->getResource();
+				$data = $autoRelatedRule->getProductList($pageType, $id, $ruleIds);
+				if (!empty($data)) {
+					$i = 0;
+					foreach ($data as $location => $infos) {
+						$html = '';
+						$r['data'][$i]['id'] = $location;
+						foreach ($infos as $info) {
+							$productIds = $info['product_ids'];
+							$rule = $info['rule'];
+							$ruleId = $rule['rule_id'];
+							if (!empty($productIds)) {
+								if(!$isAjax || ($isAjax && isset($params['isAjax']))) {
+									$html .= $layout->createBlock('Mageplaza\AutoRelated\Block\Product\ProductList\ProductList')
+										->setTemplate('Mageplaza_AutoRelated::product/list/items.phtml')
+										->setProductIds($productIds)
+										->setRequestDefault($params)
+										->setRule($rule)
+										->toHtml();
+								}
+								if($isAjax) {
+									$autoRelatedRule->updateImpression($pageType, $id, $ruleId);
+								}
+							}
+						}
+						$r['data'][$i]['content'] = $html;
+						$i++;
+					}
+				}
+				if (!empty($r)) {
+					$r['status'] = true;
+					$this->catalogSession->create()->unsAutoRelated();
+				}
+			}
+			catch (\Exception $e) {
+				$r['status'] = false;
+				$this->_logger->critical($e);
+			}
+			$r = self::jsonEncode($r);
+		}
+        return $r;
     }
 
     function versionCompare($version, $operator = '>='){
