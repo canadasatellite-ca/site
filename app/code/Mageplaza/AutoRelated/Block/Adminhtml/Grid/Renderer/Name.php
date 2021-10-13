@@ -35,7 +35,7 @@ class Name extends AbstractRenderer
      * @param   \Magento\Framework\DataObject $row
      * @return  string
      */
-    public function render(\Magento\Framework\DataObject $row)
+    function render(\Magento\Framework\DataObject $row)
     {
         if ($row) {
             $name   = $row->getBlockName();

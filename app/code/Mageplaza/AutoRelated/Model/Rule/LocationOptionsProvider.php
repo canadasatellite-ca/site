@@ -38,7 +38,7 @@ class LocationOptionsProvider implements OptionSourceInterface
     /**
      * @param \Magento\Framework\Registry $coreRegistry
      */
-    public function __construct(Registry $coreRegistry)
+    function __construct(Registry $coreRegistry)
     {
         $this->coreRegistry = $coreRegistry;
     }
@@ -48,7 +48,7 @@ class LocationOptionsProvider implements OptionSourceInterface
      *
      * @return array Format: array(array('value' => '<value>', 'label' => '<label>'), ...)
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         $options = [];
 

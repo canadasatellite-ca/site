@@ -74,7 +74,7 @@ class BlockConfig extends Generic
      * @param \Magento\Framework\App\Request\Http $request
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         FormFactory $formFactory,

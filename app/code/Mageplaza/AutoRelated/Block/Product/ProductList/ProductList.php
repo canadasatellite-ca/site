@@ -84,7 +84,7 @@ class ProductList extends AbstractProduct implements BlockInterface
      * @param \Mageplaza\AutoRelated\Helper\Data $helperData
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         ProductFactory $productFactory,
         CollectionFactory $productCollectionFactory,
@@ -108,7 +108,7 @@ class ProductList extends AbstractProduct implements BlockInterface
      *
      * @return string
      */
-    public function getTitleBlock()
+    function getTitleBlock()
     {
         return $this->rule['block_name'];
     }
@@ -118,7 +118,7 @@ class ProductList extends AbstractProduct implements BlockInterface
      *
      * @return int
      */
-    public function getRuleId()
+    function getRuleId()
     {
         return (int)$this->rule['rule_id'];
     }
@@ -126,7 +126,7 @@ class ProductList extends AbstractProduct implements BlockInterface
     /**
      * @return array|\Magento\Catalog\Model\ResourceModel\Product\Collection
      */
-    public function getProductCollection()
+    function getProductCollection()
     {
         $this->setRequestDefault($this->getRequestDefault());
         $collection = [];
@@ -181,7 +181,7 @@ class ProductList extends AbstractProduct implements BlockInterface
      *
      * @return int
      */
-    public function getLayoutSlider()
+    function getLayoutSlider()
     {
         $layout = $this->rule['product_layout'];
         if ($layout && $layout == 1) {
@@ -195,7 +195,7 @@ class ProductList extends AbstractProduct implements BlockInterface
      * @param $type
      * @return bool
      */
-    public function getShowList($type)
+    function getShowList($type)
     {
         if (is_null($this->displayTypes)) {
             if ($this->rule['display_additional']) {

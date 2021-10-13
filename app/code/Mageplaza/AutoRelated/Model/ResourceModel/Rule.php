@@ -87,7 +87,7 @@ class Rule extends AbstractDb
      * @param \Magento\Catalog\Model\ProductFactory $productFactory
      * @param \Mageplaza\AutoRelated\Helper\Data $helperData
      */
-    public function __construct(
+    function __construct(
         DateTime $date,
         Context $context,
         SessionFactory $customerSession,
@@ -114,7 +114,7 @@ class Rule extends AbstractDb
      *
      * @return void
      */
-    public function _construct()
+    function _construct()
     {
         $this->_init('mageplaza_autorelated_block_rule', 'rule_id');
     }
@@ -140,7 +140,7 @@ class Rule extends AbstractDb
      * @param string $ruleId
      * @return array
      */
-    public function getCustomerGroupByRuleId($ruleId)
+    function getCustomerGroupByRuleId($ruleId)
     {
         $tableName = $this->getTable('mageplaza_autorelated_block_rule_customer_group');
         $select    = $this->getConnection()->select()
@@ -156,7 +156,7 @@ class Rule extends AbstractDb
      * @param string $ruleId
      * @return array
      */
-    public function getStoresByRuleId($ruleId)
+    function getStoresByRuleId($ruleId)
     {
         $tableName = $this->getTable('mageplaza_autorelated_block_rule_store');
         $select    = $this->getConnection()->select()
@@ -173,7 +173,7 @@ class Rule extends AbstractDb
      * @return array|bool
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getChildById($ruleId)
+    function getChildById($ruleId)
     {
         $connection = $this->getConnection();
         $data       = $connection->fetchRow(
@@ -199,7 +199,7 @@ class Rule extends AbstractDb
      * @param $ruleId
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function deleteById($ruleId)
+    function deleteById($ruleId)
     {
         if ($ruleId) {
             $this->autoRelatedRuleFac->create()->load($ruleId)->delete();
@@ -218,7 +218,7 @@ class Rule extends AbstractDb
      * @param string $ruleId
      * @return void
      */
-    public function deleteOldData($ruleId)
+    function deleteOldData($ruleId)
     {
         if ($ruleId) {
             $where = ['rule_id = ?' => $ruleId];
@@ -234,7 +234,7 @@ class Rule extends AbstractDb
      * @param string $ruleId
      * @return void
      */
-    public function updateStore($data = [], $ruleId)
+    function updateStore($data = [], $ruleId)
     {
         $dataInsert = [];
         foreach ($data as $storeId) {
@@ -253,7 +253,7 @@ class Rule extends AbstractDb
      * @param string $ruleId
      * @return void
      */
-    public function updateCustomerGroup($data = [], $ruleId)
+    function updateCustomerGroup($data = [], $ruleId)
     {
         $dataInsert = [];
         foreach ($data as $customerGroupId) {
@@ -272,7 +272,7 @@ class Rule extends AbstractDb
      * @param array $data
      * @return void
      */
-    public function updateMultipleData($tableName, $data = [])
+    function updateMultipleData($tableName, $data = [])
     {
         $table = $this->getTable($tableName);
         if ($table && !empty($data)) {
@@ -287,7 +287,7 @@ class Rule extends AbstractDb
      * @param array $where
      * @return void
      */
-    public function deleteMultipleData($tableName, $where = [])
+    function deleteMultipleData($tableName, $where = [])
     {
         $table = $this->getTable($tableName);
         if ($table && !empty($where)) {
@@ -324,7 +324,7 @@ class Rule extends AbstractDb
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Zend_Serializer_Exception
      */
-    public function getProductList($pageType, $id = null, $ruleParamIds = [])
+    function getProductList($pageType, $id = null, $ruleParamIds = [])
     {
         $storeId       = $this->storeManager->getStore()->getId();
         $result        = [];
@@ -438,7 +438,7 @@ class Rule extends AbstractDb
      * @return array
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getRuleById($ruleId = null)
+    function getRuleById($ruleId = null)
     {
         if ($ruleId) {
             $adapter = $this->getConnection();
@@ -461,7 +461,7 @@ class Rule extends AbstractDb
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Zend_Serializer_Exception
      */
-    public function updateImpression($pageType, $id = null, $ruleId = null)
+    function updateImpression($pageType, $id = null, $ruleId = null)
     {
         if ($ruleId) {
             $bind2  = [];
@@ -506,7 +506,7 @@ class Rule extends AbstractDb
      * @param null $ruleId
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function updateClick($ruleId = null)
+    function updateClick($ruleId = null)
     {
         if ($ruleId) {
             $bind  = [

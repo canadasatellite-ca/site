@@ -34,7 +34,7 @@ class Save extends Rule
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */
-    public function execute()
+    function execute()
     {
         $data = $this->getRequest()->getPostValue();
         $type = $this->getRequest()->getParam('type');

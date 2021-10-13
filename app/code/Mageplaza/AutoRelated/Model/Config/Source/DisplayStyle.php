@@ -35,7 +35,7 @@ class DisplayStyle implements ArrayInterface
     /**
      * @return array
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         $options = [];
         foreach ($this->toArray() as $value => $label) {
@@ -53,7 +53,7 @@ class DisplayStyle implements ArrayInterface
      *
      * @return array
      */
-    public function toArray()
+    function toArray()
     {
         return [self::TYPE_AJAX => __('Ajax Display'), self::TYPE_BLOCK => __('Block Display')];
     }

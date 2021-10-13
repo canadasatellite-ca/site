@@ -32,7 +32,7 @@ class ProductList extends Rule
     /**
      * @return \Magento\Framework\Controller\ResultInterface
      */
-    public function execute()
+    function execute()
     {
         try {
             /** @var \Magento\Framework\View\Layout $layout */

@@ -61,7 +61,7 @@ class Actions extends Generic implements TabInterface
      * @param \Mageplaza\AutoRelated\Model\RuleFactory $autoRelatedRuleFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         FormFactory $formFactory,
@@ -161,7 +161,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function getTabClass()
+    function getTabClass()
     {
         return null;
     }
@@ -170,7 +170,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function getTabUrl()
+    function getTabUrl()
     {
         return null;
     }
@@ -179,7 +179,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function isAjaxLoaded()
+    function isAjaxLoaded()
     {
         return false;
     }
@@ -188,7 +188,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Actions');
     }
@@ -197,7 +197,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return __('Actions');
     }
@@ -206,7 +206,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -215,7 +215,7 @@ class Actions extends Generic implements TabInterface
      * {@inheritdoc}
      * @codeCoverageIgnore
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }

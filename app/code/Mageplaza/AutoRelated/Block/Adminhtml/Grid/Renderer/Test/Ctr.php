@@ -44,7 +44,7 @@ class Ctr extends AbstractRenderer
      * @param \Mageplaza\AutoRelated\Helper\Data $autoRelatedHelper
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Data $autoRelatedHelper,
         array $data = []
@@ -61,7 +61,7 @@ class Ctr extends AbstractRenderer
      * @param   \Magento\Framework\DataObject $row
      * @return  string
      */
-    public function render(DataObject $row)
+    function render(DataObject $row)
     {
         if ($row) {
             $click      = (int)$row->getClick();

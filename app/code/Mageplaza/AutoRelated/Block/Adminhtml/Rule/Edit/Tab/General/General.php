@@ -82,7 +82,7 @@ class General extends Generic implements TabInterface
      * @param \Mageplaza\AutoRelated\Model\ResourceModel\RuleFactory $resourceModelRuleFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         FormFactory $formFactory,
@@ -224,7 +224,7 @@ class General extends Generic implements TabInterface
      * @return \Magento\Framework\Phrase
      * @codeCoverageIgnore
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Rule Information');
     }
@@ -235,7 +235,7 @@ class General extends Generic implements TabInterface
      * @return \Magento\Framework\Phrase
      * @codeCoverageIgnore
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return __('Rule Information');
     }
@@ -246,7 +246,7 @@ class General extends Generic implements TabInterface
      * @return bool
      * @codeCoverageIgnore
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -257,7 +257,7 @@ class General extends Generic implements TabInterface
      * @return bool
      * @codeCoverageIgnore
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }

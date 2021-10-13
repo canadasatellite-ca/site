@@ -67,7 +67,7 @@ class ProductCart extends Generic implements TabInterface
      * @param \Mageplaza\AutoRelated\Model\RuleFactory $autoRelatedRuleFactory
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         FormFactory $formFactory,
@@ -157,7 +157,7 @@ class ProductCart extends Generic implements TabInterface
      * @return \Magento\Framework\Phrase
      * @codeCoverageIgnore
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('Conditions');
     }
@@ -168,7 +168,7 @@ class ProductCart extends Generic implements TabInterface
      * @return \Magento\Framework\Phrase
      * @codeCoverageIgnore
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return __('Conditions');
     }
@@ -179,7 +179,7 @@ class ProductCart extends Generic implements TabInterface
      * @return bool
      * @codeCoverageIgnore
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -190,7 +190,7 @@ class ProductCart extends Generic implements TabInterface
      * @return bool
      * @codeCoverageIgnore
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }
@@ -201,7 +201,7 @@ class ProductCart extends Generic implements TabInterface
      * @return string
      * @codeCoverageIgnore
      */
-    public function getTabClass()
+    function getTabClass()
     {
         return null;
     }
@@ -212,7 +212,7 @@ class ProductCart extends Generic implements TabInterface
      * @return string
      * @codeCoverageIgnore
      */
-    public function getTabUrl()
+    function getTabUrl()
     {
         return null;
     }
@@ -223,7 +223,7 @@ class ProductCart extends Generic implements TabInterface
      * @return bool
      * @codeCoverageIgnore
      */
-    public function isAjaxLoaded()
+    function isAjaxLoaded()
     {
         return false;
     }

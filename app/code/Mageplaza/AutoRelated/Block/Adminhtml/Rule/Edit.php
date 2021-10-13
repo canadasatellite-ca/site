@@ -50,7 +50,7 @@ class Edit extends Container
      * @param \Magento\Framework\Registry $registry
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         array $data = []
@@ -121,7 +121,7 @@ class Edit extends Container
      *
      * @return string
      */
-    public function getBackParentUrl()
+    function getBackParentUrl()
     {
         $parentId = $this->getParent();
         $type     = $this->getBlockType();
@@ -134,7 +134,7 @@ class Edit extends Container
      *
      * @return \Magento\Framework\Phrase
      */
-    public function getHeaderText()
+    function getHeaderText()
     {
         $rule = $this->getRule();
         if ($rule->getRuleId()) {
@@ -149,7 +149,7 @@ class Edit extends Container
      *
      * @return string
      */
-    public function getBackUrl()
+    function getBackUrl()
     {
         if ($this->_coreRegistry->registry('autorelated_test_add')) {
             $ruleId = $this->getRuleId();

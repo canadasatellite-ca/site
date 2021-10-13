@@ -46,7 +46,7 @@ class AddBlock implements ObserverInterface
      * @param \Magento\Framework\App\Request\Http $request
      * @param \Mageplaza\AutoRelated\Helper\Data $helperData
      */
-    public function __construct(
+    function __construct(
         Http $request,
         Data $helperData
     ) {
@@ -58,7 +58,7 @@ class AddBlock implements ObserverInterface
      * @param Observer $observer
      * @return $this|bool|void
      */
-    public function execute(Observer $observer)
+    function execute(Observer $observer)
     {
         if (!$this->helperData->isEnabled()) {
             return false;

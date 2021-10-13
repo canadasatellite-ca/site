@@ -32,7 +32,7 @@ class NewAction extends Rule
     /**
      * @return mixed
      */
-    public function execute()
+    function execute()
     {
         return $this->resultForwardFactory->create()->forward('edit');
     }

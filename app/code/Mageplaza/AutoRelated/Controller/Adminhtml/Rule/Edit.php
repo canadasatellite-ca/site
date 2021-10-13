@@ -33,7 +33,7 @@ class Edit extends Rule
     /**
      * @return \Magento\Backend\Model\View\Result\Page|\Magento\Framework\App\ResponseInterface
      */
-    public function execute()
+    function execute()
     {
         $id        = $this->getRequest()->getParam('id');
         $type      = $this->getRequest()->getParam('type');

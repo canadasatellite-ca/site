@@ -43,7 +43,7 @@ class BlockList extends Extended
      * @param \Mageplaza\AutoRelated\Model\RuleFactory $autoRelatedRuleFac
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Data $backendHelper,
         RuleFactory $autoRelatedRuleFac,
@@ -139,7 +139,7 @@ class BlockList extends Extended
     /**
      * {@inheritdoc}
      */
-    public function getRowUrl($row)
+    function getRowUrl($row)
     {
         $ruleId = $this->getRequest()->getParam('id');
         if ($row->getRuleId() == $ruleId) {

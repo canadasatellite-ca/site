@@ -42,7 +42,7 @@ class Test extends Generic implements TabInterface
      *
      * @return \Magento\Framework\Phrase
      */
-    public function getTabLabel()
+    function getTabLabel()
     {
         return __('A/B Testing');
     }
@@ -52,7 +52,7 @@ class Test extends Generic implements TabInterface
      *
      * @return \Magento\Framework\Phrase
      */
-    public function getTabTitle()
+    function getTabTitle()
     {
         return __('A/B Testing');
     }
@@ -62,7 +62,7 @@ class Test extends Generic implements TabInterface
      *
      * @return string
      */
-    public function getTabClass()
+    function getTabClass()
     {
         return '';
     }
@@ -72,7 +72,7 @@ class Test extends Generic implements TabInterface
      *
      * @return string
      */
-    public function getTabUrl()
+    function getTabUrl()
     {
         return '';
     }
@@ -82,7 +82,7 @@ class Test extends Generic implements TabInterface
      *
      * @return bool
      */
-    public function isAjaxLoaded()
+    function isAjaxLoaded()
     {
         return false;
     }
@@ -92,7 +92,7 @@ class Test extends Generic implements TabInterface
      *
      * @return boolean
      */
-    public function canShowTab()
+    function canShowTab()
     {
         return true;
     }
@@ -102,7 +102,7 @@ class Test extends Generic implements TabInterface
      *
      * @return boolean
      */
-    public function isHidden()
+    function isHidden()
     {
         return false;
     }
@@ -110,7 +110,7 @@ class Test extends Generic implements TabInterface
     /**
      * @inheritdoc
      */
-    public function initForm()
+    function initForm()
     {
         $form = $this->_formFactory->create();
         $form->addFieldset('test_base_fieldset', ['legend' => __('A/B Testing')]);

@@ -33,7 +33,7 @@ class Delete extends Rule
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */
-    public function execute()
+    function execute()
     {
         $id = $this->getRequest()->getParam('id');
         if ($id) {

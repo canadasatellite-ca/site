@@ -65,7 +65,7 @@ class Statistic extends Template
      * @param \Magento\Framework\Registry $registry
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         RuleFactory $ruleFactory,
         Data $autoRelatedHelper,
@@ -101,7 +101,7 @@ class Statistic extends Template
      * @param   int $click
      * @return  string
      */
-    public function getCtr($impression, $click)
+    function getCtr($impression, $click)
     {
         if ($impression && $click) {
             return $this->autoRelatedHelper->getCtr($click, $impression);
@@ -115,7 +115,7 @@ class Statistic extends Template
      *
      * @return bool
      */
-    public function getChildInfo()
+    function getChildInfo()
     {
         $rule = $this->getRule();
         if ($rule && $rule->hasChild()) {
@@ -130,7 +130,7 @@ class Statistic extends Template
      *
      * @return  int
      */
-    public function getTotalImpression()
+    function getTotalImpression()
     {
         if ($this->getRule()) {
             return (int)$this->getRule()->getTotalImpression();
@@ -144,7 +144,7 @@ class Statistic extends Template
      *
      * @return  int
      */
-    public function getTotalClick()
+    function getTotalClick()
     {
         if ($this->getRule()) {
             return (int)$this->getRule()->getTotalClick();
@@ -158,7 +158,7 @@ class Statistic extends Template
      *
      * @return  int
      */
-    public function getCurrentImpression()
+    function getCurrentImpression()
     {
         if ($this->getRule()) {
             return (int)$this->getRule()->getImpression();
@@ -172,7 +172,7 @@ class Statistic extends Template
      *
      * @return  int
      */
-    public function getCurrentClick()
+    function getCurrentClick()
     {
         if ($this->getRule()) {
             return (int)$this->getRule()->getClick();
@@ -184,7 +184,7 @@ class Statistic extends Template
     /**
      * @return bool
      */
-    public function isHidden()
+    function isHidden()
     {
         $model = $this->registry->registry('autorelated_rule');
         if ($model && $model->getId()) {

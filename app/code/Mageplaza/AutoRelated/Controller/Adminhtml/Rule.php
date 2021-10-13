@@ -92,7 +92,7 @@ abstract class Rule extends Action
      * @param \Psr\Log\LoggerInterface $logger
      * @param \Mageplaza\AutoRelated\Helper\Data $helperData
      */
-    public function __construct(
+    function __construct(
         Context $context,
         ForwardFactory $resultForwardFactory,
         PageFactory $resultPageFactory,

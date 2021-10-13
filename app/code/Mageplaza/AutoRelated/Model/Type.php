@@ -38,7 +38,7 @@ class Type
     /**
      * @return array
      */
-    public function getPageType()
+    function getPageType()
     {
         return [
             self::TYPE_PAGE_PRODUCT  => __('Product Page'),

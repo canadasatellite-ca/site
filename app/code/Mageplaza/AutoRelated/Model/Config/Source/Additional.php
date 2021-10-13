@@ -40,7 +40,7 @@ class Additional implements ArrayInterface
      *
      * @return array Format: array(array('value' => '<value>', 'label' => '<label>'), ...)
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             ['value' => self::SHOW_PRICE, 'label' => __('Price')],

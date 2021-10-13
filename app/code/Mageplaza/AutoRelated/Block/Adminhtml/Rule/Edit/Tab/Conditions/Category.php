@@ -52,7 +52,7 @@ class Category extends ProductConditions
      * @param \Mageplaza\AutoRelated\Helper\Data $helperData
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         FormFactory $formFactory,
@@ -79,7 +79,7 @@ class Category extends ProductConditions
      * @return array|mixed
      * @throws \Zend_Serializer_Exception
      */
-    public function getCategoryIds()
+    function getCategoryIds()
     {
         $ids        = [];
         $conditions = $this->registry->registry('autorelated_rule_category');
@@ -95,7 +95,7 @@ class Category extends ProductConditions
      * @throws \Magento\Framework\Exception\LocalizedException
      * @throws \Zend_Serializer_Exception
      */
-    public function getCategoryTree()
+    function getCategoryTree()
     {
         $ids   = $this->getCategoryIds();
         $block = $this->getLayout()->createBlock(

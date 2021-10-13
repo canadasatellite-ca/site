@@ -63,7 +63,7 @@ class Click extends Action
      * @param \Mageplaza\AutoRelated\Helper\Data $helperData
      * @param \Mageplaza\AutoRelated\Model\ResourceModel\RuleFactory $autoRelatedRuleFac
      */
-    public function __construct(
+    function __construct(
         Context $context,
         LoggerInterface $logger,
         SessionFactory $catalogSession,
@@ -82,7 +82,7 @@ class Click extends Action
     /**
      * @return bool
      */
-    public function execute()
+    function execute()
     {
         if (!$this->helperData->isEnabled()) {
             return false;

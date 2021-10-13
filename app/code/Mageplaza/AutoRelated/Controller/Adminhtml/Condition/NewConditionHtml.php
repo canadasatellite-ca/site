@@ -33,7 +33,7 @@ class NewConditionHtml extends ConditionAction
     /**
      * @return void
      */
-    public function execute()
+    function execute()
     {
         $id       = $this->getRequest()->getParam('id');
         $formName = $this->getRequest()->getParam('form_namespace');

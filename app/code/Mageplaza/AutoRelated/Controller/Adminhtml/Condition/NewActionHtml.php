@@ -32,7 +32,7 @@ class NewActionHtml extends ConditionAction
     /**
      * @return void
      */
-    public function execute()
+    function execute()
     {
         $id      = $this->getRequest()->getParam('id');
         $typeArr = explode('|', str_replace('-', '/', $this->getRequest()->getParam('type')));

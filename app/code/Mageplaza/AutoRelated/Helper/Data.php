@@ -53,7 +53,7 @@ class Data extends AbstractData
      * @param StoreManagerInterface $storeManager
      * @param SessionFactory $catalogSession
      */
-    public function __construct(
+    function __construct(
         Context $context,
         ObjectManagerInterface $objectManager,
         StoreManagerInterface $storeManager,
@@ -74,7 +74,7 @@ class Data extends AbstractData
      * @param mixed $valueToEncode
      * @return string
      */
-//    public function jsonEncode($valueToEncode)
+//    function jsonEncode($valueToEncode)
 //    {
 //        return $this->jsonHelper->jsonEncode($valueToEncode);
 //    }
@@ -86,7 +86,7 @@ class Data extends AbstractData
      * @param string $encodedValue
      * @return mixed
      */
-//    public function jsonDecode($encodedValue)
+//    function jsonDecode($encodedValue)
 //    {
 //        return  $this->jsonHelper->jsonDecode($encodedValue);
 //    }
@@ -96,7 +96,7 @@ class Data extends AbstractData
      * @param $impression
      * @return string
      */
-    public function getCtr($click, $impression)
+    function getCtr($click, $impression)
     {
         $ctr = $click / $impression * 100;
 
@@ -107,7 +107,7 @@ class Data extends AbstractData
      * @param null $storeId
      * @return mixed
      */
-    public function getConfigDisplay($storeId = null)
+    function getConfigDisplay($storeId = null)
     {
         return $this->getConfigGeneral('display_style', $storeId);
     }
@@ -118,7 +118,7 @@ class Data extends AbstractData
      * @param bool $isAjax
      * @return bool|string
      */
-    public function getRelatedProduct($layout, $params, $isAjax = true)
+    function getRelatedProduct($layout, $params, $isAjax = true)
     {
         if (!$this->isEnabled()) {
             return false;
@@ -198,13 +198,13 @@ class Data extends AbstractData
 
         return self::jsonEncode($result);
     }
-    public function versionCompare($version, $operator = '>='){
+    function versionCompare($version, $operator = '>='){
         return false;
     }
-    public function isEnabled($storeId = NULL){
+    function isEnabled($storeId = NULL){
         return true;
     }
-    public function getConfigGeneral($field = '', $storeId = null)
+    function getConfigGeneral($field = '', $storeId = null)
     {
         return $this->scopeConfig->getValue(
             'autorelated/genera'.$field,
@@ -212,10 +212,10 @@ class Data extends AbstractData
             $storeId
         );
     }
-    public function serialize($data){
+    function serialize($data){
         return serialize($data);
     }
-    public function unserialize($data){
+    function unserialize($data){
         return unserialize($data);
     }
 }

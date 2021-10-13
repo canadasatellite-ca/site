@@ -43,7 +43,7 @@ class InstallSchema implements InstallSchemaInterface
      * InstallSchema constructor.
      * @param \Mageplaza\AutoRelated\Helper\Data $helper
      */
-    public function __construct(Data $helper)
+    function __construct(Data $helper)
     {
         $this->helper = $helper;
     }
@@ -53,7 +53,7 @@ class InstallSchema implements InstallSchemaInterface
      * @param ModuleContextInterface $context
      * @throws \Zend_Db_Exception
      */
-    public function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
+    function install(SchemaSetupInterface $setup, ModuleContextInterface $context)
     {
         $installer = $setup;
         $installer->startSetup();

@@ -101,7 +101,7 @@ class Rule extends AbstractModel
      * @param \Magento\Framework\Data\Collection\AbstractDb|null $resourceCollection
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         \Magento\Framework\Model\Context $context,
         \Magento\Framework\Registry $registry,
         \Magento\Framework\Data\FormFactory $formFactory,
@@ -138,7 +138,7 @@ class Rule extends AbstractModel
     /**
      * @return void
      */
-    public function _construct()
+    function _construct()
     {
         parent::_construct();
         $this->_init('Mageplaza\AutoRelated\Model\ResourceModel\Rule');
@@ -150,7 +150,7 @@ class Rule extends AbstractModel
      *
      * @return \Magento\CatalogRule\Model\Rule\Condition\Combine|\Magento\SalesRule\Model\Rule\Condition\Combine
      */
-    public function getConditionsInstance()
+    function getConditionsInstance()
     {
         $type = $this->_registry->registry('autorelated_type');
         if ($type == 'cart') {
@@ -165,7 +165,7 @@ class Rule extends AbstractModel
      *
      * @return \Magento\CatalogRule\Model\Rule\Condition\Combine
      */
-    public function getActionsInstance()
+    function getActionsInstance()
     {
         return $this->_productCombineFactory->create();
     }
@@ -174,7 +174,7 @@ class Rule extends AbstractModel
      * @param string $formName
      * @return string
      */
-    public function getConditionsFieldSetId($formName = '')
+    function getConditionsFieldSetId($formName = '')
     {
         return $formName . 'rule_conditions_fieldset_' . $this->getId();
     }
@@ -183,7 +183,7 @@ class Rule extends AbstractModel
      * @param string $formName
      * @return string
      */
-    public function getActionsFieldSetId($formName = '')
+    function getActionsFieldSetId($formName = '')
     {
         return $formName . 'rule_actions_fieldset_' . $this->getId();
     }
@@ -191,7 +191,7 @@ class Rule extends AbstractModel
     /**
      * @param $id
      */
-    public function deleteById($id)
+    function deleteById($id)
     {
         $this->getResource()->deleteById($id);
     }
@@ -199,7 +199,7 @@ class Rule extends AbstractModel
     /**
      * @return bool
      */
-    public function hasChild()
+    function hasChild()
     {
         $ruleChild = $this->getChild();
         if (!empty($ruleChild)) {
@@ -212,7 +212,7 @@ class Rule extends AbstractModel
     /**
      * @return mixed
      */
-    public function getChild()
+    function getChild()
     {
         return $this->getResource()->getChildById($this->getId());
     }
@@ -220,7 +220,7 @@ class Rule extends AbstractModel
     /**
      * {@inheritdoc}
      */
-    public function afterSave()
+    function afterSave()
     {
         if ($this->getCustomerGroupIds() || $this->getStoreIds()) {
             $this->getResource()->deleteOldData($this->getId());
@@ -246,7 +246,7 @@ class Rule extends AbstractModel
      *
      * @return array
      */
-    public function getMatchingProductIds($type = null)
+    function getMatchingProductIds($type = null)
     {
         if ($this->productIds === null) {
             $this->productIds = [];
@@ -291,7 +291,7 @@ class Rule extends AbstractModel
      * @param array $args
      * @return void
      */
-    public function callbackValidateProduct($args)
+    function callbackValidateProduct($args)
     {
         $product = clone $args['product'];
         $product->setData($args['row']);
@@ -308,7 +308,7 @@ class Rule extends AbstractModel
      * @param array $args
      * @return void
      */
-    public function callbackValidateProductConditions($args)
+    function callbackValidateProductConditions($args)
     {
         $product = clone $args['product'];
         $product->setData($args['row']);

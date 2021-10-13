@@ -57,7 +57,7 @@ class Grid extends \Magento\Catalog\Block\Adminhtml\Product\Grid
      * @param \Mageplaza\AutoRelated\Model\RuleFactory $autoRelatedRuleFac
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Data $backendHelper,
         WebsiteFactory $websiteFactory,
@@ -80,7 +80,7 @@ class Grid extends \Magento\Catalog\Block\Adminhtml\Product\Grid
      * @param \Magento\Framework\Data\Collection $collection
      * @return bool|void
      */
-    public function setCollection($collection)
+    function setCollection($collection)
     {
         $ruleId = $this->getRequest()->getParam('id');
         $rule   = $this->autoRelatedRuleFac->create()->load($ruleId);
@@ -121,7 +121,7 @@ class Grid extends \Magento\Catalog\Block\Adminhtml\Product\Grid
      * @param \Magento\Catalog\Model\Product|\Magento\Framework\DataObject $row
      * @return string
      */
-    public function getRowUrl($row)
+    function getRowUrl($row)
     {
         return $this->getUrl(
             'catalog/product/edit',

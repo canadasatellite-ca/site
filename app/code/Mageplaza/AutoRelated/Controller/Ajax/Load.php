@@ -48,7 +48,7 @@ class Load extends Action
      * @param PageFactory $resultPageFactory
      * @param HelperData $helperData
      */
-    public function __construct(
+    function __construct(
         Context $context,
         PageFactory $resultPageFactory,
         HelperData $helperData
@@ -63,7 +63,7 @@ class Load extends Action
     /**
      * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
      */
-    public function execute()
+    function execute()
     {
         $resultPage = $this->resultPageFactory->create();
 

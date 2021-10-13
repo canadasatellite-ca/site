@@ -56,7 +56,7 @@ class AutoRelated extends Template
      * @param \Mageplaza\AutoRelated\Helper\Data
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         Registry $registry,
         Data $helperData,
@@ -73,7 +73,7 @@ class AutoRelated extends Template
      *
      * @return mixed
      */
-    public function getAjaxData()
+    function getAjaxData()
     {
         if (!$this->helperData->isEnabled()) {
             return false;
@@ -109,7 +109,7 @@ class AutoRelated extends Template
     /**
      * @return bool
      */
-    public function isAjaxLoad()
+    function isAjaxLoad()
     {
         return (bool)$this->helperData->getConfigDisplay() == DisplayStyle::TYPE_AJAX;
     }
@@ -118,7 +118,7 @@ class AutoRelated extends Template
      * @return bool|string
      * @throws \Magento\Framework\Exception\LocalizedException
      */
-    public function getBlockListData()
+    function getBlockListData()
     {
         return $this->helperData->getRelatedProduct($this->getLayout(), $this->helperData->jsonDecode($this->getAjaxData())['originalRequest'], false);
     }

@@ -39,7 +39,7 @@ class AddProductTypes implements ArrayInterface
      *
      * @return array Format: array(array('value' => '<value>', 'label' => '<label>'), ...)
      */
-    public function toOptionArray()
+    function toOptionArray()
     {
         return [
             ['value' => self::NONE, 'label' => __('-- Please Select --')],

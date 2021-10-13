@@ -43,7 +43,7 @@ class Rule extends Container
      * @param RuleType $autoRealatedType
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         RuleType $autoRealatedType,
         array $data = []

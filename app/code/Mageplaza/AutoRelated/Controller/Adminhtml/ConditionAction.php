@@ -68,7 +68,7 @@ abstract class ConditionAction extends Action
      * @param Registry $coreRegistry
      * @param Date $dateFilter
      */
-    public function __construct(Context $context, Registry $coreRegistry, Date $dateFilter)
+    function __construct(Context $context, Registry $coreRegistry, Date $dateFilter)
     {
         parent::__construct($context);
         $this->_coreRegistry = $coreRegistry;
@@ -100,7 +100,7 @@ abstract class ConditionAction extends Action
      * @return void
      * @codeCoverageIgnore
      */
-    public function setDirtyRulesNoticeMessage($dirtyRulesNoticeMessage)
+    function setDirtyRulesNoticeMessage($dirtyRulesNoticeMessage)
     {
         $this->_dirtyRulesNoticeMessage = $dirtyRulesNoticeMessage;
     }
@@ -110,7 +110,7 @@ abstract class ConditionAction extends Action
      *
      * @return string
      */
-    public function getDirtyRulesNoticeMessage()
+    function getDirtyRulesNoticeMessage()
     {
         $type = $this->_coreRegistry->registry('autorelated_type');
         if ($type == 'cart') {

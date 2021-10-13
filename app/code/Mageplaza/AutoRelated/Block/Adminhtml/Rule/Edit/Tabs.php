@@ -45,7 +45,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
      * @param Registry $registry
      * @param array $data
      */
-    public function __construct(
+    function __construct(
         Context $context,
         EncoderInterface $jsonEncoder,
         Session $authSession,
