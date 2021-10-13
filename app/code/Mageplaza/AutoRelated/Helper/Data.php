@@ -122,7 +122,7 @@ class Data extends AbstractData
         if (!$this->isEnabled()) {
             return false;
         }
-        $result = [];
+        $r = [];
         $autoRelatedModelRule = $this->objectManager->create('Mageplaza\AutoRelated\Model\RuleFactory');
         $ruleIds = [];
         $id = '';
@@ -171,7 +171,7 @@ class Data extends AbstractData
                 $i = 0;
                 foreach ($data as $location => $infos) {
                     $html = '';
-                    $result['data'][$i]['id'] = $location;
+                    $r['data'][$i]['id'] = $location;
                     foreach ($infos as $info) {
                         $productIds = $info['product_ids'];
                         $rule = $info['rule'];
@@ -190,20 +190,20 @@ class Data extends AbstractData
                             }
                         }
                     }
-                    $result['data'][$i]['content'] = $html;
+                    $r['data'][$i]['content'] = $html;
                     $i++;
                 }
             }
-            if (!empty($result)) {
-                $result['status'] = true;
+            if (!empty($r)) {
+                $r['status'] = true;
                 $this->catalogSession->create()->unsAutoRelated();
             }
         }
 		catch (\Exception $e) {
-            $result['status'] = false;
+            $r['status'] = false;
             $this->_logger->critical($e);
         }
-        return self::jsonEncode($result);
+        return self::jsonEncode($r);
     }
 
     function versionCompare($version, $operator = '>='){
