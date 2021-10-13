@@ -119,7 +119,10 @@ class Data extends AbstractData
      * @return bool|string
      */
     function getRelatedProduct($layout, $params, $isAjax = true) {
-        if (!$this->isEnabled()) {
+		# 2021-10-13 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «Undefined index: module in app/code/Mageplaza/AutoRelated/Helper/Data.php on line 132»:
+		# https://github.com/canadasatellite-ca/site/issues/251
+        if (!$this->isEnabled() || !($module = dfa($params, 'module'))) { /** @var string|null $module */
             $r = false;
         }
 		else {
@@ -128,7 +131,7 @@ class Data extends AbstractData
 			$ruleIds = [];
 			$id = '';
 			if (
-				$params['module'] == 'catalog'
+				'catalog' === $module
 				&& $params['controller'] == 'product'
 				&& $params['action'] == 'view'
 				&& $params['product_id']
@@ -137,7 +140,7 @@ class Data extends AbstractData
 				$id = $params['product_id'];
 			}
 			elseif (
-				$params['module'] == 'catalog'
+				'catalog' === $module
 				&& $params['controller'] == 'category'
 				&& $params['action'] == 'view'
 				&& $params['category_id']
@@ -145,7 +148,7 @@ class Data extends AbstractData
 				$pageType = 'category';
 				$id = $params['category_id'];
 			}
-			elseif ($params['module'] == 'checkout' && $params['controller'] == 'cart' && $params['action'] == 'index') {
+			elseif ('checkout' === $module && $params['controller'] == 'cart' && $params['action'] == 'index') {
 				$pageType = 'cart';
 			}
 			else {
@@ -186,7 +189,7 @@ class Data extends AbstractData
 										->setRule($rule)
 										->toHtml();
 								}
-								if($isAjax) {
+								if ($isAjax) {
 									$autoRelatedRule->updateImpression($pageType, $id, $ruleId);
 								}
 							}
