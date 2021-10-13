@@ -73,28 +73,25 @@ class AutoRelated extends Template
 	 *
 	 * @return mixed
 	 */
-	function getAjaxData()
-	{
+	function getAjaxData() {
 		if (!$this->helperData->isEnabled()) {
 			return false;
 		}
-
 		$product    = $this->registry->registry('current_product');
 		$productId  = $product ? $product->getId() : '';
 		$category   = $this->registry->registry('current_category');
 		$categoryId = $category ? $category->getId() : '';
-		$request    = $this->getRequest();
-
+		$req = $this->getRequest();
 		$params = [
 			'url'             => $this->getUrl('autorelated/ajax/load'),
 			'urlClick'        => $this->getUrl('autorelated/ajax/click'),
 			'isAjax'          => $this->isAjaxLoad(),
 			'originalRequest' => [
-				'route'       => $request->getRouteName(),
-				'module'      => $request->getModuleName(),
-				'controller'  => $request->getControllerName(),
-				'action'      => $request->getActionName(),
-				'uri'         => $request->getRequestUri(),
+				'route'       => $req->getRouteName(),
+				'module'      => $req->getModuleName(),
+				'controller'  => $req->getControllerName(),
+				'action'      => $req->getActionName(),
+				'uri'         => $req->getRequestUri(),
 				'product_id'  => $productId,
 				'category_id' => $categoryId
 			]
@@ -102,7 +99,6 @@ class AutoRelated extends Template
 		if ($this->getIsCms()) {
 			$params['originalRequest']['cms'] = true;
 		}
-
 		return $this->helperData->jsonEncode($params);
 	}
 
