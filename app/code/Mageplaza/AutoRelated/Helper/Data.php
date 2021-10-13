@@ -118,26 +118,36 @@ class Data extends AbstractData
      * @param bool $isAjax
      * @return bool|string
      */
-    function getRelatedProduct($layout, $params, $isAjax = true)
-    {
+    function getRelatedProduct($layout, $params, $isAjax = true) {
         if (!$this->isEnabled()) {
             return false;
         }
-        //Get $pageType, $id, $ruleIds
-        $result               = [];
+        $result = [];
         $autoRelatedModelRule = $this->objectManager->create('Mageplaza\AutoRelated\Model\RuleFactory');
-        $ruleIds              = [];
-        $id                   = '';
-
-        if ($params['module'] == 'catalog' && $params['controller'] == 'product' && $params['action'] == 'view' && $params['product_id']) {
+        $ruleIds = [];
+        $id = '';
+        if (
+			$params['module'] == 'catalog'
+			&& $params['controller'] == 'product'
+			&& $params['action'] == 'view'
+			&& $params['product_id']
+		) {
             $pageType = 'product';
-            $id       = $params['product_id'];
-        } else if ($params['module'] == 'catalog' && $params['controller'] == 'category' && $params['action'] == 'view' && $params['category_id']) {
+            $id = $params['product_id'];
+        }
+		elseif (
+			$params['module'] == 'catalog'
+			&& $params['controller'] == 'category'
+			&& $params['action'] == 'view'
+			&& $params['category_id']
+		) {
             $pageType = 'category';
-            $id       = $params['category_id'];
-        } else if ($params['module'] == 'checkout' && $params['controller'] == 'cart' && $params['action'] == 'index') {
+            $id = $params['category_id'];
+        }
+		elseif ($params['module'] == 'checkout' && $params['controller'] == 'cart' && $params['action'] == 'index') {
             $pageType = 'cart';
-        } else {
+        }
+		else {
             $pageType = 'cms';
             if (isset($params['ruleIds'])) {
                 $ruleIds = array_filter(explode(',', $params['ruleIds']));
@@ -156,18 +166,16 @@ class Data extends AbstractData
         try {
             /** @var \Mageplaza\AutoRelated\Model\ResourceModel\Rule $autoRelatedRule */
             $autoRelatedRule = $autoRelatedModelRule->create()->getResource();
-            $data            = $autoRelatedRule->getProductList($pageType, $id, $ruleIds);
-
+            $data = $autoRelatedRule->getProductList($pageType, $id, $ruleIds);
             if (!empty($data)) {
                 $i = 0;
                 foreach ($data as $location => $infos) {
-                    $html                     = '';
+                    $html = '';
                     $result['data'][$i]['id'] = $location;
-
                     foreach ($infos as $info) {
                         $productIds = $info['product_ids'];
-                        $rule       = $info['rule'];
-                        $ruleId     = $rule['rule_id'];
+                        $rule = $info['rule'];
+                        $ruleId = $rule['rule_id'];
                         if (!empty($productIds)) {
                             if(!$isAjax || ($isAjax && isset($params['isAjax']))) {
                                 $html .= $layout->createBlock('Mageplaza\AutoRelated\Block\Product\ProductList\ProductList')
@@ -177,7 +185,6 @@ class Data extends AbstractData
                                     ->setRule($rule)
                                     ->toHtml();
                             }
-
                             if($isAjax) {
                                 $autoRelatedRule->updateImpression($pageType, $id, $ruleId);
                             }
@@ -191,13 +198,14 @@ class Data extends AbstractData
                 $result['status'] = true;
                 $this->catalogSession->create()->unsAutoRelated();
             }
-        } catch (\Exception $e) {
+        }
+		catch (\Exception $e) {
             $result['status'] = false;
             $this->_logger->critical($e);
         }
-
         return self::jsonEncode($result);
     }
+
     function versionCompare($version, $operator = '>='){
         return false;
     }
