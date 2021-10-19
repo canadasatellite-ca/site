@@ -8,9 +8,9 @@ composer remove canadasatellite/amelia
 composer remove canadasatellite/bambora
 composer remove canadasatellite/core
 composer clear-cache
-composer require canadasatellite/amelia
-composer require canadasatellite/bambora
-composer require canadasatellite/core 
+composer require canadasatellite/amelia:*
+composer require canadasatellite/bambora:*
+composer require canadasatellite/core:* 
 rm -rf var/di var/generation generated/*
 bin/magento setup:upgrade
 bin/magento cache:enable
