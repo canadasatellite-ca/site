@@ -28,7 +28,6 @@ bin/magento setup:static-content:deploy \
 bin/magento cache:clean
 bin/magento maintenance:disable
 sudo service cron start
-rm -rf var/log/*
 ```
 
 ## How to deploy the static content
