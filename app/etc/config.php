@@ -305,6 +305,7 @@ return [
         'Df_Payment' => 1,
         'Df_Paypal' => 1,
         'Df_PaypalClone' => 1,
+        'Df_Phone' => 1,
         'Df_Qa' => 1,
         'Df_Sales' => 1,
         'Df_Review' => 1,

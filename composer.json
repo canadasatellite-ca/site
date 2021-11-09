@@ -25,9 +25,9 @@
         "m2e/ebay-amazon-magento2": "^1.4",
         "mageplaza/magento-2-chinese-language-pack": "dev-master",
         "magepal/magento2-gmailsmtpapp": "*",
+        "canadasatellite/amelia": "*",
         "canadasatellite/bambora": "*",
-        "canadasatellite/core": "*",
-        "canadasatellite/amelia": "*"
+        "canadasatellite/core": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "~6.2.0",
