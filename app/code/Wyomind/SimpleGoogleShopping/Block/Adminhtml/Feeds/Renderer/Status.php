@@ -41,7 +41,7 @@ class Status extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Abstract
         $this->_ioRead = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::ROOT);
         $this->_coreDate = $coreDate;
 		# 2021-11-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
-		# «Argument 1 passed to Magento\Framework\Filesystem\Directory\PathValidator::validate()
+		# `Wyomind_SimpleGoogleShopping`: «Argument 1 passed to Magento\Framework\Filesystem\Directory\PathValidator::validate()
 		# must be of the type string, null given»: https://github.com/canadasatellite-ca/site/issues/262
         $this->_directoryRead = $directoryRead->create(BP);
     }
