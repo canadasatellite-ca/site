@@ -40,7 +40,10 @@ class Status extends \Magento\Backend\Block\Widget\Grid\Column\Renderer\Abstract
         parent::__construct($context, $data);
         $this->_ioRead = $filesystem->getDirectoryWrite(\Magento\Framework\App\Filesystem\DirectoryList::ROOT);
         $this->_coreDate = $coreDate;
-        $this->_directoryRead = $directoryRead->create("");
+		# 2021-11-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# «Argument 1 passed to Magento\Framework\Filesystem\Directory\PathValidator::validate()
+		# must be of the type string, null given»: https://github.com/canadasatellite-ca/site/issues/262
+        $this->_directoryRead = $directoryRead->create(BP);
     }
 
     /**
