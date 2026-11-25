@@ -135,7 +135,7 @@ class LastOrderedItems implements SectionSourceInterface
                         $this->_storeManager->getStore()->getId()
                     );
                 } catch (NoSuchEntityException $noEntityException) {
-					# 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+					# 2021-06-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 					# «The product that was requested doesn't exist. Verify the product and try again.»:
 					# https://github.com/canadasatellite-ca/site/issues/192
                     # $this->logger->critical($noEntityException);

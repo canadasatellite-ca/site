@@ -11,7 +11,7 @@ class Search extends Frontend
 	function getSearchBlogData()
 	{
 		$result = [];
-		# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-03-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «Invalid argument supplied for foreach() in app/code/Mageplaza/Blog/Block/Sidebar/Search.php on line 17»:
 		# https://github.com/canadasatellite-ca/site/issues/53
 		if ($posts = $this->helperData->getPostList()) {

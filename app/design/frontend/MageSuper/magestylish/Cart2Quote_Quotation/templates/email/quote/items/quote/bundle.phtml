@@ -20,7 +20,7 @@ foreach ($items as $_item):
     <?php if ($_item->getParentItem()): ?>
         <tr class="options-label">
             <?php
-				// 2021-04-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				// 2021-04-02 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 				// 1) "`Cart2Quote_Quotation`: «unserialize(): Error at offset 0 of 61 bytes» in
 				// `app/design/frontend/MageSuper/magestylish/Cart2Quote_Quotation/templates/email/quote/items/quote/bundle.phtml:22`":
 				// https://github.com/canadasatellite-ca/site/issues/67
@@ -44,7 +44,7 @@ foreach ($items as $_item):
             <td class="col name" data-th="<?php echo $b->escapeHtml(__('Product Name')); ?>">
                 <strong class="product name product-item-name"><?php echo $_item->getName() ?></strong>
 <?php
-	# 2021-03-31 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	# 2021-03-31 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	# "`Cart2Quote_Quotation`: «Array to string conversion»
 	# in `app/design/frontend/MageSuper/magestylish/Cart2Quote_Quotation/templates/email/quote/items/quote/bundle.phtml:35`":
 	# https://github.com/canadasatellite-ca/site/issues/63

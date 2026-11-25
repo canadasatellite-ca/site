@@ -123,7 +123,7 @@ class Data extends CoreHelper {
 		$categoryModel = $this->categoryfactory->create();
 		$tagModel      = $this->tagfactory->create();
 		$topicModel    = $this->topicfactory->create();
-		# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-06-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# "`Mageplaza_Blog`: «SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax;
 		# check the manual that corresponds to your MariaDB server version for the right syntax to use near '' at line 2,
 		# query was:

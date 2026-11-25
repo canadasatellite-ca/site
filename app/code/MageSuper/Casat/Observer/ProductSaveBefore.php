@@ -3,7 +3,7 @@ namespace MageSuper\Casat\Observer;
 use Magento\Catalog\Model\Product as P;
 use Magento\Framework\Event\Observer as Ob;
 use Magento\Framework\Model\AbstractModel as M;
-# 2021-04-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-04-24 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "Refactor the `MageSuper_Casat` module": https://github.com/canadasatellite-ca/site/issues/73
 class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
     /**
@@ -21,7 +21,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
 				df_message_notice(
 					$m = "The product's $fields $is changed in a non-default scope! (Product ID: {$p->getEntityId()})"
 				);
-				# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# 2021-03-21 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 				# "MageSuper_Casat:
 				# «You just catched on trying to change product name and(or) description for not default store»":
 				# https://github.com/canadasatellite-ca/site/issues/27
@@ -44,7 +44,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
 					$optionText = $attr->getSource()->getOptionText($vendor_currency);
 				}
 				if ($vendor_currency && $optionText !== 'CAD') {
-					# 2021-06-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+					# 2021-06-20 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 					# 1) «A non-numeric value encountered in vendor/mage2pro/core/Directory/lib/currency/convert.php on line 73»:
 					# https://github.com/canadasatellite-ca/site/issues/174
 					# 2) $cost could be an empty string here. It causes the error mentioned above.
@@ -66,7 +66,7 @@ class ProductSaveBefore implements \Magento\Framework\Event\ObserverInterface {
                 $optionText = $attr->getSource()->getOptionText($vendor_currency);
             }
             if ($vendor_currency && $optionText !== 'CAD') {
-				# 2021-06-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+				# 2021-06-20 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 				# 1) «A non-numeric value encountered in vendor/mage2pro/core/Directory/lib/currency/convert.php on line 73»:
 				# https://github.com/canadasatellite-ca/site/issues/174
 				# 2) $cost could be an empty string here. It causes the error mentioned above.

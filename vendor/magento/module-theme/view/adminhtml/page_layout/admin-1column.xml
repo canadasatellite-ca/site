@@ -18,7 +18,7 @@
                 </container>
 
                 <container name="header" htmlTag="header" htmlClass="page-header"/>
-<!-- 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+<!-- 2021-10-06 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 «Broken reference: the 'page.menu' tries to reorder itself towards 'header',
 but their parents are different: 'page.wrapper' and 'content' respectively»:
 https://github.com/canadasatellite-ca/site/issues/244 -->

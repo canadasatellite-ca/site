@@ -205,7 +205,7 @@ class Grid extends \Magento\Sales\Block\Adminhtml\Order\Create\Items\Grid
     {
         $options = $item->getProductOptions();
         if (isset($options['bundle_selection_attributes'])) {
-			# 2021-04-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 2021-04-02 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 			# "`bundle_selection_attributes` should be decoded using `json_decode` instead of `unserialize`":
 			# https://github.com/canadasatellite-ca/site/issues/68
             return df_json_decode($options['bundle_selection_attributes']);

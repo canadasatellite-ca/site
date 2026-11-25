@@ -242,7 +242,7 @@ class Output extends AbstractHelper
     {
         $matches = false;
         foreach ($this->directivePatterns as $pattern) {
-        	# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+        	# 2021-03-21 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 			# «preg_match() expects parameter 2 to be string, object given
 			# in vendor/magento/module-catalog/Helper/Output.php:245»: https://github.com/canadasatellite-ca/site/issues/28
             if (preg_match($pattern, (string)$attributeHtml)) {

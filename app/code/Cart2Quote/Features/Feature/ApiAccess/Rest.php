@@ -4,7 +4,7 @@ use Magento\Framework\App\RequestInterface as IRest;
 use Magento\Framework\Exception\LocalizedException as LE;
 use Magento\Framework\Webapi\Exception as WebapiE;
 use Magento\Webapi\Controller\Rest as RestC;
-# 2021-10-12 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-10-12 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "Refactor the `Cart2Quote_Features` module": https://github.com/canadasatellite-ca/site/issues/250
 /** @used-by \Cart2Quote\Features\Feature\ApiAccess::$plugins */
 final class Rest extends \Cart2Quote\License\Plugin\AbstractPlugin {

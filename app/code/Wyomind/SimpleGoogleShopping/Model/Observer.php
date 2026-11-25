@@ -43,7 +43,7 @@ class Observer
 
     /**
      * Check if google shopping data feeds need to be generated
-	 * 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-03-21 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * "Prevent the Wyomind_SimpleGoogleShopping module from logging successful events to SimpleGoogleShopping-cron.log":
 	 * https://github.com/canadasatellite-ca/site/issues/26
      * @param \Magento\Cron\Model\Schedule $schedule

@@ -163,7 +163,7 @@ class Statistics extends AbstractResource
      */
     private function getSelectForStatisticsData() {
         $conn = $this->getConnection();
-        # 2021-04-30 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+        # 2021-04-30 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# "Aheadworks_AdvancedReviews: reviews should be shown on the frontend regardless the store":
 		# https://github.com/canadasatellite-ca/site/issues/81
         $tmp = df_db_from(

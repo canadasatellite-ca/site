@@ -103,7 +103,7 @@ class CustomerVisibility extends AbstractHelper
      */
     public function isVisibilityFilterRequired()
     {
-    	# 2021-03-23 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+    	# 2021-03-23 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «Unknown column 'visibility_by_customer_group_id' in 'having clause'»:
 		# https://github.com/canadasatellite-ca/site/issues/35
         return $this->isAreaFrontend() || $this->isOrderCreate() || df_is_cron();

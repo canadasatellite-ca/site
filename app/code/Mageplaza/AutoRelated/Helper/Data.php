@@ -119,7 +119,7 @@ class Data extends AbstractData
      * @return bool|string
      */
     function getRelatedProduct($layout, $params, $isAjax = true) {
-		# 2021-10-13 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-10-13 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «Undefined index: module in app/code/Mageplaza/AutoRelated/Helper/Data.php on line 132»:
 		# https://github.com/canadasatellite-ca/site/issues/251
         if (!$this->isEnabled() || !($module = dfa($params, 'module'))) { /** @var string|null $module */

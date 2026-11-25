@@ -7,7 +7,7 @@ use Magento\Framework\App\RouterInterface as IRouter;
 use Magento\Framework\Url;
 use Mageplaza\Blog\Helper\Data as H;
 use Mageplaza\Blog\Model\Tag;
-# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-06-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
 /** @final Unable to use the PHP «final» keyword here because of the M2 code generation. */
 class Router implements IRouter {
@@ -34,7 +34,7 @@ class Router implements IRouter {
 		$h = df_o(H::class); /** @var H $h */
 		# 2021-06-26 E.g.: «blog».
 		$prefix = $h->getBlogConfig('general/url_prefix') ?: H::DEFAULT_URL_PREFIX; /** @var string $prefix */
-		# 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-06-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# "`Mageplaza_Blog`: redirect `/blog/` to `/blog`": https://github.com/canadasatellite-ca/site/issues/191
 		if ("/$prefix/" === $req->getPathInfo()) {
 			$r = df_router_redirect($req, $prefix);
@@ -52,7 +52,7 @@ class Router implements IRouter {
 				}
 				else {
 					/**
-					 * 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+					 * 2021-06-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 					 * "`Mageplaza_Blog` does not properly handle `/blog/tag/<tag>/` requests for an existing `<tag>`
 					 * if it contains a space (e.g.: `/blog/tag/satellite%20tv/`)":
 					 * https://github.com/canadasatellite-ca/site/issues/189
@@ -63,7 +63,7 @@ class Router implements IRouter {
 						$tag = $h->getTagByParam('url_key', $pathF()); /** @var Tag $tag */
 						$r = ($id = $tag->getId())
 							? $this->forward($req, $controller, 'view', ['id' => $id])
-							# 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+							# 2021-06-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 							# "`Mageplaza_Blog`: `/blog/tag/<tag>/` should be redirected to `/blog` for unexisting tags":
 							# https://github.com/canadasatellite-ca/site/issues/188
 							: df_router_redirect($req, $prefix)

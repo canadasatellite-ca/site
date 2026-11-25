@@ -291,7 +291,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
     protected function _getQuotes()
     {
         $this->_result = $this->_rateFactory->create();
-		# 2021-06-03 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-06-03 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# `Mageside_CanadaPostShipping` / ` Interactivated_Quotecheckout`:
 		# «element weight value '0' is not a valid instance of the element type»:
 		# https://github.com/canadasatellite-ca/site/issues/137
@@ -458,7 +458,7 @@ class Carrier extends AbstractCarrierOnline implements \Magento\Shipping\Model\C
             $debugData['result'] = $response;
         }
 		/**
-		 * 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		 * 2021-03-21 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		 * "Prevent the Mageside_CanadaPostShipping module from logging successful rate requests to shipping.log":
 		 * https://github.com/canadasatellite-ca/site/issues/25
 		 * @see \Mageside\CanadaPostShipping\Model\Service\Rating::getRates()

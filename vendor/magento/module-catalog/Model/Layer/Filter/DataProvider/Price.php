@@ -310,7 +310,7 @@ class Price
             return false;
         }
         foreach ($filter as $v) {
-			# 2021-05-14 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 2021-05-14 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 			# 1) «A non well formed numeric value encountered
 			# in vendor/magento/module-catalog-search/Model/Layer/Filter/Price.php on line 145»:
 			# https://github.com/canadasatellite-ca/site/issues/28

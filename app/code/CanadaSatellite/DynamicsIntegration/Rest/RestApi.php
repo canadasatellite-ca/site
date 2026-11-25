@@ -988,7 +988,7 @@ class RestApi {
 
         $response = $this->sendGetRequest($this->getCrmUrl() . '/api/data/v8.1/new_sundrieses', $headers, $query);
         $json = $this->getResponseJsonIfSuccess($response);
-        # 2021-06-01 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+        # 2021-06-01 Dmitry Fedyuk https://github.com/dmitrii-fediuk
         # «count(): Parameter must be an array or an object that implements Countable
         # in app/code/CanadaSatellite/Theme/Model/ResourceModel/Card/Collection.php on line 77»:
         # https://github.com/canadasatellite-ca/site/issues/131

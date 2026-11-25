@@ -228,7 +228,7 @@ class StockProvider
 	}
 
 	/**
-	 * 2021-05-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-05-24 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * 1) "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
 	 * 2) "«array_keys() expects parameter 1 to be array, null given
 	 * in app/code/MageWorx/OptionInventory/Model/StockProvider.php on line 253»":

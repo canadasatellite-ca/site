@@ -25,7 +25,7 @@ class CheckRecaptcha3 implements ObserverInterface
     public function execute(Observer $observer)
     {
         $result = $this->_checkRecaptchaCurl();
-        # 2021-03-18 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+        # 2021-03-18 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «Undefined property: stdClass::$score in app/code/MageSuper/Faq/Observer/CheckRecaptcha3.php on line 28»:
 		# https://github.com/canadasatellite-ca/site/issues/1
         if ($result && 0.49 < dfo($result, 'score')) {

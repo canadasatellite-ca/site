@@ -2,7 +2,7 @@
 namespace Cart2Quote\Features\Feature;
 use Cart2Quote\Features\Feature\ApiAccess\Rest;
 use Cart2Quote\Features\Feature\ApiAccess\Soap;
-# 2021-10-12 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-10-12 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "Refactor the `Cart2Quote_Features` module": https://github.com/canadasatellite-ca/site/issues/250
 final class ApiAccess extends \Cart2Quote\License\Feature\AbstractFeature {
 	protected $plugins = [

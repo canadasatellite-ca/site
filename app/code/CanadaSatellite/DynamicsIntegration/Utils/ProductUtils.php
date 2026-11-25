@@ -29,7 +29,7 @@ class ProductUtils {
 	}
 
 	/**
-	 * 2021-06-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-06-24 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * «Call to a member function getCustomAttribute() on null
 	 * in app/code/CanadaSatellite/DynamicsIntegration/Utils/EavUtils.php:24»:
 	 * https://github.com/canadasatellite-ca/site/issues/184

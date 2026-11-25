@@ -5,7 +5,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 		return $this->_objectManager->get('Interactivated\Quotecheckout\Model\Checkout\Type\Onepage');
 	}
 	/**
-	 * 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-05-16 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
 	 */
 	function execute() {
@@ -151,7 +151,7 @@ class Save extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	}
 
 	/**
-	 * 2021-06-05 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-06-05 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * "Refactor the `Interactivated_Quotecheckout` module": https://github.com/canadasatellite-ca/site/issues/116
 	 * @used-by execute()
 	 * @return array(string => int|string)

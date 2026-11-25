@@ -76,7 +76,7 @@ class QuoteAddressValidator
         if ($address->getCustomerAddressId()) {
             //Existing address cannot belong to a guest
             if (!$customerId) {
-            	# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+            	# 2021-03-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 				# «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
             	df_log_l($this, [
             		'address ID' => $address->getCustomerAddressId()
@@ -91,7 +91,7 @@ class QuoteAddressValidator
             try {
                 $this->addressRepository->getById($address->getCustomerAddressId());
             } catch (NoSuchEntityException $e) {
-            	# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+            	# 2021-03-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 				# «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
             	df_log_l($this, [
             		'address ID' => $address->getCustomerAddressId()

@@ -34,7 +34,7 @@ class SalesOrderStatusHistorySaveAfterObserver implements \Magento\Framework\Eve
 		{
 			$statusHistory = $observer->getEvent()->getStatusHistory();
 			$comment = $statusHistory->getComment();
-			# 2021-08-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 2021-08-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 			# «Call to a member function getRealOrderId() on null
 			# in app/code/CanadaSatellite/DynamicsIntegration/Observer/SalesOrderStatusHistorySaveAfterObserver.php:37»:
 			# https://github.com/canadasatellite-ca/site/issues/203

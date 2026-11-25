@@ -49,7 +49,7 @@ class AbstractInterface extends \Magento\Framework\DataObject
         $this->regionFactory = $regionFactory;
         $this->countryFactory = $countryFactory;
         $this->_httpRequest = $httpRequest;
-		# 2021-03-20 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-03-20 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «var/log/Magedelight_Firstdata_SOAPError.log" cannot be opened with mode "a"»:
 		# https://github.com/canadasatellite-ca/site/issues/22
         df_mkdir_log();

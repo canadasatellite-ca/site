@@ -210,7 +210,7 @@ class Stock extends \Magento\Framework\App\Helper\AbstractHelper
 	}
 
 	/**
-	 * 2021-05-24 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-05-24 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * 1) "Refactor the `MageWorx_OptionInventory` module": https://github.com/canadasatellite-ca/site/issues/126
 	 * 2) «Invalid argument supplied for foreach() in app/code/MageWorx/OptionInventory/Helper/Stock.php on line 222»:
 	 * https://github.com/canadasatellite-ca/site/issues/4

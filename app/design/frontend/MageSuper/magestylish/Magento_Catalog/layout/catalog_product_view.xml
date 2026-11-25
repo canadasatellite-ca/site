@@ -30,7 +30,7 @@
 		<move element="product.info.custom.attribute" destination="product.info.container" after="product.extra.information"/>
 		<referenceBlock name="product.info.sku" remove="true" />
         <move element="product.info.stock.sku" destination="product.extra.custom.attribure" after="product.info.warranty"/>
-<!-- 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+<!-- 2021-05-16 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 «Broken reference: the 'product.info.review' tries to reorder itself towards 'product.info.stock.sku',
 but their parents are different: 'page.main.title' and 'product.extra.custom.attribure' respectively»:
 https://github.com/canadasatellite-ca/site/issues/113 -->

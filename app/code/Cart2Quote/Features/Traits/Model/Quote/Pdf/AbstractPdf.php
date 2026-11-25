@@ -407,7 +407,7 @@ trait AbstractPdf
                         $maxHeight = 0;
                         foreach ($line as $column) {
                             $lineSpacing = !empty($column['height']) ? $column['height'] : $height;
-							# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+							# 2021-05-02 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 							# «Notice: Undefined index: text
 							# in app/code/Cart2Quote/Features/Traits/Model/Quote/Pdf/AbstractPdf.php on line 410»:
 							# https://github.com/canadasatellite-ca/site/issues/94
@@ -752,7 +752,7 @@ trait AbstractPdf
             }
             $fontSize = empty($column['font_size']) ? 10 : $column['font_size'];
             $font = $this->setFont($page, $column);
-			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 2021-05-02 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 			# «Notice: Undefined index: text
 			# in app/code/Cart2Quote/Features/Traits/Model/Quote/Pdf/AbstractPdf.php on line 754»:
 			# https://github.com/canadasatellite-ca/site/issues/98

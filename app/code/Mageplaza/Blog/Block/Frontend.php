@@ -409,7 +409,7 @@ class Frontend extends Template
 	{
 		$page     = $this->getRequest()->getParam('p');
 		$postList = '';
-		# 2021-06-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-06-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# "Refactor the `Mageplaza_Blog` module": https://github.com/canadasatellite-ca/site/issues/190
 		if (!$type || !$id) {
 			$postList = $this->helperData->getPostList();
@@ -456,7 +456,7 @@ class Frontend extends Template
 		$results    = array();
 		$firstIndex = 0;
 		$lastIndex  = $limit - 1;
-		# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-03-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «A non well formed numeric value encountered in app/code/Mageplaza/Blog/Block/Frontend.php on line 462»:
 		# https://github.com/canadasatellite-ca/site/issues/52
 		if ($page && is_numeric($page)) {

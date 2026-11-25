@@ -154,7 +154,7 @@ class ListingDataProvider extends UiAbstractDataProvider
      * @return $this
      */
     protected function applyDefaultFilters() {
-		# 2021-04-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-04-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# "`Aheadworks_AdvancedReviews`: reviews should be shown on the frontend regardless the store":
 		# https://github.com/canadasatellite-ca/site/issues/81
         #$this->getCollection()->addStoreFilter($this->getCurrentStoreId());

@@ -70,7 +70,7 @@ class ProductSaveAfter implements \Magento\Framework\Event\ObserverInterface
     public function updatePosition($product){
         /** @var \Magento\Catalog\Model\Product $product */
         $productId = $product->getEntityId();
-        # 2021-03-22 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+        # 2021-03-22 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# "«A non-numeric value encountered
 		# in app/code/MageSuper/CustomProductCategoryUrl/Observer/Catalog/ProductSaveAfter.php on line 73»
 		# on saving a new product in the Magento backend": https://github.com/canadasatellite-ca/site/issues/31

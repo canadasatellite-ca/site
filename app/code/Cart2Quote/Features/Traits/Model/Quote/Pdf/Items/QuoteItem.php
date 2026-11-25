@@ -72,7 +72,7 @@ trait QuoteItem
 		$line[] = ['text' => '', 'feed' => 65, 'isProductLine' => false, 'width' => 340, 'align' => 'left', 'addToTop' => $skuPosition + 10];
         $line = $this->drawProductPrices($item, $quote, $line);
         $options = $this->getQuoteItemOptions();
-		# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+		# 2021-05-02 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 		# «Undefined variable: optionsLines in app/code/Cart2Quote/Features/Traits/Model/Quote/Pdf/Items/QuoteItem.php
 		# on line 241»: https://github.com/canadasatellite-ca/site/issues/99
         $optionsLines = [];

@@ -6,11 +6,11 @@ use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteProposalSender;
 use Cart2Quote\Quotation\Model\Quote\Email\Sender\QuoteRequestSender;
 use Cart2Quote\Quotation\Model\Session as CSession;
 use Magento\Newsletter\Model\Subscriber;
-# 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-05-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "Refactor the Interactivated_Quotecheckout module": https://github.com/canadasatellite-ca/site/issues/116
 class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkout\Onepage {
 	/**
-	 * 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-05-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * "Refactor the Interactivated_Quotecheckout module": https://github.com/canadasatellite-ca/site/issues/116
 	 * @return \Magento\Framework\App\ResponseInterface|\Magento\Framework\Controller\ResultInterface|void
 	 */
@@ -109,7 +109,7 @@ class Updateordermethod extends \Interactivated\Quotecheckout\Controller\Checkou
 							->setDob(isset($_POST['dob']) ? $_POST['dob'] : '')
 							->setTaxvat(isset($_POST['billing']['taxvat']) ? $_POST['billing']['taxvat'] : '')
 							->setGender(isset($_POST['billing']['gender']) ? $_POST['billing']['gender'] : '')
-# 2021-05-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-05-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # @todo "«empty password in vendor/magento/framework/Encryption/Encryptor.php on line 591»
 # on a quotecheckout/index/updateordermethod request": https://github.com/canadasatellite-ca/site/issues/127
 							->setPassword(isset($_POST['billing']['customer_password']) ? $_POST['billing']['customer_password'] : '');

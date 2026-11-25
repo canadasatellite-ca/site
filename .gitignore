@@ -1,4 +1,4 @@
-# 2021-03-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-17 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 *
 !*/
 !/.editorconfig
@@ -9,32 +9,32 @@
 !/app/design/frontend/MageSuper/**/*
 !/app/etc/config.php
 !/lib/internal/ArimoFont/**/*
-# 2021-03-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-17 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "How to fix product images in Magento ≥ 2.3.5 in Windows?": https://mage2.pro/t/6210
 !/vendor/magento/framework/Image/Adapter/Gd2.php
-# 2021-03-17 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-17 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "How to fix the «Invalid template file» / «require_js.phtml» failure of Magento ≥ 2.3 in Windows?":
 # https://mage2.pro/t/5774
 !/vendor/magento/framework/View/Element/Template/File/Validator.php
-# 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-10-06 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «Broken reference: the 'authorizenet_acceptjs_payment_script' tries to reorder itself towards 'billing_method',
 # but their parents are different: 'content' and 'data' respectively»:https://github.com/canadasatellite-ca/site/issues/243
 !/vendor/magento/module-authorizenet-acceptjs/view/adminhtml/layout/sales_order_create_index.xml
-# 2021-03-21 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-21 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «preg_match() expects parameter 2 to be string, object given
 # in vendor/magento/module-catalog/Helper/Output.php:245»: https://github.com/canadasatellite-ca/site/issues/28
 !/vendor/magento/module-catalog/Helper/Output.php
-# 2021-05-14 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-05-14 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «A non well formed numeric value encountered
 # in vendor/magento/module-catalog-search/Model/Layer/Filter/Price.php on line 145»:
 # https://github.com/canadasatellite-ca/site/issues/28
 !/vendor/magento/module-catalog/Model/Layer/Filter/DataProvider/Price.php
-# 2021-10-12 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-10-12 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "`Cart2Quote_Features`: «DateTime::createFromFormat() expects parameter 2 to be string, array given
 # in vendor/magento/module-catalog/Model/Webapi/Product/Option/Type/Date.php on line 34»":
 # https://github.com/canadasatellite-ca/site/issues/249
 !/vendor/magento/module-catalog/Model/Webapi/Product/Option/Type/Date.php
-# 2021-05-16 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-05-16 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # 1) «Broken reference: the 'skip_gallery_before' tries to reorder itself towards 'product.info.media.image',
 # but their parents are different: 'skip_gallery_before.wrapper' and 'product.info.media' respectively»:
 # https://github.com/canadasatellite-ca/site/issues/111
@@ -42,35 +42,35 @@
 # but their parents are different: 'skip_gallery_after.wrapper' and 'product.info.media' respectively»:
 # https://github.com/canadasatellite-ca/site/issues/112
 !/vendor/magento/module-catalog/view/frontend/layout/catalog_product_view.xml
-# 2021-08-23 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-08-23 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "Prevent Magento from logging the «Consumer "async.operations.all" skipped» message":
 # https://github.com/canadasatellite-ca/site/issues/202
 !/vendor/magento/module-message-queue/Model/Cron/ConsumersRunner.php
-# 2021-03-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «Invalid customer address id <…>»: https://github.com/canadasatellite-ca/site/issues/49
 !/vendor/magento/module-quote/Model/QuoteAddressValidator.php
-# 2021-06-27 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-06-27 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «The product that was requested doesn't exist. Verify the product and try again.»:
 # https://github.com/canadasatellite-ca/site/issues/192
 !/vendor/magento/module-sales/CustomerData/LastOrderedItems.php
-# 2021-08-22 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-08-22 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "«The following tag(s) are not allowed: img» on sales/order/creditmemo/order_id/<…>":
 # https://github.com/canadasatellite-ca/site/issues/198
 !/vendor/magento/module-sales/view/frontend/templates/order/creditmemo/items/renderer/default.phtml
-# 2021-03-30 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-30 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "«The following tag(s) are not allowed: img» on sales/order/invoice/order_id/<…>":
 # https://github.com/canadasatellite-ca/site/issues/57
 !/vendor/magento/module-sales/view/frontend/templates/order/invoice/items/renderer/default.phtml
-# 2021-08-22 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-08-22 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "«The following tag(s) are not allowed: img» on sales/order/shipment/order_id/<…>":
 # https://github.com/canadasatellite-ca/site/issues/197
 !/vendor/magento/module-sales/view/frontend/templates/order/shipment/items/renderer/default.phtml
-# 2021-03-26 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-03-26 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # "«DOMDocument::loadHTML(): Tag date invalid in Entity, line: 1» on /sales/order/view/order_id/<order_id>":
 # https://github.com/canadasatellite-ca/site/issues/45
 # https://github.com/magento/magento2/issues/25738#issuecomment-563473682
 !/vendor/magento/module-sales/view/frontend/templates/order/order_date.phtml
-# 2021-10-06 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-10-06 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «Broken reference: the 'page.menu' tries to reorder itself towards 'header',
 # but their parents are different: 'page.wrapper' and 'content' respectively»:
 # https://github.com/canadasatellite-ca/site/issues/244

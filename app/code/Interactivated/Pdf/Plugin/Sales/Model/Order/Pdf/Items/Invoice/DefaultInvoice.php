@@ -34,7 +34,7 @@ class DefaultInvoice extends \Magento\Sales\Model\Order\Pdf\Items\Invoice\Defaul
             'width' => 340
         ];
         $lines[1][] = [
-			# 2021-05-02 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+			# 2021-05-02 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 			# «Call to a member function getQuoteDescription() on null
 			# in app/code/Interactivated/Pdf/Plugin/Sales/Model/Order/Pdf/Items/Invoice/DefaultInvoice.php:45»:
 			# https://github.com/canadasatellite-ca/site/issues/100

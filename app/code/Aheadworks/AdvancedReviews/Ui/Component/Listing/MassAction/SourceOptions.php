@@ -8,7 +8,7 @@ namespace Aheadworks\AdvancedReviews\Ui\Component\Listing\MassAction;
 
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\Framework\UrlInterface;
-# 2021-04-25 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+# 2021-04-25 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 # «Class argument is invalid: Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\Statuses»:
 # https://github.com/canadasatellite-ca/site/issues/80
 use Laminas\Stdlib\JsonSerializable;
@@ -18,7 +18,7 @@ use Laminas\Stdlib\JsonSerializable;
  * @package Aheadworks\AdvancedReviews\Ui\Component\Listing\MassAction
  */
 class SourceOptions implements JsonSerializable
-	# 2021-04-25 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	# 2021-04-25 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	# «Class argument is invalid: Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\Statuses»:
 	# https://github.com/canadasatellite-ca/site/issues/80
 	,OptionSourceInterface
@@ -110,7 +110,7 @@ class SourceOptions implements JsonSerializable
     }
 
 	/**
-	 * 2021-04-25 Dmitry Fedyuk https://www.upwork.com/fl/mage2pro
+	 * 2021-04-25 Dmitry Fedyuk https://github.com/dmitrii-fediuk
 	 * «Class argument is invalid: Aheadworks\AdvancedReviews\Ui\Component\Review\Listing\MassAction\Statuses»:
 	 * https://github.com/canadasatellite-ca/site/issues/80
 	 * @override
